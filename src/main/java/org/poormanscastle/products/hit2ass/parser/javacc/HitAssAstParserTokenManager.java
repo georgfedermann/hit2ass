@@ -143,6 +143,9 @@ private int jjStartNfaWithStates_13(int pos, int kind, int state)
    return jjMoveNfa_13(state, pos + 1);
 }
 static final long[] jjbitVec0 = {
+   0x0L, 0x0L, 0x100000000L, 0x0L
+};
+static final long[] jjbitVec1 = {
    0x0L, 0x0L, 0xffffffffffffffffL, 0xffffffffffffffffL
 };
 private int jjMoveNfa_13(int startState, int curPos)
@@ -224,9 +227,16 @@ private int jjMoveNfa_13(int startState, int curPos)
          {
             switch(jjstateSet[--i])
             {
+               case 1:
+                  if ((jjbitVec0[i2] & l2) == 0L)
+                     break;
+                  if (kind > 201)
+                     kind = 201;
+                  jjstateSet[jjnewStateCnt++] = 1;
+                  break;
                case 4:
                case 5:
-                  if ((jjbitVec0[i2] & l2) != 0L)
+                  if ((jjbitVec1[i2] & l2) != 0L)
                      { jjCheckNAddStates(0, 2); }
                   break;
                default : break;
@@ -380,7 +390,7 @@ private int jjMoveNfa_16(int startState, int curPos)
             {
                case 5:
                case 6:
-                  if ((jjbitVec0[i2] & l2) != 0L)
+                  if ((jjbitVec1[i2] & l2) != 0L)
                      { jjCheckNAddStates(3, 5); }
                   break;
                default : break;
@@ -555,7 +565,7 @@ private int jjMoveNfa_15(int startState, int curPos)
             {
                case 6:
                case 7:
-                  if ((jjbitVec0[i2] & l2) != 0L)
+                  if ((jjbitVec1[i2] & l2) != 0L)
                      { jjCheckNAddStates(9, 11); }
                   break;
                default : break;
@@ -643,7 +653,7 @@ private int jjMoveNfa_6(int startState, int curPos)
             switch(jjstateSet[--i])
             {
                case 0:
-                  if ((jjbitVec0[i2] & l2) != 0L && kind > 8)
+                  if ((jjbitVec1[i2] & l2) != 0L && kind > 8)
                      kind = 8;
                   break;
                default : break;
@@ -1150,14 +1160,14 @@ private int jjMoveNfa_1(int startState, int curPos)
             {
                case 0:
                case 10:
-                  if ((jjbitVec0[i2] & l2) == 0L)
+                  if ((jjbitVec1[i2] & l2) == 0L)
                      break;
                   if (kind > 31)
                      kind = 31;
                   { jjCheckNAdd(10); }
                   break;
                case 3:
-                  if ((jjbitVec0[i2] & l2) == 0L)
+                  if ((jjbitVec1[i2] & l2) == 0L)
                      break;
                   if (kind > 31)
                      kind = 31;
@@ -2317,7 +2327,7 @@ private int jjMoveNfa_12(int startState, int curPos)
                case 15:
                case 8:
                case 7:
-                  if ((jjbitVec0[i2] & l2) != 0L)
+                  if ((jjbitVec1[i2] & l2) != 0L)
                      { jjCheckNAddStates(22, 24); }
                   break;
                default : break;
@@ -2904,7 +2914,7 @@ private int jjMoveNfa_5(int startState, int curPos)
             {
                case 0:
                case 2:
-                  if ((jjbitVec0[i2] & l2) == 0L)
+                  if ((jjbitVec1[i2] & l2) == 0L)
                      break;
                   if (kind > 103)
                      kind = 103;
@@ -2912,7 +2922,7 @@ private int jjMoveNfa_5(int startState, int curPos)
                   break;
                case 5:
                case 6:
-                  if ((jjbitVec0[i2] & l2) != 0L)
+                  if ((jjbitVec1[i2] & l2) != 0L)
                      { jjCheckNAddStates(3, 5); }
                   break;
                default : break;
@@ -3015,7 +3025,7 @@ private int jjMoveNfa_14(int startState, int curPos)
             {
                case 2:
                case 3:
-                  if ((jjbitVec0[i2] & l2) != 0L)
+                  if ((jjbitVec1[i2] & l2) != 0L)
                      { jjCheckNAddStates(28, 30); }
                   break;
                default : break;
@@ -3118,7 +3128,7 @@ private int jjMoveNfa_9(int startState, int curPos)
             {
                case 2:
                case 3:
-                  if ((jjbitVec0[i2] & l2) != 0L)
+                  if ((jjbitVec1[i2] & l2) != 0L)
                      { jjCheckNAddStates(28, 30); }
                   break;
                default : break;
@@ -3393,10 +3403,10 @@ private int jjStartNfaWithStates_2(int pos, int kind, int state)
    catch(java.io.IOException e) { return pos + 1; }
    return jjMoveNfa_2(state, pos + 1);
 }
-static final long[] jjbitVec1 = {
+static final long[] jjbitVec2 = {
    0x0L, 0x0L, 0x0L, 0x2000000000000000L
 };
-static final long[] jjbitVec2 = {
+static final long[] jjbitVec3 = {
    0xfffffffffffffffeL, 0xffffffffffffffffL, 0xffffffffffffffffL, 0xffffffffffffffffL
 };
 private int jjMoveNfa_2(int startState, int curPos)
@@ -3570,11 +3580,11 @@ private int jjMoveNfa_2(int startState, int curPos)
                case 14:
                case 7:
                case 6:
-                  if (jjCanMove_2(hiByte, i1, i2, l1, l2))
+                  if (jjCanMove_3(hiByte, i1, i2, l1, l2))
                      { jjCheckNAddStates(9, 11); }
                   break;
                case 3:
-                  if (!jjCanMove_1(hiByte, i1, i2, l1, l2))
+                  if (!jjCanMove_2(hiByte, i1, i2, l1, l2))
                      break;
                   if (kind > 158)
                      kind = 158;
@@ -4270,7 +4280,7 @@ private int jjMoveNfa_4(int startState, int curPos)
                case 15:
                case 8:
                case 7:
-                  if (jjCanMove_2(hiByte, i1, i2, l1, l2))
+                  if (jjCanMove_3(hiByte, i1, i2, l1, l2))
                      { jjCheckNAddStates(22, 24); }
                   break;
                default : if (i1 == 0 || l1 == 0 || i2 == 0 ||  l2 == 0) break; else break;
@@ -4308,7 +4318,7 @@ private static final boolean jjCanMove_1(int hiByte, int i1, int i2, long l1, lo
 {
    switch(hiByte)
    {
-      case 255:
+      case 0:
          return ((jjbitVec1[i2] & l2) != 0L);
       default :
          return false;
@@ -4318,10 +4328,20 @@ private static final boolean jjCanMove_2(int hiByte, int i1, int i2, long l1, lo
 {
    switch(hiByte)
    {
-      case 0:
-         return ((jjbitVec0[i2] & l2) != 0L);
+      case 255:
+         return ((jjbitVec2[i2] & l2) != 0L);
       default :
-         if ((jjbitVec2[i1] & l1) != 0L)
+         return false;
+   }
+}
+private static final boolean jjCanMove_3(int hiByte, int i1, int i2, long l1, long l2)
+{
+   switch(hiByte)
+   {
+      case 0:
+         return ((jjbitVec1[i2] & l2) != 0L);
+      default :
+         if ((jjbitVec3[i1] & l1) != 0L)
             return true;
          return false;
    }

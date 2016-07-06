@@ -105,7 +105,7 @@ public class FixedTextMergerTest {
                 "               #G  9 2\n" +
                 "               #G 88 8\n" +
                 "               #^ \"RETURN\"\n" +
-                "               #$ absattribut(\"BLK\")'}, id='ZLNEU8', formatDefinition=''}, tail=PairClouBausteinElementList{codePosition=begin line/column 18/1; end line/column 18/3, head=FixedTextImpl{codePosition=begin line/column 18/1; end line/column 18/3, textBuffer=And so it ends.}, tail=LastClouBausteinElementList{head=FixedTextImpl{codePosition=begin line/column 18/11; end line/column 18/15, textBuffer=}}}}}}}}}}}}", probe);
+                "               #$ absattribut(\"BLK\")'}, id='ZLNEU8', formatDefinition=''}, tail=PairClouBausteinElementList{codePosition=begin line/column 19/4; end line/column 19/11, head=GlobalListDeclarationStatement{codePosition=begin line/column 19/4; end line/column 19/11, listId='l vombis', listExpression=IdExpression{id='listendlos1', valueType=null, value=null}}, tail=PairClouBausteinElementList{codePosition=begin line/column 21/1; end line/column 21/3, head=FixedTextImpl{codePosition=begin line/column 21/1; end line/column 21/3, textBuffer=And so it ends.}, tail=LastClouBausteinElementList{head=FixedTextImpl{codePosition=begin line/column 21/11; end line/column 21/15, textBuffer=}}}}}}}}}}}}}", probe);
     }
 
     @Test

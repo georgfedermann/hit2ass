@@ -320,7 +320,7 @@ TOKEN : {
     < LS_LBRACE : "{" > : COMMAND_MODE_LS_BRACES |
     < LS_GD : "D" > |
     < LS_LD : "d" > |
-    < LS_ID : [ "_", "a"-"z", "A"-"Z"](["_", "a"-"z", "A"-"Z", "0"-"9"])* > |
+    < LS_ID : [ "_", "a"-"z", "A"-"Z"](["_", "a"-"z", "A"-"Z", "0"-"9", "\u00a0"])* > |
     < LS_TEXT : "\""
         (
             "\\" ~[]

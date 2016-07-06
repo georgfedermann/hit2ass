@@ -1,0 +1,10 @@
+#
+#*  This sample HIT/CLOU text component tests the file commands "open" and "close".
+    For the greater good. Well, I never ...  #
+
+Here are scecret agents for you.
+#B "/some/fake/path/Declarations.clou"   #*  Some quargel to test file commands in context of.   #
+#X $SHELLVARIABLE("datei") O "r"
+#B "/some/fake/path//Header.clou"
+#X $SHELLVARIABLE("datei") C
+How do you like this?

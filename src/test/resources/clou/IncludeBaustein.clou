@@ -1,0 +1,10 @@
+#
+#*  This sample HIT/CLOU text component tests the IncludeBaustein statement,
+    in the context of a component with various other CLOU statements.   #
+
+Here is some fixed text for testing. This is fixed text for you.
+#D firstName "John"       #*  this is some clou variable declaration for you. #
+#B "/home/assentis/Variables.clou"  #*  this imports some CLOU text component.  #
+Here is more fixed text for you.
+#B "/home/assentis/archive/Address.clou"    #*  more clou text components.      #
+And so it ends.

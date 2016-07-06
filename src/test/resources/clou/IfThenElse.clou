@@ -1,0 +1,32 @@
+#
+#*  ShortComment #
+
+  Text mit Umlauten äüößÄÜÖ_-"Hallo"
+
+  #D bauname "AL001"
+  #D anzahlLeerzeilen 3
+
+  #^ anzahlLeerzeilen "RETURN"
+
+  #? bauname = "AL001" :
+    /J
+      #* THEN #
+      den Pensionsakt
+    /N
+      #* ELSE #
+      den Treppenakt
+  #
+  #^ anzahlLeerzeilen "RETURN"
+Halfway through...
+  #^ anzahlLeerzeilen "RETURN"
+  #? bauname <> "AL001" :
+    /J
+      #* THEN #
+      den Pensionsakt
+    /N
+      #* ELSE #
+      den Treppenakt
+  #
+  #^ anzahlLeerzeilen "RETURN"
+And so it ends.
+  #^ anzahlLeerzeilen "RETURN"

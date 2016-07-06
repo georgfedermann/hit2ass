@@ -1,0 +1,11 @@
+#
+#*  Exposes a bug in the definition of the IF_LTE / DS_LTE T5Prime definition #
+
+#D var1 5
+#D var2 7
+
+#? var1 <= var2:
+  /J This should be printed
+  /N This should not be printed
+#
+And so it ends.

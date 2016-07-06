@@ -1,0 +1,9 @@
+#
+#*  Testing complex CLOU statements within IF statements.           #
+
+    #? dbbaz <> "--":
+        /J
+            #$TABU#*##$TABU#*##> dbbaz
+            #^ "RETURN"
+    #
+    End so it ends.

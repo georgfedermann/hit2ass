@@ -1,0 +1,16 @@
+#
+#*  This sample HIT/CLOU text component tests the while structure.  #
+
+Here is some fixed text for you.
+#S counter = true :
+    Some fixed text within the loop
+    #= counter counter + 1      #*  Also some meaning-less operation on a boolean valued variable?  #
+    #? counter = counter :
+    /J
+        Grammelknödel
+    /N
+        Backfisch
+    #
+    Close to the Closure
+#
+And so it ends.

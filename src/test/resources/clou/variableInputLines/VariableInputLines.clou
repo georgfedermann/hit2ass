@@ -1,0 +1,25 @@
+#
+#*  This is a simple letter training the HitAss system to create
+    XML velocity templates and XML input data for HIT / CLOU components
+    which read in data in loops, and thus, there may be variable
+    line numbers, as in X.freitext0
+#
+
+#D firstName "Jim"
+#D lastName "Raynor"
+#D gender "m"
+#D shoppingItem "Adler"
+#D endSignalFreetext "--"
+
+#X $SHELLVARIABLE("datei") O "r"
+#X< firstName
+#X< lastName
+#X< gender
+#X< shoppingItem
+#X< endSignalFreetext
+
+#X< lelement
+#S lelement <> endSignalFreetext
+    #L indtext0 & {lelement}
+    #X< lelement
+#

@@ -1,0 +1,33 @@
+<Object id="${docFamUtils.CockpitElementId}" name="${name}" enabled="True" type="com.assentis.cockpit.bo.BoDocumentVariable">
+    <Properties>
+        <Attributes>
+            <!-- Name is an XPath expression. Thus, a string value has to be quoted, like in 'name'. -->
+            <Attribute name="DFVariableName">
+                <![CDATA[${variableName}]]>
+            </Attribute>
+            <Attribute name="DFVariableValue">
+                <Object id="" name="" enabled="True"
+                    type="com.assentis.cockpit.bo.BoXPathTextVariable">
+                    <Properties>
+                        <Attributes>
+                            <Attribute name="IsXPath">
+                            <![CDATA[True]]>
+                            </Attribute>
+                            <Attribute name="XPath">
+                            <![CDATA[${variableValue}]]>
+                            </Attribute>
+                            <Attribute name="XPathWithName">
+                            <![CDATA[]]>
+                            </Attribute>
+                        </Attributes>
+                        <Relations>
+                            <Relation name="XPathTextVariable" refTo=""/>
+                            <ManyRelation name="QueryXPathTextVariable"/>
+                        </Relations>
+                    </Properties>
+                </Object>
+            </Attribute>
+        </Attributes>
+        <Relations/>
+    </Properties>
+</Object>

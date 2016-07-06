@@ -1,0 +1,14 @@
+#
+#*  This sample HIT/CLOU text component tests the conecpt of dynamic values
+    in the context of other HIT/CLOU commands.  #
+
+This is some fixed text for you.
+#D firstName "John"
+#B "/home/assentis/Variables.clou"
+#X "/opt/batch/inputfiles/20150430-night_batch.txt" O "r"
+#X< firstName
+#X< lastName
+#X< customerNr
+#X < orderNr
+#X "/opt/batch/inputfiles/20150430-night_batch.txt" C
+And so it ends.

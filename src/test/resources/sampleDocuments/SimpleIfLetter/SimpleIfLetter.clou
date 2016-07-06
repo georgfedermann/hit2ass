@@ -1,0 +1,33 @@
+#
+#*  This is a simple letter training the HitAss transformer system to
+    recognize and process:
+    -   comments
+    -   fixed texts
+    -   HitCommandos
+    -   Dynamic values
+    -   IF conditional structure
+    The letter will need a text file with input data which must
+    1st be processed into a DocFamily compatible XML file.
+#
+
+#D firstName "Jim"
+#D lastName "Raynor"
+#D gender "m"
+#D shoppingItem "Adler"
+#D numberOfNewLines 5
+
+#X $SHELLVARIABLE("datei") O "r"
+#X< firstName
+#X< lastName
+#X< gender
+#X< shoppingItem
+
+#? gender = "m" :
+   /J Sehr geehrter Herr
+   /N Sehr geehrte Frau
+#
+#> firstName #> lastName
+#^2"RETURN"
+Wir danken Ihnen für die Bestellung und bestätigen Ihnen den Versand von einem #> shoppingItem.
+#^ numberOfNewLines "RETURN"
+Ihre ACME AG.

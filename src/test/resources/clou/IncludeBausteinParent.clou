@@ -1,0 +1,13 @@
+#
+#*  This is a simple HIT / CLOU Baustein that imports another Baustein for testing purposes #
+
+#*  First create some variables, to make things count #
+#D firstName "Jim"
+#D lastName "Raynor"
+#D gender "m"
+#D shoppingItem "Adler"
+
+#B "IncludeBausteinChild1.clou"
+
+#B "$BAUPFAD/ba/IncludeBausteinChild2.clou"
+

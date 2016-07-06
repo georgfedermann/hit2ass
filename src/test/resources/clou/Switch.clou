@@ -1,0 +1,22 @@
+#
+#*  This sample HIT/CLOU text component tests the switch structure. #
+
+Here is some fixed text for you.
+#D conditionVar "bruno"
+#C conditionVar
+    /"peter":
+        Your name appears to be "Peter".
+        #B "/home/assentis/Greeting.clou"
+        Adieu, Peter!
+    /"bruno":
+    Your name appears to be "Bruno".
+    /1:
+        I am one year old.
+    /2:
+        I am two years old.
+    /35:
+        I am six years old.
+    /:
+    For all the rest of you: "Hello, World!"
+#
+And so it ends.

@@ -1,0 +1,23 @@
+<Object id="${docFamUtils.CockpitElementId}" name="${name}" enabled="True" type="com.assentis.cockpit.bo.BoIfThenElseParagraph">
+  <Properties>
+    <Attributes>
+      <Attribute name="Condition">
+        <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXPathTextVariable">
+          <Properties>
+            <Attributes>
+              <Attribute name="IsXPath"><![CDATA[True]]></Attribute>
+              <Attribute name="XPath"><![CDATA[${xpathExpression}]]></Attribute>
+              <Attribute name="XPathWithName"><![CDATA[]]></Attribute>
+            </Attributes>
+            <Relations>
+              <Relation name="XPathTextVariable" refTo=""/>
+              <ManyRelation name="QueryXPathTextVariable"/>
+            </Relations>
+          </Properties>
+        </Object>
+      </Attribute>
+    </Attributes>
+    <Relations/>
+  </Properties>
+  ${content}
+</Object>

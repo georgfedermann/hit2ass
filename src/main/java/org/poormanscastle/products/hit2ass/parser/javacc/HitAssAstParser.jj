@@ -1,0 +1,1074 @@
+/* Parser configuration options. */
+options{
+    LOOKAHEAD = 1;
+    BUILD_PARSER = true;
+    BUILD_TOKEN_MANAGER = true;
+    CHOICE_AMBIGUITY_CHECK = 2;
+    DEBUG_LOOKAHEAD = false;
+    DEBUG_PARSER = false;
+    DEBUG_TOKEN_MANAGER = false;
+    ERROR_REPORTING = true;
+    FORCE_LA_CHECK = false;
+    IGNORE_CASE = false;
+    JAVA_UNICODE_ESCAPE = false;
+    OTHER_AMBIGUITY_CHECK = 1;
+    SANITY_CHECK = true;
+    STATIC = false; /* changed */
+    UNICODE_INPUT = true; /* changed */
+    USER_CHAR_STREAM = false;
+    USER_TOKEN_MANAGER = false;
+}
+
+PARSER_BEGIN(HitAssAstParser)
+package org.poormanscastle.products.hit2ass.parser.javacc;
+
+import org.poormanscastle.products.hit2ass.ast.domain.*;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+
+public class HitAssAstParser{
+    private final static Logger logger = Logger.getLogger(HitAssAstParser.class);
+    public static void main(String[] args){
+        HitAssAstParser parser = new HitAssAstParser(System.in);
+    }
+}
+PARSER_END(HitAssAstParser)
+
+// CLOU Baustein
+TOKEN : {
+    < CLOU_OPENER : "#"("\n"|"\r") > : TXT_MODE
+}
+
+/*
+    AS      ... Assignment Statement
+    CA      ... Case
+    CB      ... ClouBaustein
+    CBE     ... Clou Baustein Element
+    CBES    ... Clou Baustein Specific
+    CF      ... Close File
+    DV      ... Dynamic Value
+    FX      ... Fixed Text
+    GDS     ... Global Declaration Statement
+    HC      ... Hit Command
+    IF      ... Conditional Statement
+    IB      ... Import Baustein
+    LDS     ... Local Declaration Statement
+    OF      ... Open File
+    SS      ... SwitchStatement
+    WS      ... While Statement
+
+*/
+
+// CLOU comments; single line, multi-line and empty comments
+<TXT_MODE> MORE : {
+    "#*" : COMMENT_MODE
+}
+<COMMAND_MODE_DS> MORE : {
+    "#*" : COMMENT_MODE
+}
+<COMMAND_MODE_SS> MORE : {
+    "#*" : COMMENT_MODE
+}
+<COMMAND_MODE_AS> MORE : {
+    "#*" : COMMENT_MODE
+}
+<COMMAND_MODE_MS> MORE : {
+    "#*" : COMMENT_MODE
+}
+<COMMENT_MODE> SPECIAL_TOKEN : {
+    <END_COMMENT : "#"> : TXT_MODE
+}
+<COMMENT_MODE> MORE : {
+    <~["#"]>
+}
+
+/*  TEXT_MODE switching to COMMAND_MODE.    */
+<TXT_MODE> TOKEN : {
+    < IF : "#?" > : COMMAND_MODE_IF |
+    < THEN : "/J" > : TXT_MODE |
+    < ELSE : "/N" > : TXT_MODE |
+    < ENDIF : "#" > : TXT_MODE |            //
+    < WS : "#S" > : COMMAND_MODE_IF |       // While loop statement
+    < SS : "#C" > : COMMAND_MODE_SS |       // Switch statement
+    < CA : "/"(((["0"-"9"])+)|("\""(["0"-"9","a"-"z", "A"-"Z"])+"\"")?)":" > : TXT_MODE | // < CA : "/"(["0"-"9"])+|("\""(["0"-"9","a"-"z", "A"-"Z"])+"\"")":" >
+    < MS : "#$" > : COMMAND_MODE_MS |       // execute Macro
+    < HC : "#^" > : COMMAND_MODE_HC |       // execute Hit command
+    < GS : "#G" > : COMMAND_MODE_DS |       // set cursor location in row
+    < JS : "#J" > : COMMAND_MODE_DS |       // set cursor location row/column
+    < ZS : "#Z" > : COMMAND_MODE_DS |       // Query cursor location
+    < GD : "#D" > : COMMAND_MODE_DS |       // Global variable declaration statements
+    < LD : "#d" > : COMMAND_MODE_DS |       // Local variable declaration statements
+    < LIST : "#L" > : COMMAND_MODE_LS |     // List Manipulations
+    < DUMP : "#q" > : COMMAND_MODE_DUMP |
+    < AS : "#=" > : COMMAND_MODE_AS |       // Assignment Statemeent
+    < IB : "#B" > : COMMAND_MODE_IB |       // Include Baustein statement
+    < OF : "#X" > : COMMAND_MODE_FILE |     // File manipulation statements, like: open file, close file, read value from file.
+    < DV : "#X"([" ", "\n", "\r", "\t"])*"<" > : COMMAND_MODE_DV |
+    < PS : "#>" >  : COMMAND_MODE_PS |      // Print-Statement: Insert value of some given expression com the current position into the current document
+    < SK : "#!" > : COMMAND_MODE_SK         // Execute Shell command
+}
+
+/*  Fixed text mode */
+<TXT_MODE> TOKEN : {
+    <FIXED_TEXT : (~["\n", "\r", "\t", " ", "#"])+ >
+}
+
+<TXT_MODE> SKIP : {
+    "\n" | "\r" | "\t" | " "
+}
+<COMMAND_MODE_DV> TOKEN : {
+    < DV_ID : [ "_", "a"-"z", "A"-"Z"]([ "_", "a"-"z", "A"-"Z", "0"-"9" ])* > : TXT_MODE
+}
+<COMMAND_MODE_DV> SKIP : {
+    "\n" | "\r" | "\t" | " "
+}
+<COMMAND_MODE_FILE> TOKEN : {
+    < FILE_OPEN : "O" > |
+    < FILE_CLOSE : "C" > : TXT_MODE |
+    < FILE_READ : "\"r\"" > : TXT_MODE |
+    < FILE_TEXT : (["A"-"Z", "a"-"z", "\"", "$", "(", ")", "/", "0"-"9", "-", "_", "." ])+ > // If you want to work with optional file names here, you'll have to implement it in the production rules, or else this rule matches the empty string and kills the parser.
+}
+<COMMAND_MODE_FILE> SKIP : {
+    "\n" | "\r" | "\t" | " "
+}
+<COMMAND_MODE_IB> TOKEN : {
+    < IB_TEXT : "\""
+        (
+            "\\" ~[]
+        |
+            ~["\""]     // this covers the HIT/CLOU protected space character and also all German Umlauts.
+        )*"\"" > : TXT_MODE
+}
+<COMMAND_MODE_IB> SKIP : {
+    "\n" | "\r" | "\t" | " "
+}
+<COMMAND_MODE_PS> SKIP : {
+    "\n" | "\r" | "\t" | " "
+}
+<COMMAND_MODE_PS> TOKEN : {
+    <PS_ID : [ "_", "a"-"z", "A"-"Z" ]([ "_", "a"-"z", "A"-"Z", "0"-"9" ])* > : TXT_MODE
+}
+<COMMAND_MODE_SS> SKIP : {
+    "\n": TXT_MODE  | "\r": TXT_MODE  | "\t" | " "
+}
+<COMMAND_MODE_SS> TOKEN : {
+    < SS_SHELLVAR : "SHELLVARIABLE" > |
+    < SS_LPAREN : "(" > |
+    < SS_RPAREN : ")" > : TXT_MODE |
+    < SS_QUOTE : "\"" > |
+    < SS_SHELLVAR_ID : (["A"-"Z"])+ > |
+    < SS_COMMA : "," > |
+    < SS_LBRACKET : "[" > |
+    < SS_RBRACKET : "]" > |
+    < SS_NUM : (["0"-"9"])+ > |
+    < SS_ID : [ "_", "[", "]", ",", "a"-"z", "A"-"Z" ]([ "_", "[", "]", ",", "a"-"z", "A"-"Z", "0"-"9" ])* > |
+    < CA_COLON : ":" > : TXT_MODE
+}
+<COMMAND_MODE_SK> TOKEN : {
+    <SK_VAR_ID : (["$", "A"-"Z", "a"-"z", "0"-"9"])+ > : TXT_MODE
+}
+<COMMAND_MODE_SK> SKIP :{
+    " " | "\n" | "\t" | "\r"
+}
+<COMMAND_MODE_MS> SKIP : {
+    "\n" : TXT_MODE | "\r" : TXT_MODE | "\t" | " "
+}
+<COMMAND_MODE_MS> TOKEN : {
+    < MS_EQ : "=" > |
+    < MS_EQ_STRICT : "==" > |
+    < MS_OR : "oder" > |
+    < MS_AND : "und" > |
+    < MS_XOR : "xor_tbd" > |
+    < MS_NOT : "not_tbd" > |
+    < MS_NEQ : "<>" > |
+    < MS_LT : "<" > |
+    < MS_LTE : "<=" > |
+    < MS_GT : ">" > |
+    < MS_GTE : ">=" > |
+    < MS_PLUS : "+" > |
+    < MS_MINUS : "-" > |
+    < MS_TIMES : "*" > |
+    < MS_DIV : "/" > |
+    < MS_LPAREN : "(" > |
+    < MS_RPAREN : ")" > : TXT_MODE |
+    < MS_COMMA : "," > |
+    < MS_NUM : (["0"-"9"])+ > |
+    < MS_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
+    < MS_ID : ( ~["#", "(", ")", ",", " ", "\t", "\n", "\r"])+ > | /* I've switched here from white list to black list because of the Umlauts in the actual Bausteins, but that might come back to hount me, either. */
+    < MS_TEXT : "\""
+        (
+            "\\" ~[]
+        |
+            ~["\""]     // this covers the HIT/CLOU protected space character and also all German Umlauts.
+        )*"\"" >
+
+}
+<COMMAND_MODE_IF> TOKEN : {
+    < IF_SHELLVAR : "SHELLVARIABLE" > |
+    < IF_EQ : "=" > |
+    < IF_EQ_STRICT : "==" > |
+    < IF_OR : "oder" > |
+    < IF_AND : "und" > |
+    < IF_XOR : "xor_tbd" > |
+    < IF_NOT : "not_tbd" > |
+    < IF_NEQ : "<>" > |
+    < IF_LT : "<" > |
+    < IF_LTE : "<=" > |
+    < IF_GT : ">" > |
+    < IF_GTE : ">=" > |
+    < IF_PLUS : "+" > |
+    < IF_MINUS : "-" > |
+    < IF_TIMES : "*" > |
+    < IF_DIV : "/" > |
+    < IF_QUOTE : "\"" > |
+    < IF_COLON : ":" > : TXT_MODE |
+    < IF_LPAREN : "(" > |
+    < IF_RPAREN : ")" > |
+    < IF_NUM : (["0"-"9"])+ > |
+    < IF_LBRACKET : "[" > |
+    < IF_RBRACKET : "]" > |
+    < IF_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
+    < IF_SHELLVAR_ID : (["A"-"Z"])+ > |
+    < IF_ID : [ "_", "[", "]", ",", "a"-"z", "A"-"Z"](["_", "[", "]", ",", "a"-"z", "A"-"Z", "0"-"9"])* > |
+    < IF_TEXT : "\""
+        (
+            "\\" ~[]
+        |
+            ~["\""]     // this covers the HIT/CLOU protected space character and also all German Umlauts.
+        )*"\"" >
+}
+<COMMAND_MODE_IF> SKIP : {
+    "\n" | "\r" | "\t" | " "
+}
+<COMMAND_MODE_DS> TOKEN : {
+    < DS_EQ : "=" > |
+    < DS_EQ_STRICT : "==" > |
+    < DS_OR : "oder" > |
+    < DS_AND : "und" > |
+    < DS_XOR : "xor_tbd" > |
+    < DS_NOT : "not_tbd" > |
+    < DS_NEQ : "<>" > |
+    < DS_LT : "<" > |
+    < DS_LTE : "<=" > |
+    < DS_GT : ">" > |
+    < DS_GTE : ">=" > |
+    < DS_STRING_CONCAT : "&" > |
+    < DS_PLUS : "+" > |
+    < DS_MINUS : "-" > |
+    < DS_TIMES : "*" > |
+    < DS_DIV : "/" > |
+    < DS_QUOTE : "\"" > |
+    < DS_COLON : ":" > |
+    < DS_LPAREN : "(" > |
+    < DS_RPAREN : ")" > |
+    < DS_NUM : (["0"-"9"])+ > |
+    < DS_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
+    < DS_ID : [ "_", "[", "]", ",", "a"-"z", "A"-"Z"](["_", "a"-"z", "A"-"Z", "0"-"9", "\ufffd"])* > |
+    < DS_TEXT : "\""
+        (
+            "\\" ~[]
+        |
+            ~["\""]     // this covers the HIT/CLOU protected space character and also all German Umlauts.
+        )*"\"" >
+}
+<COMMAND_MODE_DS> SKIP : {
+    "\n" : TXT_MODE | "\r" : TXT_MODE | "\t" | " "
+}
+<COMMAND_MODE_AS> TOKEN : {
+    < AS_SHELLVAR : "SHELLVARIABLE" > |
+    < AS_EQ : "=" > |
+    < AS_EQ_STRICT : "==" > |
+    < AS_OR : "oder" > |
+    < AS_AND : "und" > |
+    < AS_XOR : "xor_tbd" > |
+    < AS_NOT : "not_tbd" > |
+    < AS_NEQ : "<>" > |
+    < AS_LT : "<" > |
+    < AS_LTE : "<=" > |
+    < AS_GT : ">" > |
+    < AS_GTE : ">=" > |
+    < AS_COMMA : "," > |
+    < AS_STRING_CONCAT : "&" > |
+    < AS_PLUS : "+" > |
+    < AS_MINUS : "-" > |
+    < AS_TIMES : "*" > |
+    < AS_DIV : "/" > |
+    < AS_QUOTE : "\"" > |
+    < AS_COLON : ":" > |
+    < AS_LPAREN : "(" > |
+    < AS_RPAREN : ")" > : TXT_MODE |
+    < AS_LBRACKET : "[" > |
+    < AS_RBRACKET : "]" > : TXT_MODE |
+    < AS_NUM : (["0"-"9"])+ > |
+    < AS_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
+    < AS_SHELLVAR_ID : (["A"-"Z"])+ > |
+    < AS_ID : [ "_", "[", "]", ",", "a"-"z", "A"-"Z"](["_", "[", "]", ",", "a"-"z", "A"-"Z", "0"-"9"])* > |
+    < AS_TEXT : "\""
+        (
+            "\\" ~[]
+        |
+            ~["\""]     // this covers the HIT/CLOU protected space character and also all German Umlauts.
+        )*"\"" >
+}
+<COMMAND_MODE_AS> SKIP : {
+    "\n" : TXT_MODE | "\r" : TXT_MODE | "\t" | " "
+}
+<COMMAND_MODE_LS> TOKEN : {
+    < LS_AMPERSAND : "&" > |
+    < LS_LBRACE : "{" > : COMMAND_MODE_LS_BRACES |
+    < LS_GD : "D" > |
+    < LS_LD : "d" > |
+    < LS_ID : [ "_", "a"-"z", "A"-"Z"](["_", "a"-"z", "A"-"Z", "0"-"9"])* > |
+    < LS_TEXT : "\""
+        (
+            "\\" ~[]
+        |
+            ~["\""]     // this covers the HIT/CLOU protected space character and also all German Umlauts and szlig.
+        )*"\"" >
+}
+<COMMAND_MODE_LS> SKIP : {
+    "\n" : TXT_MODE | "\r" : TXT_MODE | "\t" | " "
+}
+<COMMAND_MODE_DUMP> SKIP : {
+    "\n" | "\r" | " " | "\t"
+}
+<COMMAND_MODE_DUMP> TOKEN : {
+    < DUMP_TEXT : "\""
+        (
+            "\\" ~[]
+        |
+            ~["\""]     // this covers the HIT/CLOU protected space character and also all German Umlauts and szlig.
+        )*"\"" > : TXT_MODE
+}
+<COMMAND_MODE_LS_BRACES> TOKEN : {
+    < LS_BRACES_AMPERSAND : "&" > |
+    < LS_BRACES_COMMA : "," > |
+    < LS_BRACES_RBRACE : "}" > : COMMAND_MODE_LS |
+    < LS_BRACES_NUM : (["0"-"9"])+ > |
+    < LS_BRACES_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
+    < LS_BRACES_ID : [ "_", "a"-"z", "A"-"Z"](["_", "a"-"z", "A"-"Z", "0"-"9"])* > |
+    < LS_BRACES_TEXT : "\""
+        (
+           "\\" ~[]
+        |
+           ~["\""]     // this covers the HIT/CLOU protected space character and also all German Umlauts and szlig.
+        )*"\"" >
+}
+<COMMAND_MODE_LS_BRACES> SKIP : {
+    "\n" | "\r" | "\t" | " "
+}
+<COMMAND_MODE_HC> TOKEN : {
+    < HC_HC : "#^"> |
+    < HC_NUM : (["0"-"9"])+ > |
+    < HC_ID : [ "_", "a"-"z", "A"-"Z"](["_", "a"-"z", "A"-"Z", "0"-"9"])* > |
+    < HC_NAME : "\""
+        (
+           "\\" ~[]
+        |
+           ~["\""]     // this covers the HIT/CLOU protected space character and also all German Umlauts and szlig.
+        )*"\"" > : TXT_MODE
+}
+<COMMAND_MODE_HC> SKIP : {
+    "\n" | "\r" | "\t" | " "
+}
+
+/*  Productions */
+/*  CLOU Baustein CB */
+ClouBaustein CB() :
+{ ClouBausteinElement clouBausteinElement; }
+{
+    <CLOU_OPENER> clouBausteinElement = CBE() <EOF>
+    {
+        return clouBausteinElement != null ?
+            new ClouBausteinImpl(clouBausteinElement) :
+            new ClouBausteinImpl(CodePosition.createZeroPosition(), null );
+    }
+}
+
+ClouBausteinElementList CBE() :
+{ ClouBausteinElement element; ClouBausteinElementList elementList; }
+{
+    /* CBE production can be resolved to several options, the specific CBEs. And it is nullable, too */
+    (
+        element = CBES() elementList = CBE()
+        {
+            return elementList == null ?
+                new LastClouBausteinElementList(element) :
+                new PairClouBausteinElementList(element, elementList);
+        }
+    )?
+    { return null; }
+}
+
+ClouBausteinElement CBES() :
+{ ClouBausteinElement element; }
+{
+    element = IF()
+    {
+        return element;
+    }
+    |
+    element = WS()
+    {
+        return element;
+    }
+    |
+    element = SS()
+    {
+        return element;
+    }
+    |
+    element = MS()
+    {
+        return element;
+    }
+    |
+    element = HC()
+    {
+        return element;
+    }
+    |
+    element = GDS()
+    {
+        return element;
+    }
+    |
+    element = LDS()
+    {
+        return element;
+    }
+    |
+    element = AS()
+    {
+        return element;
+    }
+    |
+    element = IB()
+    {
+        return element;
+    }
+    |
+    element = GS()
+    {
+        return element;
+    }
+    |
+    element = JS()
+    {
+        return element;
+    }
+    |
+    element = ZS()
+    {
+        return element;
+    }
+    |
+    element = FX()
+    {
+        return element;
+    }
+    |
+    element = SK()
+    {
+        return element;
+    }
+    |
+    element = DUMP()
+    {
+        return element;
+    }
+    |
+    (LOOKAHEAD(4)element = OF()
+    {
+        return element;
+    }
+    |
+    element = CF()
+    {
+        return element;
+    })
+    |
+    (LOOKAHEAD(3) element = GLDS()
+    {
+        return element;
+    }
+    |
+    (LOOKAHEAD(3)element = LLDS()
+    {
+        return element;
+    }
+    |
+    element = LCS()
+    {
+        return element;
+    }
+    ))
+    |
+    element = DV()
+    {
+        return element;
+    }
+    |
+    element = PS()
+    {
+        return element;
+    }
+}
+
+ConditionalStatement IF() :
+{ Expression condition; ClouBausteinElement thenElement; ClouBausteinElement elseElement; }
+{
+    <IF> condition = E() <IF_COLON> thenElement = THEN() elseElement = ELSE() <ENDIF>
+    {
+        return new ConditionalStatement(condition, thenElement, elseElement);
+    }
+}
+
+ClouBausteinElement THEN() :
+ { ClouBausteinElement thenStatement; }
+ {
+     (<THEN> thenStatement = CBE()
+     {
+         return thenStatement;
+     })?
+     {
+         return null;
+     }
+ }
+
+ ClouBausteinElement ELSE() :
+ { ClouBausteinElement elseStatement; }
+ {
+     (<ELSE> elseStatement = CBE()
+     {
+         return elseStatement;
+     })?
+     {
+         return null;
+     }
+ }
+
+WhileStatement WS() :
+{ Token whileToken; Expression condition; ClouBausteinElement whileBody; }
+{
+    whileToken = <WS> condition = E() <IF_COLON> whileBody = CBE() <ENDIF>
+    {
+        return new WhileStatement(CodePosition.createFromToken(whileToken), condition, whileBody);
+    }
+}
+
+SwitchStatement SS() :
+{ Expression expression; CaseStatementList caseStatementList; }
+{
+    <SS> expression = E() caseStatementList = SSPrime() <ENDIF>{
+        return new SwitchStatement(expression, caseStatementList);
+    }
+}
+
+ShellCommand SK() :
+{ Token cmdToken; }
+{
+    <SK> cmdToken = <SK_VAR_ID>
+    {
+        return new ShellCommand(CodePosition.createFromToken(cmdToken), cmdToken.image);
+    }
+}
+
+CaseStatementList SSPrime() :
+{ CaseStatementList caseStatementList; CaseStatement caseStatement; }
+{
+    (caseStatement = CASE() caseStatementList = SSPrime()
+    {
+        return caseStatementList == null ? new LastCaseStatementList(caseStatement) :
+            new PairCaseStatementList(caseStatement, caseStatementList);
+    })?
+    { return null; }
+}
+
+CaseStatement CASE() :
+{ Token matchToken; ClouBausteinElement clouBausteinElement; }
+{
+    matchToken = <CA> clouBausteinElement = CBE()
+    {
+        return new CaseStatementImpl(CodePosition.createFromToken(matchToken), matchToken.image, clouBausteinElement);
+    }
+}
+
+MacroCallStatement MS() :
+{ Token idToken; ExpressionList argumentList; }
+{
+    <MS> idToken = <MS_ID> argumentList = AL()
+    {
+        return new MacroCallStatement(CodePosition.createFromToken(idToken), idToken.image, argumentList);
+    }
+}
+
+ExpressionList AL() :
+{ ExpressionList expressionList; }
+{
+    ((<MS_LPAREN>|<IF_LPAREN>) expressionList = EL() (<MS_RPAREN>|<IF_RPAREN>)
+    {
+        return expressionList;
+    })? { return null; }
+}
+
+ExpressionList EL() :
+{ Expression expression; ExpressionList expressionList; }
+{
+    expression = E() expressionList = ELPrime()
+    {
+        return expressionList == null ? new LastExpressionList(expression) : new PairExpressionList(expression, expressionList);
+    }
+}
+
+ExpressionList ELPrime() :
+{ Expression expression; ExpressionList expressionList; }
+{
+    ((<MS_COMMA>|<LS_BRACES_COMMA>) expression = E() expressionList = ELPrime()
+    {
+        return expressionList == null ? new LastExpressionList(expression) : new PairExpressionList(expression, expressionList);
+    })?{ return null; }
+}
+
+IncludeBausteinStatement IB() :
+{ Token pathToken; }
+{
+    <IB> pathToken = <IB_TEXT>
+    {
+        return new IncludeBausteinStatement(CodePosition.createFromToken(pathToken), pathToken.image);
+    }
+}
+
+HitCommandStatement HC() :
+{ Expression repetitorExpression = null; Token hitCommandNameToken; Token hcToken; Token verstarkerToken = null; }
+{
+    hcToken = <HC> (verstarkerToken = <HC_HC>)? (repetitorExpression = E()) hitCommandNameToken = <HC_NAME>
+    {
+        String command = hitCommandNameToken.image.replaceAll("\"", "").replaceAll("\u00c4", "AE").replaceAll("\u00d6", "OE").replaceAll("\u00dc", "UE").replaceAll("[^A-Z:]", "_");
+        String[] commandSplit = command.split(":");
+        if(commandSplit.length ==2) command = commandSplit[1];
+        HitCommandStatement hcStatement = new HitCommandStatement(CodePosition.createFromToken(hcToken),
+            HitCommand.valueOf(command), repetitorExpression);
+        if(verstarkerToken != null || commandSplit.length == 2) hcStatement.verstarken();
+        return hcStatement;
+    }
+}
+
+WriteStatement DUMP() :
+{ Token filenameToken; }
+{
+    <DUMP> filenameToken = <DUMP_TEXT>
+    {
+        return new WriteStatement(CodePosition.createFromToken(filenameToken), filenameToken.image);
+    }
+}
+
+OpenFileCommand OF() :
+{ Token fileNameToken; }
+{
+    <OF> fileNameToken = <FILE_TEXT> <FILE_OPEN> <FILE_READ>
+    {
+        return new OpenFileCommand(CodePosition.createFromToken(fileNameToken), fileNameToken.image);
+    }
+}
+
+CloseFileCommand CF() :
+{ Token fileNameToken; }
+{
+    <OF> fileNameToken = <FILE_TEXT> <FILE_CLOSE>
+    {
+        return new CloseFileCommand(CodePosition.createFromToken(fileNameToken), fileNameToken.image);
+    }
+}
+
+DynamicValue DV() :
+{ Token idToken; }
+{
+    <DV> idToken = <DV_ID>
+    {
+        logger.debug(StringUtils.join("Found DynamicValue: varId:", idToken.image));
+        return new DynamicValue(CodePosition.createFromToken(idToken), idToken.image);
+    }
+}
+
+PrintStatement PS() :
+{ Token idToken; }
+{
+    <PS> idToken = <PS_ID>
+    {
+        return new PrintStatement(CodePosition.createFromToken(idToken), idToken.image);
+    }
+}
+AssignmentStatement AS() :
+{ Token idToken; Expression expression; }
+{
+    <AS> idToken = <AS_ID> expression = E()
+    {
+        logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image, "; Expression: ", expression));
+        return new AssignmentStatement(idToken.image, expression);
+    }
+}
+
+GlobalDeclarationStatement GDS() :
+{ Token idToken; Expression expression; String formatDefinition; }
+{
+    <GD> idToken = <DS_ID> expression = E() formatDefinition = DSPrime()
+    {
+        return new GlobalDeclarationStatement(idToken.image, expression, formatDefinition);
+    }
+}
+
+String DSPrime() :
+{ Token formatToken; }
+{
+    (
+        formatToken = <DS_TEXT>
+        {
+            return formatToken.image;
+        }
+    )?
+    { return ""; }
+}
+
+LocalDeclarationStatement LDS() :
+{ Token idToken; Expression expression; String formatDefinition; }
+{
+    <LD> idToken = <DS_ID> expression = E() formatDefinition = DSPrime()
+    {
+        return new LocalDeclarationStatement(idToken.image, expression, formatDefinition);
+    }
+}
+
+GlobalListDeclarationStatement GLDS() :
+{ Token varIdToken; Expression listExpression; }
+{
+    <LIST> varIdToken = <LS_ID> <LS_GD> listExpression = E()
+    {
+        return new GlobalListDeclarationStatement(CodePosition.createFromToken(varIdToken), varIdToken.image, listExpression);
+    }
+}
+
+LocalListDeclarationStatement LLDS() :
+{ Token varIdToken; Expression listExpression; }
+{
+    <LIST> varIdToken = <LS_ID> <LS_LD> listExpression = E()
+    {
+        return new LocalListDeclarationStatement(CodePosition.createFromToken(varIdToken), varIdToken.image, listExpression);
+    }
+}
+
+ListConcatenationStatement LCS() :
+{ Token varIdToken; Expression listExpression; }
+{
+    <LIST> varIdToken = <LS_ID> <LS_AMPERSAND> listExpression = E()
+    {
+        return new ListConcatenationStatement(CodePosition.createFromToken(varIdToken), varIdToken.image, listExpression);
+    }
+}
+
+GStatement GS() :
+{ Expression colExpr, valExpr; }
+{
+    <GS> colExpr = E() valExpr = E()
+    {
+        return new GStatement(colExpr.getCodePosition(), colExpr, valExpr);
+    }
+}
+
+JStatement JS() :
+{ Expression colExpr, rowExpr; }
+{
+    <JS> colExpr = E() rowExpr = E()
+    {
+        return new JStatement(colExpr.getCodePosition(), colExpr, rowExpr);
+    }
+}
+
+ZStatement ZS() :
+{  Expression colExpr, rowExpr; }
+{
+    <ZS> colExpr = E() rowExpr = E()
+    {
+        return new ZStatement(colExpr.getCodePosition(), colExpr, rowExpr);
+    }
+}
+
+Expression E() :
+{ Expression lhs, rhs; }
+{
+    (LOOKAHEAD(2)lhs = T8() rhs = EPrime(lhs)
+    {
+        return rhs == null ? lhs : rhs;
+    })?
+    {return null;}
+}
+
+Expression EPrime(Expression lhs) :
+{ Expression rhs; Expression ePrimeExpression; }
+{
+    (
+        (<IF_OR>|<DS_OR>) rhs = T8() ePrimeExpression = EPrime(rhs)
+        {
+            return new BinaryOperatorExpression(lhs, BinaryOperator.OR,
+                ePrimeExpression != null ? ePrimeExpression : rhs );
+        }
+    )?
+    { return null; }
+}
+
+Expression T8() :
+{ Expression lhs, rhs;}
+{
+    lhs = T7() rhs = T8Prime(lhs)
+    {return rhs == null ? lhs : rhs;}
+}
+
+Expression T8Prime(Expression lhs) :
+{ Expression rhs, t8PrimeExpression; }
+{
+    (
+        (<IF_AND>|<DS_AND>|<LS_AMPERSAND>) rhs = T7() t8PrimeExpression = T8Prime(rhs)
+        {
+            return new BinaryOperatorExpression(lhs, BinaryOperator.AND,
+                t8PrimeExpression != null ? t8PrimeExpression : rhs );
+        }
+    )?
+    { return null; }
+}
+
+Expression T7() :
+{ Expression lhs, rhs; }
+{
+    lhs = T6() rhs = T7Prime(lhs)
+    {
+        return rhs != null ? rhs : lhs;
+    }
+}
+
+Expression T7Prime(Expression lhs) :
+{ Expression rhs, t7PrimeExpression; }
+{
+    (
+        (<IF_XOR>|<DS_XOR>) rhs = T6() t7PrimeExpression = T7Prime(rhs)
+        {
+            return new BinaryOperatorExpression(lhs, BinaryOperator.XOR,
+                t7PrimeExpression != null ? t7PrimeExpression : rhs );
+        }
+    )?
+    { return null; }
+}
+
+Expression T6() :
+{ Expression lhs, rhs; }
+{
+    lhs = T5() rhs = T6Prime(lhs)
+    {
+        return rhs != null ? rhs : lhs;
+    }
+}
+
+Expression T6Prime(Expression lhs) :
+{ Expression rhs, t6PrimeExpression; }
+{
+    (
+        (<IF_EQ>|<DS_EQ>|<IF_EQ_STRICT>|<DS_EQ_STRICT>) rhs = T5() t6PrimeExpression = T6Prime(rhs)
+        {
+            return new BinaryOperatorExpression(lhs, BinaryOperator.EQ,
+                t6PrimeExpression != null ? t6PrimeExpression : rhs );
+        }
+        |
+        (<IF_NEQ>|<DS_NEQ>) rhs = T5() t6PrimeExpression = T6Prime(rhs)
+        {
+            return new BinaryOperatorExpression(lhs, BinaryOperator.NEQ,
+                t6PrimeExpression != null ? t6PrimeExpression : rhs);
+        }
+    )?
+    { return null; }
+}
+
+Expression T5() :
+{ Expression lhs, rhs; }
+{
+    lhs = T4() rhs = T5Prime(lhs)
+    {
+        return rhs != null ? rhs : lhs;
+    }
+}
+
+Expression T5Prime(Expression lhs) :
+{ Expression rhs, t5PrimeExpression; }
+{
+    (
+        (<IF_LT>|<DS_LT>) rhs = T4() t5PrimeExpression = T5Prime(rhs)
+        {
+            return new BinaryOperatorExpression(lhs, BinaryOperator.LT,
+                t5PrimeExpression != null ? t5PrimeExpression : rhs );
+        }
+        |
+        (<IF_LTE>|<DS_LTE>) rhs = T4() t5PrimeExpression = T5Prime(rhs)
+        {
+            return new BinaryOperatorExpression(lhs, BinaryOperator.LTE,
+                t5PrimeExpression != null ? t5PrimeExpression : rhs );
+        }
+        |
+        (<IF_GT>|<DS_GT>) rhs = T4() t5PrimeExpression = T5Prime(rhs)
+        {
+            return new BinaryOperatorExpression(lhs, BinaryOperator.GT,
+                t5PrimeExpression != null ? t5PrimeExpression : rhs );
+        }
+        |
+        (<IF_GTE>|<DS_GTE>) rhs = T4() t5PrimeExpression = T5Prime(rhs)
+        {
+            return new BinaryOperatorExpression(lhs, BinaryOperator.GTE,
+                t5PrimeExpression != null ? t5PrimeExpression : rhs );
+        }
+    )?
+    { return null; }
+}
+
+Expression T4() :
+{ Expression lhs, rhs; }
+{
+    lhs = T3() rhs = T4Prime(lhs)
+    {
+        return rhs != null ? rhs : lhs;
+    }
+}
+
+Expression T4Prime(Expression lhs) :
+{ Expression rhs, t4PrimeExpression; }
+{
+    (
+        <IF_PLUS>|<DS_PLUS>|<AS_PLUS> rhs = T3() t4PrimeExpression = T4Prime(rhs)
+        {
+            return new BinaryOperatorExpression(lhs, BinaryOperator.PLUS,
+                t4PrimeExpression != null ? t4PrimeExpression : rhs );
+        }
+        |
+        <IF_MINUS>|<DS_MINUS>|<AS_MINUS> rhs = T3() t4PrimeExpression = T4Prime(rhs)
+        {
+            return new BinaryOperatorExpression(lhs, BinaryOperator.MINUS,
+                t4PrimeExpression != null ? t4PrimeExpression : rhs );
+        }
+        |
+        (<DS_STRING_CONCAT>|<AS_STRING_CONCAT>) rhs = T3() t4PrimeExpression = T4Prime(rhs)
+        {
+            return new BinaryOperatorExpression(lhs, BinaryOperator.STRING_CONCAT, t4PrimeExpression != null ? t4PrimeExpression : rhs);
+        }
+    )?
+    { return null; }
+}
+
+Expression T3() :
+{ Expression lhs, rhs; }
+{
+    lhs = T2() rhs = T3Prime(lhs)
+    {
+        return rhs != null ? rhs : lhs;
+    }
+}
+
+Expression T3Prime(Expression lhs) :
+{ Expression rhs, t3PrimeExpression; }
+{
+    (
+        <IF_TIMES><DS_TIMES> rhs = T2() t3PrimeExpression = T3Prime(rhs)
+        {
+               return new BinaryOperatorExpression(lhs, BinaryOperator.TIMES,
+                t3PrimeExpression != null ? t3PrimeExpression : rhs );
+        }
+        |
+        <IF_DIV>|<DS_DIV> rhs = T2() t3PrimeExpression = T3Prime(rhs)
+        {
+               return new BinaryOperatorExpression(lhs, BinaryOperator.DIV,
+                t3PrimeExpression != null ? t3PrimeExpression : rhs );
+        }
+    )?
+    { return null; }
+}
+
+Expression T2() :
+{ Expression f; }
+{
+    (
+        f = F()
+    )
+    {
+        return f;
+    }
+    |
+    (
+        (<IF_NOT>|<DS_NOT>) f = F()
+    )
+    {
+        return new UnaryOperatorExpression(UnaryOperator.NOT, f);
+    }
+}
+
+Expression F() :
+{
+    Token valueToken; ExpressionList expressionList;
+    // In case of array-like list expressions like dbklappe[1,5] provide
+    // for integer valued index expressions
+    Expression startIndexExpr = null, endIndexExpr = null;
+}
+{
+    (valueToken = <IF_NUM> | valueToken = <DS_NUM> | valueToken = <AS_NUM> | valueToken = <MS_NUM> |
+        valueToken = <LS_BRACES_NUM> | valueToken = <SS_NUM> | valueToken = <HC_NUM> )
+    {
+        return new NumExpression(CodePosition.createFromToken(valueToken), Integer.parseInt(valueToken.image));
+    }
+    |
+    (valueToken = <IF_DEC> | valueToken = <DS_DEC> | valueToken = <AS_DEC> | valueToken = <MS_DEC> | valueToken = <LS_BRACES_DEC>)
+    {
+        return new DecimalExpression(CodePosition.createFromToken(valueToken), Double.parseDouble(valueToken.image));
+    }
+    |
+    (valueToken = <IF_TEXT> | valueToken = <DS_TEXT> | valueToken = <AS_TEXT> | valueToken = <MS_TEXT> | valueToken = <LS_BRACES_TEXT>)
+    {
+        return new TextExpression(CodePosition.createFromToken(valueToken), valueToken.image);
+    }
+    |
+    (<SS_SHELLVAR>|<AS_SHELLVAR>|<IF_SHELLVAR>) (<SS_LPAREN>|<AS_LPAREN>|<IF_LPAREN>)
+        (<SS_QUOTE>valueToken = <SS_SHELLVAR_ID><SS_QUOTE> | valueToken = <AS_TEXT> | valueToken = <IF_TEXT> )
+        (<SS_RPAREN>|<AS_RPAREN>|<IF_RPAREN>)
+    {
+        // ShellVariable evaluations in assignment statements #=
+        // deliver the variableId with quotes. They have to be truncated
+        // before storage
+        return new ShellVariableExpression(CodePosition.createFromToken(valueToken), valueToken.image.replaceAll("\"", ""));
+    }
+    |
+    // implements clou standard function listlen("varname")
+    LOOKAHEAD(2) (valueToken = <IF_ID>) <IF_LPAREN> expressionList = EL() <IF_RPAREN>
+    {
+        return new ClouFunctionCall(CodePosition.createFromToken(valueToken), valueToken.image, expressionList);
+    }
+    |
+    (valueToken = <IF_ID> | valueToken = <DS_ID> | valueToken = <SS_ID> | valueToken = <AS_ID> | valueToken = <MS_ID> |
+        valueToken = <LS_ID> | valueToken = <LS_BRACES_ID> | valueToken = <HC_ID> )
+    {
+        return new IdExpression(CodePosition.createFromToken(valueToken), valueToken.image);
+    }
+    |
+    LOOKAHEAD(2)<LS_LBRACE> <LS_BRACES_RBRACE>
+    {
+        return null;
+    }
+    |
+    <LS_LBRACE> expressionList = EL() <LS_BRACES_RBRACE>
+    {
+        return expressionList;
+    }
+}
+
+FixedText FX() :
+{ Token valueToken; }
+{
+    valueToken = <FIXED_TEXT>
+    {
+        return FixedText.create(CodePosition.createFromToken(valueToken), valueToken.image);
+    }
+}
+
+

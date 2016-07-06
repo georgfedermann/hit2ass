@@ -1,0 +1,31 @@
+This grammar is reverse engineered from actual Hit/Clou text components and from the manual for CLOU 5.1
+The goal is to create a ambiguity-free context-free grammar to create the parser from.
+
+terminals_start
+#
+#?
+/J
+/N
+$
+true
+false
+terminals_end
+
+productions_start
+CB -> # CBE $
+CBE -> S CBE
+CBE -> FX CBE
+CBE ->
+
+S -> CS
+
+CS -> #? E CSJ CSN #
+CSJ -> /J CBE
+CSJ ->
+CSN -> /N CBE
+CSN ->
+
+E -> true
+E -> false
+
+productions_end

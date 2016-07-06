@@ -33,7 +33,8 @@ public class ClouBausteinMergerVisitor extends AstItemVisitorAdapter {
             // path to the HIT / CLOU Baustein library.
             String[] bausteinCoordinates = includeBausteinStatement.getPathToBaustein().replaceAll("\"", "").split("/");
             String bausteinName = bausteinCoordinates[bausteinCoordinates.length - 1];
-            ClouBaustein baustein = new HitAssAstParser(HitAssTools.getClouBausteinAsInputStream(bausteinName)).CB();
+            ClouBaustein baustein = new HitAssAstParser(
+                    HitAssTools.getClouBausteinAsInputStream(bausteinName), System.getProperty("hit2ass.clou.encoding")).CB();
             baustein.accept(new FixedTextMerger());
             includeBausteinStatement.setContent(baustein.getClouBausteinElement());
         } catch (Throwable e) {

@@ -1,9 +1,8 @@
 package org.poormanscastle.products.hit2ass.parser.javacc;
 
+import org.junit.Test;
 import org.poormanscastle.products.hit2ass.TestUtils;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouBaustein;
-
-import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -18,7 +17,7 @@ public class RudimentaryParserTests {
 
     @Test
     public void testEmptyClouBaustein() throws Exception {
-        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("emptyClou"));
+        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("emptyClou"), "UTF-8");
         parser.CB();
 //        ClouBaustein baustein = parser.CB();
         //    assertNotNull(baustein);
@@ -26,7 +25,7 @@ public class RudimentaryParserTests {
 
     @Test
     public void testComments() throws Exception {
-        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("Comments"));
+        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("Comments"), "UTF-8");
         parser.CB();
 //        ClouBaustein baustein = parser.CB();
         //  assertNotNull(baustein);

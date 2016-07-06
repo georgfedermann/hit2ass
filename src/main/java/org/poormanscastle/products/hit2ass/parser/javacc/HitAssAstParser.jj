@@ -14,7 +14,7 @@ options{
     OTHER_AMBIGUITY_CHECK = 1;
     SANITY_CHECK = true;
     STATIC = false; /* changed */
-    UNICODE_INPUT = true; /* changed */
+    UNICODE_INPUT = false; /* not changed */
     USER_CHAR_STREAM = false;
     USER_TOKEN_MANAGER = false;
 }
@@ -29,7 +29,9 @@ import org.apache.log4j.Logger;
 public class HitAssAstParser{
     private final static Logger logger = Logger.getLogger(HitAssAstParser.class);
     public static void main(String[] args){
-        HitAssAstParser parser = new HitAssAstParser(System.in);
+        logger.info(StringUtils.join("Running parser with encoding hit2ass.clou.encoding=",
+            System.getProperty("hit2ass.clou.encoding")));
+        HitAssAstParser parser = new HitAssAstParser(System.in, System.getProperty("hit2ass.clou.encoding"));
     }
 }
 PARSER_END(HitAssAstParser)

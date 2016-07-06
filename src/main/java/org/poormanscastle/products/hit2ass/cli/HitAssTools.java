@@ -1,5 +1,7 @@
 package org.poormanscastle.products.hit2ass.cli;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouBaustein;
 import org.poormanscastle.products.hit2ass.parser.javacc.HitAssAstParser;
 import org.poormanscastle.products.hit2ass.parser.javacc.ParseException;
@@ -10,8 +12,6 @@ import org.poormanscastle.products.hit2ass.renderer.xmlcreator.XmlCreator;
 import org.poormanscastle.products.hit2ass.renderer.xmlcreator.XmlDataMerger;
 import org.poormanscastle.products.hit2ass.transformer.ClouBausteinMergerVisitor;
 import org.poormanscastle.products.hit2ass.transformer.FixedTextMerger;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -63,7 +63,9 @@ public final class HitAssTools {
 
     private static String createDocDesignWorkspace() throws IOException {
         try {
-            ClouBaustein baustein = new HitAssAstParser(System.in, "UTF-8").CB();
+            logger.info(StringUtils.join("Running parser with encoding hit2ass.clou.encoding=",
+                    System.getProperty("hit2ass.clou.encoding")));
+            ClouBaustein baustein = new HitAssAstParser(System.in, System.getProperty("hit2ass.clou.encoding")).CB();
             baustein.accept(new ClouBausteinMergerVisitor());
             baustein.accept(new FixedTextMerger());
             IRTransformer irTransformer = new IRTransformer();
@@ -77,7 +79,9 @@ public final class HitAssTools {
     }
 
     private static String createXmlTemplate() throws IOException, ParseException {
-        ClouBaustein clouBaustein = new HitAssAstParser(System.in, "UTF-8").CB();
+        logger.info(StringUtils.join("Running parser with encoding hit2ass.clou.encoding=",
+                System.getProperty("hit2ass.clou.encoding")));
+        ClouBaustein clouBaustein = new HitAssAstParser(System.in, System.getProperty("hit2ass.clou.encoding")).CB();
         clouBaustein.accept(new ClouBausteinMergerVisitor());
         clouBaustein.accept(new FixedTextMerger());
         XmlCreator xmlTemplateCreator = new XmlCreator();
@@ -86,7 +90,9 @@ public final class HitAssTools {
     }
 
     private static String createAstVisualization() throws IOException, ParseException {
-        ClouBaustein clouBaustein = new HitAssAstParser(System.in, "UTF-8").CB();
+        logger.info(StringUtils.join("Running parser with encoding hit2ass.clou.encoding=",
+                System.getProperty("hit2ass.clou.encoding")));
+        ClouBaustein clouBaustein = new HitAssAstParser(System.in, System.getProperty("hit2ass.clou.encoding")).CB();
         clouBaustein.accept(new ClouBausteinMergerVisitor());
         clouBaustein.accept(new FixedTextMerger());
         PrettyPrintVisitor prettyPrinter = new PrettyPrintVisitor();
@@ -114,6 +120,7 @@ public final class HitAssTools {
     }
 
     private static void printHelp() {
+        logger.info(StringUtils.join("Printing help and version information. Configured encoding is ", System.getProperty("hit2ass.clou.encoding"), "."));
         printVersion();
         System.out.println("Usage: hitAssTools ");
         System.out.println("  Default action is to read data from standard input stream, process it, and write data to standard output stream.");
@@ -129,7 +136,7 @@ public final class HitAssTools {
     }
 
     private static void printVersion() {
-        System.out.println("HitAssTools v0.1 of 2016-04-06, by Poor Man's Castle.");
+        System.out.println("HitAssTools v0.1 of 2016-04-06, brought to you by Poor Man's Castle.");
     }
 
 }

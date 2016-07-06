@@ -1,10 +1,10 @@
 package org.poormanscastle.products.hit2ass.transformer;
 
+import org.apache.commons.lang3.StringUtils;
+import org.junit.Test;
 import org.poormanscastle.products.hit2ass.TestUtils;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouBaustein;
 import org.poormanscastle.products.hit2ass.parser.javacc.HitAssAstParser;
-import org.apache.commons.lang3.StringUtils;
-import org.junit.Test;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.TestCase.assertEquals;
@@ -110,7 +110,7 @@ public class FixedTextMergerTest {
 
     @Test
     public void testSwitch() throws Exception {
-        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("Switch"));
+        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("Switch"), "UTF-8");
         baustein = parser.CB();
         baustein.accept(merger);
         assertNotNull(baustein);

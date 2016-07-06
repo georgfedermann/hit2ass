@@ -9,7 +9,9 @@ import org.apache.log4j.Logger;
 public class HitAssAstParser implements HitAssAstParserConstants {
     private final static Logger logger = Logger.getLogger(HitAssAstParser.class);
     public static void main(String[] args){
-        HitAssAstParser parser = new HitAssAstParser(System.in);
+        logger.info(StringUtils.join("Running parser with encoding hit2ass.clou.encoding=",
+            System.getProperty("hit2ass.clou.encoding")));
+        HitAssAstParser parser = new HitAssAstParser(System.in, System.getProperty("hit2ass.clou.encoding"));
     }
 
 /*  Productions */
@@ -1423,14 +1425,6 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
     finally { jj_save(5, xla); }
   }
 
-  private boolean jj_3R_2()
- {
-    if (jj_scan_token(LIST)) return true;
-    if (jj_scan_token(LS_ID)) return true;
-    if (jj_scan_token(LS_LD)) return true;
-    return false;
-  }
-
   private boolean jj_3R_19()
  {
     Token xsp;
@@ -2010,6 +2004,14 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
     }
     }
     }
+    return false;
+  }
+
+  private boolean jj_3R_2()
+ {
+    if (jj_scan_token(LIST)) return true;
+    if (jj_scan_token(LS_ID)) return true;
+    if (jj_scan_token(LS_LD)) return true;
     return false;
   }
 

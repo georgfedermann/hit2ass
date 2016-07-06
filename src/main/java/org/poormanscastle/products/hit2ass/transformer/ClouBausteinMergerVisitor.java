@@ -26,7 +26,7 @@ public class ClouBausteinMergerVisitor extends AstItemVisitorAdapter {
     public void visitIncludeBausteinStatement(IncludeBausteinStatement includeBausteinStatement) {
         try {
             if (logger.isInfoEnabled()) {
-                logger.info(StringUtils.join("Found CLOU Baustein ", includeBausteinStatement.getPathToBaustein()));
+                logger.info(StringUtils.join("Found CLOU Baustein ", includeBausteinStatement.getPathToBaustein()));
             }
             // the following two lines deal with the issue that legacy Bausteins refer to child Bausteins with a
             // lengthy path which should not be necessary in the new system, where the system is configured with the

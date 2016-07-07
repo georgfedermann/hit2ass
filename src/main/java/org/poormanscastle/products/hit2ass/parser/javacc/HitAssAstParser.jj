@@ -312,13 +312,14 @@ TOKEN : {
     < AS_QUOTE : "\"" > |
     < AS_COLON : ":" > |
     < AS_LPAREN : "(" > |
-    < AS_RPAREN : ")" > : TXT_MODE |
+    < AS_RPAREN : ")" > : TXT_MODE |    // why is this again switching to text mode?
     < AS_LBRACKET : "[" > |
-    < AS_RBRACKET : "]" > : TXT_MODE |
+    < AS_RBRACKET : "]" > : TXT_MODE |  // why is this again switching to text mode?
     < AS_NUM : (["0"-"9"])+ > |
     < AS_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
     < AS_SHELLVAR_ID : (["A"-"Z"])+ > |
-    < AS_ID : [ "_", "[", "]", ",", "a"-"z", "A"-"Z"](["_", "[", "]", ",", "a"-"z", "A"-"Z", "0"-"9", "\u00a0", "\ufffd", "\u00d6", "\u00e4"])* > |
+    < AS_ID : [ "_", "[", "]", ",", "a"-"z", "A"-"Z"](["_", "[", "]", ",", "a"-"z", "A"-"Z", "0"-"9",
+        "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc", "\u00a0" ])* > |
     < AS_TEXT : "\""
         (
             "\\" ~[]
@@ -988,13 +989,13 @@ Expression T3Prime(Expression lhs) :
 { Expression rhs, t3PrimeExpression; }
 {
     (
-        <IF_TIMES><DS_TIMES> rhs = T2() t3PrimeExpression = T3Prime(rhs)
+        <IF_TIMES>|<DS_TIMES>|<AS_TIMES> rhs = T2() t3PrimeExpression = T3Prime(rhs)
         {
                return new BinaryOperatorExpression(lhs, BinaryOperator.TIMES,
                 t3PrimeExpression != null ? t3PrimeExpression : rhs );
         }
         |
-        <IF_DIV>|<DS_DIV> rhs = T2() t3PrimeExpression = T3Prime(rhs)
+        <IF_DIV>|<DS_DIV>|<AS_DIV> rhs = T2() t3PrimeExpression = T3Prime(rhs)
         {
                return new BinaryOperatorExpression(lhs, BinaryOperator.DIV,
                 t3PrimeExpression != null ? t3PrimeExpression : rhs );
@@ -1056,7 +1057,7 @@ Expression F() :
     }
     |
     // implements clou standard function listlen("varname")
-    LOOKAHEAD(2) (valueToken = <IF_ID>) <IF_LPAREN> expressionList = EL() <IF_RPAREN>
+    LOOKAHEAD(2) (valueToken = <IF_ID>| valueToken = <AS_ID>) (<IF_LPAREN>|<AS_LPAREN>) expressionList = EL() (<IF_RPAREN>|<AS_RPAREN>)
     {
         return new ClouFunctionCall(CodePosition.createFromToken(valueToken), valueToken.image, expressionList);
     }

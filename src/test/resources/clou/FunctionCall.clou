@@ -7,16 +7,21 @@
 #L quartal1 D { "Jänner", "Februar", "März" }
 
 #= firstName "John"
+#D listschleif 0
+#D durchlaufzähler 0
+#D list df anz 5
+
+#= listschleif 3 + 20 / 5 - 2
+
+#? durchlaufzähler <= listschleif - 2:
+    /J
+    #^"RETURN"
+#
 
 #? listlen("quartal1") > 3:
    /J
    Hier ist etwas verkehrt konfiguriert.
 #
-
-#D listschleif 0
-#D list df anz 5
-
-#= listschleif 3 + 20 / 5 - 2
 
 
 #*  And now, using list IDs with the weird protected blank character, beloved by some HIT / CLOU implementers.  #

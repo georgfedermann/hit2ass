@@ -103,6 +103,7 @@ TOKEN : {
     < ELSE : "/N" > : TXT_MODE |
     < ENDIF : "#" > : TXT_MODE |            //
     < WS : "#S" > : COMMAND_MODE_IF |       // While loop statement
+    < FS : "#W" > : COMMAND_MODE_IF |       // FOR loop, fixed number of repetitions
     < SS : "#C" > : COMMAND_MODE_SS |       // Switch statement
     < CA : "/"(((["0"-"9"])+)|("\""(["0"-"9","a"-"z", "A"-"Z"])+"\"")?)":" > : TXT_MODE | // < CA : "/"(["0"-"9"])+|("\""(["0"-"9","a"-"z", "A"-"Z"])+"\"")":" >
     < MS : "#$" > : COMMAND_MODE_MS |       // execute Macro
@@ -958,13 +959,13 @@ Expression T4Prime(Expression lhs) :
 { Expression rhs, t4PrimeExpression; }
 {
     (
-        <IF_PLUS>|<DS_PLUS>|<AS_PLUS> rhs = T3() t4PrimeExpression = T4Prime(rhs)
+        (<IF_PLUS>|<DS_PLUS>|<AS_PLUS>) rhs = T3() t4PrimeExpression = T4Prime(rhs)
         {
             return new BinaryOperatorExpression(lhs, BinaryOperator.PLUS,
                 t4PrimeExpression != null ? t4PrimeExpression : rhs );
         }
         |
-        <IF_MINUS>|<DS_MINUS>|<AS_MINUS> rhs = T3() t4PrimeExpression = T4Prime(rhs)
+        (<IF_MINUS>|<DS_MINUS>|<AS_MINUS>) rhs = T3() t4PrimeExpression = T4Prime(rhs)
         {
             return new BinaryOperatorExpression(lhs, BinaryOperator.MINUS,
                 t4PrimeExpression != null ? t4PrimeExpression : rhs );

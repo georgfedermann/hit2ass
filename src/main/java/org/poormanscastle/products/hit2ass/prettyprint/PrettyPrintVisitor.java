@@ -1,5 +1,6 @@
 package org.poormanscastle.products.hit2ass.prettyprint;
 
+import org.apache.commons.lang3.StringUtils;
 import org.poormanscastle.products.hit2ass.ast.domain.AssignmentStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.AstItemVisitorAdapter;
 import org.poormanscastle.products.hit2ass.ast.domain.BinaryOperatorExpression;
@@ -10,7 +11,7 @@ import org.poormanscastle.products.hit2ass.ast.domain.ClouFunctionCall;
 import org.poormanscastle.products.hit2ass.ast.domain.ConditionalStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.DecimalExpression;
 import org.poormanscastle.products.hit2ass.ast.domain.DynamicValue;
-import org.poormanscastle.products.hit2ass.ast.domain.FixedTextImpl;
+import org.poormanscastle.products.hit2ass.ast.domain.FixedText;
 import org.poormanscastle.products.hit2ass.ast.domain.GStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.GlobalDeclarationStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.GlobalListDeclarationStatement;
@@ -42,7 +43,6 @@ import org.poormanscastle.products.hit2ass.ast.domain.UnaryOperatorExpression;
 import org.poormanscastle.products.hit2ass.ast.domain.WhileStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.WriteStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.ZStatement;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -122,13 +122,13 @@ public class PrettyPrintVisitor extends AstItemVisitorAdapter {
 
 
     @Override
-    public void visitFixedText(FixedTextImpl fixedText) {
+    public void visitFixedText(FixedText fixedText) {
         addItem("FX", fixedText.getText());
         addBufferLine();
     }
 
     @Override
-    public void leaveFixedText(FixedTextImpl fixedText) {
+    public void leaveFixedText(FixedText fixedText) {
         itemStack.pop();
     }
 

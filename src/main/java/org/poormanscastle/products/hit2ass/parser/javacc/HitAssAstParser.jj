@@ -19,6 +19,17 @@ options{
     USER_TOKEN_MANAGER = false;
 }
 
+/*
+  ISO8859_1 sequences for German special characters:
+  ä "\u00e4"
+  ö "\u00f6"
+  ü "\u00fc"
+  Ä "\u00c4"
+  Ö "\u00d6"
+  Ü "\u00dc"
+  ß "\u00df"
+*/
+
 PARSER_BEGIN(HitAssAstParser)
 package org.poormanscastle.products.hit2ass.parser.javacc;
 
@@ -231,7 +242,8 @@ TOKEN : {
     < IF_RBRACKET : "]" > |
     < IF_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
     < IF_SHELLVAR_ID : (["A"-"Z"])+ > |
-    < IF_ID : [ "_", "[", "]", ",", "a"-"z", "A"-"Z"](["_", "[", "]", ",", "a"-"z", "A"-"Z", "0"-"9"])* > |
+    < IF_ID : [ "_", "[", "]", ",", "a"-"z", "A"-"Z"](["_", "[", "]", ",", "a"-"z", "A"-"Z", "0"-"9",
+        "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc" ])* > |
     < IF_TEXT : "\""
         (
             "\\" ~[]
@@ -304,7 +316,7 @@ TOKEN : {
     < AS_NUM : (["0"-"9"])+ > |
     < AS_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
     < AS_SHELLVAR_ID : (["A"-"Z"])+ > |
-    < AS_ID : [ "_", "[", "]", ",", "a"-"z", "A"-"Z"](["_", "[", "]", ",", "a"-"z", "A"-"Z", "0"-"9", "\u00a0"])* > |
+    < AS_ID : [ "_", "[", "]", ",", "a"-"z", "A"-"Z"](["_", "[", "]", ",", "a"-"z", "A"-"Z", "0"-"9", "\u00a0", "\ufffd", "\u00d6", "\u00e4"])* > |
     < AS_TEXT : "\""
         (
             "\\" ~[]

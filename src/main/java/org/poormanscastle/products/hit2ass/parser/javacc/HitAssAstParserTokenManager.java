@@ -2123,6 +2123,9 @@ private int jjStartNfaWithStates_12(int pos, int kind, int state)
    catch(java.io.IOException e) { return pos + 1; }
    return jjMoveNfa_12(state, pos + 1);
 }
+static final long[] jjbitVec2 = {
+   0x0L, 0x0L, 0x0L, 0x1040001090400010L
+};
 private int jjMoveNfa_12(int startState, int curPos)
 {
    int startsAt = 0;
@@ -2329,6 +2332,14 @@ private int jjMoveNfa_12(int startState, int curPos)
                case 7:
                   if ((jjbitVec1[i2] & l2) != 0L)
                      { jjCheckNAddStates(22, 24); }
+                  break;
+               case 16:
+               case 4:
+                  if ((jjbitVec2[i2] & l2) == 0L)
+                     break;
+                  if (kind > 130)
+                     kind = 130;
+                  { jjCheckNAdd(4); }
                   break;
                default : break;
             }
@@ -3403,13 +3414,13 @@ private int jjStartNfaWithStates_2(int pos, int kind, int state)
    catch(java.io.IOException e) { return pos + 1; }
    return jjMoveNfa_2(state, pos + 1);
 }
-static final long[] jjbitVec2 = {
+static final long[] jjbitVec3 = {
    0x0L, 0x0L, 0x0L, 0x1000400000L
 };
-static final long[] jjbitVec3 = {
+static final long[] jjbitVec4 = {
    0x0L, 0x0L, 0x0L, 0x2000000000000000L
 };
-static final long[] jjbitVec4 = {
+static final long[] jjbitVec5 = {
    0xfffffffffffffffeL, 0xffffffffffffffffL, 0xffffffffffffffffL, 0xffffffffffffffffL
 };
 private int jjMoveNfa_2(int startState, int curPos)
@@ -3583,11 +3594,11 @@ private int jjMoveNfa_2(int startState, int curPos)
                case 14:
                case 7:
                case 6:
-                  if (jjCanMove_3(hiByte, i1, i2, l1, l2))
+                  if (jjCanMove_4(hiByte, i1, i2, l1, l2))
                      { jjCheckNAddStates(9, 11); }
                   break;
                case 3:
-                  if (!jjCanMove_2(hiByte, i1, i2, l1, l2))
+                  if (!jjCanMove_3(hiByte, i1, i2, l1, l2))
                      break;
                   if (kind > 158)
                      kind = 158;
@@ -4076,6 +4087,9 @@ private int jjStartNfaWithStates_4(int pos, int kind, int state)
    catch(java.io.IOException e) { return pos + 1; }
    return jjMoveNfa_4(state, pos + 1);
 }
+static final long[] jjbitVec7 = {
+   0x0L, 0x0L, 0x100000000L, 0x1000400000L
+};
 private int jjMoveNfa_4(int startState, int curPos)
 {
    int startsAt = 0;
@@ -4283,12 +4297,12 @@ private int jjMoveNfa_4(int startState, int curPos)
                case 15:
                case 8:
                case 7:
-                  if (jjCanMove_3(hiByte, i1, i2, l1, l2))
+                  if (jjCanMove_4(hiByte, i1, i2, l1, l2))
                      { jjCheckNAddStates(22, 24); }
                   break;
                case 16:
                case 4:
-                  if (!jjCanMove_0(hiByte, i1, i2, l1, l2))
+                  if (!jjCanMove_5(hiByte, i1, i2, l1, l2))
                      break;
                   if (kind > 191)
                      kind = 191;
@@ -4341,8 +4355,6 @@ private static final boolean jjCanMove_2(int hiByte, int i1, int i2, long l1, lo
    {
       case 0:
          return ((jjbitVec2[i2] & l2) != 0L);
-      case 255:
-         return ((jjbitVec3[i2] & l2) != 0L);
       default :
          return false;
    }
@@ -4352,10 +4364,34 @@ private static final boolean jjCanMove_3(int hiByte, int i1, int i2, long l1, lo
    switch(hiByte)
    {
       case 0:
+         return ((jjbitVec3[i2] & l2) != 0L);
+      case 255:
+         return ((jjbitVec4[i2] & l2) != 0L);
+      default :
+         return false;
+   }
+}
+private static final boolean jjCanMove_4(int hiByte, int i1, int i2, long l1, long l2)
+{
+   switch(hiByte)
+   {
+      case 0:
          return ((jjbitVec1[i2] & l2) != 0L);
       default :
-         if ((jjbitVec4[i1] & l1) != 0L)
+         if ((jjbitVec5[i1] & l1) != 0L)
             return true;
+         return false;
+   }
+}
+private static final boolean jjCanMove_5(int hiByte, int i1, int i2, long l1, long l2)
+{
+   switch(hiByte)
+   {
+      case 0:
+         return ((jjbitVec7[i2] & l2) != 0L);
+      case 255:
+         return ((jjbitVec4[i2] & l2) != 0L);
+      default :
          return false;
    }
 }

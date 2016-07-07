@@ -6,15 +6,15 @@ package org.poormanscastle.products.hit2ass.ast.domain;
 public abstract class AstItemVisitorAdapter implements AstItemVisitor {
 
     private boolean isAstValid = true;
-    
+
     private boolean defaultVisitNodes = true;
 
     public AstItemVisitorAdapter(boolean defaultVisitNodes) {
         this.defaultVisitNodes = defaultVisitNodes;
     }
 
-    public AstItemVisitorAdapter(){
-
+    public AstItemVisitorAdapter() {
+        this(true);
     }
 
     @Override
@@ -47,7 +47,7 @@ public abstract class AstItemVisitorAdapter implements AstItemVisitor {
     }
 
     @Override
-    public void leaveFixedText(FixedTextImpl fixedText) {
+    public void leaveFixedText(FixedText fixedText) {
 
     }
 
@@ -92,7 +92,7 @@ public abstract class AstItemVisitorAdapter implements AstItemVisitor {
     }
 
     @Override
-    public boolean proceedWithFixedText(FixedTextImpl fixedText) {
+    public boolean proceedWithFixedText(FixedText fixedText) {
         return this.defaultVisitNodes;
     }
 
@@ -137,7 +137,7 @@ public abstract class AstItemVisitorAdapter implements AstItemVisitor {
     }
 
     @Override
-    public void visitFixedText(FixedTextImpl fixedText) {
+    public void visitFixedText(FixedText fixedText) {
 
     }
 

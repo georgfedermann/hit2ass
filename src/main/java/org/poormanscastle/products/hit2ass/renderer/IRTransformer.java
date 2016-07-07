@@ -1,10 +1,15 @@
 package org.poormanscastle.products.hit2ass.renderer;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+import org.apache.velocity.app.Velocity;
+import org.apache.velocity.runtime.RuntimeConstants;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.poormanscastle.products.hit2ass.ast.domain.AstItemVisitorAdapter;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouBausteinImpl;
 import org.poormanscastle.products.hit2ass.ast.domain.ConditionalStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.DynamicValue;
-import org.poormanscastle.products.hit2ass.ast.domain.FixedTextImpl;
+import org.poormanscastle.products.hit2ass.ast.domain.FixedText;
 import org.poormanscastle.products.hit2ass.ast.domain.GlobalDeclarationStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.HitCommandStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.IncludeBausteinStatement;
@@ -20,11 +25,6 @@ import org.poormanscastle.products.hit2ass.renderer.domain.IfThenParagraph;
 import org.poormanscastle.products.hit2ass.renderer.domain.Paragraph;
 import org.poormanscastle.products.hit2ass.renderer.domain.Text;
 import org.poormanscastle.products.hit2ass.renderer.domain.Workspace;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
-import org.apache.velocity.app.Velocity;
-import org.apache.velocity.runtime.RuntimeConstants;
-import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 import java.util.Stack;
 
@@ -149,7 +149,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     }
 
     @Override
-    public void visitFixedText(FixedTextImpl fixedText) {
+    public void visitFixedText(FixedText fixedText) {
         containerStack.peek().addContent(new Text("text", fixedText.getText()));
     }
 

@@ -33,11 +33,11 @@ public interface AstItemVisitor {
 
     void leaveLastClouBausteinElementList(LastClouBausteinElementList lastClouBausteinElementList);
 
-    boolean proceedWithFixedText(FixedTextImpl fixedText);
+    boolean proceedWithFixedText(FixedText fixedText);
 
-    void visitFixedText(FixedTextImpl fixedText);
+    void visitFixedText(FixedText fixedText);
 
-    void leaveFixedText(FixedTextImpl fixedText);
+    void leaveFixedText(FixedText fixedText);
 
     boolean proceedWithConditionalStatement(ConditionalStatement conditionalStatement);
 

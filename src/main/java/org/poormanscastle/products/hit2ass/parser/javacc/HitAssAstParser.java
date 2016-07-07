@@ -1478,26 +1478,6 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
     finally { jj_save(5, xla); }
   }
 
-  private boolean jj_3R_40()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_scan_token(128)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(157)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(189)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(102)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(216)) return true;
-    }
-    }
-    }
-    }
-    return false;
-  }
-
   private boolean jj_3R_7()
  {
     Token xsp;
@@ -2081,6 +2061,26 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
     if (jj_scan_token(139)) {
     jj_scanpos = xsp;
     if (jj_scan_token(197)) return true;
+    }
+    }
+    return false;
+  }
+
+  private boolean jj_3R_40()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(128)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(157)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(189)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(102)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(216)) return true;
+    }
+    }
     }
     }
     return false;

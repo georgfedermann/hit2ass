@@ -1,0 +1,28 @@
+#
+#*  This CLOU component trains the system to process function calls.    #
+
+    Gleichzeitig ersuchen wir Sie, zeitnah tätig zu werden.
+
+#D firstName "James"
+#L quartal1 D { "Jänner", "Februar", "März" }
+
+#= firstName "John"
+
+#? listlen("quartal1") > 3:
+   /J
+   Hier ist etwas verkehrt konfiguriert.
+#
+
+#D listschleif 0
+#D list df anz 5
+
+
+#*  And now, using list IDs with the weird protected blank character, beloved by some HIT / CLOU implementers.  #
+#L l vombis D { "March", "August" }
+#? listlen("l vombis") <> 2:
+   /J
+   #= listschleif listlen("l vombis") / list df anz
+   Hier ist etwas verkehrt konfiguriert.
+#
+
+And so it ends.

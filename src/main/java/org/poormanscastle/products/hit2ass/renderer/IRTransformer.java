@@ -1,10 +1,12 @@
 package org.poormanscastle.products.hit2ass.renderer;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
+import org.poormanscastle.products.hit2ass.ast.domain.AssignmentStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.AstItemVisitorAdapter;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouBausteinImpl;
 import org.poormanscastle.products.hit2ass.ast.domain.ConditionalStatement;
@@ -70,7 +72,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     @Override
     public boolean proceedWithConditionalStatement(ConditionalStatement conditionalStatement) {
         IfThenElseParagraph ifParagraph = new IfThenElseParagraph(StringUtils.join(
-                "IF-", conditionalStatement.getCondition().toXPathString()), conditionalStatement.getCondition());
+                "IF-", StringEscapeUtils.escapeXml10(conditionalStatement.getCondition().toXPathString())), conditionalStatement.getCondition());
         containerStack.peek().addContent(ifParagraph);
 
         if (conditionalStatement.getThenElement() != null) {
@@ -131,9 +133,18 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     @Override
     public void visitDynamicValue(DynamicValue dynamicValue) {
         containerStack.peek().addContent(new DynamicContentReference(
-                StringUtils.join("Assignment: ", dynamicValue.getName()),
+                StringUtils.join("Assign from Userdata XML: ", dynamicValue.getName()),
                 StringUtils.join("var:write('", dynamicValue.getName(),
                         "', /UserData/payload/line[@lineNr = var:read('hit2ass_xml_sequence')]) | var:write('hit2ass_xml_sequence', var:read('hit2ass_xml_sequence') + 1)")));
+    }
+
+    @Override
+    public void visitAssignmentStatement(AssignmentStatement assignmentStatement) {
+        containerStack.peek().addContent(new DynamicContentReference(
+                StringUtils.join("Assignment: ", assignmentStatement.getId()),
+                StringUtils.join("var:write('", assignmentStatement.getId(),
+                        "', ", assignmentStatement.getExpression().toXPathString(), ")")
+        ));
     }
 
     @Override

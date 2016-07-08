@@ -47,6 +47,8 @@ public interface Expression<T> extends AstItem {
     /**
      * I vote for deletion of this method. It does make no sense whatsoever in the context
      * of the HIT/CLOU2ASS transformer.
+     * The decision was made against deleting this method because it is used by PrettyPrintVisitor
+     * for static Expressions (like NumExpression, TextExpression, etc.)
      *
      * @return the value which the AST interpreter parked here before for later retrieval
      */
@@ -55,6 +57,8 @@ public interface Expression<T> extends AstItem {
     /**
      * I vote for deletion of this method. It does make no sense whatsoever in the context
      * of the HIT/CLOU2ASS transformer.
+     * The decision was made against deleting this method because it is used by PrettyPrintVisitor
+     * for static Expressions (like NumExpression, TextExpression, etc.)
      */
     void setValue(T value);
 

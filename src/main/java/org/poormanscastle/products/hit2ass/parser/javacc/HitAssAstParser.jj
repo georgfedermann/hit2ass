@@ -14,10 +14,22 @@ options{
     OTHER_AMBIGUITY_CHECK = 1;
     SANITY_CHECK = true;
     STATIC = false; /* changed */
-    UNICODE_INPUT = true; /* changed */
+    UNICODE_INPUT = false; /* not changed */
     USER_CHAR_STREAM = false;
     USER_TOKEN_MANAGER = false;
 }
+
+/*
+  ISO8859_1 sequences for German special characters:
+  ä "\u00e4"
+  ö "\u00f6"
+  ü "\u00fc"
+  Ä "\u00c4"
+  Ö "\u00d6"
+  Ü "\u00dc"
+  ß "\u00df"
+  _ "\u00a0"    weird underscore character in HIT / CLOU editor
+*/
 
 PARSER_BEGIN(HitAssAstParser)
 package org.poormanscastle.products.hit2ass.parser.javacc;
@@ -29,7 +41,9 @@ import org.apache.log4j.Logger;
 public class HitAssAstParser{
     private final static Logger logger = Logger.getLogger(HitAssAstParser.class);
     public static void main(String[] args){
-        HitAssAstParser parser = new HitAssAstParser(System.in);
+        logger.info(StringUtils.join("Running parser with encoding hit2ass.clou.encoding=",
+            System.getProperty("hit2ass.clou.encoding")));
+        HitAssAstParser parser = new HitAssAstParser(System.in, System.getProperty("hit2ass.clou.encoding"));
     }
 }
 PARSER_END(HitAssAstParser)
@@ -89,6 +103,7 @@ TOKEN : {
     < ELSE : "/N" > : TXT_MODE |
     < ENDIF : "#" > : TXT_MODE |            //
     < WS : "#S" > : COMMAND_MODE_IF |       // While loop statement
+    < FS : "#W" > : COMMAND_MODE_FOR |       // FOR loop, fixed number of repetitions; a new mode is in order because FOR loops have their own syntax, thus mode switches in command_mode_for occur differently than it's the case in command_mode_if
     < SS : "#C" > : COMMAND_MODE_SS |       // Switch statement
     < CA : "/"(((["0"-"9"])+)|("\""(["0"-"9","a"-"z", "A"-"Z"])+"\"")?)":" > : TXT_MODE | // < CA : "/"(["0"-"9"])+|("\""(["0"-"9","a"-"z", "A"-"Z"])+"\"")":" >
     < MS : "#$" > : COMMAND_MODE_MS |       // execute Macro
@@ -229,7 +244,8 @@ TOKEN : {
     < IF_RBRACKET : "]" > |
     < IF_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
     < IF_SHELLVAR_ID : (["A"-"Z"])+ > |
-    < IF_ID : [ "_", "[", "]", ",", "a"-"z", "A"-"Z"](["_", "[", "]", ",", "a"-"z", "A"-"Z", "0"-"9"])* > |
+    < IF_ID : [ "_", "[", "]", ",", "a"-"z", "A"-"Z"](["_", "[", "]", ",", "a"-"z", "A"-"Z", "0"-"9",
+        "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc", "\u00a0" ])* > |
     < IF_TEXT : "\""
         (
             "\\" ~[]
@@ -239,6 +255,44 @@ TOKEN : {
 }
 <COMMAND_MODE_IF> SKIP : {
     "\n" | "\r" | "\t" | " "
+}
+<COMMAND_MODE_FOR> TOKEN : {
+    < FOR_SHELLVAR : "SHELLVARIABLE" > |
+    < FOR_EQ : "=" > |
+    < FOR_EQ_STRICT : "==" > |
+    < FOR_OR : "oder" > |
+    < FOR_AND : "und" > |
+    < FOR_XOR : "xor_tbd" > |
+    < FOR_NOT : "not_tbd" > |
+    < FOR_NEQ : "<>" > |
+    < FOR_LT : "<" > |
+    < FOR_LTE : "<=" > |
+    < FOR_GT : ">" > |
+    < FOR_GTE : ">=" > |
+    < FOR_PLUS : "+" > |
+    < FOR_MINUS : "-" > |
+    < FOR_TIMES : "*" > |
+    < FOR_DIV : "/" > |
+    < FOR_QUOTE : "\"" > |
+    < FOR_COLON : ":" > |
+    < FOR_LPAREN : "(" > |
+    < FOR_RPAREN : ")" > |
+    < FOR_NUM : (["0"-"9"])+ > |
+    < FOR_LBRACKET : "[" > |
+    < FOR_RBRACKET : "]" > |
+    < FOR_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
+    < FOR_SHELLVAR_ID : (["A"-"Z"])+ > |
+    < FOR_ID : [ "_", "[", "]", ",", "a"-"z", "A"-"Z"](["_", "[", "]", ",", "a"-"z", "A"-"Z", "0"-"9",
+        "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc", "\u00a0" ])* > |
+    < FOR_TEXT : "\""
+        (
+            "\\" ~[]
+        |
+            ~["\""]     // this covers the HIT/CLOU protected space character and also all German Umlauts.
+        )*"\"" >
+}
+<COMMAND_MODE_FOR> SKIP : {
+    "\n" : TXT_MODE | "\r" : TXT_MODE | "\t" | " "
 }
 <COMMAND_MODE_DS> TOKEN : {
     < DS_EQ : "=" > |
@@ -263,7 +317,8 @@ TOKEN : {
     < DS_RPAREN : ")" > |
     < DS_NUM : (["0"-"9"])+ > |
     < DS_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
-    < DS_ID : [ "_", "[", "]", ",", "a"-"z", "A"-"Z"](["_", "a"-"z", "A"-"Z", "0"-"9", "\ufffd"])* > |
+    < DS_ID : [ "_", "[", "]", ",", "a"-"z", "A"-"Z"](["_", "a"-"z", "A"-"Z", "0"-"9",
+        "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc", "\u00a0" ])* > |
     < DS_TEXT : "\""
         (
             "\\" ~[]
@@ -296,13 +351,16 @@ TOKEN : {
     < AS_QUOTE : "\"" > |
     < AS_COLON : ":" > |
     < AS_LPAREN : "(" > |
-    < AS_RPAREN : ")" > : TXT_MODE |
+    // < AS_RPAREN : ")" > : TXT_MODE |    // why is this again switching to text mode?
+    < AS_RPAREN : ")" > |
     < AS_LBRACKET : "[" > |
-    < AS_RBRACKET : "]" > : TXT_MODE |
+    // < AS_RBRACKET : "]" > : TXT_MODE |  // why is this again switching to text mode?
+    < AS_RBRACKET : "]" > |
     < AS_NUM : (["0"-"9"])+ > |
     < AS_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
     < AS_SHELLVAR_ID : (["A"-"Z"])+ > |
-    < AS_ID : [ "_", "[", "]", ",", "a"-"z", "A"-"Z"](["_", "[", "]", ",", "a"-"z", "A"-"Z", "0"-"9"])* > |
+    < AS_ID : [ "_", "[", "]", ",", "a"-"z", "A"-"Z"](["_", "[", "]", ",", "a"-"z", "A"-"Z", "0"-"9",
+        "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc", "\u00a0" ])* > |
     < AS_TEXT : "\""
         (
             "\\" ~[]
@@ -318,7 +376,7 @@ TOKEN : {
     < LS_LBRACE : "{" > : COMMAND_MODE_LS_BRACES |
     < LS_GD : "D" > |
     < LS_LD : "d" > |
-    < LS_ID : [ "_", "a"-"z", "A"-"Z"](["_", "a"-"z", "A"-"Z", "0"-"9"])* > |
+    < LS_ID : [ "_", "a"-"z", "A"-"Z"](["_", "a"-"z", "A"-"Z", "0"-"9", "\u00a0"])* > |
     < LS_TEXT : "\""
         (
             "\\" ~[]
@@ -404,6 +462,11 @@ ClouBausteinElement CBES() :
 { ClouBausteinElement element; }
 {
     element = IF()
+    {
+        return element;
+    }
+    |
+    element = FOR()
     {
         return element;
     }
@@ -512,6 +575,15 @@ ClouBausteinElement CBES() :
     element = PS()
     {
         return element;
+    }
+}
+
+ForStatement FOR() :
+{ Expression repetitionCount; ClouBausteinElement forBody; }
+{
+    <FS> repetitionCount = E() forBody = CBE() <ENDIF>
+    {
+        return new ForStatement(repetitionCount, forBody);
     }
 }
 
@@ -849,7 +921,7 @@ Expression T7Prime(Expression lhs) :
 { Expression rhs, t7PrimeExpression; }
 {
     (
-        (<IF_XOR>|<DS_XOR>) rhs = T6() t7PrimeExpression = T7Prime(rhs)
+        (<IF_XOR>|<DS_XOR>|<FOR_XOR>) rhs = T6() t7PrimeExpression = T7Prime(rhs)
         {
             return new BinaryOperatorExpression(lhs, BinaryOperator.XOR,
                 t7PrimeExpression != null ? t7PrimeExpression : rhs );
@@ -871,13 +943,13 @@ Expression T6Prime(Expression lhs) :
 { Expression rhs, t6PrimeExpression; }
 {
     (
-        (<IF_EQ>|<DS_EQ>|<IF_EQ_STRICT>|<DS_EQ_STRICT>) rhs = T5() t6PrimeExpression = T6Prime(rhs)
+        (<IF_EQ>|<DS_EQ>|<IF_EQ_STRICT>|<DS_EQ_STRICT>|<FOR_EQ_STRICT>) rhs = T5() t6PrimeExpression = T6Prime(rhs)
         {
             return new BinaryOperatorExpression(lhs, BinaryOperator.EQ,
                 t6PrimeExpression != null ? t6PrimeExpression : rhs );
         }
         |
-        (<IF_NEQ>|<DS_NEQ>) rhs = T5() t6PrimeExpression = T6Prime(rhs)
+        (<IF_NEQ>|<DS_NEQ>|<FOR_NEQ>) rhs = T5() t6PrimeExpression = T6Prime(rhs)
         {
             return new BinaryOperatorExpression(lhs, BinaryOperator.NEQ,
                 t6PrimeExpression != null ? t6PrimeExpression : rhs);
@@ -899,25 +971,25 @@ Expression T5Prime(Expression lhs) :
 { Expression rhs, t5PrimeExpression; }
 {
     (
-        (<IF_LT>|<DS_LT>) rhs = T4() t5PrimeExpression = T5Prime(rhs)
+        (<IF_LT>|<DS_LT>|<FOR_LT>) rhs = T4() t5PrimeExpression = T5Prime(rhs)
         {
             return new BinaryOperatorExpression(lhs, BinaryOperator.LT,
                 t5PrimeExpression != null ? t5PrimeExpression : rhs );
         }
         |
-        (<IF_LTE>|<DS_LTE>) rhs = T4() t5PrimeExpression = T5Prime(rhs)
+        (<IF_LTE>|<DS_LTE>|<FOR_LTE>) rhs = T4() t5PrimeExpression = T5Prime(rhs)
         {
             return new BinaryOperatorExpression(lhs, BinaryOperator.LTE,
                 t5PrimeExpression != null ? t5PrimeExpression : rhs );
         }
         |
-        (<IF_GT>|<DS_GT>) rhs = T4() t5PrimeExpression = T5Prime(rhs)
+        (<IF_GT>|<DS_GT>|<FOR_GT>) rhs = T4() t5PrimeExpression = T5Prime(rhs)
         {
             return new BinaryOperatorExpression(lhs, BinaryOperator.GT,
                 t5PrimeExpression != null ? t5PrimeExpression : rhs );
         }
         |
-        (<IF_GTE>|<DS_GTE>) rhs = T4() t5PrimeExpression = T5Prime(rhs)
+        (<IF_GTE>|<DS_GTE>|<FOR_GTE>) rhs = T4() t5PrimeExpression = T5Prime(rhs)
         {
             return new BinaryOperatorExpression(lhs, BinaryOperator.GTE,
                 t5PrimeExpression != null ? t5PrimeExpression : rhs );
@@ -939,13 +1011,13 @@ Expression T4Prime(Expression lhs) :
 { Expression rhs, t4PrimeExpression; }
 {
     (
-        <IF_PLUS>|<DS_PLUS>|<AS_PLUS> rhs = T3() t4PrimeExpression = T4Prime(rhs)
+        (<IF_PLUS>|<DS_PLUS>|<AS_PLUS>|<FOR_PLUS>) rhs = T3() t4PrimeExpression = T4Prime(rhs)
         {
             return new BinaryOperatorExpression(lhs, BinaryOperator.PLUS,
                 t4PrimeExpression != null ? t4PrimeExpression : rhs );
         }
         |
-        <IF_MINUS>|<DS_MINUS>|<AS_MINUS> rhs = T3() t4PrimeExpression = T4Prime(rhs)
+        (<IF_MINUS>|<DS_MINUS>|<AS_MINUS>|<FOR_MINUS>) rhs = T3() t4PrimeExpression = T4Prime(rhs)
         {
             return new BinaryOperatorExpression(lhs, BinaryOperator.MINUS,
                 t4PrimeExpression != null ? t4PrimeExpression : rhs );
@@ -972,13 +1044,13 @@ Expression T3Prime(Expression lhs) :
 { Expression rhs, t3PrimeExpression; }
 {
     (
-        <IF_TIMES><DS_TIMES> rhs = T2() t3PrimeExpression = T3Prime(rhs)
+        (<IF_TIMES>|<DS_TIMES>|<AS_TIMES>|<FOR_TIMES>) rhs = T2() t3PrimeExpression = T3Prime(rhs)
         {
                return new BinaryOperatorExpression(lhs, BinaryOperator.TIMES,
                 t3PrimeExpression != null ? t3PrimeExpression : rhs );
         }
         |
-        <IF_DIV>|<DS_DIV> rhs = T2() t3PrimeExpression = T3Prime(rhs)
+        (<IF_DIV>|<DS_DIV>|<AS_DIV>|<FOR_DIV>) rhs = T2() t3PrimeExpression = T3Prime(rhs)
         {
                return new BinaryOperatorExpression(lhs, BinaryOperator.DIV,
                 t3PrimeExpression != null ? t3PrimeExpression : rhs );
@@ -998,7 +1070,7 @@ Expression T2() :
     }
     |
     (
-        (<IF_NOT>|<DS_NOT>) f = F()
+        (<IF_NOT>|<DS_NOT>|<FOR_NOT>) f = F()
     )
     {
         return new UnaryOperatorExpression(UnaryOperator.NOT, f);
@@ -1014,17 +1086,19 @@ Expression F() :
 }
 {
     (valueToken = <IF_NUM> | valueToken = <DS_NUM> | valueToken = <AS_NUM> | valueToken = <MS_NUM> |
-        valueToken = <LS_BRACES_NUM> | valueToken = <SS_NUM> | valueToken = <HC_NUM> )
+        valueToken = <LS_BRACES_NUM> | valueToken = <SS_NUM> | valueToken = <HC_NUM> | valueToken = <FOR_NUM> )
     {
         return new NumExpression(CodePosition.createFromToken(valueToken), Integer.parseInt(valueToken.image));
     }
     |
-    (valueToken = <IF_DEC> | valueToken = <DS_DEC> | valueToken = <AS_DEC> | valueToken = <MS_DEC> | valueToken = <LS_BRACES_DEC>)
+    (valueToken = <IF_DEC> | valueToken = <DS_DEC> | valueToken = <AS_DEC> | valueToken = <MS_DEC> |
+        valueToken = <LS_BRACES_DEC> | valueToken = <FOR_DEC> )
     {
         return new DecimalExpression(CodePosition.createFromToken(valueToken), Double.parseDouble(valueToken.image));
     }
     |
-    (valueToken = <IF_TEXT> | valueToken = <DS_TEXT> | valueToken = <AS_TEXT> | valueToken = <MS_TEXT> | valueToken = <LS_BRACES_TEXT>)
+    (valueToken = <IF_TEXT> | valueToken = <DS_TEXT> | valueToken = <AS_TEXT> | valueToken = <MS_TEXT> |
+        valueToken = <LS_BRACES_TEXT> | valueToken = <FOR_TEXT>)
     {
         return new TextExpression(CodePosition.createFromToken(valueToken), valueToken.image);
     }
@@ -1033,6 +1107,7 @@ Expression F() :
         (<SS_QUOTE>valueToken = <SS_SHELLVAR_ID><SS_QUOTE> | valueToken = <AS_TEXT> | valueToken = <IF_TEXT> )
         (<SS_RPAREN>|<AS_RPAREN>|<IF_RPAREN>)
     {
+        // TODO 2016-07-08 I vote to delete this since SHELLVARIABLE in fact is a function call and has to be handled there
         // ShellVariable evaluations in assignment statements #=
         // deliver the variableId with quotes. They have to be truncated
         // before storage
@@ -1040,13 +1115,14 @@ Expression F() :
     }
     |
     // implements clou standard function listlen("varname")
-    LOOKAHEAD(2) (valueToken = <IF_ID>) <IF_LPAREN> expressionList = EL() <IF_RPAREN>
+    LOOKAHEAD(2) (valueToken = <IF_ID>| valueToken = <AS_ID>| valueToken = <FOR_ID>) (<IF_LPAREN>|<AS_LPAREN>|<FOR_LPAREN>)
+        expressionList = EL() (<IF_RPAREN>|<AS_RPAREN>|<FOR_RPAREN>)
     {
         return new ClouFunctionCall(CodePosition.createFromToken(valueToken), valueToken.image, expressionList);
     }
     |
     (valueToken = <IF_ID> | valueToken = <DS_ID> | valueToken = <SS_ID> | valueToken = <AS_ID> | valueToken = <MS_ID> |
-        valueToken = <LS_ID> | valueToken = <LS_BRACES_ID> | valueToken = <HC_ID> )
+        valueToken = <LS_ID> | valueToken = <LS_BRACES_ID> | valueToken = <HC_ID> | valueToken = <FOR_ID> )
     {
         return new IdExpression(CodePosition.createFromToken(valueToken), valueToken.image);
     }
@@ -1070,5 +1146,3 @@ FixedText FX() :
         return FixedText.create(CodePosition.createFromToken(valueToken), valueToken.image);
     }
 }
-
-

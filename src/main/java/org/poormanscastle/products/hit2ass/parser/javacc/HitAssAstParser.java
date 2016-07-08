@@ -9,7 +9,9 @@ import org.apache.log4j.Logger;
 public class HitAssAstParser implements HitAssAstParserConstants {
     private final static Logger logger = Logger.getLogger(HitAssAstParser.class);
     public static void main(String[] args){
-        HitAssAstParser parser = new HitAssAstParser(System.in);
+        logger.info(StringUtils.join("Running parser with encoding hit2ass.clou.encoding=",
+            System.getProperty("hit2ass.clou.encoding")));
+        HitAssAstParser parser = new HitAssAstParser(System.in, System.getProperty("hit2ass.clou.encoding"));
     }
 
 /*  Productions */
@@ -28,6 +30,7 @@ public class HitAssAstParser implements HitAssAstParserConstants {
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case IF:
     case WS:
+    case FS:
     case SS:
     case MS:
     case HC:
@@ -64,6 +67,11 @@ public class HitAssAstParser implements HitAssAstParserConstants {
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case IF:{
       element = IF();
+{if ("" != null) return element;}
+      break;
+      }
+    case FS:{
+      element = FOR();
 {if ("" != null) return element;}
       break;
       }
@@ -204,6 +212,15 @@ public class HitAssAstParser implements HitAssAstParserConstants {
       jj_consume_token(-1);
       throw new ParseException();
     }
+    throw new Error("Missing return statement in function");
+  }
+
+  final public ForStatement FOR() throws ParseException {Expression repetitionCount; ClouBausteinElement forBody;
+    jj_consume_token(FS);
+    repetitionCount = E();
+    forBody = CBE();
+    jj_consume_token(ENDIF);
+{if ("" != null) return new ForStatement(repetitionCount, forBody);}
     throw new Error("Missing return statement in function");
   }
 
@@ -650,6 +667,7 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
   final public Expression T7Prime(Expression lhs) throws ParseException {Expression rhs, t7PrimeExpression;
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case IF_XOR:
+    case FOR_XOR:
     case DS_XOR:{
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case IF_XOR:{
@@ -658,6 +676,10 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
         }
       case DS_XOR:{
         jj_consume_token(DS_XOR);
+        break;
+        }
+      case FOR_XOR:{
+        jj_consume_token(FOR_XOR);
         break;
         }
       default:
@@ -691,12 +713,15 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
     case IF_EQ:
     case IF_EQ_STRICT:
     case IF_NEQ:
+    case FOR_EQ_STRICT:
+    case FOR_NEQ:
     case DS_EQ:
     case DS_EQ_STRICT:
     case DS_NEQ:{
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case IF_EQ:
       case IF_EQ_STRICT:
+      case FOR_EQ_STRICT:
       case DS_EQ:
       case DS_EQ_STRICT:{
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
@@ -716,6 +741,10 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
           jj_consume_token(DS_EQ_STRICT);
           break;
           }
+        case FOR_EQ_STRICT:{
+          jj_consume_token(FOR_EQ_STRICT);
+          break;
+          }
         default:
           jj_la1[21] = jj_gen;
           jj_consume_token(-1);
@@ -728,6 +757,7 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
         break;
         }
       case IF_NEQ:
+      case FOR_NEQ:
       case DS_NEQ:{
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
         case IF_NEQ:{
@@ -736,6 +766,10 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
           }
         case DS_NEQ:{
           jj_consume_token(DS_NEQ);
+          break;
+          }
+        case FOR_NEQ:{
+          jj_consume_token(FOR_NEQ);
           break;
           }
         default:
@@ -777,12 +811,17 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
     case IF_LTE:
     case IF_GT:
     case IF_GTE:
+    case FOR_LT:
+    case FOR_LTE:
+    case FOR_GT:
+    case FOR_GTE:
     case DS_LT:
     case DS_LTE:
     case DS_GT:
     case DS_GTE:{
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case IF_LT:
+      case FOR_LT:
       case DS_LT:{
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
         case IF_LT:{
@@ -791,6 +830,10 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
           }
         case DS_LT:{
           jj_consume_token(DS_LT);
+          break;
+          }
+        case FOR_LT:{
+          jj_consume_token(FOR_LT);
           break;
           }
         default:
@@ -805,6 +848,7 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
         break;
         }
       case IF_LTE:
+      case FOR_LTE:
       case DS_LTE:{
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
         case IF_LTE:{
@@ -813,6 +857,10 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
           }
         case DS_LTE:{
           jj_consume_token(DS_LTE);
+          break;
+          }
+        case FOR_LTE:{
+          jj_consume_token(FOR_LTE);
           break;
           }
         default:
@@ -827,6 +875,7 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
         break;
         }
       case IF_GT:
+      case FOR_GT:
       case DS_GT:{
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
         case IF_GT:{
@@ -835,6 +884,10 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
           }
         case DS_GT:{
           jj_consume_token(DS_GT);
+          break;
+          }
+        case FOR_GT:{
+          jj_consume_token(FOR_GT);
           break;
           }
         default:
@@ -849,6 +902,7 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
         break;
         }
       case IF_GTE:
+      case FOR_GTE:
       case DS_GTE:{
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
         case IF_GTE:{
@@ -857,6 +911,10 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
           }
         case DS_GTE:{
           jj_consume_token(DS_GTE);
+          break;
+          }
+        case FOR_GTE:{
+          jj_consume_token(FOR_GTE);
           break;
           }
         default:
@@ -896,6 +954,8 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case IF_PLUS:
     case IF_MINUS:
+    case FOR_PLUS:
+    case FOR_MINUS:
     case DS_STRING_CONCAT:
     case DS_PLUS:
     case DS_MINUS:
@@ -903,32 +963,64 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
     case AS_PLUS:
     case AS_MINUS:{
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case IF_PLUS:{
-        jj_consume_token(IF_PLUS);
-        break;
-        }
-      case DS_PLUS:{
-        jj_consume_token(DS_PLUS);
-        break;
-        }
+      case IF_PLUS:
+      case FOR_PLUS:
+      case DS_PLUS:
       case AS_PLUS:{
-        jj_consume_token(AS_PLUS);
+        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+        case IF_PLUS:{
+          jj_consume_token(IF_PLUS);
+          break;
+          }
+        case DS_PLUS:{
+          jj_consume_token(DS_PLUS);
+          break;
+          }
+        case AS_PLUS:{
+          jj_consume_token(AS_PLUS);
+          break;
+          }
+        case FOR_PLUS:{
+          jj_consume_token(FOR_PLUS);
+          break;
+          }
+        default:
+          jj_la1[31] = jj_gen;
+          jj_consume_token(-1);
+          throw new ParseException();
+        }
         rhs = T3();
         t4PrimeExpression = T4Prime(rhs);
 {if ("" != null) return new BinaryOperatorExpression(lhs, BinaryOperator.PLUS,
                 t4PrimeExpression != null ? t4PrimeExpression : rhs );}
         break;
         }
-      case IF_MINUS:{
-        jj_consume_token(IF_MINUS);
-        break;
-        }
-      case DS_MINUS:{
-        jj_consume_token(DS_MINUS);
-        break;
-        }
+      case IF_MINUS:
+      case FOR_MINUS:
+      case DS_MINUS:
       case AS_MINUS:{
-        jj_consume_token(AS_MINUS);
+        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+        case IF_MINUS:{
+          jj_consume_token(IF_MINUS);
+          break;
+          }
+        case DS_MINUS:{
+          jj_consume_token(DS_MINUS);
+          break;
+          }
+        case AS_MINUS:{
+          jj_consume_token(AS_MINUS);
+          break;
+          }
+        case FOR_MINUS:{
+          jj_consume_token(FOR_MINUS);
+          break;
+          }
+        default:
+          jj_la1[32] = jj_gen;
+          jj_consume_token(-1);
+          throw new ParseException();
+        }
         rhs = T3();
         t4PrimeExpression = T4Prime(rhs);
 {if ("" != null) return new BinaryOperatorExpression(lhs, BinaryOperator.MINUS,
@@ -947,7 +1039,7 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
           break;
           }
         default:
-          jj_la1[31] = jj_gen;
+          jj_la1[33] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
@@ -957,14 +1049,14 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
         break;
         }
       default:
-        jj_la1[32] = jj_gen;
+        jj_la1[34] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
       break;
       }
     default:
-      jj_la1[33] = jj_gen;
+      jj_la1[35] = jj_gen;
       ;
     }
 {if ("" != null) return null;}
@@ -982,23 +1074,71 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case IF_TIMES:
     case IF_DIV:
-    case DS_DIV:{
+    case FOR_TIMES:
+    case FOR_DIV:
+    case DS_TIMES:
+    case DS_DIV:
+    case AS_TIMES:
+    case AS_DIV:{
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case IF_TIMES:{
-        jj_consume_token(IF_TIMES);
-        jj_consume_token(DS_TIMES);
+      case IF_TIMES:
+      case FOR_TIMES:
+      case DS_TIMES:
+      case AS_TIMES:{
+        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+        case IF_TIMES:{
+          jj_consume_token(IF_TIMES);
+          break;
+          }
+        case DS_TIMES:{
+          jj_consume_token(DS_TIMES);
+          break;
+          }
+        case AS_TIMES:{
+          jj_consume_token(AS_TIMES);
+          break;
+          }
+        case FOR_TIMES:{
+          jj_consume_token(FOR_TIMES);
+          break;
+          }
+        default:
+          jj_la1[36] = jj_gen;
+          jj_consume_token(-1);
+          throw new ParseException();
+        }
         rhs = T2();
         t3PrimeExpression = T3Prime(rhs);
 {if ("" != null) return new BinaryOperatorExpression(lhs, BinaryOperator.TIMES,
                 t3PrimeExpression != null ? t3PrimeExpression : rhs );}
         break;
         }
-      case IF_DIV:{
-        jj_consume_token(IF_DIV);
-        break;
+      case IF_DIV:
+      case FOR_DIV:
+      case DS_DIV:
+      case AS_DIV:{
+        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+        case IF_DIV:{
+          jj_consume_token(IF_DIV);
+          break;
+          }
+        case DS_DIV:{
+          jj_consume_token(DS_DIV);
+          break;
+          }
+        case AS_DIV:{
+          jj_consume_token(AS_DIV);
+          break;
+          }
+        case FOR_DIV:{
+          jj_consume_token(FOR_DIV);
+          break;
+          }
+        default:
+          jj_la1[37] = jj_gen;
+          jj_consume_token(-1);
+          throw new ParseException();
         }
-      case DS_DIV:{
-        jj_consume_token(DS_DIV);
         rhs = T2();
         t3PrimeExpression = T3Prime(rhs);
 {if ("" != null) return new BinaryOperatorExpression(lhs, BinaryOperator.DIV,
@@ -1006,14 +1146,14 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
         break;
         }
       default:
-        jj_la1[34] = jj_gen;
+        jj_la1[38] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
       break;
       }
     default:
-      jj_la1[35] = jj_gen;
+      jj_la1[39] = jj_gen;
       ;
     }
 {if ("" != null) return null;}
@@ -1034,6 +1174,10 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
     case IF_DEC:
     case IF_ID:
     case IF_TEXT:
+    case FOR_NUM:
+    case FOR_DEC:
+    case FOR_ID:
+    case FOR_TEXT:
     case DS_NUM:
     case DS_DEC:
     case DS_ID:
@@ -1056,6 +1200,7 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
       break;
       }
     case IF_NOT:
+    case FOR_NOT:
     case DS_NOT:{
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case IF_NOT:{
@@ -1066,8 +1211,12 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
         jj_consume_token(DS_NOT);
         break;
         }
+      case FOR_NOT:{
+        jj_consume_token(FOR_NOT);
+        break;
+        }
       default:
-        jj_la1[36] = jj_gen;
+        jj_la1[40] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -1076,7 +1225,7 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
       break;
       }
     default:
-      jj_la1[37] = jj_gen;
+      jj_la1[41] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1091,6 +1240,7 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
     case SS_NUM:
     case MS_NUM:
     case IF_NUM:
+    case FOR_NUM:
     case DS_NUM:
     case AS_NUM:
     case LS_BRACES_NUM:
@@ -1124,8 +1274,12 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
         valueToken = jj_consume_token(HC_NUM);
         break;
         }
+      case FOR_NUM:{
+        valueToken = jj_consume_token(FOR_NUM);
+        break;
+        }
       default:
-        jj_la1[38] = jj_gen;
+        jj_la1[42] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -1134,6 +1288,7 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
       }
     case MS_DEC:
     case IF_DEC:
+    case FOR_DEC:
     case DS_DEC:
     case AS_DEC:
     case LS_BRACES_DEC:{
@@ -1158,8 +1313,12 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
         valueToken = jj_consume_token(LS_BRACES_DEC);
         break;
         }
+      case FOR_DEC:{
+        valueToken = jj_consume_token(FOR_DEC);
+        break;
+        }
       default:
-        jj_la1[39] = jj_gen;
+        jj_la1[43] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -1168,6 +1327,7 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
       }
     case MS_TEXT:
     case IF_TEXT:
+    case FOR_TEXT:
     case DS_TEXT:
     case AS_TEXT:
     case LS_BRACES_TEXT:{
@@ -1192,8 +1352,12 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
         valueToken = jj_consume_token(LS_BRACES_TEXT);
         break;
         }
+      case FOR_TEXT:{
+        valueToken = jj_consume_token(FOR_TEXT);
+        break;
+        }
       default:
-        jj_la1[40] = jj_gen;
+        jj_la1[44] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -1217,7 +1381,7 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
         break;
         }
       default:
-        jj_la1[41] = jj_gen;
+        jj_la1[45] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -1235,7 +1399,7 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
         break;
         }
       default:
-        jj_la1[42] = jj_gen;
+        jj_la1[46] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -1255,7 +1419,7 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
         break;
         }
       default:
-        jj_la1[43] = jj_gen;
+        jj_la1[47] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -1273,29 +1437,82 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
         break;
         }
       default:
-        jj_la1[44] = jj_gen;
+        jj_la1[48] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
-// ShellVariable evaluations in assignment statements #=
+// TODO 2016-07-08 I vote to delete this since SHELLVARIABLE in fact is a function call and has to be handled there
+        // ShellVariable evaluations in assignment statements #=
         // deliver the variableId with quotes. They have to be truncated
         // before storage
         {if ("" != null) return new ShellVariableExpression(CodePosition.createFromToken(valueToken), valueToken.image.replaceAll("\u005c"", ""));}
       break;
       }
     default:
-      jj_la1[46] = jj_gen;
+      jj_la1[53] = jj_gen;
       if (jj_2_5(2)) {
-        valueToken = jj_consume_token(IF_ID);
-        jj_consume_token(IF_LPAREN);
+        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+        case IF_ID:{
+          valueToken = jj_consume_token(IF_ID);
+          break;
+          }
+        case AS_ID:{
+          valueToken = jj_consume_token(AS_ID);
+          break;
+          }
+        case FOR_ID:{
+          valueToken = jj_consume_token(FOR_ID);
+          break;
+          }
+        default:
+          jj_la1[49] = jj_gen;
+          jj_consume_token(-1);
+          throw new ParseException();
+        }
+        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+        case IF_LPAREN:{
+          jj_consume_token(IF_LPAREN);
+          break;
+          }
+        case AS_LPAREN:{
+          jj_consume_token(AS_LPAREN);
+          break;
+          }
+        case FOR_LPAREN:{
+          jj_consume_token(FOR_LPAREN);
+          break;
+          }
+        default:
+          jj_la1[50] = jj_gen;
+          jj_consume_token(-1);
+          throw new ParseException();
+        }
         expressionList = EL();
-        jj_consume_token(IF_RPAREN);
+        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+        case IF_RPAREN:{
+          jj_consume_token(IF_RPAREN);
+          break;
+          }
+        case AS_RPAREN:{
+          jj_consume_token(AS_RPAREN);
+          break;
+          }
+        case FOR_RPAREN:{
+          jj_consume_token(FOR_RPAREN);
+          break;
+          }
+        default:
+          jj_la1[51] = jj_gen;
+          jj_consume_token(-1);
+          throw new ParseException();
+        }
 {if ("" != null) return new ClouFunctionCall(CodePosition.createFromToken(valueToken), valueToken.image, expressionList);}
       } else {
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
         case SS_ID:
         case MS_ID:
         case IF_ID:
+        case FOR_ID:
         case DS_ID:
         case AS_ID:
         case LS_ID:
@@ -1334,8 +1551,12 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
             valueToken = jj_consume_token(HC_ID);
             break;
             }
+          case FOR_ID:{
+            valueToken = jj_consume_token(FOR_ID);
+            break;
+            }
           default:
-            jj_la1[45] = jj_gen;
+            jj_la1[52] = jj_gen;
             jj_consume_token(-1);
             throw new ParseException();
           }
@@ -1343,7 +1564,7 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
           break;
           }
         default:
-          jj_la1[47] = jj_gen;
+          jj_la1[54] = jj_gen;
           if (jj_2_6(2)) {
             jj_consume_token(LS_LBRACE);
             jj_consume_token(LS_BRACES_RBRACE);
@@ -1358,7 +1579,7 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
               break;
               }
             default:
-              jj_la1[48] = jj_gen;
+              jj_la1[55] = jj_gen;
               jj_consume_token(-1);
               throw new ParseException();
             }
@@ -1423,6 +1644,189 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
     finally { jj_save(5, xla); }
   }
 
+  private boolean jj_3R_18()
+ {
+    if (jj_3R_23()) return true;
+    if (jj_3R_24()) return true;
+    return false;
+  }
+
+  private boolean jj_3_2()
+ {
+    if (jj_3R_2()) return true;
+    return false;
+  }
+
+  private boolean jj_3_6()
+ {
+    if (jj_scan_token(LS_LBRACE)) return true;
+    if (jj_scan_token(LS_BRACES_RBRACE)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_9()
+ {
+    if (jj_3R_12()) return true;
+    if (jj_3R_13()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_35()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(179)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(209)) return true;
+    }
+    return false;
+  }
+
+  private boolean jj_3_3()
+ {
+    if (jj_3R_3()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_43()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(131)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(190)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(73)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(223)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(104)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(233)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(249)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(257)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(162)) return true;
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    return false;
+  }
+
+  private boolean jj_3R_1()
+ {
+    if (jj_scan_token(OF)) return true;
+    if (jj_scan_token(FILE_TEXT)) return true;
+    if (jj_scan_token(FILE_OPEN)) return true;
+    if (jj_scan_token(FILE_READ)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_34()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(119)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(181)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(211)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(150)) return true;
+    }
+    }
+    }
+    return false;
+  }
+
+  private boolean jj_3R_14()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(111)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(172)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(142)) return true;
+    }
+    }
+    return false;
+  }
+
+  private boolean jj_3_5()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(131)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(223)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(162)) return true;
+    }
+    }
+    xsp = jj_scanpos;
+    if (jj_scan_token(124)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(216)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(155)) return true;
+    }
+    }
+    return false;
+  }
+
+  private boolean jj_3_1()
+ {
+    if (jj_3R_1()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_33()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(118)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(180)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(210)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(149)) return true;
+    }
+    }
+    }
+    return false;
+  }
+
+  private boolean jj_3R_10()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_14()) jj_scanpos = xsp;
+    return false;
+  }
+
+  private boolean jj_3R_25()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_33()) {
+    jj_scanpos = xsp;
+    if (jj_3R_34()) {
+    jj_scanpos = xsp;
+    if (jj_3R_35()) return true;
+    }
+    }
+    return false;
+  }
+
   private boolean jj_3R_2()
  {
     if (jj_scan_token(LIST)) return true;
@@ -1443,19 +1847,19 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
  {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_scan_token(63)) {
+    if (jj_scan_token(64)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(164)) {
+    if (jj_scan_token(196)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(105)) return true;
+    if (jj_scan_token(106)) return true;
     }
     }
     xsp = jj_scanpos;
-    if (jj_scan_token(64)) {
+    if (jj_scan_token(65)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(184)) {
+    if (jj_scan_token(216)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(123)) return true;
+    if (jj_scan_token(124)) return true;
     }
     }
     return false;
@@ -1480,15 +1884,18 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
  {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_scan_token(131)) {
+    if (jj_scan_token(132)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(159)) {
+    if (jj_scan_token(191)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(192)) {
+    if (jj_scan_token(224)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(104)) {
+    if (jj_scan_token(105)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(218)) return true;
+    if (jj_scan_token(250)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(163)) return true;
+    }
     }
     }
     }
@@ -1507,11 +1914,11 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
  {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_scan_token(109)) {
+    if (jj_scan_token(110)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(139)) {
+    if (jj_scan_token(171)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(197)) return true;
+    if (jj_scan_token(229)) return true;
     }
     }
     return false;
@@ -1521,15 +1928,18 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
  {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_scan_token(128)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(157)) {
+    if (jj_scan_token(129)) {
     jj_scanpos = xsp;
     if (jj_scan_token(189)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(102)) {
+    if (jj_scan_token(221)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(216)) return true;
+    if (jj_scan_token(103)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(248)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(160)) return true;
+    }
     }
     }
     }
@@ -1549,9 +1959,12 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
  {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_scan_token(116)) {
+    if (jj_scan_token(117)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(146)) return true;
+    if (jj_scan_token(178)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(148)) return true;
+    }
     }
     return false;
   }
@@ -1560,19 +1973,22 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
  {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_scan_token(125)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(156)) {
+    if (jj_scan_token(126)) {
     jj_scanpos = xsp;
     if (jj_scan_token(188)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(101)) {
+    if (jj_scan_token(220)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(215)) {
+    if (jj_scan_token(102)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(71)) {
+    if (jj_scan_token(247)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(224)) return true;
+    if (jj_scan_token(72)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(256)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(157)) return true;
+    }
     }
     }
     }
@@ -1615,9 +2031,12 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
  {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_scan_token(115)) {
+    if (jj_scan_token(116)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(145)) return true;
+    if (jj_scan_token(177)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(147)) return true;
+    }
     }
     return false;
   }
@@ -1633,9 +2052,9 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
  {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_scan_token(100)) {
+    if (jj_scan_token(101)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(213)) return true;
+    if (jj_scan_token(245)) return true;
     }
     return false;
   }
@@ -1652,9 +2071,12 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
  {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_scan_token(114)) {
+    if (jj_scan_token(115)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(144)) return true;
+    if (jj_scan_token(176)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(146)) return true;
+    }
     }
     return false;
   }
@@ -1663,9 +2085,9 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
  {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_scan_token(108)) {
+    if (jj_scan_token(109)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(138)) return true;
+    if (jj_scan_token(170)) return true;
     }
     return false;
   }
@@ -1691,9 +2113,12 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
  {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_scan_token(113)) {
+    if (jj_scan_token(114)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(143)) return true;
+    if (jj_scan_token(175)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(145)) return true;
+    }
     }
     return false;
   }
@@ -1702,9 +2127,12 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
  {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_scan_token(111)) {
+    if (jj_scan_token(112)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(141)) return true;
+    if (jj_scan_token(173)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(143)) return true;
+    }
     }
     if (jj_3R_36()) return true;
     return false;
@@ -1730,12 +2158,6 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_20()) jj_scanpos = xsp;
-    return false;
-  }
-
-  private boolean jj_3R_38()
- {
-    if (jj_scan_token(DS_DIV)) return true;
     return false;
   }
 
@@ -1778,9 +2200,37 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
     return false;
   }
 
+  private boolean jj_3R_38()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(121)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(183)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(213)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(152)) return true;
+    }
+    }
+    }
+    return false;
+  }
+
   private boolean jj_3R_37()
  {
-    if (jj_scan_token(IF_TIMES)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(120)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(182)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(212)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(151)) return true;
+    }
+    }
+    }
     return false;
   }
 
@@ -1790,10 +2240,7 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
     xsp = jj_scanpos;
     if (jj_3R_37()) {
     jj_scanpos = xsp;
-    if (jj_scan_token(120)) {
-    jj_scanpos = xsp;
     if (jj_3R_38()) return true;
-    }
     }
     return false;
   }
@@ -1802,16 +2249,13 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
  {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_scan_token(112)) {
+    if (jj_scan_token(113)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(142)) return true;
+    if (jj_scan_token(174)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(144)) return true;
     }
-    return false;
-  }
-
-  private boolean jj_3R_34()
- {
-    if (jj_scan_token(AS_MINUS)) return true;
+    }
     return false;
   }
 
@@ -1838,49 +2282,19 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
  {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_scan_token(106)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(136)) {
-    jj_scanpos = xsp;
     if (jj_scan_token(107)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(137)) return true;
+    if (jj_scan_token(168)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(108)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(169)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(139)) return true;
     }
     }
     }
-    return false;
-  }
-
-  private boolean jj_3_2()
- {
-    if (jj_3R_2()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_13()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_17()) jj_scanpos = xsp;
-    return false;
-  }
-
-  private boolean jj_3_3()
- {
-    if (jj_3R_3()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_33()
- {
-    if (jj_scan_token(AS_PLUS)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_18()
- {
-    if (jj_3R_23()) return true;
-    if (jj_3R_24()) return true;
+    }
     return false;
   }
 
@@ -1892,124 +2306,11 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
     return false;
   }
 
-  private boolean jj_3R_9()
- {
-    if (jj_3R_12()) return true;
-    if (jj_3R_13()) return true;
-    return false;
-  }
-
-  private boolean jj_3_6()
- {
-    if (jj_scan_token(LS_LBRACE)) return true;
-    if (jj_scan_token(LS_BRACES_RBRACE)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_35()
+  private boolean jj_3R_13()
  {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_scan_token(147)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(177)) return true;
-    }
-    return false;
-  }
-
-  private boolean jj_3_1()
- {
-    if (jj_3R_1()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_1()
- {
-    if (jj_scan_token(OF)) return true;
-    if (jj_scan_token(FILE_TEXT)) return true;
-    if (jj_scan_token(FILE_OPEN)) return true;
-    if (jj_scan_token(FILE_READ)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_43()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_scan_token(130)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(158)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(72)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(191)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(103)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(201)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(217)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(225)) return true;
-    }
-    }
-    }
-    }
-    }
-    }
-    }
-    return false;
-  }
-
-  private boolean jj_3R_14()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_scan_token(110)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(140)) return true;
-    }
-    return false;
-  }
-
-  private boolean jj_3_5()
- {
-    if (jj_scan_token(IF_ID)) return true;
-    if (jj_scan_token(IF_LPAREN)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_10()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_14()) jj_scanpos = xsp;
-    return false;
-  }
-
-  private boolean jj_3R_25()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_scan_token(117)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(148)) {
-    jj_scanpos = xsp;
-    if (jj_3R_33()) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(118)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(149)) {
-    jj_scanpos = xsp;
-    if (jj_3R_34()) {
-    jj_scanpos = xsp;
-    if (jj_3R_35()) return true;
-    }
-    }
-    }
-    }
-    }
-    }
+    if (jj_3R_17()) jj_scanpos = xsp;
     return false;
   }
 
@@ -2024,7 +2325,7 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
   private Token jj_scanpos, jj_lastpos;
   private int jj_la;
   private int jj_gen;
-  final private int[] jj_la1 = new int[49];
+  final private int[] jj_la1 = new int[56];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static private int[] jj_la1_2;
@@ -2033,6 +2334,7 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
   static private int[] jj_la1_5;
   static private int[] jj_la1_6;
   static private int[] jj_la1_7;
+  static private int[] jj_la1_8;
   static {
       jj_la1_init_0();
       jj_la1_init_1();
@@ -2042,30 +2344,34 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
       jj_la1_init_5();
       jj_la1_init_6();
       jj_la1_init_7();
+      jj_la1_init_8();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0xffff6200,0x8000000,0x800000,0x800000,0xffff6200,0x400,0x800,0x8000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
+      jj_la1_0 = new int[] {0xfffee200,0x10000000,0x1000000,0x1000000,0xfffee200,0x400,0x800,0x10000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x80000000,0x0,0x0,0x0,0x80000000,0x0,0x0,0x0,0x0,0x80000000,0x0,0x0,};
+      jj_la1_1 = new int[] {0x1,0x0,0x0,0x0,0x1,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
    }
    private static void jj_la1_init_2() {
-      jj_la1_2 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x180,0x80,0x0,0x0,0x0,0x1,0x4,0x2,0x100,0x80,0x100,0x0,};
+      jj_la1_2 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x301,0x100,0x0,0x0,0x1,0x2,0x8,0x4,0x0,0x0,0x0,0x200,0x101,0x200,0x0,};
    }
    private static void jj_la1_init_3() {
-      jj_la1_3 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x8000004,0x10000008,0x8000004,0x10,0x10,0x0,0x0,0x1000,0x1000,0x2000,0x2000,0x4000,0x4000,0xc00,0x10000,0x10c00,0x10c00,0x20000,0x40000,0x80000,0x100000,0x1e0000,0x1e0000,0x0,0x600000,0x600000,0x1800000,0x1800000,0x8000,0x200083e0,0x20000020,0x40,0x100,0x200,0x8000000,0x0,0x10000000,0x80,0x20000360,0x80,0x0,};
+      jj_la1_3 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x10000008,0x20000010,0x10000008,0x20,0x20,0x0,0x0,0x2000,0x2000,0x4000,0x4000,0x8000,0x8000,0x1800,0x20000,0x21800,0x21800,0x40000,0x80000,0x100000,0x200000,0x3c0000,0x3c0000,0x400000,0x800000,0x0,0xc00000,0xc00000,0x1000000,0x2000000,0x3000000,0x3000000,0x10000,0x400107c0,0x40000040,0x80,0x200,0x400,0x10000000,0x0,0x20000000,0x0,0x10000000,0x20000000,0x100,0x400006c0,0x100,0x0,};
    }
    private static void jj_la1_init_4() {
-      jj_la1_4 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x80000000,0x400,0x400,0x800,0x800,0x1000,0x1000,0x300,0x4000,0x4300,0x4300,0x8000,0x10000,0x20000,0x40000,0x78000,0x78000,0x80000,0x380000,0x380000,0x800000,0x800000,0x2000,0xf000200d,0x10000000,0x20000001,0x80000008,0x0,0x0,0x8,0x0,0x40000004,0xb0000009,0x40000004,0x0,};
+      jj_la1_4 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x4000,0x4000,0x800,0x10000,0x10800,0x10800,0x20000,0x40000,0x80000,0x100000,0x1e0000,0x1e0000,0x200000,0x400000,0x0,0x600000,0x600000,0x800000,0x1000000,0x1800000,0x1800000,0x8000,0x2000801a,0x20000000,0x2,0x10,0x0,0x0,0x10,0x0,0x8,0x8000000,0x10000000,0x8,0x20000012,0x8,0x0,};
    }
    private static void jj_la1_init_5() {
-      jj_la1_5 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x20000,0xe0000,0xe0000,0x0,0x0,0x0,0xb0000010,0x10000000,0x20000000,0x0,0x10,0x1000000,0x0,0x2000000,0x80000000,0x30000010,0x80000000,0x0,};
+      jj_la1_5 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x80000000,0x400,0x400,0x800,0x800,0x1000,0x1000,0x300,0x4000,0x4300,0x4300,0x8000,0x10000,0x20000,0x40000,0x78000,0x78000,0x100000,0x200000,0x80000,0x380000,0x380000,0x400000,0x800000,0xc00000,0xc00000,0x2000,0xf000200d,0x10000000,0x20000001,0x80000008,0x0,0x0,0x0,0x0,0x4,0x0,0x0,0x40000004,0xb0000009,0x40000004,0x0,};
    }
    private static void jj_la1_init_6() {
-      jj_la1_6 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x200000,0x200000,0x80000000,0x0,0x0,0x0,0x20,0x20,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x7800241,0x800000,0x1000000,0x4000001,0x0,0x0,0x1,0x0,0x2000200,0x5800001,0x2000200,0x40,};
+      jj_la1_6 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x40000,0x80000,0x20000,0xe0000,0xe0000,0x100000,0x200000,0x300000,0x300000,0x0,0xb0000010,0x10000000,0x20000000,0x0,0x10,0x1000000,0x0,0x2000000,0x80000000,0x1000000,0x2000000,0x80000000,0x30000010,0x80000000,0x0,};
    }
    private static void jj_la1_init_7() {
-      jj_la1_7 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x3,0x1,0x0,0x0,0x0,0x0,0x0,0x0,0x2,0x1,0x2,0x0,};
+      jj_la1_7 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x200000,0x200000,0x80000000,0x0,0x0,0x0,0x20,0x20,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x7800241,0x800000,0x1000000,0x4000001,0x0,0x0,0x1,0x0,0x0,0x0,0x0,0x2000200,0x5800001,0x2000200,0x40,};
+   }
+   private static void jj_la1_init_8() {
+      jj_la1_8 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x3,0x1,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x2,0x1,0x2,0x0,};
    }
   final private JJCalls[] jj_2_rtns = new JJCalls[6];
   private boolean jj_rescan = false;
@@ -2082,7 +2388,7 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 49; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 56; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -2097,7 +2403,7 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 49; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 56; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -2108,7 +2414,7 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 49; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 56; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -2119,7 +2425,7 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 49; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 56; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -2129,7 +2435,7 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 49; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 56; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -2139,7 +2445,7 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 49; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 56; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -2252,12 +2558,12 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
   /** Generate ParseException. */
   public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[231];
+    boolean[] la1tokens = new boolean[263];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 49; i++) {
+    for (int i = 0; i < 56; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -2284,10 +2590,13 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
           if ((jj_la1_7[i] & (1<<j)) != 0) {
             la1tokens[224+j] = true;
           }
+          if ((jj_la1_8[i] & (1<<j)) != 0) {
+            la1tokens[256+j] = true;
+          }
         }
       }
     }
-    for (int i = 0; i < 231; i++) {
+    for (int i = 0; i < 263; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

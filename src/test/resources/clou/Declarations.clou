@@ -8,11 +8,21 @@ Here is some fixed text.
 #d height 1.78 "-10.2"
 #d weight 196 "10.2"
 #d label "Kevin Cline" "10.6"
-#D ZLNEU8     "#^ \"ZL NEU\"
+#D ZLNEUÖä8     "#^ \"ZL NEU\"
                #^ \"W LÖSCHEN\"
                #G  14 1
                #G  9 2
                #G 88 8
                #^ \"RETURN\"
                #$ absattribut(\"BLK\")"
+
+#*  Test list names with the special blank character which is a valid id character in HIT / CLOU
+    (and some implementers make even us of it!) #
+#L l vombis D listendlos1
+#= list df anz 3
+
+#*  Test Umlauts in IDs within assigment statements #
+#= durchlaufzähler durchlaufzähler + 1
+
+
 And so it ends.

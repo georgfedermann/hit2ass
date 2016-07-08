@@ -1,13 +1,13 @@
 package org.poormanscastle.products.hit2ass.transformer;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.poormanscastle.products.hit2ass.ast.domain.AstItemVisitorAdapter;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouBaustein;
 import org.poormanscastle.products.hit2ass.ast.domain.IncludeBausteinStatement;
 import org.poormanscastle.products.hit2ass.exceptions.BausteinMergerException;
 import org.poormanscastle.products.hit2ass.parser.javacc.HitAssAstParser;
 import org.poormanscastle.products.hit2ass.tools.HitAssTools;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
 
 /**
  * Scans a CLOU AST for #B Baustein imports. When found one the
@@ -26,14 +26,21 @@ public class ClouBausteinMergerVisitor extends AstItemVisitorAdapter {
     public void visitIncludeBausteinStatement(IncludeBausteinStatement includeBausteinStatement) {
         try {
             if (logger.isInfoEnabled()) {
-                logger.info(StringUtils.join("Found CLOU Baustein ", includeBausteinStatement.getPathToBaustein()));
+                logger.info(StringUtils.join("Found CLOU Baustein ", includeBausteinStatement.getPathToBaustein()));
             }
             // the following two lines deal with the issue that legacy Bausteins refer to child Bausteins with a
             // lengthy path which should not be necessary in the new system, where the system is configured with the
             // path to the HIT / CLOU Baustein library.
             String[] bausteinCoordinates = includeBausteinStatement.getPathToBaustein().replaceAll("\"", "").split("/");
             String bausteinName = bausteinCoordinates[bausteinCoordinates.length - 1];
-            ClouBaustein baustein = new HitAssAstParser(HitAssTools.getClouBausteinAsInputStream(bausteinName)).CB();
+
+            // TODO implement interceptor or some other hook point here
+            if ("a.ende".equals(bausteinName)) {
+                return;
+            }
+
+            ClouBaustein baustein = new HitAssAstParser(
+                    HitAssTools.getClouBausteinAsInputStream(bausteinName), System.getProperty("hit2ass.clou.encoding")).CB();
             baustein.accept(new FixedTextMerger());
             includeBausteinStatement.setContent(baustein.getClouBausteinElement());
         } catch (Throwable e) {

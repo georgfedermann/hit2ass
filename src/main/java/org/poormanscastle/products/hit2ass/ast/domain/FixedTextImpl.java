@@ -8,7 +8,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * CLOU Command: n.n. just text within the CLOU Baustein that is not a comment.
  * Created by georg.federmann@poormanscastle.com on 29.03.2016.
  */
-public final class FixedTextImpl extends AbstractAstItem implements FixedText {
+final class FixedTextImpl extends AbstractAstItem implements FixedText {
 
     private final StringBuilder textBuffer;
 

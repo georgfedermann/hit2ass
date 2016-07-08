@@ -2,6 +2,7 @@ package org.poormanscastle.products.hit2ass.tools;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.poormanscastle.products.hit2ass.ast.domain.ExpressionList;
 import org.poormanscastle.products.hit2ass.exceptions.ClouBausteinIoException;
 
 import java.io.ByteArrayInputStream;
@@ -53,6 +54,10 @@ public final class HitAssTools {
                     "No path to HIT/CLOU Baustein library defined. Please set Java system property hit2ass.clou.path."));
         }
         return HitAssTools.getClouBausteinAsInputStream(System.getProperty("hit2ass.clou.path"), bausteinName);
+    }
+
+    public static String getExpressionListAsString(ExpressionList expressionList) {
+        return expressionList.toXPathString();
     }
 
 }

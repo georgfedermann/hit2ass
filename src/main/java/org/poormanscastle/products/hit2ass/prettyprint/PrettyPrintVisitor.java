@@ -12,6 +12,7 @@ import org.poormanscastle.products.hit2ass.ast.domain.ConditionalStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.DecimalExpression;
 import org.poormanscastle.products.hit2ass.ast.domain.DynamicValue;
 import org.poormanscastle.products.hit2ass.ast.domain.FixedText;
+import org.poormanscastle.products.hit2ass.ast.domain.ForStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.GStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.GlobalDeclarationStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.GlobalListDeclarationStatement;
@@ -174,6 +175,17 @@ public class PrettyPrintVisitor extends AstItemVisitorAdapter {
 
     @Override
     public void leaveWhileStatement(WhileStatement whileStatement) {
+        itemStack.pop();
+    }
+
+    @Override
+    public void visitForStatement(ForStatement forStatement) {
+        addItem("For", forStatement.getRepetitionCount().toXPathString());
+        addBufferLine();
+    }
+
+    @Override
+    public void leaveForStatement(ForStatement forStatement) {
         itemStack.pop();
     }
 

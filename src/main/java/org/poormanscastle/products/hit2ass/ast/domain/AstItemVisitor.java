@@ -261,4 +261,10 @@ public interface AstItemVisitor {
 
     void leaveClouFunctionCall(ClouFunctionCall clouFunctionCall);
 
+    boolean proceedWithForStatement(ForStatement forStatement);
+
+    void visitForStatement(ForStatement forStatement);
+
+    void leaveForStatement(ForStatement forStatement);
+
 }

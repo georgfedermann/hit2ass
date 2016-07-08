@@ -8,7 +8,7 @@ HIT_CLOU_LIBRARY_PATH=`pwd`
 HIT_CLOU_ENCODING=ISO8859_1
 
 ARGS=
-while getopts "ac:d:hmt:vwx" opt; do
+while getopts "ac:hvwx" opt; do
   case $opt in
     a)
       ARGS="a $ARGS"
@@ -17,18 +17,9 @@ while getopts "ac:d:hmt:vwx" opt; do
       # echo "-c was triggered!" >&2
       ARGS="c $OPTARG $ARGS"
       ;;
-    d)
-      ARGS="d $OPTARG $ARGS"
-      ;;
     h)
       # echo "-h was triggered!" >&2
       ARGS="h $ARGS"
-      ;;
-    m)
-      ARGS="m $ARGS"
-      ;;
-    t)
-      ARGS="t $OPTARG $ARGS"
       ;;
     v)
       # echo "-v was triggered!" >&2

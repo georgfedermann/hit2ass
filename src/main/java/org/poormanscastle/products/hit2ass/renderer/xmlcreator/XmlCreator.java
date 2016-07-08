@@ -1,8 +1,8 @@
 package org.poormanscastle.products.hit2ass.renderer.xmlcreator;
 
+import org.apache.commons.lang3.StringUtils;
 import org.poormanscastle.products.hit2ass.ast.domain.AstItemVisitorAdapter;
 import org.poormanscastle.products.hit2ass.ast.domain.DynamicValue;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * Iterates an AST representing a HIT/CLOU text component and creates from it and
@@ -26,6 +26,10 @@ import org.apache.commons.lang3.StringUtils;
  * respective value in the generated DocFamily input XML.
  * <p>
  * Created by georg.federmann@poormanscastle.com on 5/10/16.
+ *
+ * @deprecated the strategy to create the userdata xml has changed fundamentally from
+ * parsing an AST to find #X> statements to embedding the input text file into a
+ * generic XML structure. So, this type is not needed any more. It never worked, anyway.
  */
 final public class XmlCreator extends AstItemVisitorAdapter {
     // the implementation of this class could well be replaced by code
@@ -43,7 +47,7 @@ final public class XmlCreator extends AstItemVisitorAdapter {
      * a new AST. After iterating an AST, the XmlCreator can be reused
      * after calling this method again. For your convenience the XmlCreator
      * comes loaded and ready to work, so for a one-shot action, you don't
-     * need to call this method com all, pal.
+     * need to call this method at all, pal.
      */
     public void init() {
         xmlBuffer = new StringBuilder();

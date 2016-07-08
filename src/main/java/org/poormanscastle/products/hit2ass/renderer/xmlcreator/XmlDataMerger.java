@@ -23,6 +23,11 @@ import java.io.StringWriter;
  * produce the DocFamily Data XML.
  * <p>
  * Created by georg.federmann@poormanscastle.com on 5/11/16.
+ * <p>
+ * TODO since the strategy to produce the userdata XML has changed fundamentally this type is not needed any more.
+ * But since it creates a velocity template out of thin air as opposed to reading it from a file it is still
+ * interesting for future reference. Push this type to a sample source code repository and then delete it from
+ * this project.
  */
 public class XmlDataMerger {
 

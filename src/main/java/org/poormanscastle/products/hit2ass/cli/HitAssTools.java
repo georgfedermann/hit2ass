@@ -1,5 +1,6 @@
 package org.poormanscastle.products.hit2ass.cli;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouBaustein;
@@ -8,18 +9,12 @@ import org.poormanscastle.products.hit2ass.parser.javacc.ParseException;
 import org.poormanscastle.products.hit2ass.parser.javacc.TokenMgrError;
 import org.poormanscastle.products.hit2ass.prettyprint.PrettyPrintVisitor;
 import org.poormanscastle.products.hit2ass.renderer.IRTransformer;
+import org.poormanscastle.products.hit2ass.renderer.xmlcreator.UserDataServiceBean;
 import org.poormanscastle.products.hit2ass.renderer.xmlcreator.XmlCreator;
-import org.poormanscastle.products.hit2ass.renderer.xmlcreator.XmlDataMerger;
 import org.poormanscastle.products.hit2ass.transformer.ClouBausteinMergerVisitor;
 import org.poormanscastle.products.hit2ass.transformer.FixedTextMerger;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-
-import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * HitAssTools is meant to be used as cmd line tool to work with grammars.
@@ -44,14 +39,12 @@ public final class HitAssTools {
                     System.out.println(HitAssTools.createAstVisualization());
                 } else if ("h".equals(arg)) {
                     HitAssTools.printHelp();
-                } else if ("m".equals(arg)) {
-                    System.out.println(HitAssTools.createDataXml(Arrays.asList(args)));
                 } else if ("v".equals(arg)) {
                     HitAssTools.printVersion();
                 } else if ("w".equals(arg)) {
                     System.out.println(HitAssTools.createDocDesignWorkspace());
                 } else if ("x".equals(arg)) {
-                    System.out.println(HitAssTools.createXmlTemplate());
+                    System.out.println(HitAssTools.createUserDataXml());
                 }
             } while (counter < args.length);
         } catch (Exception exception) {
@@ -78,15 +71,8 @@ public final class HitAssTools {
         }
     }
 
-    private static String createXmlTemplate() throws IOException, ParseException {
-        logger.info(StringUtils.join("Running parser with encoding hit2ass.clou.encoding=",
-                System.getProperty("hit2ass.clou.encoding")));
-        ClouBaustein clouBaustein = new HitAssAstParser(System.in, System.getProperty("hit2ass.clou.encoding")).CB();
-        clouBaustein.accept(new ClouBausteinMergerVisitor());
-        clouBaustein.accept(new FixedTextMerger());
-        XmlCreator xmlTemplateCreator = new XmlCreator();
-        clouBaustein.accept(xmlTemplateCreator);
-        return xmlTemplateCreator.serialize();
+    private static String createUserDataXml() throws IOException, ParseException {
+        return IOUtils.toString(new UserDataServiceBean().getUserdataXml(System.in));
     }
 
     private static String createAstVisualization() throws IOException, ParseException {
@@ -100,25 +86,6 @@ public final class HitAssTools {
         return prettyPrinter.serialize();
     }
 
-    private static String createDataXml(List<String> args) {
-        // search args for file names of velocity template and data file.
-        try {
-            checkArgument(args.contains("m"));
-            checkArgument(args.contains("t"));
-            checkArgument(args.contains("d"));
-            checkArgument(args.size() == 5);
-
-            String dataFileName = args.get(1);
-            String templateFileName = args.get(3);
-            return new XmlDataMerger().merge(new BufferedInputStream(new FileInputStream(args.get(3))),
-                    new BufferedInputStream(new FileInputStream(args.get(1))));
-        } catch (IllegalArgumentException e) {
-            return "Usage: hitAssTools -m -t templateFileName -d dataFileName";
-        } catch (IOException e) {
-            return StringUtils.join("Could not process input files, because: ", e.getMessage());
-        }
-    }
-
     private static void printHelp() {
         logger.info(StringUtils.join("Printing help and version information. Configured encoding is ", System.getProperty("hit2ass.clou.encoding"), "."));
         printVersion();
@@ -129,9 +96,10 @@ public final class HitAssTools {
         System.out.println("  -h  print this help.");
         System.out.println("  -v  print version information.");
         System.out.println("  -a  create AST diagram for the Clou component in dot format. Input data is read from the std input.");
-        System.out.println("  -x  create DocFamily data XML-template for the given CLOU component.");
-        System.out.println("  -m  merge HIT/CLOU input data with XML-template to create DocFamily data XML.");
-        System.out.println("      hitAssTools -m -t xmlTemplate -d dataFile");
+        System.out.println("  -x  create DocFamily userdata XML from HIT/CLOU input text file.");
+        System.out.println("      usage: cat hitclou_Order60071.txt | hitAssTools -x > userdata_Order60071.xml");
+        System.out.println("      To get intented XML output you can use xmllint with the pipe redirect symbol - :");
+        System.out.println("      cat OrderData.dat | hitAssTools.sh -x | xmllint --format -");
         System.out.println("  -w  create DocFamily workspace from HIT/CLOU Baustein.");
     }
 

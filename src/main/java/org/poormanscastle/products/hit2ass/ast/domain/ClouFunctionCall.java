@@ -1,6 +1,7 @@
 package org.poormanscastle.products.hit2ass.ast.domain;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -11,6 +12,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Created by georg.federmann@poormanscastle.com on 5/3/16.
  */
 public class ClouFunctionCall extends AbstractExpression<Object> {
+
+    final static Logger logger = Logger.getLogger(ClouFunctionCall.class);
 
     private final String functionName;
 
@@ -28,7 +31,10 @@ public class ClouFunctionCall extends AbstractExpression<Object> {
 
     @Override
     public String toXPathString() {
-        throw new UnsupportedOperationException("yet to be implemented.");
+        logger.warn(StringUtils.join(
+                "Returning dummy value 0 for not yet implemented FunctionCall feature for this function:\n",
+                this.toString()));
+        return "0";
     }
 
     public String getFunctionName() {

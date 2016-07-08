@@ -130,14 +130,10 @@ public final class IRTransformer extends AstItemVisitorAdapter {
      */
     @Override
     public void visitDynamicValue(DynamicValue dynamicValue) {
-        // TODO test quick fix: because there are potentially multiple variables with same name in HIT/CLOU components,
-        // this will result in multiple elements with same name in the data XML, and thus break the var:read and var:write
-        // functions, because they expect exactly one element. So, as a quick fix I've added [1] to the end of the xpath
-        // to get a "working" version and to further explore this matter.
         containerStack.peek().addContent(new DynamicContentReference(
                 StringUtils.join("Assignment: ", dynamicValue.getName()),
-                StringUtils.join("var:write('", dynamicValue.getName(), "', /xml/", dynamicValue.getName(), "[1])")
-        ));
+                StringUtils.join("var:write('", dynamicValue.getName(),
+                        "', /UserData/payload/line[@lineNr = var:read('hit2ass_xml_sequence')]) | var:write('hit2ass_xml_sequence', var:read('hit2ass_xml_sequence') + 1)")));
     }
 
     @Override
@@ -167,7 +163,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     @Override
     public void visitIncludeBausteinStatement(IncludeBausteinStatement includeBausteinStatement) {
         if (logger.isInfoEnabled()) {
-            logger.info(StringUtils.join("Found IncludeBausteinStatement ", includeBausteinStatement.toString()));
+            logger.info(StringUtils.join("Found IncludeBausteinStatement ", includeBausteinStatement.getPathToBaustein()));
         }
     }
 }

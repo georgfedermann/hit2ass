@@ -31,8 +31,8 @@ public final class ConditionalStatement extends AbstractAstItem implements State
         this.elseElement = elseElement;
     }
 
-    public ConditionalStatement(Expression expression, ClouBausteinElement thenElement, ClouBausteinElement elseElement) {
-        this(expression.getCodePosition(), expression, thenElement, elseElement);
+    public ConditionalStatement(Expression condition, ClouBausteinElement thenElement, ClouBausteinElement elseElement) {
+        this(condition.getCodePosition(), condition, thenElement, elseElement);
     }
 
     public Expression getCondition() {

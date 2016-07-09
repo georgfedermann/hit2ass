@@ -1,8 +1,8 @@
 package org.poormanscastle.products.hit2ass.ast.domain;
 
-import org.poormanscastle.products.hit2ass.exceptions.HitAssTransformerException;
 import com.google.common.base.Preconditions;
 import org.apache.commons.lang3.StringUtils;
+import org.poormanscastle.products.hit2ass.exceptions.HitAssTransformerException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +16,13 @@ public enum BinaryOperator implements Operator {
     MINUS("-", OperatorCategory.ADDITIVE_ARITHMETIC, Type.INT, Type.DOUBLE),
     TIMES("*", OperatorCategory.MULTIPLICATIVE_ARITHMETIC, Type.INT, Type.DOUBLE),
     DIV("div", OperatorCategory.MULTIPLICATIVE_ARITHMETIC, Type.INT, Type.DOUBLE),
-    STRING_CONCAT(".", OperatorCategory.ADDITIVE_TEXT, Type.TEXT),
+    STRING_CONCAT("&", OperatorCategory.ADDITIVE_TEXT, Type.TEXT) {
+        @Override
+        public String toXPathString(Expression... operands) {
+            Preconditions.checkArgument(operands.length == 2);
+            return StringUtils.join("concat( ", operands[0].toXPathString(), ", ", operands[1].toXPathString(), " ) ");
+        }
+    },
     XOR("xor", OperatorCategory.BITWISE_OR, Type.BOOLEAN),
     AND("and", OperatorCategory.LOGICAL_AND, Type.BOOLEAN),
     OR("or", OperatorCategory.LOGICAL_OR, Type.BOOLEAN),

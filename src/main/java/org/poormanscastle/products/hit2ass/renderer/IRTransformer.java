@@ -80,6 +80,8 @@ public final class IRTransformer extends AstItemVisitorAdapter {
             transformer.containerStack.push(new IfThenParagraph("THEN"));
             conditionalStatement.getThenElement().accept(transformer);
             ifParagraph.addContent(transformer.containerStack.pop());
+        } else {
+            ifParagraph.addContent(new IfThenParagraph("THEN EMPTY"));
         }
         if (conditionalStatement.getElseElement() != null) {
             IRTransformer transformer = new IRTransformer();

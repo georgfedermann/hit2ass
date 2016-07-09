@@ -1,10 +1,12 @@
 package org.poormanscastle.products.hit2ass.renderer;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
+import org.poormanscastle.products.hit2ass.ast.domain.AssignmentStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.AstItemVisitorAdapter;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouBausteinImpl;
 import org.poormanscastle.products.hit2ass.ast.domain.ConditionalStatement;
@@ -70,7 +72,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     @Override
     public boolean proceedWithConditionalStatement(ConditionalStatement conditionalStatement) {
         IfThenElseParagraph ifParagraph = new IfThenElseParagraph(StringUtils.join(
-                "IF-", conditionalStatement.getCondition().toXPathString()), conditionalStatement.getCondition());
+                "IF-", StringEscapeUtils.escapeXml10(conditionalStatement.getCondition().toXPathString())), conditionalStatement.getCondition());
         containerStack.peek().addContent(ifParagraph);
 
         if (conditionalStatement.getThenElement() != null) {
@@ -130,13 +132,18 @@ public final class IRTransformer extends AstItemVisitorAdapter {
      */
     @Override
     public void visitDynamicValue(DynamicValue dynamicValue) {
-        // TODO test quick fix: because there are potentially multiple variables with same name in HIT/CLOU components,
-        // this will result in multiple elements with same name in the data XML, and thus break the var:read and var:write
-        // functions, because they expect exactly one element. So, as a quick fix I've added [1] to the end of the xpath
-        // to get a "working" version and to further explore this matter.
         containerStack.peek().addContent(new DynamicContentReference(
-                StringUtils.join("Assignment: ", dynamicValue.getName()),
-                StringUtils.join("var:write('", dynamicValue.getName(), "', /xml/", dynamicValue.getName(), "[1])")
+                StringUtils.join("Assign from Userdata XML: ", dynamicValue.getName()),
+                StringUtils.join("var:write('", dynamicValue.getName(),
+                        "', /UserData/payload/line[@lineNr = var:read('hit2ass_xml_sequence')]) | var:write('hit2ass_xml_sequence', var:read('hit2ass_xml_sequence') + 1)")));
+    }
+
+    @Override
+    public void visitAssignmentStatement(AssignmentStatement assignmentStatement) {
+        containerStack.peek().addContent(new DynamicContentReference(
+                StringUtils.join("Assignment: ", assignmentStatement.getId()),
+                StringUtils.join("var:write('", assignmentStatement.getId(),
+                        "', ", assignmentStatement.getExpression().toXPathString(), ")")
         ));
     }
 
@@ -167,7 +174,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     @Override
     public void visitIncludeBausteinStatement(IncludeBausteinStatement includeBausteinStatement) {
         if (logger.isInfoEnabled()) {
-            logger.info(StringUtils.join("Found IncludeBausteinStatement ", includeBausteinStatement.toString()));
+            logger.info(StringUtils.join("Found IncludeBausteinStatement ", includeBausteinStatement.getPathToBaustein()));
         }
     }
 }

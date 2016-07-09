@@ -6,6 +6,10 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
+ * Represents HIT / CLOU statement #= as in
+ * <p>
+ * #= bauname "UE108"
+ * <p>
  * Created by georg.federmann@poormanscastle.com on 4/15/16.
  */
 public class AssignmentStatement extends AbstractAstItem implements Statement {
@@ -48,7 +52,7 @@ public class AssignmentStatement extends AbstractAstItem implements Statement {
     @Override
     public void accept(AstItemVisitor visitor) {
         visitor.visitAssignmentStatement(this);
-        if(expression.handleProceedWith(visitor)){
+        if (expression.handleProceedWith(visitor)) {
             expression.accept(visitor);
         }
         visitor.leaveAssignmentStatement(this);

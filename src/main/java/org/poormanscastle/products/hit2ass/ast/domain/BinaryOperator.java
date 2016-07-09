@@ -20,10 +20,10 @@ public enum BinaryOperator implements Operator {
     XOR("xor", OperatorCategory.BITWISE_OR, Type.BOOLEAN),
     AND("and", OperatorCategory.LOGICAL_AND, Type.BOOLEAN),
     OR("or", OperatorCategory.LOGICAL_OR, Type.BOOLEAN),
-    LT("&lt;", OperatorCategory.RELATIONAL, Type.INT, Type.DOUBLE),
-    LTE("&lt;=", OperatorCategory.RELATIONAL, Type.INT, Type.DOUBLE),
-    GT("&gt;", OperatorCategory.RELATIONAL, Type.INT, Type.DOUBLE),
-    GTE("&gt;=", OperatorCategory.RELATIONAL, Type.INT, Type.DOUBLE),
+    LT("<", OperatorCategory.RELATIONAL, Type.INT, Type.DOUBLE),
+    LTE("<=", OperatorCategory.RELATIONAL, Type.INT, Type.DOUBLE),
+    GT(">", OperatorCategory.RELATIONAL, Type.INT, Type.DOUBLE),
+    GTE(">=", OperatorCategory.RELATIONAL, Type.INT, Type.DOUBLE),
     EQ("=", OperatorCategory.EQUALITY, Type.INT, Type.DOUBLE, Type.TEXT, Type.BOOLEAN),
     NEQ("!=", OperatorCategory.EQUALITY, Type.INT, Type.DOUBLE, Type.BOOLEAN, Type.TEXT);
 

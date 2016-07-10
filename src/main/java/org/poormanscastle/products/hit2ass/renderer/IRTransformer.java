@@ -16,6 +16,7 @@ import org.poormanscastle.products.hit2ass.ast.domain.GlobalDeclarationStatement
 import org.poormanscastle.products.hit2ass.ast.domain.HitCommandStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.IncludeBausteinStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.LocalDeclarationStatement;
+import org.poormanscastle.products.hit2ass.ast.domain.MacroCallStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.PrintStatement;
 import org.poormanscastle.products.hit2ass.renderer.domain.CarriageReturn;
 import org.poormanscastle.products.hit2ass.renderer.domain.Container;
@@ -110,6 +111,20 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     }
 
     @Override
+    public void visitMacroCallStatement(MacroCallStatement macroCallStatement) {
+        // TODO short-cut: implement a set of specific MACRO definitions.
+        // In this implementation you're restricted to usage of those macros.
+        // This also impacts how you can use functions textattribut, absatzattribut
+        // and sonderzeichenzeile, since they are only indirectly implemented by
+        // the algorithms implemented or quoted in this method.
+        if (macroCallStatement.getMacroId().equals("FEEIN")) {
+            fontWeight = FontWeight.BOLD;
+        } else if (macroCallStatement.getMacroId().equals("FEAUS")) {
+            fontWeight = FontWeight.INHERIT;
+        }
+    }
+
+    @Override
     public void visitHitCommandStatement(HitCommandStatement hitCommandStatement) {
         if (logger.isInfoEnabled()) {
             logger.info(StringUtils.join("Found HitCommandStatement ", hitCommandStatement.toString(),
@@ -171,8 +186,6 @@ public final class IRTransformer extends AstItemVisitorAdapter {
 
     @Override
     public void visitPrintStatement(PrintStatement printStatement) {
-//        containerStack.peek().addContent(new DynamicContentReference(printStatement.getSymbolId(),
-//                StringUtils.join("/xml/", printStatement.getSymbolId())));
         containerStack.peek().addContent(new DynamicContentReference(printStatement.getSymbolId(),
                 StringUtils.join("var:read('", printStatement.getSymbolId(), "')"), fontWeight));
     }

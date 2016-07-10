@@ -6,6 +6,10 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * Created by georg.federmann@poormanscastle.com on 4/19/16.
+ * @deprecated as far as I oversee things, this actually is the #D statement.
+ * the macro is created like a string variable whose content is executable by some
+ * HIT / CLOU processor. The macro is executed by stating the variable name in
+ * a #$ statement.
  */
 public class MacroDefinitionStatement extends AbstractAstItem implements Statement {
 

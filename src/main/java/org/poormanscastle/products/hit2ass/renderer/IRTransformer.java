@@ -16,11 +16,13 @@ import org.poormanscastle.products.hit2ass.ast.domain.GlobalDeclarationStatement
 import org.poormanscastle.products.hit2ass.ast.domain.HitCommandStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.IncludeBausteinStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.LocalDeclarationStatement;
+import org.poormanscastle.products.hit2ass.ast.domain.MacroCallStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.PrintStatement;
 import org.poormanscastle.products.hit2ass.renderer.domain.CarriageReturn;
 import org.poormanscastle.products.hit2ass.renderer.domain.Container;
 import org.poormanscastle.products.hit2ass.renderer.domain.DocumentVariable;
 import org.poormanscastle.products.hit2ass.renderer.domain.DynamicContentReference;
+import org.poormanscastle.products.hit2ass.renderer.domain.FontWeight;
 import org.poormanscastle.products.hit2ass.renderer.domain.IfElseParagraph;
 import org.poormanscastle.products.hit2ass.renderer.domain.IfThenElseParagraph;
 import org.poormanscastle.products.hit2ass.renderer.domain.IfThenParagraph;
@@ -43,6 +45,8 @@ import java.util.Stack;
 public final class IRTransformer extends AstItemVisitorAdapter {
 
     private final static Logger logger = Logger.getLogger(IRTransformer.class);
+
+    private FontWeight fontWeight = FontWeight.INHERIT;
 
     /**
      * While iterating over the HIT/CLOU AST, the renderer will keep a reference
@@ -69,6 +73,20 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         Velocity.init();
     }
 
+    /**
+     * At different places, the transformer will spin off child transformers
+     * that will transform certain subtrees like the bodies of THEN statements
+     * etc. To keep configurations like fontweight, the spin-off transformer will
+     * inherit its parents configuration.
+     *
+     * @return
+     */
+    private IRTransformer spinOff() {
+        IRTransformer transformer = new IRTransformer();
+        transformer.fontWeight = fontWeight;
+        return transformer;
+    }
+
     @Override
     public boolean proceedWithConditionalStatement(ConditionalStatement conditionalStatement) {
         IfThenElseParagraph ifParagraph = new IfThenElseParagraph(StringUtils.join(
@@ -76,7 +94,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         containerStack.peek().addContent(ifParagraph);
 
         if (conditionalStatement.getThenElement() != null) {
-            IRTransformer transformer = new IRTransformer();
+            IRTransformer transformer = spinOff();
             transformer.containerStack.push(new IfThenParagraph("THEN"));
             conditionalStatement.getThenElement().accept(transformer);
             ifParagraph.addContent(transformer.containerStack.pop());
@@ -84,12 +102,26 @@ public final class IRTransformer extends AstItemVisitorAdapter {
             ifParagraph.addContent(new IfThenParagraph("THEN EMPTY"));
         }
         if (conditionalStatement.getElseElement() != null) {
-            IRTransformer transformer = new IRTransformer();
+            IRTransformer transformer = spinOff();
             transformer.containerStack.push(new IfElseParagraph("ELSE"));
             conditionalStatement.getElseElement().accept(transformer);
             ifParagraph.addContent(transformer.containerStack.pop());
         }
         return false;
+    }
+
+    @Override
+    public void visitMacroCallStatement(MacroCallStatement macroCallStatement) {
+        // TODO short-cut: implement a set of specific MACRO definitions.
+        // In this implementation you're restricted to usage of those macros.
+        // This also impacts how you can use functions textattribut, absatzattribut
+        // and sonderzeichenzeile, since they are only indirectly implemented by
+        // the algorithms implemented or quoted in this method.
+        if (macroCallStatement.getMacroId().equals("FEEIN")) {
+            fontWeight = FontWeight.BOLD;
+        } else if (macroCallStatement.getMacroId().equals("FEAUS")) {
+            fontWeight = FontWeight.INHERIT;
+        }
     }
 
     @Override
@@ -137,7 +169,9 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         containerStack.peek().addContent(new DynamicContentReference(
                 StringUtils.join("Assign from Userdata XML: ", dynamicValue.getName()),
                 StringUtils.join("var:write('", dynamicValue.getName(),
-                        "', /UserData/payload/line[@lineNr = var:read('hit2ass_xml_sequence')]) | var:write('hit2ass_xml_sequence', var:read('hit2ass_xml_sequence') + 1)")));
+                        "', /UserData/payload/line[@lineNr = var:read('hit2ass_xml_sequence')]) | var:write('hit2ass_xml_sequence', var:read('hit2ass_xml_sequence') + 1)"),
+                fontWeight)
+        );
     }
 
     @Override
@@ -145,21 +179,20 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         containerStack.peek().addContent(new DynamicContentReference(
                 StringUtils.join("Assignment: ", assignmentStatement.getId()),
                 StringUtils.join("var:write('", assignmentStatement.getId(),
-                        "', ", assignmentStatement.getExpression().toXPathString(), ")")
+                        "', ", assignmentStatement.getExpression().toXPathString(), ")"),
+                fontWeight
         ));
     }
 
     @Override
     public void visitPrintStatement(PrintStatement printStatement) {
-//        containerStack.peek().addContent(new DynamicContentReference(printStatement.getSymbolId(),
-//                StringUtils.join("/xml/", printStatement.getSymbolId())));
         containerStack.peek().addContent(new DynamicContentReference(printStatement.getSymbolId(),
-                StringUtils.join("var:read('", printStatement.getSymbolId(), "')")));
+                StringUtils.join("var:read('", printStatement.getSymbolId(), "')"), fontWeight));
     }
 
     @Override
     public void visitFixedText(FixedText fixedText) {
-        containerStack.peek().addContent(new Text("text", fixedText.getText()));
+        containerStack.peek().addContent(new Text("text", fixedText.getText(), fontWeight));
     }
 
     @Override

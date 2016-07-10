@@ -1,9 +1,9 @@
 package org.poormanscastle.products.hit2ass.renderer.domain;
 
-import org.poormanscastle.products.hit2ass.renderer.VelocityHelper;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
+import org.poormanscastle.products.hit2ass.renderer.VelocityHelper;
 
 import java.io.StringWriter;
 
@@ -16,10 +16,12 @@ public final class Text implements Content {
 
     private final String name;
     private final String text;
+    private final FontWeight fontWeight;
 
-    public Text(String name, String text) {
+    public Text(String name, String text, FontWeight fontWeight) {
         this.name = name;
         this.text = text;
+        this.fontWeight = fontWeight;
     }
 
     public String getName() {
@@ -35,6 +37,7 @@ public final class Text implements Content {
         VelocityContext context = VelocityHelper.getVelocityContext();
         context.put("textName", name);
         context.put("textContent", text);
+        context.put("fontWeight", fontWeight.getValue());
         Template template = Velocity.getTemplate("/velocity/TemplateText.vlt");
         StringWriter stringWriter = new StringWriter();
         template.merge(context, stringWriter);

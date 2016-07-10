@@ -1,2 +1,15 @@
 #
 #*  This CLOU component trains the system to process function calls. #
+
+#D firstName "James"
+#D lastName "Liquidmore"
+
+#D FEEIN      "#$ textattribut(\"FE\", \"ein\")"
+
+Some text is plain,
+#$ FEEIN
+and some is bold.
+#$ FEAUS
+#^3"RETURN"
+
+And so it ends.

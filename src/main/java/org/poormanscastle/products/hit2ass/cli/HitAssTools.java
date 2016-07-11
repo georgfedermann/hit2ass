@@ -10,9 +10,9 @@ import org.poormanscastle.products.hit2ass.parser.javacc.TokenMgrError;
 import org.poormanscastle.products.hit2ass.prettyprint.PrettyPrintVisitor;
 import org.poormanscastle.products.hit2ass.renderer.IRTransformer;
 import org.poormanscastle.products.hit2ass.renderer.xmlcreator.UserDataServiceBean;
-import org.poormanscastle.products.hit2ass.renderer.xmlcreator.XmlCreator;
 import org.poormanscastle.products.hit2ass.transformer.ClouBausteinMergerVisitor;
 import org.poormanscastle.products.hit2ass.transformer.FixedTextMerger;
+import org.poormanscastle.products.hit2ass.transformer.InsertBlanksVisitor;
 
 import java.io.IOException;
 
@@ -61,11 +61,10 @@ public final class HitAssTools {
             ClouBaustein baustein = new HitAssAstParser(System.in, System.getProperty("hit2ass.clou.encoding")).CB();
             baustein.accept(new ClouBausteinMergerVisitor());
             baustein.accept(new FixedTextMerger());
+            baustein.accept(new InsertBlanksVisitor());
             IRTransformer irTransformer = new IRTransformer();
             baustein.accept(irTransformer);
             return irTransformer.getWorkspace().getContent();
-//            SymbolTableCreatorVisitor symbolTableCreator = new SymbolTableCreatorVisitor();
-//            program.accept(symbolTableCreator);
         } catch (ParseException | TokenMgrError e) {
             return StringUtils.join("Parser error: ", e.getMessage());
         }
@@ -81,6 +80,7 @@ public final class HitAssTools {
         ClouBaustein clouBaustein = new HitAssAstParser(System.in, System.getProperty("hit2ass.clou.encoding")).CB();
         clouBaustein.accept(new ClouBausteinMergerVisitor());
         clouBaustein.accept(new FixedTextMerger());
+        clouBaustein.accept(new InsertBlanksVisitor());
         PrettyPrintVisitor prettyPrinter = new PrettyPrintVisitor();
         clouBaustein.accept(prettyPrinter);
         return prettyPrinter.serialize();

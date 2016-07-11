@@ -111,7 +111,7 @@ xpathExpression=/xml/gender/text()='f'
 TemplateIfThenPage.vlt | com.assentis.cockpit.bo.BoIfThenPage
 
 
-TemplateDocumentVariablee.vlt | com.assentis.cockpit.bo.BoDocumentVariable
+TemplateDocumentVariable.vlt | com.assentis.cockpit.bo.BoDocumentVariable
 ==========================================================================
 This is appearently a special DocFamily XSLT extension (?)
 A variable abstraction, that enables creating, setting and reading of variables within DocFamily Workspaces.

@@ -11,7 +11,7 @@ package org.poormanscastle.products.hit2ass.ast.domain;
  * <p>
  * Created by georg.federmann@poormanscastle.com on 4/28/16.
  */
-public class PrintStatement extends AbstractAstItem implements Statement {
+public final class PrintStatement extends AbstractAstItem implements Statement {
 
     private final String symbolId;
 

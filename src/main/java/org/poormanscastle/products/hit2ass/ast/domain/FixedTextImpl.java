@@ -31,7 +31,7 @@ final class FixedTextImpl extends AbstractAstItem implements FixedText {
 
     @Override
     public void reset() {
-        textBuffer.delete(0, textBuffer.length());
+        textBuffer.setLength(0);
     }
 
     @Override

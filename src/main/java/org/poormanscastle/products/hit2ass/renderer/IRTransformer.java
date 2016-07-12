@@ -9,6 +9,7 @@ import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.poormanscastle.products.hit2ass.ast.domain.AssignmentStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.AstItemVisitorAdapter;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouBausteinImpl;
+import org.poormanscastle.products.hit2ass.ast.domain.CodePosition;
 import org.poormanscastle.products.hit2ass.ast.domain.ConditionalStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.DynamicValue;
 import org.poormanscastle.products.hit2ass.ast.domain.FixedText;
@@ -17,7 +18,9 @@ import org.poormanscastle.products.hit2ass.ast.domain.HitCommandStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.IncludeBausteinStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.LocalDeclarationStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.MacroCallStatement;
+import org.poormanscastle.products.hit2ass.ast.domain.NumExpression;
 import org.poormanscastle.products.hit2ass.ast.domain.PrintStatement;
+import org.poormanscastle.products.hit2ass.ast.domain.SectionStatement;
 import org.poormanscastle.products.hit2ass.renderer.domain.CarriageReturn;
 import org.poormanscastle.products.hit2ass.renderer.domain.Container;
 import org.poormanscastle.products.hit2ass.renderer.domain.DocumentVariable;
@@ -146,6 +149,11 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     public void visitGlobalDeclarationStatement(GlobalDeclarationStatement globalDeclarationStatement) {
         containerStack.peek().addContent(new DocumentVariable(globalDeclarationStatement.getId(),
                 StringUtils.join("'", globalDeclarationStatement.getId(), "'"), globalDeclarationStatement.getExpression().toXPathString()));
+    }
+
+    @Override
+    public void visitSectionStatement(SectionStatement sectionStatement) {
+        containerStack.peek().addContent(new CarriageReturn("NL", new NumExpression(CodePosition.createZeroPosition(), 1)));
     }
 
     /**

@@ -53,6 +53,19 @@ public class IRTransformerTest {
     }
 
     @Test
+    public void testSection() throws Exception{
+        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("SectionBreak"), "ISO8859_1");
+        baustein = parser.CB();
+        baustein.accept(merger);
+        baustein.accept(blanksVisitor);
+        baustein.accept(irTransformer);
+        Workspace workspace = irTransformer.getWorkspace();
+        assertNotNull(workspace);
+        String acrString = workspace.getContent();
+        assertFalse(StringUtils.isBlank(acrString));
+    }
+
+    @Test
     public void testSimpleIfLetter() throws Exception {
         parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("/sampleDocuments/SimpleIfLetter/", "SimpleIfLetter", "clou"), "ISO8859-1");
         baustein = parser.CB();

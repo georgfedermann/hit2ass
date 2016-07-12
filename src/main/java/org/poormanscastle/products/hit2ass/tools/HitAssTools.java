@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.poormanscastle.products.hit2ass.ast.domain.ExpressionList;
 import org.poormanscastle.products.hit2ass.exceptions.ClouBausteinIoException;
 
+import java.awt.event.ActionEvent;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -37,6 +38,18 @@ public final class HitAssTools {
                     StringUtils.join(path, path.endsWith("/") ? "" : "/", bausteinName)))));
         } catch (IOException e) {
             throw new ClouBausteinIoException(StringUtils.join("Could not open baustein ", path, bausteinName, ", because: ", e.getMessage(), e));
+        }
+    }
+
+    public void showItemList(ArrayList<Item> arrayList){
+        for(int i = 0; i < arrayList.size(); i++){
+            JButton but = new JButton(arrayList.get(i).getName());
+            getContentPane().add(but);
+            but.addActionListener(new ActionListener(){
+               public void actionPerformed(ActionEvent event){
+                   String itemName = event.getActionCommand();
+               }
+            });
         }
     }
 

@@ -1,6 +1,6 @@
 #set($pageId=${docFamUtils.CockpitElementId})
 #set($variableCollectionId=${docFamUtils.CockpitElementId})
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
 <Cockpit version="5.10.03.072744" export="07.05.2016 16:27:05">
   <!--Assentis DocDesign workspace - do not modify this file com any time!-->
   <Object id="${docFamUtils.CockpitElementId}" name="${workspaceName}" enabled="True" type="com.assentis.cockpit.bo.BoWorkspace">
@@ -727,6 +727,40 @@
               <Relation name="FootnoteSeparation" refTo=""/>
             </Relations>
           </Properties>
+          <Object id="${docFamUtils.CockpitElementId}" name="hit2ass_xml_sequence" enabled="True" type="com.assentis.cockpit.bo.BoDocumentVariable">
+              <Properties>
+                  <Attributes>
+                      <!-- Name is an XPath expression. Thus, a string value has to be quoted, like in 'name'. -->
+                      <Attribute name="DFVariableName">
+                          <![CDATA['hit2ass_xml_sequence']]>
+                      </Attribute>
+                      <Attribute name="DFVariableValue">
+                          <Object id="" name="" enabled="True"
+                              type="com.assentis.cockpit.bo.BoXPathTextVariable">
+                              <Properties>
+                                  <Attributes>
+                                      <Attribute name="IsXPath">
+                                      <![CDATA[True]]>
+                                      </Attribute>
+                                      <Attribute name="XPath">
+                                      <![CDATA[1]]>
+                                      </Attribute>
+                                      <Attribute name="XPathWithName">
+                                      <![CDATA[]]>
+                                      </Attribute>
+                                  </Attributes>
+                                  <Relations>
+                                      <Relation name="XPathTextVariable" refTo=""/>
+                                      <ManyRelation name="QueryXPathTextVariable"/>
+                                  </Relations>
+                              </Properties>
+                          </Object>
+                      </Attribute>
+                  </Attributes>
+                  <Relations/>
+              </Properties>
+          </Object>
+
 ${content}
         </Object>
       </Object>

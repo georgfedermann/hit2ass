@@ -78,6 +78,14 @@ Configurables:
 -------------------------------------
 linebreakName=newline
 
+TemplateNewLineHitcommand.vlt
+=============================
+Will probably replace TemplateCReturn.vlt.
+Is more flexible. An XPath expression hast to be given which will be
+evaluated by the XSLT transformer during document processing.
+Configurables:
+-------------------------------------
+upperLimitExpression=var:read('upperLimit')     the value is anything returned by the toXPathString() method when called on the expression
 
 TemplateDynamicContentReference.vlt
 =====================================
@@ -103,11 +111,12 @@ xpathExpression=/xml/gender/text()='f'
 TemplateIfThenPage.vlt | com.assentis.cockpit.bo.BoIfThenPage
 
 
-TemplateDocumentVaribale.vlt | com.assentis.cockpit.bo.BoDocumentVariable
-=========================================================================
+TemplateDocumentVariable.vlt | com.assentis.cockpit.bo.BoDocumentVariable
+==========================================================================
 This is appearently a special DocFamily XSLT extension (?)
 A variable abstraction, that enables creating, setting and reading of variables within DocFamily Workspaces.
 Configurables:
+-------------------------------------
 name=weight             the name of the BoDocumentVariable Object in the DocDesign workspace
 variableName='weight'   the name of the variable. This is an XPath expression, thus string values have to be
                         quoted like in 'weight' or 'name'.
@@ -115,8 +124,19 @@ variableValue='68px'    the value of the variable. Again, this is an XPath expre
                         quoted as in '68px' or 'Connor'.
 
 
-
-
+TemplateNewLineHitCommand.vlt | com.assentis.cockpit.bo.BoAggregationParagraph holding
+com.assentis.cockpit.bo.BoCReturn and com.assentis.cockpit.bo.BoElementRepetition
+======================================================================================
+In HIT/CLOU there is an VERSTAERKER option and a NewLine Command.
+By given a certain number of VERSTAERKER one can say how many NewLine elements shall be added.
+This TemplatNewLineHitCommand models this behavior by constructing a DocDesign Aggregation holding
+a CReturn and a Repetition element.
+Configurables:
+-------------------------------------
+repetitionExpression=5  this is the number of repetitions for the 'newline character'.
+                        the given value is an xpath expression which will be evaluated by the xslt transformer.
+                        the expression typically should be obtained using the toXPathString() method of some Expression
+                        given here in the HIT/CLOU component.
 
 
 

@@ -1,0 +1,16 @@
+#
+#*  This simple HIT/CLOU Baustein trains the system to deal with section breaks.    #
+
+#D firstName "Jim"
+#D lastName "Raynor"
+#D gender "m"
+#D shoppingItem "Adler"
+#D numberOfNewLines 5
+
+Sehr geehrter Herr #> firstName #> lastName@
+
+Wir danken Ihnen für Ihre Bestellung und bitten Sie um Ihre Zurkenntnisnahme:@
+Ihre Bestellung wird nicht ausgeführt.
+#^3"RETURN"
+Aufwiederhören.
+End so it ends.

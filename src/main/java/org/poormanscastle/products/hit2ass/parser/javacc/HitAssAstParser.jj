@@ -102,6 +102,7 @@ TOKEN : {
     < THEN : "/J" > : TXT_MODE |
     < ELSE : "/N" > : TXT_MODE |
     < ENDIF : "#" > : TXT_MODE |            //
+    < SB : "@" > : TXT_MODE |          // represents a section break. TODO when adapting this tool to a project, find a character that fits your document base and configure procon accordingly
     < WS : "#S" > : COMMAND_MODE_IF |       // While loop statement
     < FS : "#W" > : COMMAND_MODE_FOR |       // FOR loop, fixed number of repetitions; a new mode is in order because FOR loops have their own syntax, thus mode switches in command_mode_for occur differently than it's the case in command_mode_if
     < SS : "#C" > : COMMAND_MODE_SS |       // Switch statement
@@ -125,7 +126,7 @@ TOKEN : {
 
 /*  Fixed text mode */
 <TXT_MODE> TOKEN : {
-    <FIXED_TEXT : (~["\n", "\r", "\t", " ", "#"])+ >
+    <FIXED_TEXT : (~["\n", "\r", "\t", " ", "#", "@" ])+ >
 }
 
 <TXT_MODE> SKIP : {
@@ -161,6 +162,7 @@ TOKEN : {
     "\n" | "\r" | "\t" | " "
 }
 <COMMAND_MODE_PS> TOKEN : {
+    <PS_SB : "@" > : TXT_MODE |
     <PS_ID : [ "_", "a"-"z", "A"-"Z" ]([ "_", "a"-"z", "A"-"Z", "0"-"9" ])* > : TXT_MODE
 }
 <COMMAND_MODE_SS> SKIP : {
@@ -576,6 +578,11 @@ ClouBausteinElement CBES() :
     {
         return element;
     }
+    |
+    element = SB()
+    {
+        return element;
+    }
 }
 
 ForStatement FOR() :
@@ -771,6 +778,16 @@ PrintStatement PS() :
         return new PrintStatement(CodePosition.createFromToken(idToken), idToken.image);
     }
 }
+
+SectionStatement SB() :
+{ Token sbToken; }
+{
+    (sbToken = <SB>| sbToken = <PS_SB>)
+    {
+        return new SectionStatement(CodePosition.createFromToken(sbToken));
+    }
+}
+
 AssignmentStatement AS() :
 { Token idToken; Expression expression; }
 {

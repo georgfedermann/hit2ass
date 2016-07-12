@@ -53,6 +53,20 @@ public class IRTransformerTest {
     }
 
     @Test
+    public void testSection() throws Exception {
+        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("SectionBreak"), "ISO8859_1");
+        baustein = parser.CB();
+        baustein.accept(merger);
+        baustein.accept(blanksVisitor);
+        baustein.accept(irTransformer);
+        Workspace workspace = irTransformer.getWorkspace();
+        assertNotNull(workspace);
+        String acrString = workspace.getContent();
+        assertFalse(StringUtils.isBlank(acrString));
+        assertEquals("Workspace{workspaceName='HitAssWorkspace', projectsName='HitAssProjects', projectName='HitAssProject', documentName='HitAssDocument', repeatingPageName='HitAssRepeatingPage', pageContentName='HitAssPageContent', contentContainer=Paragraph{contentElements=[DocumentVariable{variableName=''firstName'', variableValue=' 'Jim' '}, DocumentVariable{variableName=''lastName'', variableValue=' 'Raynor' '}, DocumentVariable{variableName=''gender'', variableValue=' 'm' '}, DocumentVariable{variableName=''shoppingItem'', variableValue=' 'Adler' '}, DocumentVariable{variableName=''numberOfNewLines'', variableValue='5'}, Text{name='text', text='Sehr geehrter Herr '}, DynamicContentReference{name='firstName', xpath='var:read('firstName')'}, Text{name='text', text=' '}, DynamicContentReference{name='lastName', xpath='var:read('lastName')'}, CarriageReturn{name='NL', repetitionExpression.toXPathString()='1'}, Text{name='text', text='Wir danken Ihnen für Ihre Bestellung und bitten Sie um Ihre Zurkenntnisnahme:'}, CarriageReturn{name='NL', repetitionExpression.toXPathString()='1'}, Text{name='text', text='Ihre Bestellung wird nicht ausgeführt.'}, CarriageReturn{name='NL', repetitionExpression.toXPathString()='3'}, Text{name='text', text='Aufwiederhören. End so it ends.'}, Text{name='text', text=''}]}}", workspace.toString());
+    }
+
+    @Test
     public void testSimpleIfLetter() throws Exception {
         parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("/sampleDocuments/SimpleIfLetter/", "SimpleIfLetter", "clou"), "ISO8859-1");
         baustein = parser.CB();

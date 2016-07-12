@@ -33,4 +33,12 @@ public class DocumentVariable extends AbstractContainer {
         context.put("variableValue", variableValue);
     }
 
+    @Override
+    public String toString() {
+        return "DocumentVariable{" +
+                "variableName='" + variableName + '\'' +
+                ", variableValue='" + variableValue + '\'' +
+                '}';
+    }
+
 }

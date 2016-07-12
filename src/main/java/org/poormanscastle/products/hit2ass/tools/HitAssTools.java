@@ -41,18 +41,6 @@ public final class HitAssTools {
         }
     }
 
-    public void showItemList(ArrayList<Item> arrayList){
-        for(int i = 0; i < arrayList.size(); i++){
-            JButton but = new JButton(arrayList.get(i).getName());
-            getContentPane().add(but);
-            but.addActionListener(new ActionListener(){
-               public void actionPerformed(ActionEvent event){
-                   String itemName = event.getActionCommand();
-               }
-            });
-        }
-    }
-
     /**
      * load a HIT / CLOU text component given its name.
      *

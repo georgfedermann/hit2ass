@@ -1,0 +1,47 @@
+<Object id="${docFamUtils.CockpitElementId}" name="${name}"
+    enabled="True" type="com.assentis.cockpit.bo.BoAggregationParagraph">
+    <Properties>
+        <Attributes/>
+        <Relations>
+            <Relation name="TabulatorsRel" refTo=""/>
+            <Relation name="EditorConfigFreetext" refTo=""/>
+            <Relation name="EditorConfigTextComponents" refTo=""/>
+        </Relations>
+    </Properties>
+    <Object id="20160629T142056.959-2768.631236.9331315.679"
+        name="Repetition" enabled="True"
+        type="com.assentis.cockpit.bo.BoElementRepetition">
+        <Properties>
+            <Attributes>
+                <Attribute name="Notes"><![CDATA[]]></Attribute>
+                <Attribute name="XPathTextVariable">
+                    <Object id="" name="" enabled="True"
+                        type="com.assentis.cockpit.bo.BoXPathTextVariable">
+                        <Properties>
+                          <Attributes>
+                          <Attribute name="IsXPath"
+                          ><![CDATA[True]]></Attribute>
+                          <Attribute name="XPath"
+                          ><![CDATA[for $n in 1 to ${repetitionExpression} return .]]></Attribute>
+                          <Attribute name="XPathWithName"
+                          ><![CDATA[]]></Attribute>
+                          </Attributes>
+                          <Relations>
+                          <Relation name="XPathTextVariable" refTo=""/>
+                          <ManyRelation name="QueryXPathTextVariable"/>
+                          </Relations>
+                        </Properties>
+                    </Object>
+                </Attribute>
+                <Attribute name="DoSort"><![CDATA[False]]></Attribute>
+                <Attribute name="SortExpression"><![CDATA[./.]]></Attribute>
+                <Attribute name="Order"><![CDATA[ascending]]></Attribute>
+                <Attribute name="CaseOrder"
+                    ><![CDATA[upper-first]]></Attribute>
+                <Attribute name="TextOrNumber"><![CDATA[text]]></Attribute>
+            </Attributes>
+            <Relations/>
+        </Properties>
+    </Object>
+    ${content}
+</Object>

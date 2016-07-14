@@ -1,14 +1,16 @@
 package org.poormanscastle.products.hit2ass.renderer.domain;
 
-import org.poormanscastle.products.hit2ass.ast.domain.Expression;
-import org.poormanscastle.products.hit2ass.renderer.VelocityHelper;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
+import org.poormanscastle.products.hit2ass.ast.domain.Expression;
+import org.poormanscastle.products.hit2ass.renderer.VelocityHelper;
 
 import java.io.StringWriter;
 
 /**
+ * This is the command for adding a new line into the text flow.
+ * <p>
  * Represents the type com.assentis.cockpit.bo.BoCReturn.
  * <p>
  * Created by georg.federmann@poormanscastle.com on 5/9/16.

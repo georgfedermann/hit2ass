@@ -173,8 +173,11 @@ public final class IRTransformer extends AstItemVisitorAdapter {
 
     @Override
     public void visitGlobalListDeclarationStatement(GlobalListDeclarationStatement globalListDeclarationStatement) {
+        // add list declaration statement
         containerStack.peek().addContent(new ListDeclaration(StringUtils.join("Listdeclaration - ", globalListDeclarationStatement.getListId()),
                 globalListDeclarationStatement.getListId()));
+        // then add list initialization
+        
     }
 
     @Override

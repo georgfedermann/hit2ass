@@ -9,23 +9,30 @@ import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.poormanscastle.products.hit2ass.ast.domain.AssignmentStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.AstItemVisitorAdapter;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouBausteinImpl;
+import org.poormanscastle.products.hit2ass.ast.domain.CodePosition;
 import org.poormanscastle.products.hit2ass.ast.domain.ConditionalStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.DynamicValue;
 import org.poormanscastle.products.hit2ass.ast.domain.FixedText;
+import org.poormanscastle.products.hit2ass.ast.domain.ForStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.GlobalDeclarationStatement;
+import org.poormanscastle.products.hit2ass.ast.domain.GlobalListDeclarationStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.HitCommandStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.IncludeBausteinStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.LocalDeclarationStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.MacroCallStatement;
+import org.poormanscastle.products.hit2ass.ast.domain.NumExpression;
 import org.poormanscastle.products.hit2ass.ast.domain.PrintStatement;
+import org.poormanscastle.products.hit2ass.ast.domain.SectionStatement;
 import org.poormanscastle.products.hit2ass.renderer.domain.CarriageReturn;
 import org.poormanscastle.products.hit2ass.renderer.domain.Container;
 import org.poormanscastle.products.hit2ass.renderer.domain.DocumentVariable;
 import org.poormanscastle.products.hit2ass.renderer.domain.DynamicContentReference;
 import org.poormanscastle.products.hit2ass.renderer.domain.FontWeight;
+import org.poormanscastle.products.hit2ass.renderer.domain.ForLoop;
 import org.poormanscastle.products.hit2ass.renderer.domain.IfElseParagraph;
 import org.poormanscastle.products.hit2ass.renderer.domain.IfThenElseParagraph;
 import org.poormanscastle.products.hit2ass.renderer.domain.IfThenParagraph;
+import org.poormanscastle.products.hit2ass.renderer.domain.ListDeclaration;
 import org.poormanscastle.products.hit2ass.renderer.domain.Paragraph;
 import org.poormanscastle.products.hit2ass.renderer.domain.Text;
 import org.poormanscastle.products.hit2ass.renderer.domain.Workspace;
@@ -88,6 +95,20 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     }
 
     @Override
+    public boolean proceedWithForStatement(ForStatement forStatement) {
+        ForLoop forLoop = new ForLoop(StringUtils.join("FOR-", StringEscapeUtils.escapeXml10(forStatement.getRepetitionCount().toXPathString())),
+                forStatement.getRepetitionCount());
+        containerStack.peek().addContent(forLoop);
+
+        IRTransformer transformer = spinOff();
+        transformer.containerStack.push(forLoop);
+        forStatement.getForBody().accept(transformer);
+        // the visit logic gets handled in the proceedWith method, so it returns "false" so that
+        // the visit method won't get called.
+        return false;
+    }
+
+    @Override
     public boolean proceedWithConditionalStatement(ConditionalStatement conditionalStatement) {
         IfThenElseParagraph ifParagraph = new IfThenElseParagraph(StringUtils.join(
                 "IF-", StringEscapeUtils.escapeXml10(conditionalStatement.getCondition().toXPathString())), conditionalStatement.getCondition());
@@ -107,6 +128,8 @@ public final class IRTransformer extends AstItemVisitorAdapter {
             conditionalStatement.getElseElement().accept(transformer);
             ifParagraph.addContent(transformer.containerStack.pop());
         }
+        // the visit logic gets handled in the proceedWith method, so it returns "false" so that
+        // the visit method won't get called.
         return false;
     }
 
@@ -144,8 +167,22 @@ public final class IRTransformer extends AstItemVisitorAdapter {
      */
     @Override
     public void visitGlobalDeclarationStatement(GlobalDeclarationStatement globalDeclarationStatement) {
-        containerStack.peek().addContent(new DocumentVariable(globalDeclarationStatement.getId(),
+        containerStack.peek().addContent(new DocumentVariable(StringUtils.join("Global Variable: ", globalDeclarationStatement.getId()),
                 StringUtils.join("'", globalDeclarationStatement.getId(), "'"), globalDeclarationStatement.getExpression().toXPathString()));
+    }
+
+    @Override
+    public void visitGlobalListDeclarationStatement(GlobalListDeclarationStatement globalListDeclarationStatement) {
+        // add list declaration statement
+        containerStack.peek().addContent(new ListDeclaration(StringUtils.join("Listdeclaration - ", globalListDeclarationStatement.getListId()),
+                globalListDeclarationStatement.getListId()));
+        // then add list initialization
+        
+    }
+
+    @Override
+    public void visitSectionStatement(SectionStatement sectionStatement) {
+        containerStack.peek().addContent(new CarriageReturn("NL", new NumExpression(CodePosition.createZeroPosition(), 1)));
     }
 
     /**

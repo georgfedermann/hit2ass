@@ -35,6 +35,7 @@ import org.poormanscastle.products.hit2ass.ast.domain.PairCaseStatementList;
 import org.poormanscastle.products.hit2ass.ast.domain.PairClouBausteinElementList;
 import org.poormanscastle.products.hit2ass.ast.domain.PairExpressionList;
 import org.poormanscastle.products.hit2ass.ast.domain.PrintStatement;
+import org.poormanscastle.products.hit2ass.ast.domain.SectionStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.ShellCommand;
 import org.poormanscastle.products.hit2ass.ast.domain.ShellVariableExpression;
 import org.poormanscastle.products.hit2ass.ast.domain.SubListExpression;
@@ -109,6 +110,17 @@ public class PrettyPrintVisitor extends AstItemVisitorAdapter {
         StackItem stackItem = new StackItem(name, value.replaceAll("\"", "\\\\\""));
         itemStack.push(stackItem);
         stackItems.add(stackItem);
+    }
+
+    @Override
+    public void visitSectionStatement(SectionStatement sectionStatement) {
+        addItem("Break", "");
+        addBufferLine();
+    }
+
+    @Override
+    public void leaveSectionStatement(SectionStatement sectionStatement) {
+        itemStack.pop();
     }
 
     @Override

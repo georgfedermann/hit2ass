@@ -267,4 +267,10 @@ public interface AstItemVisitor {
 
     void leaveForStatement(ForStatement forStatement);
 
+    boolean proceedWithSectionStatement(SectionStatement sectionStatement);
+
+    void visitSectionStatement(SectionStatement sectionStatement);
+
+    void leaveSectionStatement(SectionStatement sectionStatement);
+
 }

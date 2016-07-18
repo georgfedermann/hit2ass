@@ -655,4 +655,19 @@ public abstract class AstItemVisitorAdapter implements AstItemVisitor {
     public void leaveForStatement(ForStatement forStatement) {
 
     }
+
+    @Override
+    public boolean proceedWithSectionStatement(SectionStatement sectionStatement) {
+        return this.defaultVisitNodes;
+    }
+
+    @Override
+    public void visitSectionStatement(SectionStatement sectionStatement) {
+
+    }
+
+    @Override
+    public void leaveSectionStatement(SectionStatement sectionStatement) {
+
+    }
 }

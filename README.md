@@ -1,5 +1,23 @@
 # hit2ass tool suite
 
+# Internal naming conventions
+## Grouping symbols
+To avoid nomenclature like left curly brace, closing round bracket, and squiggly parenthesis, this document uses the conventions as specified below. This nomenclature is especially heavily used within the JavaCC lexer and parser configuration document.
+<dl>
+  <dt>(</dt>
+  <dd>left parenthesis</dd>
+  <dt>)</dt>
+  <dd>right parenthesis</dd>
+  <dt>[</dt>
+  <dd>left bracket/dd>
+  <dt>]</dt>
+  <dd>right bracket</dd>
+  <dt>{</dt>
+  <dd>left brace</dd>
+  <dt>}</dt>
+  <dd>right brace</dd>
+</dl>
+
 ## Introduction
 **Hit2Ass** is a tool suite that supports the analysis of **HIT/CLOU** __text components__ 
 and the automated transformation of **HIT/CLOU** __text components__ to **Assentis DocFamily** workspaces.

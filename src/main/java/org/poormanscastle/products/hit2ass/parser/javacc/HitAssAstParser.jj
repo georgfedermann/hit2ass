@@ -1,3 +1,71 @@
+/*
+This is the hit2ass transformer JavaCC based lexer and parser configuration.
+
+Both, the lexer and the grammar rules are the result of reverse engineering of the
+available sources within the legacy project.
+
+All legacy files (i.e. document templates and business data input text files) are provided in ISO-8859-1 encoding
+(not UTF-8).
+Nota bene: The JavaCC system expects the encoding name to be given in this form: ISO8859_1
+or it will not be recognized by the system. In particular, the wording ISO-8859-1 is not recognized by the system.
+
+This document uses the following conventions:
+
+parenthesis, bracket, brace
+===========================
+To avoid nomenclature like left curly brace, closing round bracket, and squiggly parentheses,
+this document uses the conventions as quoted below.
+(       left parenthesis
+)       right parenthesis
+[       left bracket
+]       right bracket
+{       left brace
+}       right brace
+
+German Umlauts
+==============
+The legacy project provides ISO-8859-1 encoded document templates and business data input text files.
+Here is a list of the ISO-8859-1 sequences for the umlauts, which are used in the lexer definitions below.
+  ISO8859_1 sequences for German special characters:
+  ä "\u00e4"
+  ö "\u00f6"
+  ü "\u00fc"
+  Ä "\u00c4"
+  Ö "\u00d6"
+  Ü "\u00dc"
+  ß "\u00df"
+  _ "\u00a0"    weird underscore character in HIT / CLOU editor
+
+Nonterminal symbols, syntactic variables, expandables
+=====================================================
+This is a list of all non-terminal symbols used in the grammar specification
+    AS      ... Assignment Statement
+    CA      ... Case
+    CB      ... ClouBaustein
+    CBE     ... Clou Baustein Element
+    CBES    ... Clou Baustein Specific
+    CF      ... Close File
+    DV      ... Dynamic Value
+    FX      ... Fixed Text
+    GDS     ... Global Declaration Statement
+    GS      ... G statement, for setting of cursor positions
+    HC      ... Hit Command
+    IF      ... Conditional Statement
+    IB      ... Import Baustein
+    JS      ... J statement, for setting of cursor positions
+    LDS     ... Local Declaration Statement
+    MS      ... Macro Statement
+    OF      ... Open File
+    PS      ... Print statement, for printing the evaluation result of IdExpressions
+    SB      ... Section break
+    SK      ... Shell Kommando
+    SS      ... SwitchStatement
+    WS      ... While Statement
+    ZS      ... Z statement, used to query the current cursor position
+
+
+*/
+
 /* Parser configuration options. */
 options{
     LOOKAHEAD = 1;
@@ -18,18 +86,6 @@ options{
     USER_CHAR_STREAM = false;
     USER_TOKEN_MANAGER = false;
 }
-
-/*
-  ISO8859_1 sequences for German special characters:
-  ä "\u00e4"
-  ö "\u00f6"
-  ü "\u00fc"
-  Ä "\u00c4"
-  Ö "\u00d6"
-  Ü "\u00dc"
-  ß "\u00df"
-  _ "\u00a0"    weird underscore character in HIT / CLOU editor
-*/
 
 PARSER_BEGIN(HitAssAstParser)
 package org.poormanscastle.products.hit2ass.parser.javacc;
@@ -54,22 +110,6 @@ TOKEN : {
 }
 
 /*
-    AS      ... Assignment Statement
-    CA      ... Case
-    CB      ... ClouBaustein
-    CBE     ... Clou Baustein Element
-    CBES    ... Clou Baustein Specific
-    CF      ... Close File
-    DV      ... Dynamic Value
-    FX      ... Fixed Text
-    GDS     ... Global Declaration Statement
-    HC      ... Hit Command
-    IF      ... Conditional Statement
-    IB      ... Import Baustein
-    LDS     ... Local Declaration Statement
-    OF      ... Open File
-    SS      ... SwitchStatement
-    WS      ... While Statement
 
 */
 
@@ -120,7 +160,7 @@ TOKEN : {
     < IB : "#B" > : COMMAND_MODE_IB |       // Include Baustein statement
     < OF : "#X" > : COMMAND_MODE_FILE |     // File manipulation statements, like: open file, close file, read value from file.
     < DV : "#X"([" ", "\n", "\r", "\t"])*"<" > : COMMAND_MODE_DV |
-    < PS : "#>" >  : COMMAND_MODE_PS |      // Print-Statement: Insert value of some given expression com the current position into the current document
+    < PS : "#>" >  : COMMAND_MODE_PS |      // Print-Statement: Insert value of some given expression at the current position into the current document
     < SK : "#!" > : COMMAND_MODE_SK         // Execute Shell command
 }
 
@@ -163,8 +203,20 @@ TOKEN : {
 }
 <COMMAND_MODE_PS> TOKEN : {
     <PS_SB : "@" > : TXT_MODE |
-    <PS_ID : [ "_", "a"-"z", "A"-"Z" ]([ "_", "a"-"z", "A"-"Z", "0"-"9" ])* > : TXT_MODE
+    <PS_ID : [ "_", "a"-"z", "A"-"Z" ]([ "_", "a"-"z", "A"-"Z", "0"-"9" ])* >
 }
+
+// after reading an identifier each mode shall switch into COMMAND_MODE_IDX to check for [ that would indicate a field index
+<COMMAND_MODE_IDX> TOKEN : {
+    <IDX_LBRACKET : "[" > |
+    <IDX_RBRACKET : "]" > |
+    <IDX_ID : [ "_", "a"-"z", "A"-"Z" ]([ "_", "a"-"z", "A"-"Z", "0"-"9", "[", "]" ])* > |
+    <IDX_SB : "@" > : TXT_MODE
+}
+<COMMAND_MODE_IDX> SKIP : {
+    "\n" : TXT_MODE | "\r" : TXT_MODE | "\t" : TXT_MODE | " " : TXT_MODE
+}
+
 <COMMAND_MODE_SS> SKIP : {
     "\n": TXT_MODE  | "\r": TXT_MODE  | "\t" | " "
 }
@@ -770,12 +822,15 @@ DynamicValue DV() :
     }
 }
 
+// a PrintStatement prints the current value of a variable. Thus, it looks for an id here, not an E()!
+// This might be a limitation of the HIT/CLOU processing engine, where it might be difficult to implement
+// a parser that reliably can tell an expression from fixed text within a HIT/CLOU template.
 PrintStatement PS() :
-{ Token idToken; }
+{ Expression idExpression; }
 {
-    <PS> idToken = <PS_ID>
+    <PS> idExpression = E()
     {
-        return new PrintStatement(CodePosition.createFromToken(idToken), idToken.image);
+        return new PrintStatement(CodePosition.createFromToken(idToken), idExpression);
     }
 }
 
@@ -1097,9 +1152,7 @@ Expression T2() :
 Expression F() :
 {
     Token valueToken; ExpressionList expressionList;
-    // In case of array-like list expressions like dbklappe[1,5] provide
-    // for integer valued index expressions
-    Expression startIndexExpr = null, endIndexExpr = null;
+    Expression idxExp1; Expression idxExpr2;
 }
 {
     (valueToken = <IF_NUM> | valueToken = <DS_NUM> | valueToken = <AS_NUM> | valueToken = <MS_NUM> |
@@ -1138,8 +1191,18 @@ Expression F() :
         return new ClouFunctionCall(CodePosition.createFromToken(valueToken), valueToken.image, expressionList);
     }
     |
+    // implements IdExpressions. An IdExpression holds a string that is interpreted as the name of a variable.
+    // Nota bene: An IdExpression can refer to a scalar (e.g. firstName), or to a list (e.g. names), or to an
+    // entry within a list (e.g. names[4]), or another interesting substring construct as in myName[1,5] which
+    // results in the substring from char 1 to char 5 in myName.
     (valueToken = <IF_ID> | valueToken = <DS_ID> | valueToken = <SS_ID> | valueToken = <AS_ID> | valueToken = <MS_ID> |
-        valueToken = <LS_ID> | valueToken = <LS_BRACES_ID> | valueToken = <HC_ID> | valueToken = <FOR_ID> )
+        valueToken = <LS_ID> | valueToken = <LS_BRACES_ID> | valueToken = <HC_ID> | valueToken = <FOR_ID> | valueToken = <PS_ID>)
+    (
+        // after the id there may be one or two bracket constructs. when there is a second one, it will be a substring
+        // structure for the result of the first part of the expression
+        (<IDX_LBRACKET> idxExp1 = E() <IDX_RBRACKET>) |
+        (<IDX_LBRACKET> idxExp1 = E() <IDX_RBRACKET><IDX_LBRACKET> idxExp2 = E() <IDX_RBRACKET>)
+    )
     {
         return new IdExpression(CodePosition.createFromToken(valueToken), valueToken.image);
     }

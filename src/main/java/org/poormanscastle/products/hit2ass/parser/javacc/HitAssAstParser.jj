@@ -38,30 +38,33 @@ Here is a list of the ISO-8859-1 sequences for the umlauts, which are used in th
 
 Nonterminal symbols, syntactic variables, expandables
 =====================================================
-This is a list of all non-terminal symbols used in the grammar specification
-    AS      ... Assignment Statement
-    CA      ... Case
-    CB      ... ClouBaustein
-    CBE     ... Clou Baustein Element
-    CBES    ... Clou Baustein Specific
+This is a list of the terminal symbols used in the lexer specification in text mode
+    AS      ... Assignment Statement #=
+    CA      ... Case, works in the context of a switch statement (SS), /id
     CF      ... Close File
-    DV      ... Dynamic Value
+    DV      ... Dynamic Value #X<
     FX      ... Fixed Text
     GDS     ... Global Declaration Statement
-    GS      ... G statement, for setting of cursor positions
+    GS      ... G statement, for setting of cursor positions #G
     HC      ... Hit Command
-    IF      ... Conditional Statement
-    IB      ... Import Baustein
-    JS      ... J statement, for setting of cursor positions
+    IF      ... Conditional Statement #?
+    IB      ... Import Baustein	#B
+    JS      ... J statement, for setting of cursor positions #J
     LDS     ... Local Declaration Statement
-    MS      ... Macro Statement
+    MS      ... Macro Statement, generic execution statement, interprets to content of a text variable as CLOU sources #$
     OF      ... Open File
-    PS      ... Print statement, for printing the evaluation result of IdExpressions
-    SB      ... Section break
+    PS      ... Print statement, for printing the evaluation result of IdExpressions #>
+    SB      ... Section break @
     SK      ... Shell Kommando
-    SS      ... SwitchStatement
-    WS      ... While Statement
-    ZS      ... Z statement, used to query the current cursor position
+    SS      ... SwitchStatement #C
+    WS      ... While Statement #S
+    ZS      ... Z statement, used to query the current cursor position #Z
+
+This is a list of the expandables / non-terminal symbols / lexical variables
+
+    CB      ... ClouBaustein
+    CBE     ... Clou Baustein Element
+    CBES    ... Clou Baustein Element Specific
 
 
 */
@@ -91,6 +94,8 @@ PARSER_BEGIN(HitAssAstParser)
 package org.poormanscastle.products.hit2ass.parser.javacc;
 
 import org.poormanscastle.products.hit2ass.ast.domain.*;
+import org.poormanscastle.products.hit2ass.exceptions.*;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -202,21 +207,11 @@ TOKEN : {
     "\n" | "\r" | "\t" | " "
 }
 <COMMAND_MODE_PS> TOKEN : {
-    <PS_SB : "@" > : TXT_MODE |
-    <PS_ID : [ "_", "a"-"z", "A"-"Z" ]([ "_", "a"-"z", "A"-"Z", "0"-"9" ])* >
+    < PS_SB : "@" > : TXT_MODE |
+    < PS_LBRACKET : "[" > |
+    < PS_RBRACKET : "]" > |
+    < PS_ID : [ "_", "a"-"z", "A"-"Z" ]([ "_", "a"-"z", "A"-"Z", "0"-"9" ])* > : TXT_MODE
 }
-
-// after reading an identifier each mode shall switch into COMMAND_MODE_IDX to check for [ that would indicate a field index
-<COMMAND_MODE_IDX> TOKEN : {
-    <IDX_LBRACKET : "[" > |
-    <IDX_RBRACKET : "]" > |
-    <IDX_ID : [ "_", "a"-"z", "A"-"Z" ]([ "_", "a"-"z", "A"-"Z", "0"-"9", "[", "]" ])* > |
-    <IDX_SB : "@" > : TXT_MODE
-}
-<COMMAND_MODE_IDX> SKIP : {
-    "\n" : TXT_MODE | "\r" : TXT_MODE | "\t" : TXT_MODE | " " : TXT_MODE
-}
-
 <COMMAND_MODE_SS> SKIP : {
     "\n": TXT_MODE  | "\r": TXT_MODE  | "\t" | " "
 }
@@ -260,6 +255,8 @@ TOKEN : {
     < MS_DIV : "/" > |
     < MS_LPAREN : "(" > |
     < MS_RPAREN : ")" > : TXT_MODE |
+    < MS_LBRACKET : "[" > |
+    < MS_RBRACKET : "]" > |
     < MS_COMMA : "," > |
     < MS_NUM : (["0"-"9"])+ > |
     < MS_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
@@ -369,6 +366,8 @@ TOKEN : {
     < DS_COLON : ":" > |
     < DS_LPAREN : "(" > |
     < DS_RPAREN : ")" > |
+    < DS_LBRACKET : "[" > |
+    < DS_RBRACKET : "]" > |
     < DS_NUM : (["0"-"9"])+ > |
     < DS_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
     < DS_ID : [ "_", "[", "]", ",", "a"-"z", "A"-"Z"](["_", "a"-"z", "A"-"Z", "0"-"9",
@@ -430,6 +429,8 @@ TOKEN : {
     < LS_LBRACE : "{" > : COMMAND_MODE_LS_BRACES |
     < LS_GD : "D" > |
     < LS_LD : "d" > |
+    < LS_LBRACKET : "[" > |
+    < LS_RBRACKET : "]" > |
     < LS_ID : [ "_", "a"-"z", "A"-"Z"](["_", "a"-"z", "A"-"Z", "0"-"9", "\u00a0"])* > |
     < LS_TEXT : "\""
         (
@@ -456,6 +457,8 @@ TOKEN : {
     < LS_BRACES_AMPERSAND : "&" > |
     < LS_BRACES_COMMA : "," > |
     < LS_BRACES_RBRACE : "}" > : COMMAND_MODE_LS |
+    < LS_BRACES_LBRACKET : "[" > |
+    < LS_BRACES_RBRACKET : "]" > |
     < LS_BRACES_NUM : (["0"-"9"])+ > |
     < LS_BRACES_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
     < LS_BRACES_ID : [ "_", "a"-"z", "A"-"Z"](["_", "a"-"z", "A"-"Z", "0"-"9"])* > |
@@ -472,6 +475,8 @@ TOKEN : {
 <COMMAND_MODE_HC> TOKEN : {
     < HC_HC : "#^"> |
     < HC_NUM : (["0"-"9"])+ > |
+    < HC_LBRACKET : "[" > |
+    < HC_RBRACKET : "]" > |
     < HC_ID : [ "_", "a"-"z", "A"-"Z"](["_", "a"-"z", "A"-"Z", "0"-"9"])* > |
     < HC_NAME : "\""
         (
@@ -830,7 +835,7 @@ PrintStatement PS() :
 {
     <PS> idExpression = E()
     {
-        return new PrintStatement(CodePosition.createFromToken(idToken), idExpression);
+        return new PrintStatement(idExpression.getCodePosition(), idExpression);
     }
 }
 
@@ -1152,7 +1157,8 @@ Expression T2() :
 Expression F() :
 {
     Token valueToken; ExpressionList expressionList;
-    Expression idxExp1; Expression idxExpr2;
+    // idxExp1 and idxExp2 are needed for IdExpressions that have indices as in names[5] and name[1,5]
+    Expression buffer; Expression idxExp1 = null; Expression idxExp2 = null;
 }
 {
     (valueToken = <IF_NUM> | valueToken = <DS_NUM> | valueToken = <AS_NUM> | valueToken = <MS_NUM> |
@@ -1173,9 +1179,9 @@ Expression F() :
         return new TextExpression(CodePosition.createFromToken(valueToken), valueToken.image);
     }
     |
-    (<SS_SHELLVAR>|<AS_SHELLVAR>|<IF_SHELLVAR>) (<SS_LPAREN>|<AS_LPAREN>|<IF_LPAREN>)
+    ((<SS_SHELLVAR>|<AS_SHELLVAR>|<IF_SHELLVAR>) (<SS_LPAREN>|<AS_LPAREN>|<IF_LPAREN>)
         (<SS_QUOTE>valueToken = <SS_SHELLVAR_ID><SS_QUOTE> | valueToken = <AS_TEXT> | valueToken = <IF_TEXT> )
-        (<SS_RPAREN>|<AS_RPAREN>|<IF_RPAREN>)
+        (<SS_RPAREN>|<AS_RPAREN>|<IF_RPAREN>))
     {
         // TODO 2016-07-08 I vote to delete this since SHELLVARIABLE in fact is a function call and has to be handled there
         // ShellVariable evaluations in assignment statements #=
@@ -1185,8 +1191,8 @@ Expression F() :
     }
     |
     // implements clou standard function listlen("varname")
-    LOOKAHEAD(2) (valueToken = <IF_ID>| valueToken = <AS_ID>| valueToken = <FOR_ID>) (<IF_LPAREN>|<AS_LPAREN>|<FOR_LPAREN>)
-        expressionList = EL() (<IF_RPAREN>|<AS_RPAREN>|<FOR_RPAREN>)
+    LOOKAHEAD(2) ((valueToken = <IF_ID>| valueToken = <AS_ID>| valueToken = <FOR_ID>) (<IF_LPAREN>|<AS_LPAREN>|<FOR_LPAREN>)
+        expressionList = EL() (<IF_RPAREN>|<AS_RPAREN>|<FOR_RPAREN>))
     {
         return new ClouFunctionCall(CodePosition.createFromToken(valueToken), valueToken.image, expressionList);
     }
@@ -1195,24 +1201,60 @@ Expression F() :
     // Nota bene: An IdExpression can refer to a scalar (e.g. firstName), or to a list (e.g. names), or to an
     // entry within a list (e.g. names[4]), or another interesting substring construct as in myName[1,5] which
     // results in the substring from char 1 to char 5 in myName.
-    (valueToken = <IF_ID> | valueToken = <DS_ID> | valueToken = <SS_ID> | valueToken = <AS_ID> | valueToken = <MS_ID> |
-        valueToken = <LS_ID> | valueToken = <LS_BRACES_ID> | valueToken = <HC_ID> | valueToken = <FOR_ID> | valueToken = <PS_ID>)
+    ((valueToken = <IF_ID> | valueToken = <DS_ID> | valueToken = <SS_ID> | valueToken = <AS_ID> | valueToken = <MS_ID> |
+        valueToken = <LS_ID> | valueToken = <LS_BRACES_ID> | valueToken = <HC_ID> | valueToken = <FOR_ID>)
+    // if the id is a reference to a value within a field there will follow a bracket expression, e.g. names[5].
+    // from the perspective of the IdExpression factor, bracket expressions are optional. There are two kinds
+    // of bracket expressions: a pair of expressions with a single expression inside that can be evaluated to a
+    // numeric value -> referencing an entry in a field. a pair of expressions with an expression list inside,
+    // holding exactly two values -> another way in HIT/CLOU to get a substring.
     (
-        // after the id there may be one or two bracket constructs. when there is a second one, it will be a substring
-        // structure for the result of the first part of the expression
-        (<IDX_LBRACKET> idxExp1 = E() <IDX_RBRACKET>) |
-        (<IDX_LBRACKET> idxExp1 = E() <IDX_RBRACKET><IDX_LBRACKET> idxExp2 = E() <IDX_RBRACKET>)
-    )
+        (<IF_LBRACKET>|<DS_LBRACKET>|<SS_LBRACKET>|<AS_LBRACKET>|<MS_LBRACKET>|<LS_LBRACKET>|<LS_BRACES_LBRACKET>|
+        <HC_LBRACKET>|<FOR_LBRACKET>)
+        buffer = E()
+        (<IF_RBRACKET>|<DS_RBRACKET>|<SS_RBRACKET>|<AS_RBRACKET>|<MS_RBRACKET>|<LS_RBRACKET>|<LS_BRACES_RBRACKET>|
+        <HC_RBRACKET>|<FOR_RBRACKET>)
+        {
+            if(idxExp1 == null){
+                idxExp1 = buffer;
+            } else if(idxExp2 == null){
+                idxExp2 = buffer;
+            } else {
+                throw new ClouParserException(StringUtils.join(
+                    "Could not parse CLOU text component. Only 2 index expressions are allowed for variables. I have found at least three!"));
+            }
+        }
+    )*)
     {
-        return new IdExpression(CodePosition.createFromToken(valueToken), valueToken.image);
+        return new IdExpression(CodePosition.createFromToken(valueToken), valueToken.image, idxExp1, idxExp2);
     }
     |
-    LOOKAHEAD(2)<LS_LBRACE> <LS_BRACES_RBRACE>
+    // IdExpressions revisited: PrintStatement. PrintStatements behave differently from other Statements in that they
+    // have no end demarcation, but just end after the variableId was read, and on goes fixed text. This behavior
+    // requires special treatment for indexed variables
+    ((valueToken = <PS_ID>)
+    (
+        <PS_LBRACKET> buffer = E() <PS_RBRACKET>
+        {
+            if(idxExp1 == null){
+                idxExp1 = buffer;
+            } else if (idxExp2 == null){
+                idxExp2 = buffer;
+            } else {
+                throw new ClouParserException(StringUtils.join(
+                    "Could not parse CLOU text component. Only 2 index expressions are allowed for variable IDs in PrintStatements. I have found at least three!"));
+            }
+        }
+    )*)
+    {
+        return new IdExpression(CodePosition.createFromToken(valueToken), valueToken.image, idxExp1, idxExp2);
+    }
+    (<LS_LBRACE> <LS_BRACES_RBRACE>)
     {
         return null;
     }
     |
-    <LS_LBRACE> expressionList = EL() <LS_BRACES_RBRACE>
+    (<LS_LBRACE> expressionList = EL() <LS_BRACES_RBRACE>)
     {
         return expressionList;
     }

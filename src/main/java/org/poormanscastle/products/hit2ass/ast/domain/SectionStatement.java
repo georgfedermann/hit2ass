@@ -29,4 +29,8 @@ public class SectionStatement extends AbstractAstItem implements Statement {
         visitor.leaveSectionStatement(this);
     }
 
+    @Override
+    public String toString() {
+        return "SectionStatement{}";
+    }
 }

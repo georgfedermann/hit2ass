@@ -15,6 +15,7 @@ import org.poormanscastle.products.hit2ass.ast.domain.DynamicValue;
 import org.poormanscastle.products.hit2ass.ast.domain.FixedText;
 import org.poormanscastle.products.hit2ass.ast.domain.ForStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.GlobalDeclarationStatement;
+import org.poormanscastle.products.hit2ass.ast.domain.GlobalListDeclarationStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.HitCommandStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.IncludeBausteinStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.LocalDeclarationStatement;
@@ -31,6 +32,7 @@ import org.poormanscastle.products.hit2ass.renderer.domain.ForLoop;
 import org.poormanscastle.products.hit2ass.renderer.domain.IfElseParagraph;
 import org.poormanscastle.products.hit2ass.renderer.domain.IfThenElseParagraph;
 import org.poormanscastle.products.hit2ass.renderer.domain.IfThenParagraph;
+import org.poormanscastle.products.hit2ass.renderer.domain.ListDeclaration;
 import org.poormanscastle.products.hit2ass.renderer.domain.Paragraph;
 import org.poormanscastle.products.hit2ass.renderer.domain.Text;
 import org.poormanscastle.products.hit2ass.renderer.domain.Workspace;
@@ -165,8 +167,17 @@ public final class IRTransformer extends AstItemVisitorAdapter {
      */
     @Override
     public void visitGlobalDeclarationStatement(GlobalDeclarationStatement globalDeclarationStatement) {
-        containerStack.peek().addContent(new DocumentVariable(globalDeclarationStatement.getId(),
+        containerStack.peek().addContent(new DocumentVariable(StringUtils.join("Global Variable: ", globalDeclarationStatement.getId()),
                 StringUtils.join("'", globalDeclarationStatement.getId(), "'"), globalDeclarationStatement.getExpression().toXPathString()));
+    }
+
+    @Override
+    public void visitGlobalListDeclarationStatement(GlobalListDeclarationStatement globalListDeclarationStatement) {
+        // add list declaration statement
+        containerStack.peek().addContent(new ListDeclaration(StringUtils.join("Listdeclaration - ", globalListDeclarationStatement.getListId()),
+                globalListDeclarationStatement.getListId()));
+        // then add list initialization
+
     }
 
     @Override
@@ -212,8 +223,9 @@ public final class IRTransformer extends AstItemVisitorAdapter {
 
     @Override
     public void visitPrintStatement(PrintStatement printStatement) {
-        containerStack.peek().addContent(new DynamicContentReference(printStatement.getSymbolId(),
-                StringUtils.join("var:read('", printStatement.getSymbolId(), "')"), fontWeight));
+        containerStack.peek().addContent(new DynamicContentReference(
+                StringUtils.join("Print: ", printStatement.getIdExpression().getId()),
+                printStatement.getIdExpression().toXPathString(), fontWeight));
     }
 
     @Override
@@ -238,4 +250,5 @@ public final class IRTransformer extends AstItemVisitorAdapter {
             logger.info(StringUtils.join("Found IncludeBausteinStatement ", includeBausteinStatement.getPathToBaustein()));
         }
     }
+
 }

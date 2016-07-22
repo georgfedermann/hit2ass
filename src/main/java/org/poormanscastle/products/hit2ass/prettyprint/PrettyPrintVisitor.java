@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.poormanscastle.products.hit2ass.ast.domain.AssignmentStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.AstItemVisitorAdapter;
 import org.poormanscastle.products.hit2ass.ast.domain.BinaryOperatorExpression;
+import org.poormanscastle.products.hit2ass.ast.domain.BooleanExpression;
 import org.poormanscastle.products.hit2ass.ast.domain.CaseStatementImpl;
 import org.poormanscastle.products.hit2ass.ast.domain.CloseFileCommand;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouBausteinImpl;
@@ -491,7 +492,7 @@ public class PrettyPrintVisitor extends AstItemVisitorAdapter {
 
     @Override
     public void visitPrintStatement(PrintStatement printStatement) {
-        addItem("Print", printStatement.getSymbolId());
+        addItem("Print", printStatement.getIdExpression().toXPathString());
         addBufferLine();
     }
 
@@ -552,6 +553,17 @@ public class PrettyPrintVisitor extends AstItemVisitorAdapter {
 
     @Override
     public void leaveNumExpression(NumExpression numExpression) {
+        itemStack.pop();
+    }
+
+    @Override
+    public void visitBooleanExpression(BooleanExpression booleanExpression) {
+        addItem("BoolExp", String.valueOf(booleanExpression.getValue()));
+        addBufferLine();
+    }
+
+    @Override
+    public void leaveBooleanExpression(BooleanExpression booleanExpression) {
         itemStack.pop();
     }
 

@@ -11,7 +11,23 @@ import static com.google.common.base.Preconditions.checkArgument;
  */
 public final class IdExpression extends AbstractExpression<Object> {
 
+    /**
+     * this must evaluate to a string value.
+     */
     private final String id;
+
+    /**
+     * idxExp1 is needed for IdExpressions that have indices as in names[5] and name[1,5].
+     * It can be null for idExpressions that refer to scalar variables.
+     */
+    private final Expression idxExp1;
+
+    /**
+     * idExp2 is needed for IdExpressions that refer to string valued vectors, and where
+     * a substring will be derived from the first part of the IdExpression, as in
+     * names[5][1,5]. It can be null when not needed and must be null if idxExp1 is null.
+     */
+    private final Expression idxExp2;
 
     /**
      * the type of this identifier needs to be set in the semantic compiler phase.
@@ -20,19 +36,50 @@ public final class IdExpression extends AbstractExpression<Object> {
 
     private Object value;
 
-    public IdExpression(CodePosition codePosition, String id) {
+    @Override
+    public String toXPathString() {
+        if (idxExp1 == null) {
+            return StringUtils.join(" var:read('", id, "') ");
+        } else if (idxExp2 == null && !(idxExp1 instanceof ExpressionList)) {
+            return StringUtils.join(" hit2assext:getListValueAt(var:read('renderSessionUuid'), '",
+                    id, "', ", idxExp1.toXPathString(), ")");
+        } else {
+            throw new IllegalStateException(StringUtils.join("Cannot create an XPath expression for this IdExpression: ", toString()));
+        }
+    }
+
+    public IdExpression(CodePosition codePosition, String id, Expression idxExp1, Expression idxExp2) {
         super(codePosition);
         checkArgument(!StringUtils.isBlank(id));
+        // check idxExp1: must be null or a NumExpression or an ExpressionList with two entries
+        checkArgument(idxExp1 == null || idxExp1 instanceof NumExpression || idxExp1 instanceof ExpressionList);
+        checkArgument((idxExp1 != null && idxExp2 != null) || idxExp2 == null);
         this.id = id;
+        this.idxExp1 = idxExp1;
+        this.idxExp2 = idxExp2;
     }
 
     @Override
-    public String toXPathString() {
-        return StringUtils.join(" var:read('", id, "') ");
+    public String toString() {
+        return "IdExpression{" +
+                "id='" + id + '\'' +
+                ", idxExp1=" + idxExp1 +
+                ", idxExp2=" + idxExp2 +
+                ", valueType=" + valueType +
+                ", value=" + value +
+                '}';
     }
 
     public String getId() {
         return id;
+    }
+
+    public Expression getIdxExp1() {
+        return idxExp1;
+    }
+
+    public Expression getIdxExp2() {
+        return idxExp2;
     }
 
     @Override
@@ -65,12 +112,4 @@ public final class IdExpression extends AbstractExpression<Object> {
         visitor.leaveIdExpression(this);
     }
 
-    @Override
-    public String toString() {
-        return "IdExpression{" +
-                "id='" + id + '\'' +
-                ", valueType=" + valueType +
-                ", value=" + value +
-                '}';
-    }
 }

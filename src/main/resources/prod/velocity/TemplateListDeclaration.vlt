@@ -1,5 +1,5 @@
 #set($H='#')
-<Object id="${docFamUtils.CockpitElementId}" name="${dynamicContentName}" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
+<Object id="${docFamUtils.CockpitElementId}" name="${name}" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
   <Properties>
     <Attributes>
       <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -9,7 +9,7 @@
           <Properties>
             <Attributes>
               <Attribute name="IsXPath"><![CDATA[True]]></Attribute>
-              <Attribute name="XPath"><![CDATA[${xpath}]]></Attribute>
+              <Attribute name="XPath"><![CDATA[hit2assext:createList(var:read('renderSessionUuid'), '${listVariableName}')]]></Attribute>
               <Attribute name="XPathWithName"><![CDATA[]]></Attribute>
             </Attributes>
             <Relations>
@@ -97,10 +97,10 @@
                               <Attribute name="Final"><![CDATA[NU-0006]]></Attribute>
                               <Attribute name="Localized"><![CDATA[Decimal1]]></Attribute>
                               <Attribute name="Locale"><![CDATA[US_en]]></Attribute>
-                              <Attribute name="ISOCurrency"><![CDATA[EUR]]></Attribute>
+                              <Attribute name="ISOCurrency"><![CDATA[DKK]]></Attribute>
                               <Attribute name="TestValue"><![CDATA[]]></Attribute>
                               <Attribute name="TestLocale"><![CDATA[AT_de]]></Attribute>
-                              <Attribute name="TestISOCurrency"><![CDATA[EUR]]></Attribute>
+                              <Attribute name="TestISOCurrency"><![CDATA[DKK]]></Attribute>
                             </Attributes>
                             <Relations/>
                           </Properties>
@@ -116,10 +116,10 @@
                               <Attribute name="Final"><![CDATA[NU-0006]]></Attribute>
                               <Attribute name="Localized"><![CDATA[CurrencyWithSymbolAndSeparator]]></Attribute>
                               <Attribute name="Locale"><![CDATA[AT_de]]></Attribute>
-                              <Attribute name="ISOCurrency"><![CDATA[EUR]]></Attribute>
+                              <Attribute name="ISOCurrency"><![CDATA[DKK]]></Attribute>
                               <Attribute name="TestValue"><![CDATA[]]></Attribute>
                               <Attribute name="TestLocale"><![CDATA[AT_de]]></Attribute>
-                              <Attribute name="TestISOCurrency"><![CDATA[EUR]]></Attribute>
+                              <Attribute name="TestISOCurrency"><![CDATA[DKK]]></Attribute>
                             </Attributes>
                             <Relations/>
                           </Properties>
@@ -146,7 +146,7 @@
         </Object>
       </Attribute>
       <Attribute name="BackgroundColor">
-        <Object id="" name="Color" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+        <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoColor">
           <Properties>
             <Attributes>
               <Attribute name="inherit"><![CDATA[True]]></Attribute>
@@ -179,11 +179,11 @@
               <Attribute name="FontSize"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
               <Attribute name="FontStyle"><![CDATA[inherit]]></Attribute>
               <Attribute name="FontVariant"><![CDATA[inherit]]></Attribute>
-              <Attribute name="FontWeight"><![CDATA[${fontWeight}]]></Attribute>
+              <Attribute name="FontWeight"><![CDATA[inherit]]></Attribute>
               <Attribute name="FontPlacement"><![CDATA[inherit]]></Attribute>
               <Attribute name="FontDecoration"><![CDATA[inherit]]></Attribute>
               <Attribute name="FontColor">
-                <Object id="" name="Color" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+                <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoColor">
                   <Properties>
                     <Attributes>
                       <Attribute name="inherit"><![CDATA[True]]></Attribute>

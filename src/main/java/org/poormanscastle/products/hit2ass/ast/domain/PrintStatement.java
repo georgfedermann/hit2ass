@@ -1,5 +1,6 @@
 package org.poormanscastle.products.hit2ass.ast.domain;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -24,9 +25,10 @@ public final class PrintStatement extends AbstractAstItem implements Statement {
      */
     private final IdExpression idExpression;
 
-    public PrintStatement(CodePosition codePosition, IdExpression idExpression) {
+    public PrintStatement(CodePosition codePosition, Expression idExpression) {
         super(codePosition);
         checkNotNull(idExpression);
+        checkArgument(idExpression instanceof IdExpression);
         this.idExpression = (IdExpression) idExpression;
     }
 

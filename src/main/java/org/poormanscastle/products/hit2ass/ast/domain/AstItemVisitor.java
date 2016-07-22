@@ -273,4 +273,10 @@ public interface AstItemVisitor {
 
     void leaveSectionStatement(SectionStatement sectionStatement);
 
+    boolean proceedWithBooleanExpression(BooleanExpression booleanExpression);
+
+    void visitBooleanExpression(BooleanExpression booleanExpression);
+
+    void leaveBooleanExpression(BooleanExpression booleanExpression);
+
 }

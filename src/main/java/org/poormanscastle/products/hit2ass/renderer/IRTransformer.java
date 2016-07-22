@@ -223,7 +223,8 @@ public final class IRTransformer extends AstItemVisitorAdapter {
 
     @Override
     public void visitPrintStatement(PrintStatement printStatement) {
-        containerStack.peek().addContent(new DynamicContentReference(printStatement.getIdExpression().toXPathString(),
+        containerStack.peek().addContent(new DynamicContentReference(
+                StringUtils.join("Print: ", printStatement.getIdExpression().getId()),
                 printStatement.getIdExpression().toXPathString(), fontWeight));
     }
 

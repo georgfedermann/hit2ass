@@ -45,4 +45,12 @@ public class MacroCallStatement extends AbstractAstItem implements Statement {
         visitor.leaveMacroCallStatement(this);
     }
 
+    @Override
+    public String toString() {
+        return "MacroCallStatement{" +
+                "macroId='" + macroId + '\'' +
+                ", argumentList=" + argumentList +
+                '}';
+    }
+
 }

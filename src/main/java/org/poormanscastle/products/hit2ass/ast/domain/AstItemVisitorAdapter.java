@@ -27,6 +27,21 @@ public abstract class AstItemVisitorAdapter implements AstItemVisitor {
     }
 
     @Override
+    public boolean proceedWithBooleanExpression(BooleanExpression booleanExpression) {
+        return false;
+    }
+
+    @Override
+    public void visitBooleanExpression(BooleanExpression booleanExpression) {
+
+    }
+
+    @Override
+    public void leaveBooleanExpression(BooleanExpression booleanExpression) {
+
+    }
+
+    @Override
     public void leaveBinaryOperatorExpression(BinaryOperatorExpression binaryOperatorExpression) {
 
     }

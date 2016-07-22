@@ -177,7 +177,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         containerStack.peek().addContent(new ListDeclaration(StringUtils.join("Listdeclaration - ", globalListDeclarationStatement.getListId()),
                 globalListDeclarationStatement.getListId()));
         // then add list initialization
-        
+
     }
 
     @Override
@@ -223,8 +223,9 @@ public final class IRTransformer extends AstItemVisitorAdapter {
 
     @Override
     public void visitPrintStatement(PrintStatement printStatement) {
-        containerStack.peek().addContent(new DynamicContentReference(printStatement.getSymbolId(),
-                StringUtils.join("var:read('", printStatement.getSymbolId(), "')"), fontWeight));
+        containerStack.peek().addContent(new DynamicContentReference(
+                StringUtils.join("Print: ", printStatement.getIdExpression().getId()),
+                printStatement.getIdExpression().toXPathString(), fontWeight));
     }
 
     @Override
@@ -249,4 +250,5 @@ public final class IRTransformer extends AstItemVisitorAdapter {
             logger.info(StringUtils.join("Found IncludeBausteinStatement ", includeBausteinStatement.getPathToBaustein()));
         }
     }
+
 }

@@ -5,8 +5,19 @@
   anlässlich der Information zu expedieren bzw. auszuhändigen und
   einen entsprechenden Expedierungsvermerk anzubringen.
 
+#D bauname_äöüßÄÖÜ "AL001"
+
   #? bauname_äöüßÄÖÜ = "AL001" :
     /J
       #* THEN #
       den Treppenakt
   #
+
+#*  HIT/CLOU accepts condition statement with only an ELSE statement, and no THEN statement.
+    The resuling IR tree must have an empty THEN statement in such a case.  #
+
+#? bauname_äöüßÄÖÜ = "AL001" :
+    /N
+    #* ELSE #
+    den anderen Treppenakt
+#

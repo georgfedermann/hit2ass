@@ -1,12 +1,19 @@
 #
 #*  This quite simple HIT/CLOU text component defines and concatenates lists.   *#
 
+#D firstName "John"
+#D lastName "Connor"
+
 This is some fixed text for you.
 #L liste99 D { 1, 2, 3, 4, 5 }
 #L liste98 D { "Die", "fiend", "die" }
 #L liste97 D { "Horrido" } & { "auf" } & { "und" } & { "der" } & { "Gas" } & { "nach" }
 #L liste97 & liste89 & liste99 & { 99, 98 } & { 96, 30 }
 
+#^2"RETURN"
+Hello #> firstName #> lastName,
+#^"RETURN"
+Hello #> firstName #> lastName!
 #^2"RETURN"
 #> liste98[1] #> liste98[2] #> liste98[3]
 #^2"RETURN"

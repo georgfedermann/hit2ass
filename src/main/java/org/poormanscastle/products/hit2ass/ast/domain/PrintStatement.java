@@ -1,9 +1,16 @@
 package org.poormanscastle.products.hit2ass.ast.domain;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * CLOU Comman: #X<
  * A PrintStatement inserts the value of a given symbol com the current cursor position
- * within the document. Sample code from an actual HIT/CLOU text component:
+ * within the document. Nota bene: only printing of variables is supported, not printing
+ * of generic expressions. This might be a limitation resulting from the not very structured
+ * approach chosen in the implementation of the HIT/CLOU templating language.
+ * <p>
+ * Sample code from an actual HIT/CLOU text component:
  * <p>
  * Wir teilen Ihnen mit, dass Ihre Zahlung
  * von #> W #> zahlung
@@ -13,15 +20,20 @@ package org.poormanscastle.products.hit2ass.ast.domain;
  */
 public final class PrintStatement extends AbstractAstItem implements Statement {
 
-    private final String symbolId;
+    /**
+     * sinse HIT/CLOU PrintStatements only support id expressions, this must be of type IdExpression.
+     */
+    private final IdExpression idExpression;
 
-    public PrintStatement(CodePosition codePosition, String symbolId) {
+    public PrintStatement(CodePosition codePosition, Expression idExpression) {
         super(codePosition);
-        this.symbolId = symbolId;
+        checkNotNull(idExpression);
+        checkArgument(idExpression instanceof IdExpression);
+        this.idExpression = (IdExpression) idExpression;
     }
 
-    public String getSymbolId() {
-        return symbolId;
+    public IdExpression getIdExpression() {
+        return idExpression;
     }
 
     @Override
@@ -40,7 +52,7 @@ public final class PrintStatement extends AbstractAstItem implements Statement {
     public String toString() {
         return "PrintStatement{" +
                 "codePosition=" + getCodePosition() +
-                ", symbolId='" + symbolId + '\'' +
+                ", idExpression='" + idExpression + '\'' +
                 '}';
     }
 }

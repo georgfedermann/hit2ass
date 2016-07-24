@@ -1,8 +1,12 @@
 #
 #*  This baustein trains the system to recognize indexed variables. #
-
+Here is some fixed text for you.
 #L myList D { "John", "Joanne", "Josh" }
 #D myName myList[1]
+
+#^2"RETURN"
+They say, your name is #> myName, gringo! Is that right?@
+Because I think, that you are #> myList[2].
 
 #^"RETURN"
 And so it ends.

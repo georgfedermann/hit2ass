@@ -60,7 +60,7 @@ public class LastExpressionList extends AbstractAstItem implements ExpressionLis
 
     @Override
     public String toString() {
-        return "GlobalListDeclarationStatement{" +
+        return "LastExpressionList{" +
                 "codePosition=" + getCodePosition() +
                 "head='" + head.toString() +
                 '}';

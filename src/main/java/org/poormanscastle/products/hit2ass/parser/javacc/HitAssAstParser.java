@@ -1696,7 +1696,7 @@ logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image
               jj_consume_token(-1);
               throw new ParseException();
             }
-            buffer = E();
+            buffer = EL();
             switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
             case IF_RBRACKET:{
               jj_consume_token(IF_RBRACKET);
@@ -1769,7 +1769,7 @@ if(idxExp1 == null){
               break label_2;
             }
             jj_consume_token(PS_IDX_CHECK_LBRACKET);
-            buffer = E();
+            buffer = EL();
             jj_consume_token(PS_IDX_RBRACKET);
 if(idxExp1 == null){
                 idxExp1 = buffer;
@@ -1875,6 +1875,20 @@ if(idxExp1 == null){
     try { return !jj_3_6(); }
     catch(LookaheadSuccess ls) { return true; }
     finally { jj_save(5, xla); }
+  }
+
+  private boolean jj_3R_13()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(165)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(226)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(286)) return true;
+    }
+    }
+    return false;
   }
 
   private boolean jj_3R_42()
@@ -2604,20 +2618,6 @@ if(idxExp1 == null){
   private boolean jj_3_1()
  {
     if (jj_3R_3()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_13()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_scan_token(165)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(226)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(286)) return true;
-    }
-    }
     return false;
   }
 

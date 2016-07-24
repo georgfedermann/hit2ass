@@ -4,6 +4,8 @@ echo "Positional parameters: "
 echo '$0 = ' $0
 echo '$1 = ' $1
 echo '$2 = ' $2
+echo "To process all .clou files in the current directory, use this:"
+echo 'for file in `ls *.clou` ; do file="${file%.*}"; echo "processing $file"; ./process.sh $file ; done'
 
 if [ "$1" != "" ]; then
   echo "Processing textcomponent " $1 "."

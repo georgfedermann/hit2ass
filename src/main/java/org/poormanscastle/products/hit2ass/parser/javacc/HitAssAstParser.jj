@@ -1294,7 +1294,7 @@ Expression F() :
     // requires special treatment for indexed variables
     ((valueToken = <PS_ID>)
     (
-        <PS_IDX_LBRACKET> buffer = E() <PS_IDX_RBRACKET>
+        <PS_IDX_CHECK_LBRACKET> buffer = E() <PS_IDX_RBRACKET>
         {
             if(idxExp1 == null){
                 idxExp1 = buffer;

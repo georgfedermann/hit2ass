@@ -29,18 +29,18 @@ public final class ListEnumerationExpression extends AbstractExpression<List> {
     }
 
     @Override
-    public final Type getValueType() {
+    public Type getValueType() {
         return null;
     }
 
     @Override
-    public final List getValue() {
+    public List getValue() {
         return value;
     }
 
     @Override
-    public final void setValue(List value) {
-
+    public void setValue(List value) {
+        throw new UnsupportedOperationException();
     }
 
     @Override

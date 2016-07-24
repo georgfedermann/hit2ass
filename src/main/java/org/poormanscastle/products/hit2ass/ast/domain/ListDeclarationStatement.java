@@ -3,7 +3,6 @@ package org.poormanscastle.products.hit2ass.ast.domain;
 import org.apache.commons.lang3.StringUtils;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Declares a LIST variable.

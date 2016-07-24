@@ -40,7 +40,7 @@ public final class IdExpression extends AbstractExpression<Object> {
     public String toXPathString() {
         if (idxExp1 == null) {
             return StringUtils.join(" var:read('", id, "') ");
-        } else if (idxExp2 == null && !(idxExp1 instanceof ExpressionList)) {
+        } else if (idxExp2 == null && (idxExp1 instanceof LastExpressionList)) {
             return StringUtils.join(" hit2assext:getListValueAt(var:read('renderSessionUuid'), '",
                     id, "', ", idxExp1.toXPathString(), ")");
         } else {

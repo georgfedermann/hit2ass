@@ -41,7 +41,6 @@ Nonterminal symbols, syntactic variables, expandables
 This is a list of the terminal symbols used in the lexer specification in text mode
     AS      ... Assignment Statement #=
     CA      ... Case, works in the context of a switch statement (SS), /id
-    CF      ... Close File
     DV      ... Dynamic Value #X<
     FX      ... Fixed Text
     GDS     ... Global Declaration Statement
@@ -52,7 +51,7 @@ This is a list of the terminal symbols used in the lexer specification in text m
     JS      ... J statement, for setting of cursor positions #J
     LDS     ... Local Declaration Statement
     MS      ... Macro Statement, generic execution statement, interprets to content of a text variable as CLOU sources #$
-    OF      ... Open File
+    OF      ... Handling files, like opening and closing them. Historically derives from "Open file"
     PS      ... Print statement, for printing the evaluation result of IdExpressions #>
     SB      ... Section break @
     SK      ... Shell Kommando
@@ -1271,7 +1270,7 @@ Expression F() :
     (
         ( <IF_LBRACKET> | <DS_LBRACKET> | <SS_LBRACKET> | <AS_LBRACKET> | <MS_LBRACKET> | <LS_LBRACKET> | <LS_BRACES_LBRACKET> |
             <HC_LBRACKET> | <FOR_LBRACKET> | <PS_IDX_LBRACKET> )
-            buffer = E()
+            buffer = EL()
         ( <IF_RBRACKET> | <DS_RBRACKET> | <SS_RBRACKET> | <AS_RBRACKET> | <MS_RBRACKET> | <LS_RBRACKET> | <LS_BRACES_RBRACKET> |
             <HC_RBRACKET> | <FOR_RBRACKET> | <PS_IDX_RBRACKET> )
         {
@@ -1294,7 +1293,7 @@ Expression F() :
     // requires special treatment for indexed variables
     ((valueToken = <PS_ID>)
     (
-        <PS_IDX_CHECK_LBRACKET> buffer = E() <PS_IDX_RBRACKET>
+        <PS_IDX_CHECK_LBRACKET> buffer = EL() <PS_IDX_RBRACKET>
         {
             if(idxExp1 == null){
                 idxExp1 = buffer;

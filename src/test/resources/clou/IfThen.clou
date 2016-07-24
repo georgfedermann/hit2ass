@@ -2,21 +2,21 @@
 #*  This CLOU component holds some sample text taken from a real CLOU component. #
 
   Gleichzeitig ersuchen wir den (das) beiliegende(n) Bescheid (INFO)
-  anlÃ¤sslich der Information zu expedieren bzw. auszuhÃ¤ndigen und
+  anlässlich der Information zu expedieren bzw. auszuhändigen und
   einen entsprechenden Expedierungsvermerk anzubringen.
 
-#D bauname_Ã¤Ã¶Ã¼ÃŸÃ„Ã–Ãœ "AL001"
+#D bauname_äöüßÄÖÜ "AL001"
 
-  #? bauname_Ã¤Ã¶Ã¼ÃŸÃ„Ã–Ãœ = "AL001" :
+  #? bauname_äöüßÄÖÜ = "AL001" :
     /J
       #* THEN #
       den Treppenakt
   #
 
-#*  HIT/CLOUÂ accepts condition statement with only an ELSE statement, and no THEN statement.
-    The resuling IR tree must have an empty THENÂ statement in such a case.  #
+#*  HIT/CLOU accepts condition statement with only an ELSE statement, and no THEN statement.
+    The resuling IR tree must have an empty THEN statement in such a case.  #
 
-#? bauname_Ã¤Ã¶Ã¼ÃŸÃ„Ã–Ãœ = "AL001" :
+#? bauname_äöüßÄÖÜ = "AL001" :
     /N
     #* ELSE #
     den anderen Treppenakt

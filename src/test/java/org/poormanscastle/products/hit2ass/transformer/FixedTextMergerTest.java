@@ -24,7 +24,7 @@ public class FixedTextMergerTest {
 
     @Test
     public void testCommentsAndFixedText() throws Exception {
-        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("CommentsAndFixedText"), "UTF-8");
+        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("CommentsAndFixedText"), "ISO8859_1");
         baustein = parser.CB();
         baustein.accept(merger);
         assertNotNull(baustein);

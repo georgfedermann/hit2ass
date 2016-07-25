@@ -73,7 +73,7 @@ public class FixedTextMergerTest {
 
     @Test
     public void testIfThenElese() throws Exception {
-        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("IfThenElse"), "UTF-8");
+        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("IfThenElse"), "ISO8859_1");
         baustein = parser.CB();
         baustein.accept(merger);
         assertNotNull(baustein);

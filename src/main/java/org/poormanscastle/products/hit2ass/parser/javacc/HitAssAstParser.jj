@@ -262,6 +262,7 @@ TOKEN : {
     < PS_IDX_QUOTE : "\"" > |
     < PS_IDX_LPAREN : "(" > |
     < PS_IDX_RPAREN : ")" > |
+    < PS_IDX_COMMA : "," > |
     < PS_IDX_NUM : (["0"-"9"])+ > |
     < PS_IDX_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
     < PS_IDX_ID : [ "_", "a"-"z", "A"-"Z"](["_", ",", "a"-"z", "A"-"Z", "0"-"9",
@@ -817,7 +818,7 @@ ExpressionList EL() :
 ExpressionList ELPrime() :
 { Expression expression; ExpressionList expressionList; }
 {
-    ((<MS_COMMA>|<LS_BRACES_COMMA>|<DS_COMMA>) expression = E() expressionList = ELPrime()
+    ((<MS_COMMA>|<LS_BRACES_COMMA>|<DS_COMMA>|<AS_COMMA>|<SS_COMMA>|<PS_IDX_COMMA>) expression = E() expressionList = ELPrime()
     {
         return expressionList == null ? new LastExpressionList(expression) : new PairExpressionList(expression, expressionList);
     })?{ return null; }
@@ -911,7 +912,7 @@ AssignmentStatement AS() :
     <AS> idToken = <AS_ID> expression = E()
     {
         logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image, "; Expression: ", expression));
-        return new AssignmentStatement(idToken.image, expression);
+        return new AssignmentStatement(CodePosition.createFromToken(idToken), idToken.image, expression);
     }
 }
 

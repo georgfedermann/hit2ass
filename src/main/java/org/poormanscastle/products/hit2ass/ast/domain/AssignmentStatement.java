@@ -27,13 +27,14 @@ public class AssignmentStatement extends AbstractAstItem implements Statement {
     public AssignmentStatement(CodePosition codePosition, String id, Expression expression) {
         super(codePosition);
         checkArgument(!StringUtils.isBlank(id));
-        checkNotNull(expression);
+        checkNotNull(expression, StringUtils.join("In the assignment statement for symbol ", id,
+                " at ", codePosition, " the expression appears to be null."));
         this.id = id;
         this.expression = expression;
     }
 
     public AssignmentStatement(String id, Expression expression) {
-        this(expression.getCodePosition(), id, expression);
+        this(expression != null ? expression.getCodePosition() : CodePosition.createZeroPosition(), id, expression);
     }
 
     public String getId() {

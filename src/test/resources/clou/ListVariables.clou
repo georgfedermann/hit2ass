@@ -1,0 +1,21 @@
+#
+#*  This sample HIT/CLOU text component exposes bugs that were found when
+    using the hit2ass system to parse actual productive text components.    #
+
+#D telmitarb ""
+#D dbklappe "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+
+#= telmitarb dbklappe[1,5]
+
+#D vsnr "1981160374"
+#>vsnr[1,4]
+@
+#>vsnr[5,10]
+
+#D listind 0
+#= listind 1
+
+#L indtext D {"auf", "und", "der", "Gas", "nach", "."}
+#= indtext[listind] " "
+
+And so it ends.

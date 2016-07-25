@@ -31,7 +31,9 @@ public class FixedTextMerger extends AstItemVisitorAdapter {
                 parent = pairClouBausteinElementList;
                 master = (FixedText) pairClouBausteinElementList.getHead();
             } else {
-                master.appendText(((FixedText) pairClouBausteinElementList.getHead()).getText(), true);
+                FixedText followingText = ((FixedText) pairClouBausteinElementList.getHead());
+                boolean withBlank = !(master.getText().endsWith("\"") && followingText.getText().startsWith("."));
+                master.appendText(((FixedText) pairClouBausteinElementList.getHead()).getText(), withBlank);
                 parent.setTail(pairClouBausteinElementList.getTail());
             }
         } else {

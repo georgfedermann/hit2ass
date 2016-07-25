@@ -536,12 +536,12 @@ logger.debug(StringUtils.join("Found DynamicValue: varId:", idToken.image));
     throw new Error("Missing return statement in function");
   }
 
-  final public AssignmentStatement AS() throws ParseException {Token idToken; Expression expression;
+  final public AssignmentStatement AS() throws ParseException {Expression idExpression; Expression expression;
     jj_consume_token(AS);
-    idToken = jj_consume_token(AS_ID);
+    idExpression = E();
     expression = E();
-logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image, "; Expression: ", expression));
-        {if ("" != null) return new AssignmentStatement(CodePosition.createFromToken(idToken), idToken.image, expression);}
+logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idExpression, "; Expression: ", expression));
+        {if ("" != null) return new AssignmentStatement(idExpression.getCodePosition(), ((IdExpression) idExpression), expression);}
     throw new Error("Missing return statement in function");
   }
 

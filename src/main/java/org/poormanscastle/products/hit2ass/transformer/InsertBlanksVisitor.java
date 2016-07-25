@@ -36,13 +36,15 @@ public class InsertBlanksVisitor extends AstItemVisitorAdapter {
         if (pairClouBausteinElementList.getHead() instanceof FixedText && previousElementList != null && previousElementList.getHead() instanceof PrintStatement) {
             FixedText fixedText = (FixedText) pairClouBausteinElementList.getHead();
             String content = fixedText.getText();
-            if (!Pattern.matches("\\p{Punct}", content.substring(0, 1))) {
+            if (!Pattern.matches("\\p{Punct}|\"", content.substring(0, 1))) {
                 fixedText.reset();
                 fixedText.appendText(content, true);
             }
         } else if (pairClouBausteinElementList.getHead() instanceof PrintStatement && previousElementList != null && previousElementList.getHead() instanceof FixedText) {
             FixedText fixedText = (FixedText) previousElementList.getHead();
-            fixedText.appendText(" ", false);
+            if (!fixedText.getText().endsWith("\"")) {
+                fixedText.appendText(" ", false);
+            }
         } else if (previousElementList != null && previousElementList.getHead() instanceof PrintStatement && pairClouBausteinElementList.getHead() instanceof PrintStatement) {
             previousElementList.setTail(new PairClouBausteinElementList(FixedText.create(CodePosition.createZeroPosition(), " "), pairClouBausteinElementList));
         }

@@ -907,12 +907,12 @@ SectionStatement SB() :
 }
 
 AssignmentStatement AS() :
-{ Token idToken; Expression expression; }
+{ Expression idExpression; Expression expression; }
 {
-    <AS> idToken = <AS_ID> expression = E()
+    <AS> idExpression = E() expression = E()
     {
-        logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idToken.image, "; Expression: ", expression));
-        return new AssignmentStatement(CodePosition.createFromToken(idToken), idToken.image, expression);
+        logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idExpression, "; Expression: ", expression));
+        return new AssignmentStatement(idExpression.getCodePosition(), ((IdExpression) idExpression), expression);
     }
 }
 

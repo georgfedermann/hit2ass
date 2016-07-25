@@ -1,0 +1,12 @@
+#
+#*  This HIT/CLOU text component exposes bugs related to direct successions of
+    PrintStatement and FixedText elements, and the blanks between them. #
+
+#D firstName "John"
+#D lastName "Connor"
+
+You are #> firstName #> lastName.   #*  a blank is expected between fixed text and firstName, and firstName and lastName, not before the dot! #
+#^2"RETURN"
+You are "#> firstName". #*  in this case, no blanks are expected.   #
+#^2"RETURN"
+And so it ends.

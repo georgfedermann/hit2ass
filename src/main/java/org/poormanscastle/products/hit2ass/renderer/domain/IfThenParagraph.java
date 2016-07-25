@@ -15,4 +15,12 @@ public final class IfThenParagraph extends AbstractContainer {
     public void setupContext(VelocityContext context) {
 
     }
+
+    @Override
+    public String toString() {
+        return "IfThenParagraph{" +
+                "components=" + getComponents() +
+                '}';
+    }
+
 }

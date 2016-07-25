@@ -6,4 +6,10 @@
 #D mySubstring myString[5,11]
 
 The substring [5,11] of "#> myString" is "#> mySubstring".@
+#? mySubstring = "freedom" :
+    /J
+        Hey, that worked!@
+    /N
+        OK, we will have to fix that.@
+#
 And so it ends.

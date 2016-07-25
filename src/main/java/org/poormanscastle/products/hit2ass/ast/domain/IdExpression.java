@@ -55,10 +55,14 @@ public final class IdExpression extends AbstractExpression<Object> {
             // this is the HIT/CLOU syntax to extract substrings from string variables.
             // #D myString "Let freedom ring"
             // #D mySubstring myString[5,11]
+            // where 5 is the start index and 11 is the end index of the substring within the parent string
+            // this needs to be transformed to XPath speak:
+            // substring(stringvar, startindex, lengthInCharacter)
             PairExpressionList head = (PairExpressionList) idxExp1;
             checkState(head.getTail() instanceof LastExpressionList);
             LastExpressionList tail = (LastExpressionList) head.getTail();
-            return StringUtils.join(" substring(var:read('", id, "'), ", head.toXPathString(), ", ", tail.toXPathString(), " ) ");
+            return StringUtils.join(" substring(var:read('", id, "'), ", head.toXPathString(), ", ", tail.toXPathString(),
+                    " + 1 - ", head.toXPathString(), " ) ");
         } else {
             throw new IllegalStateException(StringUtils.join("Cannot create an XPath expression for this IdExpression: ", toString()));
         }

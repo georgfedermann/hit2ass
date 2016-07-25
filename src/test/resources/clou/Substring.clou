@@ -1,0 +1,9 @@
+#
+#*  This simple sample HIT/CLOU text component trains the system to
+    support HIT/CLOU substring expression.  #
+
+#D myString "Let freedom ring"
+#D mySubstring myString[5,11]
+
+The substring [5,11] of "#> myString" is "#> mySubstring".@
+And so it ends.

@@ -420,6 +420,7 @@ TOKEN : {
     < DS_DIV : "/" > |
     < DS_QUOTE : "\"" > |
     < DS_COLON : ":" > |
+    < DS_COMMA : "," > |
     < DS_LPAREN : "(" > |
     < DS_RPAREN : ")" > |
     < DS_LBRACKET : "[" > |
@@ -816,7 +817,7 @@ ExpressionList EL() :
 ExpressionList ELPrime() :
 { Expression expression; ExpressionList expressionList; }
 {
-    ((<MS_COMMA>|<LS_BRACES_COMMA>) expression = E() expressionList = ELPrime()
+    ((<MS_COMMA>|<LS_BRACES_COMMA>|<DS_COMMA>) expression = E() expressionList = ELPrime()
     {
         return expressionList == null ? new LastExpressionList(expression) : new PairExpressionList(expression, expressionList);
     })?{ return null; }

@@ -74,4 +74,13 @@ public class PairExpressionList extends AbstractAstItem implements ExpressionLis
         }
         visitor.leavePairExpressionList(this);
     }
+
+    @Override
+    public String toString() {
+        return "PairExpressionList{" +
+                "head=" + head +
+                ", tail=" + tail +
+                '}';
+    }
+
 }

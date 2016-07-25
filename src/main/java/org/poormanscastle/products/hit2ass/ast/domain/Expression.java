@@ -17,7 +17,7 @@ public interface Expression<T> extends AstItem {
      *
      * @return
      */
-    public String toXPathString();
+    String toXPathString();
 
     /**
      * Can be used to query the state of the given expression.

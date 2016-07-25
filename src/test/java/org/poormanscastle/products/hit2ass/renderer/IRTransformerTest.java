@@ -67,6 +67,34 @@ public class IRTransformerTest {
     }
 
     @Test
+    public void testSubstring() throws Exception {
+        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("Substring"), "ISO8859_1");
+        baustein = parser.CB();
+        baustein.accept(merger);
+        baustein.accept(blanksVisitor);
+        baustein.accept(irTransformer);
+        Workspace workspace = irTransformer.getWorkspace();
+        assertNotNull(workspace);
+        String probe = workspace.toString();
+        assertFalse(StringUtils.isBlank(probe));
+        assertEquals("Workspace{workspaceName='HitAssWorkspace', projectsName='HitAssProjects', projectName='HitAssProject', documentName='HitAssDocument', repeatingPageName='HitAssRepeatingPage', pageContentName='HitAssPageContent', contentContainer=Paragraph{contentElements=[DocumentVariable{variableName=''myString'', variableValue=' 'Let freedom ring' '}, DocumentVariable{variableName=''mySubstring'', variableValue=' substring(var:read('myString'), 5, 11 + 1 - 5 ) '}, Text{name='text', text='The substring [5,11] of \"'}, DynamicContentReference{name='Print: myString', xpath=' var:read('myString') '}, Text{name='text', text='\" is \"'}, DynamicContentReference{name='Print: mySubstring', xpath=' var:read('mySubstring') '}, Text{name='text', text='\".'}, CarriageReturn{name='NL', repetitionExpression.toXPathString()='1'}, IfThenElseParagraph{condition=BinaryOperatorExpression{codePosition=begin line/column 9/4; end line/column 9/14, lhs=IdExpression{id='mySubstring', idxExp1=null, idxExp2=null, valueType=null, value=null}, operator=EQ, rhs=TextExpression{codePosition=begin line/column 9/18; end line/column 9/26, value='freedom'}, value=null}, components=[IfThenParagraph{components=[Text{name='text', text='Hey, that worked!'}, CarriageReturn{name='NL', repetitionExpression.toXPathString()='1'}]}, IfElseParagraph{components=[Text{name='text', text='OK, we will have to fix that.'}, CarriageReturn{name='NL', repetitionExpression.toXPathString()='1'}]}]}, Text{name='text', text='And so it ends.'}, Text{name='text', text=''}]}}", probe);
+    }
+
+    @Test
+    public void testInsertBlanksVisitor() throws Exception {
+        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("InsertBlanksVisitorTest"), "ISO8859_1");
+        baustein = parser.CB();
+        baustein.accept(merger);
+        baustein.accept(blanksVisitor);
+        baustein.accept(irTransformer);
+        Workspace workspace = irTransformer.getWorkspace();
+        assertNotNull(workspace);
+        String probe = workspace.toString();
+        assertFalse(StringUtils.isBlank(probe));
+        assertEquals("Workspace{workspaceName='HitAssWorkspace', projectsName='HitAssProjects', projectName='HitAssProject', documentName='HitAssDocument', repeatingPageName='HitAssRepeatingPage', pageContentName='HitAssPageContent', contentContainer=Paragraph{contentElements=[DocumentVariable{variableName=''firstName'', variableValue=' 'John' '}, DocumentVariable{variableName=''lastName'', variableValue=' 'Connor' '}, Text{name='text', text='You are '}, DynamicContentReference{name='Print: firstName', xpath=' var:read('firstName') '}, Text{name='text', text=' '}, DynamicContentReference{name='Print: lastName', xpath=' var:read('lastName') '}, Text{name='text', text='.'}, CarriageReturn{name='NL', repetitionExpression.toXPathString()='2'}, Text{name='text', text='You are \"'}, DynamicContentReference{name='Print: firstName', xpath=' var:read('firstName') '}, Text{name='text', text='\".'}, CarriageReturn{name='NL', repetitionExpression.toXPathString()='2'}, Text{name='text', text='And so it ends.'}, Text{name='text', text=''}]}}", probe);
+    }
+
+    @Test
     public void testSimpleIfLetter() throws Exception {
         parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("/sampleDocuments/SimpleIfLetter/", "SimpleIfLetter", "clou"), "ISO8859-1");
         baustein = parser.CB();

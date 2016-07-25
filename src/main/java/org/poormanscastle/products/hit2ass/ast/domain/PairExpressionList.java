@@ -23,7 +23,7 @@ public class PairExpressionList extends AbstractAstItem implements ExpressionLis
 
     @Override
     public String toXPathString() {
-        return StringUtils.join(head.toXPathString(), " , ", tail.toXPathString());
+        return StringUtils.join(head.toXPathString());
     }
 
     public PairExpressionList(Expression head, ExpressionList tail) {
@@ -74,4 +74,13 @@ public class PairExpressionList extends AbstractAstItem implements ExpressionLis
         }
         visitor.leavePairExpressionList(this);
     }
+
+    @Override
+    public String toString() {
+        return "PairExpressionList{" +
+                "head=" + head +
+                ", tail=" + tail +
+                '}';
+    }
+
 }

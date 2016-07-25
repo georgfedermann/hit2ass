@@ -16,4 +16,11 @@ public final class IfElseParagraph extends AbstractContainer {
 
     }
 
+    @Override
+    public String toString() {
+        return "IfElseParagraph{" +
+                "components=" + getComponents() +
+                '}';
+    }
+
 }

@@ -232,8 +232,8 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     @Override
     public void visitAssignmentStatement(AssignmentStatement assignmentStatement) {
         containerStack.peek().addContent(new DynamicContentReference(
-                StringUtils.join("Assignment: ", assignmentStatement.getId()),
-                StringUtils.join("var:write('", assignmentStatement.getId(),
+                StringUtils.join("Assignment: ", assignmentStatement.getIdExpression().getId()),
+                StringUtils.join("var:write('", assignmentStatement.getIdExpression().toXPathString(),
                         "', ", assignmentStatement.getExpression().toXPathString(), ")"),
                 fontWeight
         ));

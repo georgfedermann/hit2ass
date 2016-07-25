@@ -514,7 +514,7 @@ public class PrettyPrintVisitor extends AstItemVisitorAdapter {
 
     @Override
     public void visitAssignmentStatement(AssignmentStatement assignmentStatement) {
-        addItem("AS", assignmentStatement.getId());
+        addItem("AS", assignmentStatement.getIdExpression().getId());
         addBufferLine();
     }
 

@@ -2,11 +2,10 @@ package org.poormanscastle.products.hit2ass.ast.domain;
 
 import org.apache.commons.lang3.StringUtils;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Represents HIT / CLOU statement #= as in
+ * Represents HIT / CLOU assignment statement #= as in
  * <p>
  * #= bauname "UE108"
  * <p>
@@ -17,27 +16,24 @@ public class AssignmentStatement extends AbstractAstItem implements Statement {
     /**
      * Name of the symbol (variable) that shall get assigned the given value.
      */
-    private final String id;
+    private final IdExpression idExpression;
 
     /**
      * The value of this expression shall get assigned to the variable specified by the given id.
      */
     private final Expression expression;
 
-    public AssignmentStatement(CodePosition codePosition, String id, Expression expression) {
+    public AssignmentStatement(CodePosition codePosition, IdExpression idExpression, Expression expression) {
         super(codePosition);
-        checkArgument(!StringUtils.isBlank(id));
-        checkNotNull(expression);
-        this.id = id;
+        checkNotNull(idExpression);
+        checkNotNull(expression, StringUtils.join("In the assignment statement for symbol ",
+                idExpression.toXPathString(), " at ", codePosition, " the expression appears to be null."));
+        this.idExpression = idExpression;
         this.expression = expression;
     }
 
-    public AssignmentStatement(String id, Expression expression) {
-        this(expression.getCodePosition(), id, expression);
-    }
-
-    public String getId() {
-        return id;
+    public IdExpression getIdExpression() {
+        return idExpression;
     }
 
     public Expression getExpression() {
@@ -62,7 +58,7 @@ public class AssignmentStatement extends AbstractAstItem implements Statement {
     public String toString() {
         return "AssignmentStatement{" +
                 "codePosition=" + getCodePosition() +
-                ", id='" + id + '\'' +
+                ", idExpression='" + idExpression + '\'' +
                 ", expression=" + expression +
                 '}';
     }

@@ -231,12 +231,32 @@ public final class IRTransformer extends AstItemVisitorAdapter {
 
     @Override
     public void visitAssignmentStatement(AssignmentStatement assignmentStatement) {
-        containerStack.peek().addContent(new DynamicContentReference(
-                StringUtils.join("Assignment: ", assignmentStatement.getIdExpression().getId()),
-                StringUtils.join("var:write('", assignmentStatement.getIdExpression().toXPathString(),
-                        "', ", assignmentStatement.getExpression().toXPathString(), ")"),
-                fontWeight
-        ));
+        // there are several possibilities here:
+        // assign a value to a scalar variable
+        // assign a value to a slot of a list variable
+        if (assignmentStatement.getIdExpression().getIdxExp1() == null) {
+            // assign a value to a scalar variable
+            // uses the DocDesign DocumentVariable mechanism
+            // var:write('varName', XPath Expression)
+            containerStack.peek().addContent(new DynamicContentReference(
+                    StringUtils.join("Scalar Assignment: ", assignmentStatement.getIdExpression().getId()),
+                    StringUtils.join("var:write('", assignmentStatement.getIdExpression().getId(),
+                            "', ", assignmentStatement.getExpression().toXPathString(), ")"),
+                    fontWeight
+            ));
+        } else {
+            // currently, the only other possibility is: assign a vlaue to a slot of a list variable
+            // uses the hit2assext list mechanisms
+            // hit2assext:setListValueAt(var:read('renderSessionUuid'), assignmentStatement.getIdExpression().getId(), value XPath)
+            containerStack.peek().addContent(new DynamicContentReference(
+                    StringUtils.join("List Assignment: ", assignmentStatement.getIdExpression().getId()),
+                    StringUtils.join("hit2assext:setListValueAt(var:read('renderSessionUuid'), '",
+                            assignmentStatement.getIdExpression().getId(), "', ",
+                            assignmentStatement.getIdExpression().getIdxExp1().toXPathString(),
+                            ", ", assignmentStatement.getExpression().toXPathString(), ")"), fontWeight
+            ));
+        }
+
     }
 
     @Override

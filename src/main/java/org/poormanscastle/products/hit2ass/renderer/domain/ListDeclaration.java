@@ -30,4 +30,12 @@ public class ListDeclaration extends AbstractContainer {
     public void setupContext(VelocityContext context) {
         context.put("listVariableName", listVariableName);
     }
+
+    @Override
+    public String toString() {
+        return "ListDeclaration{" +
+                "listVariableName='" + listVariableName + '\'' +
+                ", components='" + getComponents() + "'" +
+                '}';
+    }
 }

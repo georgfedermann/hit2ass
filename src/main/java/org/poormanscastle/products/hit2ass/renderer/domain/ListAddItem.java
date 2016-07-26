@@ -25,4 +25,13 @@ public class ListAddItem extends AbstractContainer {
         context.put("listVariableName", listVariableName);
         context.put("newValue", newValue);
     }
+
+    @Override
+    public String toString() {
+        return "ListAddItem{" +
+                "listVariableName='" + listVariableName + '\'' +
+                ", newValue='" + newValue + '\'' +
+                ", components='" + getComponents() + "'" +
+                '}';
+    }
 }

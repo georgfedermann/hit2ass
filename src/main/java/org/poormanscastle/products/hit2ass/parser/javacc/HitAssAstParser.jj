@@ -442,6 +442,7 @@ TOKEN : {
 }
 <COMMAND_MODE_AS> TOKEN : {
     < AS_SHELLVAR : "SHELLVARIABLE" > |
+    < AS_SB : "@" > : TXT_MODE |
     < AS_EQ : "=" > |
     < AS_EQ_STRICT : "==" > |
     < AS_OR : "oder" > |
@@ -900,7 +901,7 @@ PrintStatement PS() :
 SectionStatement SB() :
 { Token sbToken; }
 {
-    ( sbToken = <SB> | sbToken = <PS_SB> | sbToken = <PS_IDX_SB> )
+    ( sbToken = <SB> | sbToken = <PS_SB> | sbToken = <PS_IDX_SB> | sbToken = <AS_SB> )
     {
         return new SectionStatement(CodePosition.createFromToken(sbToken));
     }

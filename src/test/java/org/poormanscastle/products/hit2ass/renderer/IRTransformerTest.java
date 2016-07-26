@@ -19,11 +19,11 @@ import static org.junit.Assert.assertTrue;
  */
 public class IRTransformerTest {
 
+    private ClouBaustein baustein;
     private HitAssAstParser parser;
     private FixedTextMerger merger = new FixedTextMerger();
-    private ClouBaustein baustein;
-    private IRTransformer irTransformer = new IRTransformer();
     private InsertBlanksVisitor blanksVisitor = new InsertBlanksVisitor();
+    private IRTransformer irTransformer = new IRTransformer();
 
     @Test
     public void testHitCommandReturn() throws Exception {
@@ -64,6 +64,19 @@ public class IRTransformerTest {
         String acrString = workspace.getContent();
         assertFalse(StringUtils.isBlank(acrString));
         assertEquals("Workspace{workspaceName='HitAssWorkspace', projectsName='HitAssProjects', projectName='HitAssProject', documentName='HitAssDocument', repeatingPageName='HitAssRepeatingPage', pageContentName='HitAssPageContent', contentContainer=Paragraph{contentElements=[DocumentVariable{variableName=''firstName'', variableValue=' 'Jim' '}, DocumentVariable{variableName=''lastName'', variableValue=' 'Raynor' '}, DocumentVariable{variableName=''gender'', variableValue=' 'm' '}, DocumentVariable{variableName=''shoppingItem'', variableValue=' 'Adler' '}, DocumentVariable{variableName=''numberOfNewLines'', variableValue='5'}, Text{name='text', text='Sehr geehrter Herr '}, DynamicContentReference{name='Print: firstName', xpath=' var:read('firstName') '}, Text{name='text', text=' '}, DynamicContentReference{name='Print: lastName', xpath=' var:read('lastName') '}, CarriageReturn{name='NL', repetitionExpression.toXPathString()='1'}, Text{name='text', text='Wir danken Ihnen für Ihre Bestellung und bitten Sie um Ihre Zurkenntnisnahme:'}, CarriageReturn{name='NL', repetitionExpression.toXPathString()='1'}, Text{name='text', text='Ihre Bestellung wird nicht ausgeführt.'}, CarriageReturn{name='NL', repetitionExpression.toXPathString()='3'}, Text{name='text', text='Aufwiederhören.'}, CarriageReturn{name='NL', repetitionExpression.toXPathString()='1'}, CarriageReturn{name='NL', repetitionExpression.toXPathString()='1'}, CarriageReturn{name='NL', repetitionExpression.toXPathString()='1'}, Text{name='text', text='And so it ends.'}, Text{name='text', text=''}]}}", workspace.toString());
+    }
+
+    @Test
+    public void testAssignments() throws Exception {
+        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("Assignments"), "ISO8859_1");
+        baustein = parser.CB();
+        baustein.accept(merger);
+        baustein.accept(blanksVisitor);
+        baustein.accept(irTransformer);
+        Workspace workspace = irTransformer.getWorkspace();
+        assertNotNull(workspace);
+        String probe = workspace.toString();
+        assertEquals("Workspace{workspaceName='HitAssWorkspace', projectsName='HitAssProjects', projectName='HitAssProject', documentName='HitAssDocument', repeatingPageName='HitAssRepeatingPage', pageContentName='HitAssPageContent', contentContainer=Paragraph{contentElements=[Text{name='text', text='Here is some fixed text for you.'}, DocumentVariable{variableName=''myVar'', variableValue=' 'John2' '}, DynamicContentReference{name='Assign from Userdata XML: quargl', xpath='var:write('quargl', /UserData/payload/line[@lineNr = var:read('hit2ass_xml_sequence')]) | var:write('hit2ass_xml_sequence', var:read('hit2ass_xml_sequence') + 1)'}, DynamicContentReference{name='Scalar Assignment: quargl', xpath='var:write('quargl',  'Speed' )'}, DynamicContentReference{name='Scalar Assignment: varName', xpath='var:write('varName',  'For' )'}, DynamicContentReference{name='Scalar Assignment: anotherVisitor', xpath='var:write('anotherVisitor',  'Need' )'}, Text{name='text', text='This is the value of anotherVisitor: '}, DynamicContentReference{name='Print: anotherVisitor', xpath=' var:read('anotherVisitor') '}, Text{name='text', text=','}, CarriageReturn{name='NL', repetitionExpression.toXPathString()='1'}, Text{name='text', text='this is the value of varName: '}, DynamicContentReference{name='Print: varName', xpath=' var:read('varName') '}, Text{name='text', text=','}, CarriageReturn{name='NL', repetitionExpression.toXPathString()='1'}, Text{name='text', text='and this is the vlaue of quargl: '}, DynamicContentReference{name='Print: quargl', xpath=' var:read('quargl') '}, Text{name='text', text='.'}, CarriageReturn{name='NL', repetitionExpression.toXPathString()='1'}, CarriageReturn{name='NL', repetitionExpression.toXPathString()='1'}, Text{name='text', text='Now, intitializing a list, setting slot values and retrieving slot values:'}, CarriageReturn{name='NL', repetitionExpression.toXPathString()='1'}, CarriageReturn{name='NL', repetitionExpression.toXPathString()='1'}, ListDeclaration{listVariableName='someNames', components='[]'}, ListAddItem{listVariableName='someNames', newValue=' 'John' ', components='[]'}, ListAddItem{listVariableName='someNames', newValue=' 'Joanne' ', components='[]'}, ListAddItem{listVariableName='someNames', newValue=' 'Eli' ', components='[]'}, Text{name='text', text='someNames[1]= '}, DynamicContentReference{name='Print: someNames', xpath=' hit2assext:getListValueAt(var:read('renderSessionUuid'), 'someNames', 1)'}, CarriageReturn{name='NL', repetitionExpression.toXPathString()='1'}, Text{name='text', text='someNames[2]= '}, DynamicContentReference{name='Print: someNames', xpath=' hit2assext:getListValueAt(var:read('renderSessionUuid'), 'someNames', 2)'}, CarriageReturn{name='NL', repetitionExpression.toXPathString()='1'}, Text{name='text', text='someNames[3|= '}, DynamicContentReference{name='Print: someNames', xpath=' hit2assext:getListValueAt(var:read('renderSessionUuid'), 'someNames', 3)'}, CarriageReturn{name='NL', repetitionExpression.toXPathString()='1'}, CarriageReturn{name='NL', repetitionExpression.toXPathString()='1'}, Text{name='text', text='Now setting someNames[2] to Lisa'}, DynamicContentReference{name='List Assignment: someNames', xpath='hit2assext:setListValueAt(var:read('renderSessionUuid'), 'someNames', 2,  'Lisa' )'}, CarriageReturn{name='NL', repetitionExpression.toXPathString()='1'}, Text{name='text', text='someNames[2]= '}, DynamicContentReference{name='Print: someNames', xpath=' hit2assext:getListValueAt(var:read('renderSessionUuid'), 'someNames', 2)'}, CarriageReturn{name='NL', repetitionExpression.toXPathString()='1'}, CarriageReturn{name='NL', repetitionExpression.toXPathString()='1'}]}}", probe);
     }
 
     @Test

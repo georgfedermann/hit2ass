@@ -10,3 +10,15 @@ Here is some fixed text for you.    #*  Complete with hanging comments  #
 #= varName "For"
 #= anotherVisitor "Need"
 #X "/home/assentis/batch/inputData.txt" C
+
+This is the value of anotherVisitor: #> anotherVisitor,@
+this is the value of varName: #> varName,@
+and this is the vlaue of quargl: #>quargl.@@
+
+Now, intitializing a list, setting slot values and retrieving slot values:@@
+#L someNames D { "John", "Joanne", "Eli" }
+someNames[1]=#> someNames[1]@
+someNames[2]=#> someNames[2]@
+someNames[3|=#>someNames[3]@@
+Now setting someNames[2] to Lisa #= someNames[2] "Lisa"@
+someNames[2]=#>someNames[2]@@

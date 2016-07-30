@@ -70,6 +70,20 @@ Configurables:
 textName=Salutation
 textContent=Sehr geehrter Herr
 
+TemplateWhileLelementFlavor.vlt
+=====================================
+contains the structure of the lelement flavor WHILE loop
+#X< lelement
+#S lelement <> "*" :
+    #L indtext0 & { lelement }
+    #X< lelement
+#
+this is by far the most common while loop in the realm.
+Configurables:
+-------------------------------------
+inputVariable=lelement
+listVariable=indtext0
+flagValue=*
 
 TemplateCReturn.vlt
 =====================================

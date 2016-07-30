@@ -164,17 +164,6 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         }
     }
 
-    /**
-     * e.g. #D firstName ""
-     *
-     * @param globalDeclarationStatement
-     */
-    @Override
-    public void visitGlobalDeclarationStatement(GlobalDeclarationStatement globalDeclarationStatement) {
-        containerStack.peek().addContent(new DocumentVariable(StringUtils.join("Global Variable: ", globalDeclarationStatement.getId()),
-                StringUtils.join("'", globalDeclarationStatement.getId(), "'"), globalDeclarationStatement.getExpression().toXPathString()));
-    }
-
     @Override
     public void visitGlobalListDeclarationStatement(GlobalListDeclarationStatement globalListDeclarationStatement) {
         // add list declaration statement
@@ -215,18 +204,41 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     }
 
     /**
+     * read a value from the user data XML and write it to a hit2assext scalar variable.
      * e.g. #X< firstName
      *
      * @param dynamicValue
      */
     @Override
     public void visitDynamicValue(DynamicValue dynamicValue) {
+//        containerStack.peek().addContent(new DynamicContentReference(
+//                StringUtils.join("Assign from Userdata XML: ", dynamicValue.getName()),
+//                StringUtils.join("var:write('", dynamicValue.getName(),
+//                        "', /UserData/payload/line[@lineNr = hit2assext:getXmlSequence(var:read('renderSessionUuid'))])",
+//                        " | hit2assext:incrementXmlSequence(var:read('renderSessionUuid'))"),
+//                fontWeight)
+//        );
         containerStack.peek().addContent(new DynamicContentReference(
                 StringUtils.join("Assign from Userdata XML: ", dynamicValue.getName()),
-                StringUtils.join("var:write('", dynamicValue.getName(),
-                        "', /UserData/payload/line[@lineNr = hit2assext:getXmlSequence(var:read('renderSessionUuid'))]) | hit2assext:incrementXmlSequence(var:read('renderSessionUuid'))"),
-                fontWeight)
-        );
+                StringUtils.join(" hit2assext:setScalarVariableValue(var:read('renderSessionUuid'), '", dynamicValue.getName(),
+                        "', /UserData/payload/line[@lineNr = hit2assext:getXmlSequence(var:read('renderSessionUuid'))]) ",
+                        "| hit2assext:incrementXmlSequence(var:read('renderSessionUuid')) ) "),
+                fontWeight));
+    }
+
+    /**
+     * e.g. #D firstName ""
+     *
+     * @param globalDeclarationStatement
+     */
+    @Override
+    public void visitGlobalDeclarationStatement(GlobalDeclarationStatement globalDeclarationStatement) {
+//        containerStack.peek().addContent(new DocumentVariable(StringUtils.join("Global Variable: ", globalDeclarationStatement.getId()),
+//                StringUtils.join("'", globalDeclarationStatement.getId(), "'"), globalDeclarationStatement.getExpression().toXPathString()));
+        containerStack.peek().addContent(new DynamicContentReference(StringUtils.join("Global Variable: ", globalDeclarationStatement.getId()),
+                StringUtils.join(" hit2assext:createScalarVariable(var:read('renderSessionUuid'), '", globalDeclarationStatement.getId(), "', ",
+                        globalDeclarationStatement.getExpression().toXPathString(), ") "
+                ), fontWeight));
     }
 
     @Override
@@ -238,10 +250,16 @@ public final class IRTransformer extends AstItemVisitorAdapter {
             // assign a value to a scalar variable
             // uses the DocDesign DocumentVariable mechanism
             // var:write('varName', XPath Expression)
+//            containerStack.peek().addContent(new DynamicContentReference(
+//                    StringUtils.join("Scalar Assignment: ", assignmentStatement.getIdExpression().getId()),
+//                    StringUtils.join("var:write('", assignmentStatement.getIdExpression().getId(),
+//                            "', ", assignmentStatement.getExpression().toXPathString(), ")"),
+//                    fontWeight
+//            ));
             containerStack.peek().addContent(new DynamicContentReference(
                     StringUtils.join("Scalar Assignment: ", assignmentStatement.getIdExpression().getId()),
-                    StringUtils.join("var:write('", assignmentStatement.getIdExpression().getId(),
-                            "', ", assignmentStatement.getExpression().toXPathString(), ")"),
+                    StringUtils.join("hit2assext:setScalarVariableValue(var:read('renderSessionUuid'), '", assignmentStatement.getIdExpression().getId(),
+                            "', ", assignmentStatement.getExpression().toXPathString(), " )"),
                     fontWeight
             ));
         } else {

@@ -41,7 +41,8 @@ public final class IdExpression extends AbstractExpression<Object> {
     public String toXPathString() {
         if (idxExp1 == null) {
             // this is the HIT/CLOU syntax to evaluate a variable name to the respective value
-            return StringUtils.join(" var:read('", id, "') ");
+            // return StringUtils.join(" var:read('", id, "') ");
+            return StringUtils.join(" hit2assext:getScalarVariableValue(var:read('renderSessionUuid'), '", id, "')  ");
         } else if (idxExp2 == null && (idxExp1 instanceof LastExpressionList)) {
             // varName[5]
             // this can be one of two things, depending on the data type of the given symbol:
@@ -61,8 +62,10 @@ public final class IdExpression extends AbstractExpression<Object> {
             PairExpressionList head = (PairExpressionList) idxExp1;
             checkState(head.getTail() instanceof LastExpressionList);
             LastExpressionList tail = (LastExpressionList) head.getTail();
-            return StringUtils.join(" substring(var:read('", id, "'), ", head.toXPathString(), ", ", tail.toXPathString(),
-                    " + 1 - ", head.toXPathString(), " ) ");
+//            return StringUtils.join(" substring(var:read('", id, "'), ", head.toXPathString(), ", ", tail.toXPathString(),
+//                    " + 1 - ", head.toXPathString(), " ) ");
+            return StringUtils.join(" substring(hit2assext:getScalarVariableValue(var:read('renderSessionUuid'), '", id, "'), ",
+                    head.toXPathString(), ", ", tail.toXPathString(), " + 1 - ", head.toXPathString(), " ) ");
         } else {
             throw new IllegalStateException(StringUtils.join("Cannot create an XPath expression for this IdExpression: ", toString()));
         }

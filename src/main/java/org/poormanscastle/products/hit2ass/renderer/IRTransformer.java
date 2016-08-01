@@ -26,6 +26,7 @@ import org.poormanscastle.products.hit2ass.ast.domain.NumExpression;
 import org.poormanscastle.products.hit2ass.ast.domain.PairExpressionList;
 import org.poormanscastle.products.hit2ass.ast.domain.PrintStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.SectionStatement;
+import org.poormanscastle.products.hit2ass.ast.domain.WhileStatement;
 import org.poormanscastle.products.hit2ass.renderer.domain.CarriageReturn;
 import org.poormanscastle.products.hit2ass.renderer.domain.Container;
 import org.poormanscastle.products.hit2ass.renderer.domain.DocumentVariable;
@@ -39,6 +40,7 @@ import org.poormanscastle.products.hit2ass.renderer.domain.ListAddItem;
 import org.poormanscastle.products.hit2ass.renderer.domain.ListDeclaration;
 import org.poormanscastle.products.hit2ass.renderer.domain.Paragraph;
 import org.poormanscastle.products.hit2ass.renderer.domain.Text;
+import org.poormanscastle.products.hit2ass.renderer.domain.WhileLoop;
 import org.poormanscastle.products.hit2ass.renderer.domain.Workspace;
 
 import java.util.Stack;
@@ -109,6 +111,16 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         forStatement.getForBody().accept(transformer);
         // the visit logic gets handled in the proceedWith method, so it returns "false" so that
         // the visit method won't get called.
+        return false;
+    }
+
+    @Override
+    public boolean proceedWithWhileStatement(WhileStatement whileStatement) {
+        WhileLoop whileLoop = new WhileLoop(StringUtils.join("WHILE-", StringEscapeUtils.escapeXml10(whileStatement.getCondition().toXPathString())),
+                whileStatement.getCondition());
+        containerStack.peek().addContent(whileLoop);
+        // the visitor logic gets handled in the proceedWith method.
+        // Thus it returns "false" here so that the visit methods won't get called.
         return false;
     }
 
@@ -211,18 +223,11 @@ public final class IRTransformer extends AstItemVisitorAdapter {
      */
     @Override
     public void visitDynamicValue(DynamicValue dynamicValue) {
-//        containerStack.peek().addContent(new DynamicContentReference(
-//                StringUtils.join("Assign from Userdata XML: ", dynamicValue.getName()),
-//                StringUtils.join("var:write('", dynamicValue.getName(),
-//                        "', /UserData/payload/line[@lineNr = hit2assext:getXmlSequence(var:read('renderSessionUuid'))])",
-//                        " | hit2assext:incrementXmlSequence(var:read('renderSessionUuid'))"),
-//                fontWeight)
-//        );
         containerStack.peek().addContent(new DynamicContentReference(
                 StringUtils.join("Assign from Userdata XML: ", dynamicValue.getName()),
                 StringUtils.join(" hit2assext:setScalarVariableValue(var:read('renderSessionUuid'), '", dynamicValue.getName(),
                         "', /UserData/payload/line[@lineNr = hit2assext:getXmlSequence(var:read('renderSessionUuid'))]) ",
-                        "| hit2assext:incrementXmlSequence(var:read('renderSessionUuid')) ) "),
+                        "| hit2assext:incrementXmlSequence(var:read('renderSessionUuid')) "),
                 fontWeight));
     }
 
@@ -233,8 +238,6 @@ public final class IRTransformer extends AstItemVisitorAdapter {
      */
     @Override
     public void visitGlobalDeclarationStatement(GlobalDeclarationStatement globalDeclarationStatement) {
-//        containerStack.peek().addContent(new DocumentVariable(StringUtils.join("Global Variable: ", globalDeclarationStatement.getId()),
-//                StringUtils.join("'", globalDeclarationStatement.getId(), "'"), globalDeclarationStatement.getExpression().toXPathString()));
         containerStack.peek().addContent(new DynamicContentReference(StringUtils.join("Global Variable: ", globalDeclarationStatement.getId()),
                 StringUtils.join(" hit2assext:createScalarVariable(var:read('renderSessionUuid'), '", globalDeclarationStatement.getId(), "', ",
                         globalDeclarationStatement.getExpression().toXPathString(), ") "
@@ -250,12 +253,6 @@ public final class IRTransformer extends AstItemVisitorAdapter {
             // assign a value to a scalar variable
             // uses the DocDesign DocumentVariable mechanism
             // var:write('varName', XPath Expression)
-//            containerStack.peek().addContent(new DynamicContentReference(
-//                    StringUtils.join("Scalar Assignment: ", assignmentStatement.getIdExpression().getId()),
-//                    StringUtils.join("var:write('", assignmentStatement.getIdExpression().getId(),
-//                            "', ", assignmentStatement.getExpression().toXPathString(), ")"),
-//                    fontWeight
-//            ));
             containerStack.peek().addContent(new DynamicContentReference(
                     StringUtils.join("Scalar Assignment: ", assignmentStatement.getIdExpression().getId()),
                     StringUtils.join("hit2assext:setScalarVariableValue(var:read('renderSessionUuid'), '", assignmentStatement.getIdExpression().getId(),

@@ -30,4 +30,11 @@ public class ForLoop extends AbstractContainer {
         context.put("repetitionExpression", expression.toXPathString());
     }
 
+    @Override
+    public String toString() {
+        return "ForLoop{" +
+                "expression=" + expression +
+                ", components=" + getComponents() +
+                '}';
+    }
 }

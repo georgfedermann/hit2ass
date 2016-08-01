@@ -1,19 +1,33 @@
 #
-#*  This sample HIT/CLOU text component tests the while structure.  #
+#*  This sample HIT/CLOU text component provides typical WHILE loop situations.  #
 
-Here is some fixed text for you.
+Lets test away with the lelement WHILE-loop szenario!
+#^2"RETURN"
+#L indtext0 D {}
 #D lelement "x"
 
+#D firstName ""
+#D lastName ""
+
+#X< firstName
+#X< lastName
+
+#X< lelement
 #S lelement <> "*" :
-    Some fixed text within the loop
-    #= counter counter + 1      #*  Also some meaning-less operation on a boolean valued variable?  #
-    #? counter = "--" :
-    /J
-        Grammelknödel
-    /N
-        Backfisch
-    #
-    Close to the Closure
+    #L indtext0 & { lelement }
     #X< lelement
 #
+
+This is a message from #> firstName #> lastName:@
+And this is the date of the message:#X< myDate#>myDate@
+#*  TODO introduce a FOR loop here when listlen() was implemented   #
+And these are the values found in the user data XML:@
+indtext0[1]=#>indtext0[1]@
+indtext0[2]=#>indtext0[2]@
+indtext0[3]=#>indtext0[3]@
+indtext0[4]=#>indtext0[4]@
+indtext0[5]=#>indtext0[5]@
+grin
+#^2"RETURN"
+
 And so it ends.

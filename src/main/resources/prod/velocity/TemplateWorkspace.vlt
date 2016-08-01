@@ -738,40 +738,6 @@
               <Relation name="FootnoteSeparation" refTo=""/>
             </Relations>
           </Properties>
-          <Object id="${docFamUtils.CockpitElementId}" name="hit2ass_xml_sequence" enabled="True" type="com.assentis.cockpit.bo.BoDocumentVariable">
-              <Properties>
-                  <Attributes>
-                      <!-- Name is an XPath expression. Thus, a string value has to be quoted, like in 'name'. -->
-                      <Attribute name="DFVariableName">
-                          <![CDATA['hit2ass_xml_sequence']]>
-                      </Attribute>
-                      <Attribute name="DFVariableValue">
-                          <Object id="" name="" enabled="True"
-                              type="com.assentis.cockpit.bo.BoXPathTextVariable">
-                              <Properties>
-                                  <Attributes>
-                                      <Attribute name="IsXPath">
-                                      <![CDATA[True]]>
-                                      </Attribute>
-                                      <Attribute name="XPath">
-                                      <![CDATA[1]]>
-                                      </Attribute>
-                                      <Attribute name="XPathWithName">
-                                      <![CDATA[]]>
-                                      </Attribute>
-                                  </Attributes>
-                                  <Relations>
-                                      <Relation name="XPathTextVariable" refTo=""/>
-                                      <ManyRelation name="QueryXPathTextVariable"/>
-                                  </Relations>
-                              </Properties>
-                          </Object>
-                      </Attribute>
-                  </Attributes>
-                  <Relations/>
-              </Properties>
-          </Object>
-
           <Object id="${docFamUtils.CockpitElementId}" name="renderSessionUuid" enabled="True" type="com.assentis.cockpit.bo.BoDocumentVariable">
             <Properties>
               <Attributes>

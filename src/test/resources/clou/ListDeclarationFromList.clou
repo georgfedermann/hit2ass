@@ -1,0 +1,49 @@
+#
+#*  This quite simple HIT/CLOU text component defines local and global list variables.  #
+
+#D length 0
+#D counter 1
+
+Initializing liste99 D { 1, 2, 3, 4, 5 } @
+#L liste99 D { 1, 2, 3, 4, 5 }
+#= length listlen("liste99")
+liste99 should have 5 elements, and in fact it has these #> length elements:@
+#D counter 1
+#W length
+    #> liste99[counter]@
+    #= counter counter + 1
+#
+
+Initializing liste98 d { "Hello, ", "World!", " argl " }@
+#L liste98 d { "Hello, ", "World!", " argl "}
+#= length listlen("liste98")
+liste98 should have 3 elements, and in fact it has these #> length elements:@
+#D counter 1
+#W length
+    #> liste98[counter]@
+    #= counter counter + 1
+#
+
+Initializing liste97 D liste99 & liste98 & { "argl" }@
+#L liste97 D liste99 & liste98 & { "argl" }
+#= length listlen("liste97")
+liste97 should have 9 elements, and in fact it has these #> length elements:@
+#D counter 1
+#W length
+    #> liste97[counter]@
+    #= counter counter + 1
+#
+
+Initializing liste99
+#L listFromList D liste99
+#= length listlen("listFromList")
+listFromList should have 5 elements, and in fact it has these #> length elements:@
+#= counter 1
+#W length
+    #> listFromList[counter]@
+    #= counter counter + 1
+#
+
+And so it ends.
+
+

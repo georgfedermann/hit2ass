@@ -27,6 +27,7 @@ import org.poormanscastle.products.hit2ass.ast.domain.IncludeBausteinStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.LastExpressionList;
 import org.poormanscastle.products.hit2ass.ast.domain.ListConcatenationStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.LocalDeclarationStatement;
+import org.poormanscastle.products.hit2ass.ast.domain.LocalListDeclarationStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.MacroCallStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.NumExpression;
 import org.poormanscastle.products.hit2ass.ast.domain.PairExpressionList;
@@ -262,6 +263,29 @@ public final class IRTransformer extends AstItemVisitorAdapter {
                 } else if (expressionList instanceof LastExpressionList) {
                     containerStack.peek().addContent(
                             new ListAddItem("AddIem", globalListDeclarationStatement.getListId(), expressionList.toXPathString()));
+                    expressionList = null;
+                }
+            }
+        }
+    }
+
+    @Override
+    public void visitLocalListDeclarationStatement(LocalListDeclarationStatement localListDeclarationStatement) {
+        // add list declaration statement
+        containerStack.peek().addContent(new ListDeclaration(StringUtils.join("Listdeclaration: ", localListDeclarationStatement.getListId()),
+                localListDeclarationStatement.getListId()));
+        // then add list initialization
+        if (localListDeclarationStatement.getListExpression() != null && localListDeclarationStatement.getListExpression() instanceof ExpressionList) {
+            ExpressionList expressionList = (ExpressionList) localListDeclarationStatement.getListExpression();
+            while (expressionList != null) {
+                if (expressionList instanceof PairExpressionList) {
+                    PairExpressionList pairExpressionList = (PairExpressionList) expressionList;
+                    containerStack.peek().addContent(
+                            new ListAddItem("AddItem", localListDeclarationStatement.getListId(), pairExpressionList.getHead().toXPathString()));
+                    expressionList = pairExpressionList.getTail();
+                } else if (expressionList instanceof LastExpressionList) {
+                    containerStack.peek().addContent(
+                            new ListAddItem("AddItem", localListDeclarationStatement.getListId(), expressionList.toXPathString()));
                     expressionList = null;
                 }
             }

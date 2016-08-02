@@ -1,0 +1,30 @@
+#
+#*  This sample HIT/CLOU text component tests the HIT/CLOU standard function listlen
+    in the context of for loops.  #
+
+Let's test away with the lelement WHILE-loop szenario!
+#^2"RETURN"
+#L indtext0 D {}
+#D lelement "x"
+
+#D firstName ""
+#D lastName ""
+
+#X< firstName
+#X< lastName
+
+Hello #> firstName #> lastName,@
+here comes your list:@@
+#X< lelement
+#S lelement <> "*" :
+    #L indtext0 & { lelement }
+    #X< lelement
+#
+
+#D counter 1
+#W listlen("indtext0")
+    #> indtext0[counter]
+    #= counter counter + 1
+    @
+#
+And so it ends.

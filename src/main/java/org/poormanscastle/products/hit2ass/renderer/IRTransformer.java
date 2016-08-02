@@ -62,6 +62,8 @@ public final class IRTransformer extends AstItemVisitorAdapter {
 
     private FontWeight fontWeight = FontWeight.INHERIT;
 
+    private boolean insideWhileLoop = false;
+
     /**
      * While iterating over the HIT/CLOU AST, the renderer will keep a reference
      * to the latest encountered container here, until it is left again.
@@ -98,6 +100,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     private IRTransformer spinOff() {
         IRTransformer transformer = new IRTransformer();
         transformer.fontWeight = fontWeight;
+        transformer.insideWhileLoop = insideWhileLoop;
         return transformer;
     }
 
@@ -119,6 +122,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     public boolean proceedWithWhileStatement(WhileStatement whileStatement) {
         WhileLoop whileLoop = new WhileLoop(StringUtils.join("WHILE-", StringEscapeUtils.escapeXml10(whileStatement.getCondition().toXPathString())),
                 whileStatement.getCondition());
+        insideWhileLoop = true;
         containerStack.peek().addContent(whileLoop);
 
         IRTransformer transformer = spinOff();
@@ -126,6 +130,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         whileStatement.getWhileBody().accept(transformer);
         // the visitor logic gets handled in the proceedWith method.
         // Thus it returns "false" here so that the visit methods won't get called.
+        insideWhileLoop = false;
         return false;
     }
 
@@ -253,12 +258,20 @@ public final class IRTransformer extends AstItemVisitorAdapter {
             logger.info(StringUtils.join("Found DynamicValue ", dynamicValue.toString(),
                     " at ", dynamicValue.getCodePosition()));
         }
-        containerStack.peek().addContent(new DynamicContentReference(
-                StringUtils.join("Assign from Userdata XML: ", dynamicValue.getName()),
-                StringUtils.join(" hit2assext:setScalarVariableValue(var:read('renderSessionUuid'), '", dynamicValue.getName(),
-                        "', /UserData/payload/line[@lineNr = hit2assext:getXmlSequence(var:read('renderSessionUuid'))]) ",
-                        "| hit2assext:incrementXmlSequence(var:read('renderSessionUuid')) "),
-                fontWeight));
+        if (insideWhileLoop) {
+            containerStack.peek().addContent(new DynamicContentReference(
+                    StringUtils.join("Assign from Userdata XML (iWL): ", dynamicValue.getName()),
+                    StringUtils.join(" hit2assext:setScalarVariableValue(var:read('renderSessionUuid'), '", dynamicValue.getName(),
+                            "', ./. ) | hit2assext:incrementXmlSequence(var:read('renderSessionUuid')) "),
+                    fontWeight));
+        } else {
+            containerStack.peek().addContent(new DynamicContentReference(
+                    StringUtils.join("Assign from Userdata XML (oWL): ", dynamicValue.getName()),
+                    StringUtils.join(" hit2assext:setScalarVariableValue(var:read('renderSessionUuid'), '", dynamicValue.getName(),
+                            "', /UserData/payload/line[@lineNr = hit2assext:getXmlSequence(var:read('renderSessionUuid'))]) ",
+                            "| hit2assext:incrementXmlSequence(var:read('renderSessionUuid')) "),
+                    fontWeight));
+        }
     }
 
     /**

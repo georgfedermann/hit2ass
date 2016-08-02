@@ -20,6 +20,7 @@ import org.poormanscastle.products.hit2ass.ast.domain.GlobalListDeclarationState
 import org.poormanscastle.products.hit2ass.ast.domain.HitCommandStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.IncludeBausteinStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.LastExpressionList;
+import org.poormanscastle.products.hit2ass.ast.domain.ListConcatenationStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.LocalDeclarationStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.MacroCallStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.NumExpression;
@@ -119,9 +120,26 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         WhileLoop whileLoop = new WhileLoop(StringUtils.join("WHILE-", StringEscapeUtils.escapeXml10(whileStatement.getCondition().toXPathString())),
                 whileStatement.getCondition());
         containerStack.peek().addContent(whileLoop);
+
+        IRTransformer transformer = spinOff();
+        transformer.containerStack.push(whileLoop);
+        whileStatement.getWhileBody().accept(transformer);
         // the visitor logic gets handled in the proceedWith method.
         // Thus it returns "false" here so that the visit methods won't get called.
         return false;
+    }
+
+    @Override
+    public void visitListConcatenationStatement(ListConcatenationStatement listConcatenationStatement) {
+        if (logger.isInfoEnabled()) {
+            logger.info(StringUtils.join("Found ListConcatenationStatement ", listConcatenationStatement.toString(),
+                    " at ", listConcatenationStatement.getCodePosition()));
+        }
+        containerStack.peek().addContent(new DynamicContentReference(StringUtils.join("ListConcat: ",
+                listConcatenationStatement.getListId(), ":", listConcatenationStatement.getListExpression().toXPathString()),
+                StringUtils.join(" hit2assext:addListValue(var:read('renderSessionUuid'), '", listConcatenationStatement.getListId(),
+                        "', ", listConcatenationStatement.getListExpression().toXPathString(), ") "),
+                fontWeight));
     }
 
     @Override
@@ -201,6 +219,10 @@ public final class IRTransformer extends AstItemVisitorAdapter {
 
     @Override
     public void visitSectionStatement(SectionStatement sectionStatement) {
+        if (logger.isInfoEnabled()) {
+            logger.info(StringUtils.join("Found SectionStatement ", sectionStatement.toString(),
+                    " at ", sectionStatement.getCodePosition()));
+        }
         containerStack.peek().addContent(new CarriageReturn("NL", new NumExpression(CodePosition.createZeroPosition(), 1)));
     }
 
@@ -211,6 +233,10 @@ public final class IRTransformer extends AstItemVisitorAdapter {
      */
     @Override
     public void visitLocalDeclarationStatement(LocalDeclarationStatement localDeclarationStatement) {
+        if (logger.isInfoEnabled()) {
+            logger.info(StringUtils.join("Found LocalDeclarationStatement ", localDeclarationStatement.toString(),
+                    " at ", localDeclarationStatement.getCodePosition()));
+        }
         containerStack.peek().addContent(new DocumentVariable(localDeclarationStatement.getId(),
                 StringUtils.join("'", localDeclarationStatement.getId(), "'"), localDeclarationStatement.getExpression().toXPathString()));
     }
@@ -223,6 +249,10 @@ public final class IRTransformer extends AstItemVisitorAdapter {
      */
     @Override
     public void visitDynamicValue(DynamicValue dynamicValue) {
+        if (logger.isInfoEnabled()) {
+            logger.info(StringUtils.join("Found DynamicValue ", dynamicValue.toString(),
+                    " at ", dynamicValue.getCodePosition()));
+        }
         containerStack.peek().addContent(new DynamicContentReference(
                 StringUtils.join("Assign from Userdata XML: ", dynamicValue.getName()),
                 StringUtils.join(" hit2assext:setScalarVariableValue(var:read('renderSessionUuid'), '", dynamicValue.getName(),
@@ -238,6 +268,10 @@ public final class IRTransformer extends AstItemVisitorAdapter {
      */
     @Override
     public void visitGlobalDeclarationStatement(GlobalDeclarationStatement globalDeclarationStatement) {
+        if (logger.isInfoEnabled()) {
+            logger.info(StringUtils.join("Found GlobalDeclarationStatement ", globalDeclarationStatement.toString(),
+                    " at ", globalDeclarationStatement.getCodePosition()));
+        }
         containerStack.peek().addContent(new DynamicContentReference(StringUtils.join("Global Variable: ", globalDeclarationStatement.getId()),
                 StringUtils.join(" hit2assext:createScalarVariable(var:read('renderSessionUuid'), '", globalDeclarationStatement.getId(), "', ",
                         globalDeclarationStatement.getExpression().toXPathString(), ") "
@@ -246,6 +280,10 @@ public final class IRTransformer extends AstItemVisitorAdapter {
 
     @Override
     public void visitAssignmentStatement(AssignmentStatement assignmentStatement) {
+        if (logger.isInfoEnabled()) {
+            logger.info(StringUtils.join("Found AssignmentStatement ", assignmentStatement.toString(),
+                    " at ", assignmentStatement.getCodePosition()));
+        }
         // there are several possibilities here:
         // assign a value to a scalar variable
         // assign a value to a slot of a list variable
@@ -276,6 +314,10 @@ public final class IRTransformer extends AstItemVisitorAdapter {
 
     @Override
     public void visitPrintStatement(PrintStatement printStatement) {
+        if (logger.isInfoEnabled()) {
+            logger.info(StringUtils.join("Found PrintStatement ", printStatement.toString(),
+                    " at ", printStatement.getCodePosition()));
+        }
         containerStack.peek().addContent(new DynamicContentReference(
                 StringUtils.join("Print: ", printStatement.getIdExpression().getId()),
                 printStatement.getIdExpression().toXPathString(), fontWeight));

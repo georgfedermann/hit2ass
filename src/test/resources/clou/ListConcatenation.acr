@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
 <Cockpit version="5.10.03.072744" export="07.05.2016 16:27:05">
   <!--Assentis DocDesign workspace - do not modify this file at any time!-->
-  <Object id="20160730T222202.124.83996129129935-1167.1854720680378.5218253.776814115.1376762.2133335785.734.0691717000929" name="HitAssWorkspace" enabled="True" type="com.assentis.cockpit.bo.BoWorkspace">
+  <Object id="20160802T114349.118.84413235386928-2291.2273952584374.9449544.193305405.3159750.866989829.770.2141188119808" name="HitAssWorkspace" enabled="True" type="com.assentis.cockpit.bo.BoWorkspace">
     <Properties>
       <Attributes>
         <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -51,19 +51,19 @@
       </Attributes>
       <Relations/>
     </Properties>
-    <Object id="20160730T222202.156.75819817811092-9275.178705792681.8871798.960814023.5819796.787721159.796.2105599452333" name="HitAssProjects" enabled="True" type="com.assentis.cockpit.bo.BoProjectGroup">
+    <Object id="20160802T114349.197.90654802020043-4403.0814977426635.2060656.5339243736.5921545.577754512.261.5900948236074" name="HitAssProjects" enabled="True" type="com.assentis.cockpit.bo.BoProjectGroup">
       <Properties>
         <Attributes/>
         <Relations/>
       </Properties>
-      <Object id="20160730T222202.104.99425254211218-6005.9491487737105.7077592.319737499.4393071.091220179.703.7403665967223" name="HitAssProject" enabled="True" type="com.assentis.cockpit.bo.BoProject">
+      <Object id="20160802T114349.176.41371029698252-8253.00510884053.3733460.2536864015.1846107.0528972317.706.6418721095434" name="HitAssProject" enabled="True" type="com.assentis.cockpit.bo.BoProject">
         <Properties>
           <Attributes>
             <Attribute name="Notes"><![CDATA[]]></Attribute>
           </Attributes>
           <Relations/>
         </Properties>
-        <Object id="20160730T222202.102.17922834842003-2741.0190909921066.8192101.64887398.2237123.4201410115.168.770998129052" name="HitAssDocument" enabled="True" type="com.assentis.cockpit.bo.BoDocument">
+        <Object id="20160802T114349.131.83324363853365-7532.101526577597.1086623.7555671672.5769779.18794522.771.0979060126535" name="HitAssDocument" enabled="True" type="com.assentis.cockpit.bo.BoDocument">
           <Properties>
             <Attributes>
               <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -265,7 +265,7 @@
                     </Attributes>
                     <Relations/>
                   </Properties>
-                  <Object id="20160730T222202.195.93441028317744-1355.0109821758342.6136686.836576722.7544557.097286315.295.9125933455289" name="US_en" enabled="True" type="com.assentis.cockpit.bo.BoLocale">
+                  <Object id="20160802T114349.110.94237967940334-1869.467024156621.5498765.242701358.9432491.339840543.272.42534584046126" name="US_en" enabled="True" type="com.assentis.cockpit.bo.BoLocale">
                     <Properties>
                       <Attributes>
                         <Attribute name="LocaleID"><![CDATA[US_en]]></Attribute>
@@ -283,7 +283,7 @@
                     </Attributes>
                     <Relations/>
                   </Properties>
-                  <Object id="20160730T222202.157.47994171921087-8212.152531895015.3407302.742182962.3743385.1098182183.987.1882634060531" name="hit2assext:org poormanscastle products hit2assext domain RenderSessionManager" enabled="True" type="com.assentis.cockpit.bo.BoNamespaceDecl">
+                  <Object id="20160802T114349.108.63017773232849-9477.038071275774.8681324.29178495.2267439.3746853536.315.8038188786218" name="hit2assext:org poormanscastle products hit2assext domain RenderSessionManager" enabled="True" type="com.assentis.cockpit.bo.BoNamespaceDecl">
                     <Properties>
                       <Attributes>
                         <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -444,12 +444,12 @@
             </Attributes>
             <Relations>
               <Relation name="ArchivingInformation" refTo=""/>
-              <Relation name="VariableCollection" refTo="20160730T222202.173.99780423319487-6472.0828727651915.1142421.9820318643.4152791.3436641293.696.9034769474977"/>
+              <Relation name="VariableCollection" refTo="20160802T114349.125.2306153428399-2160.8937730478524.5051884.1577423345.6776706.447989856.782.221079578497"/>
               <Relation name="VariableSlaveCollection" refTo=""/>
               <Relation name="AFPPrinting" refTo=""/>
             </Relations>
           </Properties>
-          <Object id="20160730T222202.110.64527599909239-3918.5147468195796.7619228.523090093.6753703.060770734.617.1835725408831" name="HitAssRepeatingPage" enabled="True" type="com.assentis.cockpit.bo.BoPageRepetition">
+          <Object id="20160802T114349.119.83387416058505-1857.1220421473718.8600068.125041198.5759331.126537803.362.52708481391403" name="HitAssRepeatingPage" enabled="True" type="com.assentis.cockpit.bo.BoPageRepetition">
             <Properties>
               <Attributes>
                 <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -632,12 +632,12 @@
                 <Relation name="StartRegion" refTo=""/>
                 <Relation name="EndRegion" refTo=""/>
                 <Relation name="FootnoteSeparation" refTo=""/>
-                <Relation name="Page" refTo="20160730T222202.141.3111664987377-3611.5421028014894.2529492.9213940445.3332492.903345304.423.08457519007123"/>
+                <Relation name="Page" refTo="20160802T114349.102.22586165603447-5060.784125575878.5773847.03201362.1698018.0089899227.938.2450823889169"/>
               </Relations>
             </Properties>
           </Object>
         </Object>
-        <Object id="20160730T222202.141.3111664987377-3611.5421028014894.2529492.9213940445.3332492.903345304.423.08457519007123" name="HitAssPageContent" enabled="True" type="com.assentis.cockpit.bo.BoPage">
+        <Object id="20160802T114349.102.22586165603447-5060.784125575878.5773847.03201362.1698018.0089899227.938.2450823889169" name="HitAssPageContent" enabled="True" type="com.assentis.cockpit.bo.BoPage">
           <Properties>
             <Attributes>
               <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -735,7 +735,7 @@
               <Relation name="FootnoteSeparation" refTo=""/>
             </Relations>
           </Properties>
-          <Object id="20160730T222202.107.24420725170066-7045.51956463422.4509452.056627231.9844002.03085386.410.3000139480204" name="renderSessionUuid" enabled="True" type="com.assentis.cockpit.bo.BoDocumentVariable">
+          <Object id="20160802T114349.104.36925166415888-1916.225248819677.7493099.1094799.5313957.123776543.922.2337983960239" name="renderSessionUuid" enabled="True" type="com.assentis.cockpit.bo.BoDocumentVariable">
             <Properties>
               <Attributes>
                 <Attribute name="DFVariableName"><![CDATA['renderSessionUuid']]></Attribute>
@@ -758,7 +758,7 @@
               <Relations/>
             </Properties>
           </Object>
-          <Object id="20160730T222202.167.3446934516027-1219.9227182653267.2659448.483262942.3307736.756189724.609.0686121240377" name="CLOU Component Paragraph" enabled="True" type="com.assentis.cockpit.bo.BoParagraph">
+          <Object id="20160802T114349.177.84155559876712-1791.674795875937.4144386.729058776.7278719.69405706.156.14149108879053" name="CLOU Component Paragraph" enabled="True" type="com.assentis.cockpit.bo.BoParagraph">
             <Properties>
               <Attributes>
                 <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -1117,7 +1117,7 @@
                 <Relation name="EditorConfigTextComponents" refTo=""/>
               </Relations>
             </Properties>
-            <Object id="20160730T222202.193.13043619153524-3002.4144512953308.7573578.070723038.5617696.484433321.405.4644971517738" name="Global Variable: firstName" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
+            <Object id="20160802T114348.135.79057738779474-5518.574687831457.5615705.220452052.7526461.153739616.194.53520223229262" name="Global Variable: firstName" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -1343,7 +1343,7 @@
                 <Relations/>
               </Properties>
             </Object>
-            <Object id="20160730T222202.114.48715611373511-6374.139824431056.5362883.812798055.6759386.272135205.924.6486341813061" name="Global Variable: lastName" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
+            <Object id="20160802T114348.162.64926916393543-3249.238206468181.3053242.376748358.2209231.0179849835.112.13894799086319" name="Global Variable: lastName" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -1569,7 +1569,7 @@
                 <Relations/>
               </Properties>
             </Object>
-            <Object id="20160730T222202.127.60964674535174-7904.595307179154.5819828.7886207495.3344681.1607354144.938.0657472607024" name="text" enabled="True" type="com.assentis.cockpit.bo.BoText">
+            <Object id="20160802T114348.117.66644829302929-7186.453735425916.7351028.227967376.4148118.7936901776.459.1914331529819" name="text" enabled="True" type="com.assentis.cockpit.bo.BoText">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -1654,7 +1654,7 @@
                 <Relations/>
               </Properties>
             </Object>
-            <Object id="20160730T222202.108.86342427278042-7972.447135207113.4862011.220474457.7649517.4968291875.204.0770981908876" name="Listdeclaration - liste99" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
+            <Object id="20160802T114348.146.51274236161373-4376.233957386034.6605049.882000729.5684748.063369626.282.20395662943787" name="Listdeclaration - liste99" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -1880,7 +1880,7 @@
                 <Relations/>
               </Properties>
             </Object>
-            <Object id="20160730T222202.192.36733179186726-9047.403583229392.6891625.601991529.1236273.9427010987.610.3893846976214" name="AddItem" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
+            <Object id="20160802T114348.135.2696647928832-1474.5896634133.1174603.5923034695.3145390.013899094.399.98289501030166" name="AddItem" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -2106,7 +2106,7 @@
                 <Relations/>
               </Properties>
             </Object>
-            <Object id="20160730T222202.112.77434969158061-7210.534291789415.8847752.197872693.9641204.020772383.781.2468395664973" name="AddItem" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
+            <Object id="20160802T114348.183.8497813182555-5445.452915746508.9253947.735569708.2505163.509286044.840.087328767507" name="AddItem" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -2332,7 +2332,7 @@
                 <Relations/>
               </Properties>
             </Object>
-            <Object id="20160730T222202.113.25070407342403-4464.641351392979.4783090.022107711.8889556.15657824.481.04386219886817" name="AddItem" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
+            <Object id="20160802T114348.125.43434725159625-3608.4841813863727.2731675.039677527.7931096.37946338.351.6632777372882" name="AddItem" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -2558,7 +2558,7 @@
                 <Relations/>
               </Properties>
             </Object>
-            <Object id="20160730T222202.102.1100679698571-3667.808952952178.3941118.6805068264.5258535.693990454.275.08149538800353" name="AddItem" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
+            <Object id="20160802T114348.151.1656999510507-9247.480010712052.2897721.6370377266.9985956.790933885.265.7766980855125" name="AddItem" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -2784,7 +2784,7 @@
                 <Relations/>
               </Properties>
             </Object>
-            <Object id="20160730T222202.117.94232305016737-3671.444915462332.1329620.719790884.8699833.58011555.219.38605643732114" name="AddIem" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
+            <Object id="20160802T114348.100.58002855915684-7135.423201256861.7317231.978551212.1008809.36989563.296.1056215147385" name="AddIem" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -3010,7 +3010,7 @@
                 <Relations/>
               </Properties>
             </Object>
-            <Object id="20160730T222202.170.5737840024936-4576.770251779981.8120463.471109737.1972081.9854140605.483.39501532702286" name="Listdeclaration - liste98" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
+            <Object id="20160802T114348.178.5583420217115-6862.587729856431.3838809.403923762.9927354.48366502.714.7322064799077" name="Listdeclaration - liste98" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -3236,7 +3236,7 @@
                 <Relations/>
               </Properties>
             </Object>
-            <Object id="20160730T222202.101.87994141297226-3581.9518805533253.4504323.5498273615.6109155.845143863.104.69730967638952" name="AddItem" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
+            <Object id="20160802T114348.110.51332480905897-7031.02796431356.9165906.897053827.5617576.5724125.599.7496064364341" name="AddItem" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -3462,7 +3462,7 @@
                 <Relations/>
               </Properties>
             </Object>
-            <Object id="20160730T222202.107.74614434019058-8719.28011066415.7484475.832413838.2707252.0114671364.852.9418740110717" name="AddItem" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
+            <Object id="20160802T114348.190.13007985496972-1999.326833874798.7887108.544017077.4962903.554594981.247.5876694557502" name="AddItem" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -3688,7 +3688,7 @@
                 <Relations/>
               </Properties>
             </Object>
-            <Object id="20160730T222202.110.79857296772948-3366.6110012654262.4713246.844983082.8267251.982419995.968.1844820454353" name="AddIem" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
+            <Object id="20160802T114348.111.83444890485814-8293.736267058051.5300465.667577398.1996035.6643426735.189.33355011790894" name="AddIem" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -3914,7 +3914,7 @@
                 <Relations/>
               </Properties>
             </Object>
-            <Object id="20160730T222202.159.1452064440806-1807.4224377796618.6039555.829579182.7659213.129122571.456.4613389112418" name="Listdeclaration - liste97" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
+            <Object id="20160802T114348.163.8093804173114-5936.898441779014.5506786.919036936.8893425.897885084.410.8169039082188" name="Listdeclaration - liste97" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -4140,7 +4140,233 @@
                 <Relations/>
               </Properties>
             </Object>
-            <Object id="20160730T222202.148.12802305225318-3479.661750043285.6929062.789205028.9242676.02936596.250.8649431419215" name="NL" enabled="True" type="com.assentis.cockpit.bo.BoAggregationParagraph">
+            <Object id="20160802T114348.175.53405841036235-7460.251720785643.4472443.627364555.1683080.123010819.891.1563826073545" name="ListConcat: liste97: hit2assext:getScalarVariableValue(var:read('renderSessionUuid'), 'liste89')   and  hit2assext:getScalarVariableValue(var:read('renderSessionUuid'), 'liste99')   and 99 and 96" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
+              <Properties>
+                <Attributes>
+                  <Attribute name="Notes"><![CDATA[]]></Attribute>
+                  <Attribute name="Editable"><![CDATA[False]]></Attribute>
+                  <Attribute name="XPathTextVariable">
+                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXPathTextVariable">
+                      <Properties>
+                        <Attributes>
+                          <Attribute name="IsXPath"><![CDATA[True]]></Attribute>
+                          <Attribute name="XPath"><![CDATA[ hit2assext:addListValue(var:read('renderSessionUuid'), 'liste97',  hit2assext:getScalarVariableValue(var:read('renderSessionUuid'), 'liste89')   and  hit2assext:getScalarVariableValue(var:read('renderSessionUuid'), 'liste99')   and 99 and 96) ]]></Attribute>
+                          <Attribute name="XPathWithName"><![CDATA[]]></Attribute>
+                        </Attributes>
+                        <Relations>
+                          <Relation name="XPathTextVariable" refTo=""/>
+                          <ManyRelation name="QueryXPathTextVariable"/>
+                        </Relations>
+                      </Properties>
+                    </Object>
+                  </Attribute>
+                  <Attribute name="Formatting">
+                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoFormatting">
+                      <Properties>
+                        <Attributes>
+                          <Attribute name="FormattingType"><![CDATA[1000]]></Attribute>
+                          <Attribute name="StringFormatter">
+                            <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoStringPattern">
+                              <Properties>
+                                <Attributes>
+                                  <Attribute name="PatternType"><![CDATA[1]]></Attribute>
+                                  <Attribute name="SourcePattern"><![CDATA[]]></Attribute>
+                                  <Attribute name="TargetPattern"><![CDATA[]]></Attribute>
+                                </Attributes>
+                                <Relations/>
+                              </Properties>
+                            </Object>
+                          </Attribute>
+                          <Attribute name="DateFormatter">
+                            <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoDatePatterns">
+                              <Properties>
+                                <Attributes>
+                                  <Attribute name="PatternType"><![CDATA[0]]></Attribute>
+                                  <Attribute name="Source">
+                                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoDatePattern">
+                                      <Properties>
+                                        <Attributes>
+                                          <Attribute name="PatternType"><![CDATA[16]]></Attribute>
+                                          <Attribute name="RoleType"><![CDATA[1024]]></Attribute>
+                                          <Attribute name="User"><![CDATA[dd.MM.yyyy]]></Attribute>
+                                          <Attribute name="Final"><![CDATA[DA-0011]]></Attribute>
+                                          <Attribute name="Localized"><![CDATA[]]></Attribute>
+                                          <Attribute name="Locale"><![CDATA[US_en]]></Attribute>
+                                          <Attribute name="TestValue"><![CDATA[]]></Attribute>
+                                          <Attribute name="TestNow"><![CDATA[True]]></Attribute>
+                                          <Attribute name="TestLocale"><![CDATA[AT_de]]></Attribute>
+                                        </Attributes>
+                                        <Relations/>
+                                      </Properties>
+                                    </Object>
+                                  </Attribute>
+                                  <Attribute name="Target">
+                                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoDatePattern">
+                                      <Properties>
+                                        <Attributes>
+                                          <Attribute name="PatternType"><![CDATA[32]]></Attribute>
+                                          <Attribute name="RoleType"><![CDATA[2048]]></Attribute>
+                                          <Attribute name="User"><![CDATA[dd.MM.yyyy]]></Attribute>
+                                          <Attribute name="Final"><![CDATA[]]></Attribute>
+                                          <Attribute name="Localized"><![CDATA[DateLongText]]></Attribute>
+                                          <Attribute name="Locale"><![CDATA[AT_de]]></Attribute>
+                                          <Attribute name="TestValue"><![CDATA[]]></Attribute>
+                                          <Attribute name="TestNow"><![CDATA[True]]></Attribute>
+                                          <Attribute name="TestLocale"><![CDATA[AT_de]]></Attribute>
+                                        </Attributes>
+                                        <Relations/>
+                                      </Properties>
+                                    </Object>
+                                  </Attribute>
+                                </Attributes>
+                                <Relations/>
+                              </Properties>
+                            </Object>
+                          </Attribute>
+                          <Attribute name="NumberFormatter">
+                            <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoNumberPatterns">
+                              <Properties>
+                                <Attributes>
+                                  <Attribute name="PatternType"><![CDATA[0]]></Attribute>
+                                  <Attribute name="Source">
+                                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoNumberPattern">
+                                      <Properties>
+                                        <Attributes>
+                                          <Attribute name="PatternType"><![CDATA[16]]></Attribute>
+                                          <Attribute name="UserPos"><![CDATA[#.##]]></Attribute>
+                                          <Attribute name="UserNeg"><![CDATA[#.##]]></Attribute>
+                                          <Attribute name="Final"><![CDATA[NU-0006]]></Attribute>
+                                          <Attribute name="Localized"><![CDATA[Decimal1]]></Attribute>
+                                          <Attribute name="Locale"><![CDATA[US_en]]></Attribute>
+                                          <Attribute name="ISOCurrency"><![CDATA[EUR]]></Attribute>
+                                          <Attribute name="TestValue"><![CDATA[]]></Attribute>
+                                          <Attribute name="TestLocale"><![CDATA[AT_de]]></Attribute>
+                                          <Attribute name="TestISOCurrency"><![CDATA[EUR]]></Attribute>
+                                        </Attributes>
+                                        <Relations/>
+                                      </Properties>
+                                    </Object>
+                                  </Attribute>
+                                  <Attribute name="Target">
+                                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoNumberPattern">
+                                      <Properties>
+                                        <Attributes>
+                                          <Attribute name="PatternType"><![CDATA[32]]></Attribute>
+                                          <Attribute name="UserPos"><![CDATA[#.##]]></Attribute>
+                                          <Attribute name="UserNeg"><![CDATA[#.##]]></Attribute>
+                                          <Attribute name="Final"><![CDATA[NU-0006]]></Attribute>
+                                          <Attribute name="Localized"><![CDATA[CurrencyWithSymbolAndSeparator]]></Attribute>
+                                          <Attribute name="Locale"><![CDATA[AT_de]]></Attribute>
+                                          <Attribute name="ISOCurrency"><![CDATA[EUR]]></Attribute>
+                                          <Attribute name="TestValue"><![CDATA[]]></Attribute>
+                                          <Attribute name="TestLocale"><![CDATA[AT_de]]></Attribute>
+                                          <Attribute name="TestISOCurrency"><![CDATA[EUR]]></Attribute>
+                                        </Attributes>
+                                        <Relations/>
+                                      </Properties>
+                                    </Object>
+                                  </Attribute>
+                                </Attributes>
+                                <Relations/>
+                              </Properties>
+                            </Object>
+                          </Attribute>
+                        </Attributes>
+                        <Relations/>
+                      </Properties>
+                    </Object>
+                  </Attribute>
+                  <Attribute name="XMLNamespaces">
+                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoNamespaceCollection">
+                      <Properties>
+                        <Attributes>
+                          <Attribute name="Notes"><![CDATA[]]></Attribute>
+                        </Attributes>
+                        <Relations/>
+                      </Properties>
+                    </Object>
+                  </Attribute>
+                  <Attribute name="BackgroundColor">
+                    <Object id="" name="Color" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+                      <Properties>
+                        <Attributes>
+                          <Attribute name="inherit"><![CDATA[True]]></Attribute>
+                          <Attribute name="transparent"><![CDATA[False]]></Attribute>
+                          <Attribute name="userdefined"><![CDATA[False]]></Attribute>
+                          <Attribute name="showrgbtransparency"><![CDATA[False]]></Attribute>
+                          <Attribute name="RGB"><![CDATA[0,0,0,255]]></Attribute>
+                          <Attribute name="CMYK"><![CDATA[0,0,0,1]]></Attribute>
+                          <Attribute name="Spotcolor">
+                            <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoSpotcolor">
+                              <Properties>
+                                <Attributes>
+                                  <Attribute name="SpotcolorKey"><![CDATA[none]]></Attribute>
+                                  <Attribute name="Tint"><![CDATA[1]]></Attribute>
+                                </Attributes>
+                                <Relations/>
+                              </Properties>
+                            </Object>
+                          </Attribute>
+                        </Attributes>
+                        <Relations/>
+                      </Properties>
+                    </Object>
+                  </Attribute>
+                  <Attribute name="Font">
+                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoFont">
+                      <Properties>
+                        <Attributes>
+                          <Attribute name="FontFamily"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontSize"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                          <Attribute name="FontStyle"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontVariant"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontWeight"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontPlacement"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontDecoration"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontColor">
+                            <Object id="" name="Color" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+                              <Properties>
+                                <Attributes>
+                                  <Attribute name="inherit"><![CDATA[True]]></Attribute>
+                                  <Attribute name="transparent"><![CDATA[False]]></Attribute>
+                                  <Attribute name="userdefined"><![CDATA[False]]></Attribute>
+                                  <Attribute name="showrgbtransparency"><![CDATA[False]]></Attribute>
+                                  <Attribute name="RGB"><![CDATA[0,0,0,255]]></Attribute>
+                                  <Attribute name="CMYK"><![CDATA[0,0,0,1]]></Attribute>
+                                  <Attribute name="Spotcolor">
+                                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoSpotcolor">
+                                      <Properties>
+                                        <Attributes>
+                                          <Attribute name="SpotcolorKey"><![CDATA[none]]></Attribute>
+                                          <Attribute name="Tint"><![CDATA[1]]></Attribute>
+                                        </Attributes>
+                                        <Relations/>
+                                      </Properties>
+                                    </Object>
+                                  </Attribute>
+                                </Attributes>
+                                <Relations/>
+                              </Properties>
+                            </Object>
+                          </Attribute>
+                        </Attributes>
+                        <Relations/>
+                      </Properties>
+                    </Object>
+                  </Attribute>
+                  <Attribute name="LetterSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                  <Attribute name="LetterSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                  <Attribute name="WordSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                  <Attribute name="WordSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                  <Attribute name="KeepWithPreviousLine"><![CDATA[none]]></Attribute>
+                  <Attribute name="KeepWithNextLine"><![CDATA[none]]></Attribute>
+                  <Attribute name="KeepTogetherLine"><![CDATA[none]]></Attribute>
+                  <Attribute name="FOLang"><![CDATA[Inherit]]></Attribute>
+                </Attributes>
+                <Relations/>
+              </Properties>
+            </Object>
+            <Object id="20160802T114348.102.83449730429702-3348.8862170284915.9254043.742406089.9624054.428593265.935.6322382894019" name="NL" enabled="True" type="com.assentis.cockpit.bo.BoAggregationParagraph">
               <Properties>
                 <Attributes/>
                 <Relations>
@@ -4261,7 +4487,7 @@
                 </Properties>
               </Object>
             </Object>
-            <Object id="20160730T222202.140.6991800264614-3111.4213689129792.4987776.352930125.2026401.576397735.134.0530115754165" name="text" enabled="True" type="com.assentis.cockpit.bo.BoText">
+            <Object id="20160802T114348.156.91642252548309-7560.33591075438.2176160.9602194065.6343252.150593361.481.404708828448" name="text" enabled="True" type="com.assentis.cockpit.bo.BoText">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -4346,7 +4572,7 @@
                 <Relations/>
               </Properties>
             </Object>
-            <Object id="20160730T222202.102.0699866199778-2928.4904393349807.4275083.222362828.7971223.388094875.177.96705015726482" name="Print: firstName" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
+            <Object id="20160802T114348.100.03010981039805-2734.2172753916866.3450361.0997562828.4399067.15547855.646.8596052841357" name="Print: firstName" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -4572,7 +4798,7 @@
                 <Relations/>
               </Properties>
             </Object>
-            <Object id="20160730T222202.122.50250279154774-8541.330240255596.5913104.563289493.7943090.68581095.492.90319106365723" name="text" enabled="True" type="com.assentis.cockpit.bo.BoText">
+            <Object id="20160802T114348.155.453636265802-4998.035107862094.1324272.9607098293.8052558.099701139.461.5153711463643" name="text" enabled="True" type="com.assentis.cockpit.bo.BoText">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -4657,7 +4883,7 @@
                 <Relations/>
               </Properties>
             </Object>
-            <Object id="20160730T222202.193.7222376763884-3279.127246254133.7767788.815184324.3732923.1246882915.683.5992542283651" name="Print: lastName" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
+            <Object id="20160802T114349.170.55616452052948-3618.833508521869.7268101.084196824.9159045.425840631.667.9883324415144" name="Print: lastName" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -4883,7 +5109,7 @@
                 <Relations/>
               </Properties>
             </Object>
-            <Object id="20160730T222202.182.0320032247095-3073.5105104072013.5921630.785063375.6687661.30732041.840.5283725727968" name="text" enabled="True" type="com.assentis.cockpit.bo.BoText">
+            <Object id="20160802T114349.194.3320092146587-8070.5652289391.3506557.855597145.3879660.207538146.322.6767879221351" name="text" enabled="True" type="com.assentis.cockpit.bo.BoText">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -4968,7 +5194,7 @@
                 <Relations/>
               </Properties>
             </Object>
-            <Object id="20160730T222202.109.36703437391473-6545.4716461352145.4034845.5244910973.5898200.935530817.303.52016568091653" name="NL" enabled="True" type="com.assentis.cockpit.bo.BoAggregationParagraph">
+            <Object id="20160802T114349.140.45245019027172-3592.11653275148.9403799.755299438.1829245.2661845381.441.4811529983282" name="NL" enabled="True" type="com.assentis.cockpit.bo.BoAggregationParagraph">
               <Properties>
                 <Attributes/>
                 <Relations>
@@ -5089,7 +5315,7 @@
                 </Properties>
               </Object>
             </Object>
-            <Object id="20160730T222202.134.94400886670456-5806.990031468975.1007564.2332720085.7902487.932961231.923.5042494977267" name="text" enabled="True" type="com.assentis.cockpit.bo.BoText">
+            <Object id="20160802T114349.165.6279877090708-3703.353909005412.2021820.8241918692.8289182.680693688.426.0168237530126" name="text" enabled="True" type="com.assentis.cockpit.bo.BoText">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -5174,7 +5400,7 @@
                 <Relations/>
               </Properties>
             </Object>
-            <Object id="20160730T222202.177.56326209801682-2846.465623993982.9963496.454393161.3221282.904278927.292.1019952331633" name="Print: firstName" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
+            <Object id="20160802T114349.157.5311659210111-1219.8830611817189.8276246.956510884.5379370.75573836.124.77137068178438" name="Print: firstName" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -5400,7 +5626,7 @@
                 <Relations/>
               </Properties>
             </Object>
-            <Object id="20160730T222202.169.75290766106733-7336.502163001158.8465096.879370619.8897210.519264527.247.6101501180379" name="text" enabled="True" type="com.assentis.cockpit.bo.BoText">
+            <Object id="20160802T114349.184.14155594281817-9143.447658945135.7174231.827434057.3234653.070904454.542.4550336427594" name="text" enabled="True" type="com.assentis.cockpit.bo.BoText">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -5485,7 +5711,7 @@
                 <Relations/>
               </Properties>
             </Object>
-            <Object id="20160730T222202.135.85576713546584-8841.054902512435.9995974.05745104.8030877.165358933.198.05626848096506" name="Print: lastName" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
+            <Object id="20160802T114349.152.53321136518437-7935.62622638886.5224117.197270964.5406184.480935055.368.750173697291" name="Print: lastName" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -5711,7 +5937,7 @@
                 <Relations/>
               </Properties>
             </Object>
-            <Object id="20160730T222202.161.51721206628315-2914.31565531831.8024456.406461149.7261183.815647209.803.2563089684555" name="text" enabled="True" type="com.assentis.cockpit.bo.BoText">
+            <Object id="20160802T114349.114.37682863908883-2982.6053460916464.9899383.824978301.9420434.71459924.150.35239067269583" name="text" enabled="True" type="com.assentis.cockpit.bo.BoText">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -5796,7 +6022,7 @@
                 <Relations/>
               </Properties>
             </Object>
-            <Object id="20160730T222202.148.9323391205099-6474.156926691945.6597015.856670649.9174030.506750453.546.0311709943844" name="NL" enabled="True" type="com.assentis.cockpit.bo.BoAggregationParagraph">
+            <Object id="20160802T114349.125.57592296823418-5799.14971603668.1769855.5525628151.7505204.134042193.585.1037333382669" name="NL" enabled="True" type="com.assentis.cockpit.bo.BoAggregationParagraph">
               <Properties>
                 <Attributes/>
                 <Relations>
@@ -5917,7 +6143,7 @@
                 </Properties>
               </Object>
             </Object>
-            <Object id="20160730T222202.197.35297451329404-5745.99055036132.6989231.13819225.6702827.749267618.119.1033846919917" name="Print: liste98" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
+            <Object id="20160802T114349.126.01239880138642-8910.465573113604.4261720.224748385.1732591.9775466188.225.77316604765835" name="Print: liste98" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -6143,7 +6369,7 @@
                 <Relations/>
               </Properties>
             </Object>
-            <Object id="20160730T222202.156.42267588099256-1449.9086144710213.4774685.723709396.8611364.281502511.744.4526855966149" name="text" enabled="True" type="com.assentis.cockpit.bo.BoText">
+            <Object id="20160802T114349.183.45585977700242-2062.9315138686434.6456666.857371236.1680395.9956870577.486.3028604739066" name="text" enabled="True" type="com.assentis.cockpit.bo.BoText">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -6228,7 +6454,7 @@
                 <Relations/>
               </Properties>
             </Object>
-            <Object id="20160730T222202.174.19183231239293-1008.1415205705289.6125128.388670158.4811280.873114552.819.3719146707431" name="Print: liste98" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
+            <Object id="20160802T114349.165.02953253224752-3977.414470293234.4014263.049798097.9171292.335076807.914.2427251884127" name="Print: liste98" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -6454,7 +6680,7 @@
                 <Relations/>
               </Properties>
             </Object>
-            <Object id="20160730T222202.156.06096240201322-3256.257893883194.6268582.075343711.3696286.442398532.158.44366279031772" name="text" enabled="True" type="com.assentis.cockpit.bo.BoText">
+            <Object id="20160802T114349.164.06864849088583-8478.249571801352.8613374.893381711.2746141.984641997.163.64784548033245" name="text" enabled="True" type="com.assentis.cockpit.bo.BoText">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -6539,7 +6765,7 @@
                 <Relations/>
               </Properties>
             </Object>
-            <Object id="20160730T222202.195.54965945082478-9899.541322506857.5484668.585230594.3925179.8204302965.489.22803196473" name="Print: liste98" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
+            <Object id="20160802T114349.123.60947646272624-6091.978459923497.3394900.702261385.8181028.400225247.793.2704963890101" name="Print: liste98" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -6765,7 +6991,7 @@
                 <Relations/>
               </Properties>
             </Object>
-            <Object id="20160730T222202.148.7530991525228-6115.616729374328.6536401.10959512.9656085.757805144.817.5957564670013" name="NL" enabled="True" type="com.assentis.cockpit.bo.BoAggregationParagraph">
+            <Object id="20160802T114349.175.86926302255722-5272.6543929000145.8232808.196706205.7999358.020245745.607.359282167155" name="NL" enabled="True" type="com.assentis.cockpit.bo.BoAggregationParagraph">
               <Properties>
                 <Attributes/>
                 <Relations>
@@ -6886,7 +7112,7 @@
                 </Properties>
               </Object>
             </Object>
-            <Object id="20160730T222202.100.8317721225226-2428.8862255758095.2037920.665902748.6448629.866290256.425.8860010948109" name="text" enabled="True" type="com.assentis.cockpit.bo.BoText">
+            <Object id="20160802T114349.151.6785836988585-9720.21292873257.8952619.984805942.9254209.163754893.509.59388903626797" name="text" enabled="True" type="com.assentis.cockpit.bo.BoText">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -6971,7 +7197,7 @@
                 <Relations/>
               </Properties>
             </Object>
-            <Object id="20160730T222202.163.64276553625868-4251.129891489083.8206040.289884286.9840898.66498629.546.8915099800188" name="text" enabled="True" type="com.assentis.cockpit.bo.BoText">
+            <Object id="20160802T114349.162.7840527892871-6445.823259119636.2804055.8352849456.9167594.37509736.572.6776846036073" name="text" enabled="True" type="com.assentis.cockpit.bo.BoText">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -7057,7 +7283,7 @@
               </Properties>
             </Object>
           </Object>
-          <Object id="20160730T222202.134.99593765633887-9343.319144936617.4568802.361828803.4797618.962242706.447.18013964873364" name="Cleanup RenderSession" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
+          <Object id="20160802T114349.194.01830822831346-3172.0068263791295.7141413.908592033.7847306.455893191.129.2947038173139" name="Cleanup RenderSession" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
             <Properties>
               <Attributes>
                 <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -7286,19 +7512,19 @@
         </Object>
       </Object>
     </Object>
-    <Object id="20160730T222202.109.18236669029548-3881.9814463245166.8860854.850224655.1027336.0534027782.294.02936017681145" name="Regions" enabled="True" type="com.assentis.cockpit.bo.BoRegionGroup">
+    <Object id="20160802T114349.125.2680500443804-5685.177630409041.2392908.141913864.2035706.6074151504.471.16938806993073" name="Regions" enabled="True" type="com.assentis.cockpit.bo.BoRegionGroup">
       <Properties>
         <Attributes/>
         <Relations/>
       </Properties>
     </Object>
-    <Object id="20160730T222202.110.6411312440718-9447.579216747807.2267368.2569207903.3601307.9373850627.565.1828610807024" name="Modules" enabled="True" type="com.assentis.cockpit.bo.BoModuleGroup">
+    <Object id="20160802T114349.105.65672411772599-8120.478670692453.4401130.316638406.2134817.903622126.443.62765033748894" name="Modules" enabled="True" type="com.assentis.cockpit.bo.BoModuleGroup">
       <Properties>
         <Attributes/>
         <Relations/>
       </Properties>
     </Object>
-    <Object id="20160730T222202.158.71483339877162-1714.9464362101035.6066884.4925790215.7965846.947037596.619.640077472885" name="Editor Configuration Group" enabled="True" type="com.assentis.cockpit.bo.BoEditorConfigurationGroup">
+    <Object id="20160802T114349.179.4479256400076-1303.9208787251202.9517299.89479192.8744738.544640735.855.5517969614923" name="Editor Configuration Group" enabled="True" type="com.assentis.cockpit.bo.BoEditorConfigurationGroup">
       <Properties>
         <Attributes>
           <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -7306,26 +7532,26 @@
         <Relations/>
       </Properties>
     </Object>
-    <Object id="20160730T222202.169.78828180909693-1016.5434604679247.2623824.9448632887.5901627.317994914.752.29906000447" name="Variable Groups" enabled="True" type="com.assentis.cockpit.bo.BoVariableGroup">
+    <Object id="20160802T114349.165.70367981497486-9643.921427838934.2702501.576557628.5566239.845359862.486.483336062358" name="Variable Groups" enabled="True" type="com.assentis.cockpit.bo.BoVariableGroup">
       <Properties>
         <Attributes/>
         <Relations/>
       </Properties>
-      <Object id="20160730T222202.173.99780423319487-6472.0828727651915.1142421.9820318643.4152791.3436641293.696.9034769474977" name="HitAssVariableGroup" enabled="True" type="com.assentis.cockpit.bo.BoVariableCollection">
+      <Object id="20160802T114349.125.2306153428399-2160.8937730478524.5051884.1577423345.6776706.447989856.782.221079578497" name="HitAssVariableGroup" enabled="True" type="com.assentis.cockpit.bo.BoVariableCollection">
         <Properties>
           <Attributes>
             <Attribute name="Notes"><![CDATA[]]></Attribute>
           </Attributes>
           <Relations/>
         </Properties>
-        <Object id="20160730T222202.186.36917595157286-4604.249763689203.4541043.658515327.4400652.792780306.608.465274746405" name="HitAssDatasources" enabled="True" type="com.assentis.cockpit.bo.BoDataSourceFolder">
+        <Object id="20160802T114349.162.74194706345082-4831.8345967392015.5354644.999845289.2161612.2289833147.592.283599178416" name="HitAssDatasources" enabled="True" type="com.assentis.cockpit.bo.BoDataSourceFolder">
           <Properties>
             <Attributes>
               <Attribute name="Notes"><![CDATA[]]></Attribute>
             </Attributes>
             <Relations/>
           </Properties>
-          <Object id="20160730T222202.179.43586771004829-1385.9640922976052.6401455.55961915.9119773.30427465.798.5456946585733" name="HitAss XML File" enabled="True" type="com.assentis.cockpit.bo.BoXMLDocumentFile">
+          <Object id="20160802T114349.179.69764493441093-3758.703812060702.6003095.695262235.1605773.1943662842.460.2002650470722" name="HitAss XML File" enabled="True" type="com.assentis.cockpit.bo.BoXMLDocumentFile">
             <Properties>
               <Attributes>
                 <Attribute name="Notes"><![CDATA[]]></Attribute>

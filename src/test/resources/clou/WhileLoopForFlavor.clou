@@ -1,0 +1,19 @@
+#
+#*  This simple sample HIT/CLOU text component trains the system to process
+    for flavored WHILE loops.   #
+
+Let's test for-flavored WHILE loops, right away.
+#^2"RETURN"
+
+
+#L indtext D { "Wont", "see", "the", "end", "of", "this." }
+#D listind 1
+
+#= listind 1
+
+#S listind <= listlen("indtext"):
+    #> indtext[listind]@
+    #= listind listind + 1
+#
+
+And so it ends.

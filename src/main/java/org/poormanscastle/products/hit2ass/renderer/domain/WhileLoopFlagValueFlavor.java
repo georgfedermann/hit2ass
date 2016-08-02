@@ -7,18 +7,18 @@ import org.poormanscastle.products.hit2ass.ast.domain.Expression;
 import org.poormanscastle.products.hit2ass.ast.domain.TextExpression;
 
 /**
- * This is the WHILE command.
+ * This is the HIT/CLOU WHILE command #S.
  * <p>
- * It is implemented by combining a DocDesign Aggregation with a repetition.
+ * It is implemented by combining a DocDesign Aggregation with a repetition (xsl:for-each).
  * <p>
  * Created by georg on 7/30/16.
  */
-public class WhileLoop extends AbstractContainer {
+public class WhileLoopFlagValueFlavor extends AbstractContainer {
 
     private final Expression expression;
 
-    public WhileLoop(String name, Expression expression) {
-        super(name, "/velocity/TemplateWhileLelementFlavor.vlt");
+    public WhileLoopFlagValueFlavor(String name, Expression expression) {
+        super(name, "/velocity/TemplateWhileFlagValueFlavor.vlt");
         this.expression = expression;
     }
 
@@ -36,10 +36,10 @@ public class WhileLoop extends AbstractContainer {
         }
         BinaryOperatorExpression loopCondition = (BinaryOperatorExpression) expression;
         // search for flag value
-        if (loopCondition.getLhs() instanceof TextExpression) {
-            flagValue = loopCondition.getLhs().toXPathString();
-        } else if (loopCondition.getRhs() instanceof TextExpression) {
+        if (loopCondition.getRhs() instanceof TextExpression) {
             flagValue = loopCondition.getRhs().toXPathString();
+        } else if (loopCondition.getLhs() instanceof TextExpression) {
+            flagValue = loopCondition.getLhs().toXPathString();
         } else {
             throw new IllegalStateException(StringUtils.join("No TextExpression found in loop condition: ", loopCondition));
         }
@@ -48,7 +48,7 @@ public class WhileLoop extends AbstractContainer {
 
     @Override
     public String toString() {
-        return "WhileLoop{" +
+        return "WhileLoopFlagValueFlavor{" +
                 "expression=" + expression +
                 ", components=" + getComponents() +
                 '}';

@@ -1,0 +1,34 @@
+#
+#*  This simple sample HIT / CLOU text component trains the system to
+    support HIT / CLOU standard function listlen                        #
+
+Let's test away with the listlen standard function!
+#^2"RETURN"
+#L indtext0 D {}
+#D lelement "x"
+
+#D firstName ""
+#D lastName ""
+
+#X< firstName
+#X< lastName
+
+The first name was read to be #> firstName@
+The last name was read to be #> lastName@
+Now comes the loop :-)@
+
+#X< lelement
+#S lelement <> "*" :
+    #L indtext0 & { lelement }
+    #X< lelement
+#
+
+#D length listlen("indtext0")
+Now, the length of this list should be 5, and actually, it is #> length@
+#? listlen("indtext0") = 5 :
+    /J
+        Na wunderbar, das hat geklappt.@
+    /N
+        Hmm, da funktioniert noch etwas nicht. Probiert weiter.@
+#
+End so it ends.

@@ -1,7 +1,7 @@
 #
 #*  This sample HIT/CLOU text component provides typical WHILE loop situations.  #
 
-Lets test away with the lelement WHILE-loop szenario!
+Let's test away with the lelement WHILE-loop szenario!
 #^2"RETURN"
 #L indtext0 D {}
 #D lelement "x"
@@ -21,6 +21,8 @@ Lets test away with the lelement WHILE-loop szenario!
 This is a message from #> firstName #> lastName:@
 And this is the date of the message:#X< myDate#>myDate@
 #*  TODO introduce a FOR loop here when listlen() was implemented   #
+#D length listlen("indtext0")
+Now, the length of this list should be 5, and it actually is #> length@
 And these are the values found in the user data XML:@
 indtext0[1]=#>indtext0[1]@
 indtext0[2]=#>indtext0[2]@

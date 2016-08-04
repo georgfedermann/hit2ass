@@ -1,7 +1,5 @@
 package org.poormanscastle.products.hit2ass.ast.domain;
 
-import org.apache.commons.lang3.StringUtils;
-
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -23,7 +21,7 @@ public class PairExpressionList extends AbstractAstItem implements ExpressionLis
 
     @Override
     public String toXPathString() {
-        return StringUtils.join(head.toXPathString());
+        return head.toXPathString();
     }
 
     public PairExpressionList(Expression head, ExpressionList tail) {

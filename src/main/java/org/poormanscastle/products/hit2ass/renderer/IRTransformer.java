@@ -16,7 +16,6 @@ import org.poormanscastle.products.hit2ass.ast.domain.CodePosition;
 import org.poormanscastle.products.hit2ass.ast.domain.ConditionalStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.DynamicValue;
 import org.poormanscastle.products.hit2ass.ast.domain.Expression;
-import org.poormanscastle.products.hit2ass.ast.domain.ExpressionList;
 import org.poormanscastle.products.hit2ass.ast.domain.FixedText;
 import org.poormanscastle.products.hit2ass.ast.domain.ForStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.GlobalDeclarationStatement;
@@ -24,19 +23,18 @@ import org.poormanscastle.products.hit2ass.ast.domain.GlobalListDeclarationState
 import org.poormanscastle.products.hit2ass.ast.domain.HitCommandStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.IdExpression;
 import org.poormanscastle.products.hit2ass.ast.domain.IncludeBausteinStatement;
-import org.poormanscastle.products.hit2ass.ast.domain.LastExpressionList;
 import org.poormanscastle.products.hit2ass.ast.domain.ListConcatenationStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.LocalDeclarationStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.LocalListDeclarationStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.MacroCallStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.NumExpression;
-import org.poormanscastle.products.hit2ass.ast.domain.PairExpressionList;
 import org.poormanscastle.products.hit2ass.ast.domain.PrintStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.SectionStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.TextExpression;
 import org.poormanscastle.products.hit2ass.ast.domain.WhileStatement;
 import org.poormanscastle.products.hit2ass.renderer.domain.CarriageReturn;
 import org.poormanscastle.products.hit2ass.renderer.domain.Container;
+import org.poormanscastle.products.hit2ass.renderer.domain.Content;
 import org.poormanscastle.products.hit2ass.renderer.domain.DocumentVariable;
 import org.poormanscastle.products.hit2ass.renderer.domain.DynamicContentReference;
 import org.poormanscastle.products.hit2ass.renderer.domain.FontWeight;
@@ -44,7 +42,6 @@ import org.poormanscastle.products.hit2ass.renderer.domain.ForLoop;
 import org.poormanscastle.products.hit2ass.renderer.domain.IfElseParagraph;
 import org.poormanscastle.products.hit2ass.renderer.domain.IfThenElseParagraph;
 import org.poormanscastle.products.hit2ass.renderer.domain.IfThenParagraph;
-import org.poormanscastle.products.hit2ass.renderer.domain.ListAddItem;
 import org.poormanscastle.products.hit2ass.renderer.domain.ListDeclaration;
 import org.poormanscastle.products.hit2ass.renderer.domain.Paragraph;
 import org.poormanscastle.products.hit2ass.renderer.domain.Text;
@@ -182,19 +179,6 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     }
 
     @Override
-    public void visitListConcatenationStatement(ListConcatenationStatement listConcatenationStatement) {
-        if (logger.isInfoEnabled()) {
-            logger.info(StringUtils.join("Found ListConcatenationStatement ", listConcatenationStatement.toString(),
-                    " at ", listConcatenationStatement.getCodePosition()));
-        }
-        containerStack.peek().addContent(new DynamicContentReference(StringUtils.join("ListConcat: ",
-                listConcatenationStatement.getListId(), ":", listConcatenationStatement.getListExpression().toXPathString()),
-                StringUtils.join(" hit2assext:addListValue(var:read('renderSessionUuid'), '", listConcatenationStatement.getListId(),
-                        "', ", listConcatenationStatement.getListExpression().toXPathString(), ") "),
-                fontWeight));
-    }
-
-    @Override
     public boolean proceedWithConditionalStatement(ConditionalStatement conditionalStatement) {
         IfThenElseParagraph ifParagraph = new IfThenElseParagraph(StringUtils.join(
                 "IF:", StringEscapeUtils.escapeXml10(conditionalStatement.getCondition().toXPathString())), conditionalStatement.getCondition());
@@ -247,25 +231,30 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     }
 
     @Override
+    public void visitListConcatenationStatement(ListConcatenationStatement listConcatenationStatement) {
+        if (logger.isInfoEnabled()) {
+            logger.info(StringUtils.join("Found ListConcatenationStatement ", listConcatenationStatement.toString(),
+                    " at ", listConcatenationStatement.getCodePosition()));
+        }
+
+        ListExpressionTransformer transformer = new ListExpressionTransformer();
+        transformer.transformExpression(listConcatenationStatement.getListExpression(), listConcatenationStatement.getListId(), fontWeight);
+        for (Content content : transformer.getContentList()) {
+            containerStack.peek().addContent(content);
+        }
+    }
+
+    @Override
     public void visitGlobalListDeclarationStatement(GlobalListDeclarationStatement globalListDeclarationStatement) {
         // add list declaration statement
         containerStack.peek().addContent(new ListDeclaration(StringUtils.join("Listdeclaration: ", globalListDeclarationStatement.getListId()),
                 globalListDeclarationStatement.getListId()));
-        // then add list initialization
-        if (globalListDeclarationStatement.getListExpression() != null && globalListDeclarationStatement.getListExpression() instanceof ExpressionList) {
-            ExpressionList expressionList = (ExpressionList) globalListDeclarationStatement.getListExpression();
-            while (expressionList != null) {
-                if (expressionList instanceof PairExpressionList) {
-                    PairExpressionList pairExpressionList = (PairExpressionList) expressionList;
-                    containerStack.peek().addContent(
-                            new ListAddItem("AddItem", globalListDeclarationStatement.getListId(), pairExpressionList.getHead().toXPathString()));
-                    expressionList = pairExpressionList.getTail();
-                } else if (expressionList instanceof LastExpressionList) {
-                    containerStack.peek().addContent(
-                            new ListAddItem("AddIem", globalListDeclarationStatement.getListId(), expressionList.toXPathString()));
-                    expressionList = null;
-                }
-            }
+
+        ListExpressionTransformer transformer = new ListExpressionTransformer();
+        transformer.transformExpression(globalListDeclarationStatement.getListExpression(),
+                globalListDeclarationStatement.getListId(), fontWeight);
+        for (Content content : transformer.getContentList()) {
+            containerStack.peek().addContent(content);
         }
     }
 
@@ -274,21 +263,12 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         // add list declaration statement
         containerStack.peek().addContent(new ListDeclaration(StringUtils.join("Listdeclaration: ", localListDeclarationStatement.getListId()),
                 localListDeclarationStatement.getListId()));
-        // then add list initialization
-        if (localListDeclarationStatement.getListExpression() != null && localListDeclarationStatement.getListExpression() instanceof ExpressionList) {
-            ExpressionList expressionList = (ExpressionList) localListDeclarationStatement.getListExpression();
-            while (expressionList != null) {
-                if (expressionList instanceof PairExpressionList) {
-                    PairExpressionList pairExpressionList = (PairExpressionList) expressionList;
-                    containerStack.peek().addContent(
-                            new ListAddItem("AddItem", localListDeclarationStatement.getListId(), pairExpressionList.getHead().toXPathString()));
-                    expressionList = pairExpressionList.getTail();
-                } else if (expressionList instanceof LastExpressionList) {
-                    containerStack.peek().addContent(
-                            new ListAddItem("AddItem", localListDeclarationStatement.getListId(), expressionList.toXPathString()));
-                    expressionList = null;
-                }
-            }
+
+        ListExpressionTransformer transformer = new ListExpressionTransformer();
+        transformer.transformExpression(localListDeclarationStatement.getListExpression(),
+                localListDeclarationStatement.getListId(), fontWeight);
+        for (Content content : transformer.getContentList()) {
+            containerStack.peek().addContent(content);
         }
     }
 

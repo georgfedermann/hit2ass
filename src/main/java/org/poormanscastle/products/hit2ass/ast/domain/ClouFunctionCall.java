@@ -31,10 +31,15 @@ public class ClouFunctionCall extends AbstractExpression<Object> {
 
     @Override
     public String toXPathString() {
-        logger.warn(StringUtils.join(
-                "Returning dummy value 0 for not yet implemented FunctionCall feature for this function:\n",
-                this.toString()));
-        return "0";
+        // TODO short-cut: implement a set of specific HIT/CLOU functions as needed
+        if ("listlen".equals(functionName)) {
+            return StringUtils.join(" hit2assext:getListLength(var:read('renderSessionUuid'), ", args.toXPathString(), ") ");
+        } else {
+            logger.warn(StringUtils.join(
+                    "Returning dummy value for not yet implemented FunctionCall feature for this function:\n",
+                    this.toString()));
+            return "ClouFunctionCall-DummyValue";
+        }
     }
 
     public String getFunctionName() {

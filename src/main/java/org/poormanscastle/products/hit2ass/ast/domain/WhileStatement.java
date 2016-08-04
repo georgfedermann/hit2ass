@@ -29,6 +29,14 @@ public class WhileStatement extends AbstractAstItem implements Statement {
         this(condition.getCodePosition(), condition, whileBody);
     }
 
+    public Expression getCondition() {
+        return condition;
+    }
+
+    public ClouBausteinElement getWhileBody() {
+        return whileBody;
+    }
+
     @Override
     public boolean handleProceedWith(AstItemVisitor visitor) {
         return visitor.proceedWithWhileStatement(this);

@@ -15,6 +15,10 @@ public class LastExpressionList extends AbstractAstItem implements ExpressionLis
         this.head = head;
     }
 
+    public Expression getHead() {
+        return head;
+    }
+
     @Override
     public String toXPathString() {
         return head.toXPathString();

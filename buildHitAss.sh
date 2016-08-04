@@ -22,7 +22,7 @@ case $1 in
     pushd $JAVACC_PATH
     ./createHitAssAstParser.sh
     popd
-    mvn -Pprod -DargLine="-Dhit2ass.clou.path=$HIT_CLOU_LIBRARY_PATH" clean package site assembly:single && cp ${TARGET_FOLDER}${TOOLS_JAR_NAME} ${TOOLS_TARGET_PATH}
+    mvn -Pprod -DargLine="-Dhit2ass.clou.path=$HIT_CLOU_LIBRARY_PATH" clean package assembly:single && cp ${TARGET_FOLDER}${TOOLS_JAR_NAME} ${TOOLS_TARGET_PATH}
     ;;
   h)
     print_help

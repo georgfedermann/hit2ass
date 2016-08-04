@@ -7,8 +7,8 @@
 This is some fixed text for you.
 #L liste99 D { 1, 2, 3, 4, 5 }
 #L liste98 D { "Die", "fiend", "die" }
-#L liste97 D { "Horrido" } & { "auf" } & { "und" } & { "der" } & { "Gas" } & { "nach" }
-#L liste97 & liste89 & liste99 & { 99, 98 } & { 96, 30 }
+#L liste97 D { "Horrido" } & { "auf", "und", "der" } & { "Gas", "nach" } & { 1, 2, 3, 4, 5 }
+#L liste97 & liste98 & liste99 & { 99, 98 } & { 96, 30 }
 
 #^2"RETURN"
 Hello #> firstName #> lastName,
@@ -17,4 +17,17 @@ Hello #> firstName #> lastName!
 #^2"RETURN"
 #> liste98[1] #> liste98[2] #> liste98[3]
 #^2"RETURN"
+#D length listlen("liste99")
+liste99 should have 5 elements, and actually it has #> length elements.@
+#= length listlen("liste98")
+liste98 should have 3 elements, and actually it has #> length elements.@
+#= length listlen("liste97")
+liste97 should have 23 elements, and actually it has #> length elements.@
+And these are the items of liste97:@
+#D counter 1
+#W listlen("liste97")
+   #> liste97[counter]@
+   #= counter counter + 1
+#
+
 And so it ends.

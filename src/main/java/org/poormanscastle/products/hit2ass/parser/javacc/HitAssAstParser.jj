@@ -1147,13 +1147,13 @@ Expression T4Prime(Expression lhs) :
 { Expression rhs, t4PrimeExpression; }
 {
     (
-        (<IF_PLUS>|<DS_PLUS>|<AS_PLUS>|<FOR_PLUS>) rhs = T3() t4PrimeExpression = T4Prime(rhs)
+        (<IF_PLUS>|<DS_PLUS>|<AS_PLUS>|<FOR_PLUS>|<PS_IDX_PLUS>) rhs = T3() t4PrimeExpression = T4Prime(rhs)
         {
             return new BinaryOperatorExpression(lhs, BinaryOperator.PLUS,
                 t4PrimeExpression != null ? t4PrimeExpression : rhs );
         }
         |
-        (<IF_MINUS>|<DS_MINUS>|<AS_MINUS>|<FOR_MINUS>) rhs = T3() t4PrimeExpression = T4Prime(rhs)
+        (<IF_MINUS>|<DS_MINUS>|<AS_MINUS>|<FOR_MINUS>|<PS_IDX_MINUS>) rhs = T3() t4PrimeExpression = T4Prime(rhs)
         {
             return new BinaryOperatorExpression(lhs, BinaryOperator.MINUS,
                 t4PrimeExpression != null ? t4PrimeExpression : rhs );
@@ -1180,13 +1180,13 @@ Expression T3Prime(Expression lhs) :
 { Expression rhs, t3PrimeExpression; }
 {
     (
-        (<IF_TIMES>|<DS_TIMES>|<AS_TIMES>|<FOR_TIMES>) rhs = T2() t3PrimeExpression = T3Prime(rhs)
+        (<IF_TIMES>|<DS_TIMES>|<AS_TIMES>|<FOR_TIMES>|<PS_IDX_TIMES>) rhs = T2() t3PrimeExpression = T3Prime(rhs)
         {
                return new BinaryOperatorExpression(lhs, BinaryOperator.TIMES,
                 t3PrimeExpression != null ? t3PrimeExpression : rhs );
         }
         |
-        (<IF_DIV>|<DS_DIV>|<AS_DIV>|<FOR_DIV>) rhs = T2() t3PrimeExpression = T3Prime(rhs)
+        (<IF_DIV>|<DS_DIV>|<AS_DIV>|<FOR_DIV>|<PS_IDX_DIV>) rhs = T2() t3PrimeExpression = T3Prime(rhs)
         {
                return new BinaryOperatorExpression(lhs, BinaryOperator.DIV,
                 t3PrimeExpression != null ? t3PrimeExpression : rhs );
@@ -1220,6 +1220,12 @@ Expression F() :
     Expression buffer; Expression idxExp1 = null; Expression idxExp2 = null;
 }
 {
+    // take care of expressions using parenthesis to define priority
+    ( ( <IF_LPAREN> | <PS_LPAREN> | <PS_IDX_LPAREN> ) buffer = E() ( <IF_RPAREN> | <PS_RPAREN> | <PS_IDX_RPAREN> ) )
+    {
+        return buffer;
+    }
+    |
     ( valueToken = <IF_NUM> | valueToken = <DS_NUM> | valueToken = <AS_NUM> | valueToken = <MS_NUM> |
         valueToken = <LS_BRACES_NUM> | valueToken = <SS_NUM> | valueToken = <HC_NUM> | valueToken = <FOR_NUM> |
         valueToken = <PS_IDX_NUM> | valueToken = <PS_NUM> )

@@ -35,7 +35,6 @@ import org.poormanscastle.products.hit2ass.ast.domain.WhileStatement;
 import org.poormanscastle.products.hit2ass.renderer.domain.CarriageReturn;
 import org.poormanscastle.products.hit2ass.renderer.domain.Container;
 import org.poormanscastle.products.hit2ass.renderer.domain.Content;
-import org.poormanscastle.products.hit2ass.renderer.domain.DocumentVariable;
 import org.poormanscastle.products.hit2ass.renderer.domain.DynamicContentReference;
 import org.poormanscastle.products.hit2ass.renderer.domain.FontWeight;
 import org.poormanscastle.products.hit2ass.renderer.domain.ForLoop;
@@ -180,8 +179,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
 
     @Override
     public boolean proceedWithConditionalStatement(ConditionalStatement conditionalStatement) {
-        IfThenElseParagraph ifParagraph = new IfThenElseParagraph(StringUtils.join(
-                "IF:", StringEscapeUtils.escapeXml10(conditionalStatement.getCondition().toXPathString())), conditionalStatement.getCondition());
+        IfThenElseParagraph ifParagraph = new IfThenElseParagraph("IF", conditionalStatement.getCondition());
         containerStack.peek().addContent(ifParagraph);
 
         if (conditionalStatement.getThenElement() != null) {
@@ -282,21 +280,6 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     }
 
     /**
-     * e.g. #d firstName ""
-     *
-     * @param localDeclarationStatement
-     */
-    @Override
-    public void visitLocalDeclarationStatement(LocalDeclarationStatement localDeclarationStatement) {
-        if (logger.isInfoEnabled()) {
-            logger.info(StringUtils.join("Found LocalDeclarationStatement ", localDeclarationStatement.toString(),
-                    " at ", localDeclarationStatement.getCodePosition()));
-        }
-        containerStack.peek().addContent(new DocumentVariable(localDeclarationStatement.getId(),
-                StringUtils.join("'", localDeclarationStatement.getId(), "'"), localDeclarationStatement.getExpression().toXPathString()));
-    }
-
-    /**
      * read a value from the user data XML and write it to a hit2assext scalar variable.
      * e.g. #X< firstName
      *
@@ -339,6 +322,22 @@ public final class IRTransformer extends AstItemVisitorAdapter {
                 StringUtils.join(" hit2assext:createScalarVariable(var:read('renderSessionUuid'), '", globalDeclarationStatement.getId(), "', ",
                         globalDeclarationStatement.getExpression().toXPathString(), ") "
                 ), fontWeight));
+    }
+
+    /**
+     * e.g. #d firstName ""
+     *
+     * @param localDeclarationStatement
+     */
+    @Override
+    public void visitLocalDeclarationStatement(LocalDeclarationStatement localDeclarationStatement) {
+        if (logger.isInfoEnabled()) {
+            logger.info(StringUtils.join("Found LocalDeclarationStatement ", localDeclarationStatement.toString(),
+                    " at ", localDeclarationStatement.getCodePosition()));
+        }
+        containerStack.peek().addContent(new DynamicContentReference(StringUtils.join("Local Variable: ", localDeclarationStatement.getId()),
+                StringUtils.join(" hit2assext:createScalarVariable(var:read('renderSessionUuid'), '", localDeclarationStatement.getId(), "', ",
+                        localDeclarationStatement.getExpression().toXPathString(), ") "), fontWeight));
     }
 
     @Override

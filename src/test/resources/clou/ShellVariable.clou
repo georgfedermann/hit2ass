@@ -1,0 +1,8 @@
+#
+#*  This text component is about the mapping of the HIT/CLOU standard function SHELLVARIABLE("varname")
+    to a Java mechanism in DocBase. #
+
+#D myValue SHELLVARIABLE("testValue")
+System property "testValue" has this value: #> myValue.@
+Testing the function call in the context of a print statement: #> SHELLVARIABLE("testValue")@
+And so it ends.

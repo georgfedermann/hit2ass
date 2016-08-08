@@ -1245,17 +1245,6 @@ Expression F() :
         return new TextExpression(CodePosition.createFromToken(valueToken), valueToken.image);
     }
     |
-    ((<SS_SHELLVAR>|<AS_SHELLVAR>|<IF_SHELLVAR>) (<SS_LPAREN>|<AS_LPAREN>|<IF_LPAREN>)
-        (<SS_QUOTE>valueToken = <SS_SHELLVAR_ID><SS_QUOTE> | valueToken = <AS_TEXT> | valueToken = <IF_TEXT> )
-        (<SS_RPAREN>|<AS_RPAREN>|<IF_RPAREN>))
-    {
-        // TODO 2016-07-08 I vote to delete this since SHELLVARIABLE in fact is a function call and has to be handled there
-        // ShellVariable evaluations in assignment statements #=
-        // deliver the variableId with quotes. They have to be truncated
-        // before storage
-        return new ShellVariableExpression(CodePosition.createFromToken(valueToken), valueToken.image.replaceAll("\"", ""));
-    }
-    |
     // implements clou standard function, e.g. listlen("varname")
     LOOKAHEAD(2) (( valueToken = <IF_ID> | valueToken = <AS_ID> | valueToken = <FOR_ID> | valueToken = <DS_ID> )
         ( <IF_LPAREN> | <AS_LPAREN> | <FOR_LPAREN> | <DS_LPAREN> )

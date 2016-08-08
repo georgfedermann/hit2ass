@@ -1,5 +1,7 @@
 package org.poormanscastle.products.hit2ass.ast.domain;
 
+import org.apache.commons.lang3.StringUtils;
+
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -29,7 +31,7 @@ public final class BinaryOperatorExpression extends AbstractExpression<Object> {
 
     @Override
     public String toXPathString() {
-        return operator.toXPathString(lhs, rhs);
+        return StringUtils.join("(", operator.toXPathString(lhs, rhs), ")");
     }
 
     @Override

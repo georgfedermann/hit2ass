@@ -1,0 +1,17 @@
+#
+#*  This sample HIT/CLOU text component trains the system to evaluate
+    complex expressions as field indizes. #
+
+#L l vombis D { 1, 2, "J", 4, 5 }
+#D list df anz 3
+#D durchlaufzähler 1
+
+#? l vombis[(durchlaufzähler-1) * list df anz + 3] = "J" :
+    /J
+        as expected: "J"@
+    /N
+        something did not work out, keep debugging.@
+#
+#> l vombis[(durchlaufzähler-1)*list df anz+1]
+
+And so it ends.

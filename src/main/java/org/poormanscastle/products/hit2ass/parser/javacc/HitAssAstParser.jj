@@ -320,11 +320,9 @@ TOKEN : {
     "\n": TXT_MODE  | "\r": TXT_MODE  | "\t" | " "
 }
 <COMMAND_MODE_SS> TOKEN : {
-    < SS_SHELLVAR : "SHELLVARIABLE" > |
     < SS_LPAREN : "(" > |
     < SS_RPAREN : ")" > : TXT_MODE |
     < SS_QUOTE : "\"" > |
-    < SS_SHELLVAR_ID : (["A"-"Z"])+ > |
     < SS_COMMA : "," > |
     < SS_LBRACKET : "[" > |
     < SS_RBRACKET : "]" > |
@@ -374,7 +372,6 @@ TOKEN : {
 
 }
 <COMMAND_MODE_IF> TOKEN : {
-    < IF_SHELLVAR : "SHELLVARIABLE" > |
     < IF_EQ : "=" > |
     < IF_EQ_STRICT : "==" > |
     < IF_OR : "oder" > |
@@ -398,7 +395,6 @@ TOKEN : {
     < IF_LBRACKET : "[" > |
     < IF_RBRACKET : "]" > |
     < IF_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
-    < IF_SHELLVAR_ID : (["A"-"Z"])+ > |
     < IF_ID : [ "_", "a"-"z", "A"-"Z"](["_", "a"-"z", "A"-"Z", "0"-"9",
         "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc", "\u00a0" ])* > |
     < IF_TEXT : "\""
@@ -412,7 +408,6 @@ TOKEN : {
     "\n" | "\r" | "\t" | " "
 }
 <COMMAND_MODE_FOR> TOKEN : {
-    < FOR_SHELLVAR : "SHELLVARIABLE" > |
     < FOR_EQ : "=" > |
     < FOR_EQ_STRICT : "==" > |
     < FOR_OR : "oder" > |
@@ -436,7 +431,6 @@ TOKEN : {
     < FOR_LBRACKET : "[" > |
     < FOR_RBRACKET : "]" > |
     < FOR_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
-    < FOR_SHELLVAR_ID : (["A"-"Z"])+ > |
     < FOR_ID : [ "_", "a"-"z", "A"-"Z"](["_", "a"-"z", "A"-"Z", "0"-"9",
         "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc", "\u00a0" ])* > |
     < FOR_TEXT : "\""
@@ -488,7 +482,6 @@ TOKEN : {
     "\n" : TXT_MODE | "\r" : TXT_MODE | "\t" | " "
 }
 <COMMAND_MODE_AS> TOKEN : {
-    < AS_SHELLVAR : "SHELLVARIABLE" > |
     < AS_SB : "@" > : TXT_MODE |
     < AS_EQ : "=" > |
     < AS_EQ_STRICT : "==" > |
@@ -517,7 +510,6 @@ TOKEN : {
     < AS_RBRACKET : "]" > |
     < AS_NUM : (["0"-"9"])+ > |
     < AS_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
-    < AS_SHELLVAR_ID : (["A"-"Z"])+ > |
     < AS_ID : [ "_", "a"-"z", "A"-"Z"](["_", "a"-"z", "A"-"Z", "0"-"9",
         "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc", "\u00a0" ])* > |
     < AS_TEXT : "\""
@@ -758,9 +750,9 @@ ForStatement FOR() :
 }
 
 ConditionalStatement IF() :
-{ Expression condition; ClouBausteinElement thenElement; ClouBausteinElement elseElement; }
+{ Expression condition; ClouBausteinElement thenElement; ClouBausteinElement elseElement; Token debugToken; }
 {
-    <IF> condition = E() <IF_COLON> thenElement = THEN() elseElement = ELSE() <ENDIF>
+    debugToken = <IF> condition = E() <IF_COLON> thenElement = THEN() elseElement = ELSE() <ENDIF>
     {
         return new ConditionalStatement(condition, thenElement, elseElement);
     }

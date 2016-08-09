@@ -6,4 +6,14 @@
 System property "testValue" has this value: #> myValue.@
 Testing the function call in the context of a print statement: #> SHELLVARIABLE("testValue")@
 Ein Betrag von #> W #> replace(dbgutbetr," ","") wurde bereits überwiesen.@
+
+Jetzt mit IF statement:@
+#? SHELLVARIABLE("AEFRNR") <> "--":
+   /J
+     ^4(#> SHELLVARIABLE("AEFRNR")^ ^?@
+   /N
+     ^4(^ ^? @
+#
+
+
 And so it ends.

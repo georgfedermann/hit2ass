@@ -1,0 +1,59 @@
+#
+#*  This sample HIT/CLOU text component tests the use case of multiple sequentiel
+    fields in the XML input data.   #
+
+Let's test away with multiple fields.@
+The correct output would look like this:@
+Group 1 Line 1@
+Group 1 Line 2@
+Group 1 Line 3@
+Group 1 Line 4@
+Group 2 Line 1@
+Group 2 Line 2@
+Group 2 Line 3@
+Group 2 Line 4@
+Group 3 Line 1@
+Group 3 Line 2@
+Group 3 Line 3@
+Group 3 Line 4@
+@And this is what we get:@@
+
+#L group1 D {}
+#L group2 D {}
+#L group3 D {}
+
+#D lelement ""
+
+#X< lelement
+#S lelement <> "*" :
+    #L group1 & { lelement }
+    #X< lelement
+#
+
+#X< lelement
+#S lelement <> "*" :
+    #L group2 & { lelement }
+    #X< lelement
+#
+
+#X< lelement
+#S lelement <> "*" :
+    #L group3 & {lelement }
+    #X< lelement
+#
+
+#D counter 1
+#W listlen("group1")
+    #> group1[counter]@
+    #= counter counter + 1
+#
+#= counter 1
+#W listlen("group2")
+    #> group2[counter]@
+    #= counter counter + 1
+#
+#= counter 1
+#W listlen("group3")
+    #> group3[counter]@
+    #= counter counter + 1
+#

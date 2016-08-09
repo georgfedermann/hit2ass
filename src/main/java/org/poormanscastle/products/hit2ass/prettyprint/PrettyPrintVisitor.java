@@ -492,7 +492,7 @@ public class PrettyPrintVisitor extends AstItemVisitorAdapter {
 
     @Override
     public void visitPrintStatement(PrintStatement printStatement) {
-        addItem("Print", printStatement.getIdExpression().toXPathString());
+        addItem("Print", printStatement.getExpression().toXPathString());
         addBufferLine();
     }
 

@@ -21,19 +21,20 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public final class PrintStatement extends AbstractAstItem implements Statement {
 
     /**
-     * sinse HIT/CLOU PrintStatements only support id expressions, this must be of type IdExpression.
+     * since HIT/CLOU PrintStatements only support id expressions and standard function calls,
+     * this must be either of type IdExpression or of type ClouFunctionCall.
      */
-    private final IdExpression idExpression;
+    private final Expression expression;
 
-    public PrintStatement(CodePosition codePosition, Expression idExpression) {
+    public PrintStatement(CodePosition codePosition, Expression expression) {
         super(codePosition);
-        checkNotNull(idExpression);
-        checkArgument(idExpression instanceof IdExpression);
-        this.idExpression = (IdExpression) idExpression;
+        checkNotNull(expression);
+        checkArgument(expression instanceof IdExpression || expression instanceof ClouFunctionCall);
+        this.expression = expression;
     }
 
-    public IdExpression getIdExpression() {
-        return idExpression;
+    public Expression getExpression() {
+        return expression;
     }
 
     @Override
@@ -52,7 +53,7 @@ public final class PrintStatement extends AbstractAstItem implements Statement {
     public String toString() {
         return "PrintStatement{" +
                 "codePosition=" + getCodePosition() +
-                ", idExpression='" + idExpression + '\'' +
+                ", expression='" + expression + '\'' +
                 '}';
     }
 }

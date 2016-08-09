@@ -35,7 +35,7 @@ public class ClouFunctionCall extends AbstractExpression<Object> {
         if ("listlen".equals(functionName)) {
             return StringUtils.join(" hit2assext:getListLength(var:read('renderSessionUuid'), ", args.toXPathString(), ") ");
         } else if ("SHELLVARIABLE".equals(functionName)) {
-            return StringUtils.join(" hist2assext:getSystemProperty('", args.toXPathString(), "') ");
+            return StringUtils.join(" hist2assext:getSystemProperty(", args.toXPathString(), ") ");
         } else {
             logger.warn(StringUtils.join(
                     "Returning dummy value for not yet implemented FunctionCall feature for this function:\n",

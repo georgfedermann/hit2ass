@@ -362,7 +362,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         } else {
             // currently, the only other possibility is: assign a vlaue to a slot of a list variable
             // uses the hit2assext list mechanisms
-            // hit2assext:setListValueAt(var:read('renderSessionUuid'), assignmentStatement.getIdExpression().getId(), value XPath)
+            // hit2assext:setListValueAt(var:read('renderSessionUuid'), assignmentStatement.getExpression().getId(), value XPath)
             containerStack.peek().addContent(new DynamicContentReference(
                     StringUtils.join("List Assignment: ", assignmentStatement.getIdExpression().getId()),
                     StringUtils.join("hit2assext:setListValueAt(var:read('renderSessionUuid'), '",
@@ -381,8 +381,10 @@ public final class IRTransformer extends AstItemVisitorAdapter {
                     " at ", printStatement.getCodePosition()));
         }
         containerStack.peek().addContent(new DynamicContentReference(
-                StringUtils.join("Print: ", printStatement.getIdExpression().getId()),
-                printStatement.getIdExpression().toXPathString(), fontWeight));
+                StringUtils.join("Print: ",
+                        printStatement.getExpression() instanceof IdExpression ?
+                                ((IdExpression) printStatement.getExpression()).getId() : "()"),
+                printStatement.getExpression().toXPathString(), fontWeight));
     }
 
     @Override

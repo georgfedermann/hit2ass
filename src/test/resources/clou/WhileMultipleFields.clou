@@ -21,6 +21,11 @@ Group 3 Line 4@
 #L group1 D {}
 #L group2 D {}
 #L group3 D {}
+#L group4 D {}
+#L group5 D {}
+#L group6 D {}
+#L group7 D {}
+
 
 #D lelement ""
 
@@ -42,6 +47,30 @@ Group 3 Line 4@
     #X< lelement
 #
 
+#X< lelement
+#S lelement <> "*" :
+    #L group4 & {lelement }
+    #X< lelement
+#
+
+#X< lelement
+#S lelement <> "*" :
+    #L group5 & {lelement }
+    #X< lelement
+#
+
+#X< lelement
+#S lelement <> "*" :
+    #L group6 & {lelement }
+    #X< lelement
+#
+
+#X< lelement
+#S lelement <> "*" :
+    #L group7 & {lelement }
+    #X< lelement
+#
+
 #D counter 1
 #W listlen("group1")
     #> group1[counter]@
@@ -55,5 +84,25 @@ Group 3 Line 4@
 #= counter 1
 #W listlen("group3")
     #> group3[counter]@
+    #= counter counter + 1
+#
+#= counter 1
+#W listlen("group4")
+    #> group4[counter]@
+    #= counter counter + 1
+#
+#= counter 1
+#W listlen("group5")
+    #> group5[counter]@
+    #= counter counter + 1
+#
+#= counter 1
+#W listlen("group6")
+    #> group6[counter]@
+    #= counter counter + 1
+#
+#= counter 1
+#W listlen("group7")
+    #> group7[counter]@
     #= counter counter + 1
 #

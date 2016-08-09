@@ -53,10 +53,12 @@ public class PairExpressionList extends AbstractAstItem implements ExpressionLis
         return visitor.proceedWithPairExpressionList(this);
     }
 
+    @Override
     public Expression getHead() {
         return head;
     }
 
+    @Override
     public ExpressionList getTail() {
         return tail;
     }

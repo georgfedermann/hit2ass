@@ -2,6 +2,7 @@ package org.poormanscastle.products.hit2ass.ast.domain;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.poormanscastle.products.hit2ass.tools.HitAssTools;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -33,12 +34,31 @@ public class ClouFunctionCall extends AbstractExpression<Object> {
     public String toXPathString() {
         // TODO short-cut: implement a set of specific HIT/CLOU functions as needed
         if ("listlen".equals(functionName)) {
-            return StringUtils.join(" hit2assext:getListLength(var:read('renderSessionUuid'), ", args.toXPathString(), ") ");
+            return StringUtils.join(" hit2assext:getListLength(var:read('renderSessionUuid'), ",
+                    HitAssTools.getExpressionListAsString(args), ") ");
+        } else if ("SHELLVARIABLE".equals(functionName)) {
+            return StringUtils.join(" hit2assext:getSystemProperty(", HitAssTools.getExpressionListAsString(args), ") ");
+        } else if ("strlen".equals(functionName)) {
+            return StringUtils.join(" string-length( ", HitAssTools.getExpressionListAsString(args), ") ");
         } else {
             logger.warn(StringUtils.join(
                     "Returning dummy value for not yet implemented FunctionCall feature for this function:\n",
                     this.toString()));
-            return "ClouFunctionCall-DummyValue";
+            StringBuilder output = new StringBuilder(StringUtils.join(getFunctionName(), "("));
+            ExpressionList expressionList = getArgs();
+            boolean firstArg = true;
+            while (expressionList != null) {
+                if (firstArg) {
+                    firstArg = false;
+                } else {
+                    output.append(", ");
+                }
+                output.append(expressionList.getHead().toXPathString());
+                expressionList = expressionList.getTail();
+            }
+            output.append(" )");
+
+            return output.toString();
         }
     }
 
@@ -81,11 +101,24 @@ public class ClouFunctionCall extends AbstractExpression<Object> {
 
     @Override
     public String toString() {
-        return "ClouFunctionCall{" +
+        StringBuilder output = new StringBuilder("ClouFunctionCall{" +
                 "codePosition=" + getCodePosition() +
                 ", functionName='" + functionName + '\'' +
-                ", args=" + args +
-                '}';
+                ", args=(");
+
+        ExpressionList expressionList = getArgs();
+        boolean firstArg = true;
+        while (expressionList != null) {
+            if (firstArg) {
+                firstArg = false;
+            } else {
+                output.append(", ");
+            }
+            output.append(expressionList.getHead().toXPathString());
+            expressionList = expressionList.getTail();
+        }
+        output.append(" ) }");
+        return output.toString();
     }
 
 }

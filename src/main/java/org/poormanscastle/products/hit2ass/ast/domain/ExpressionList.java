@@ -6,4 +6,9 @@ package org.poormanscastle.products.hit2ass.ast.domain;
  * Created by georg.federmann@poormanscastle.com on 4/19/16.
  */
 public interface ExpressionList extends Expression {
+
+    Expression getHead();
+
+    ExpressionList getTail();
+
 }

@@ -46,7 +46,6 @@ import org.poormanscastle.products.hit2ass.ast.domain.UnaryOperatorExpression;
 import org.poormanscastle.products.hit2ass.ast.domain.WhileStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.WriteStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.ZStatement;
-import org.poormanscastle.products.hit2ass.tools.HitAssTools;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -391,8 +390,7 @@ public class PrettyPrintVisitor extends AstItemVisitorAdapter {
 
     @Override
     public void visitClouFunctionCall(ClouFunctionCall clouFunctionCall) {
-        addItem("ClouFuncCall", StringUtils.join(clouFunctionCall.getFunctionName(), "(",
-                HitAssTools.getExpressionListAsString(clouFunctionCall.getArgs()), ")"));
+        addItem("ClouFuncCall", clouFunctionCall.toXPathString());
         addBufferLine();
     }
 
@@ -492,7 +490,7 @@ public class PrettyPrintVisitor extends AstItemVisitorAdapter {
 
     @Override
     public void visitPrintStatement(PrintStatement printStatement) {
-        addItem("Print", printStatement.getIdExpression().toXPathString());
+        addItem("Print", printStatement.getExpression().toXPathString());
         addBufferLine();
     }
 

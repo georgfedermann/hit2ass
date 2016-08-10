@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.velocity.VelocityContext;
 import org.poormanscastle.products.hit2ass.ast.domain.BinaryOperatorExpression;
 import org.poormanscastle.products.hit2ass.ast.domain.Expression;
+import org.poormanscastle.products.hit2ass.ast.domain.IdExpression;
 import org.poormanscastle.products.hit2ass.ast.domain.TextExpression;
 
 /**
@@ -31,19 +32,24 @@ public class WhileLoopFlagValueFlavor extends AbstractContainer {
         // so, in the loop condition, this algorithm searches for a TextExpression containing
         // the flag value (*)
         String flagValue = "";
+        String loopVariable = "";
         if (!(expression instanceof BinaryOperatorExpression)) {
             throw new IllegalStateException(StringUtils.join("Only BinaryOperatorExpressions are supported here, not this such: ", expression));
         }
         BinaryOperatorExpression loopCondition = (BinaryOperatorExpression) expression;
         // search for flag value
-        if (loopCondition.getRhs() instanceof TextExpression) {
+        if (loopCondition.getLhs() instanceof IdExpression && loopCondition.getRhs() instanceof TextExpression) {
+            loopVariable = ((IdExpression) loopCondition.getLhs()).getId();
             flagValue = loopCondition.getRhs().toXPathString();
-        } else if (loopCondition.getLhs() instanceof TextExpression) {
+        } else if (loopCondition.getLhs() instanceof TextExpression && loopCondition.getRhs() instanceof IdExpression) {
+            loopVariable = ((IdExpression) loopCondition.getRhs()).getId();
             flagValue = loopCondition.getLhs().toXPathString();
         } else {
-            throw new IllegalStateException(StringUtils.join("No TextExpression found in loop condition: ", loopCondition));
+            throw new IllegalStateException(StringUtils.join("Not a valid WHILE(flag value flavor) condition: ",
+                    loopCondition.toString()));
         }
         context.put("flagValue", flagValue);
+        context.put("loopVariable", loopVariable);
     }
 
     @Override

@@ -142,7 +142,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
                 (loopCondition.getLhs() instanceof TextExpression && loopCondition.getRhs() instanceof IdExpression)) {
             // handle this as WhileFlagValueFlavor
             insideWhileLoop = true;
-            WhileLoopFlagValueFlavor whileLoop = new WhileLoopFlagValueFlavor(StringUtils.join("WHILE:", StringEscapeUtils.escapeXml10(whileStatement.getCondition().toXPathString())),
+            WhileLoopFlagValueFlavor whileLoop = new WhileLoopFlagValueFlavor("WHILE loop flag value flavor",
                     whileStatement.getCondition());
             containerStack.peek().addContent(whileLoop);
 

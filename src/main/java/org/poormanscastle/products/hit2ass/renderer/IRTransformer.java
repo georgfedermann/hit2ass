@@ -212,6 +212,8 @@ public final class IRTransformer extends AstItemVisitorAdapter {
             fontWeight = FontWeight.BOLD;
         } else if (macroCallStatement.getMacroId().equals("FEAUS")) {
             fontWeight = FontWeight.INHERIT;
+        } else if(macroCallStatement.getMacroId().equals("TABU")){
+            containerStack.peek().addContent(new Text("TABU", "       ", fontWeight));
         }
     }
 

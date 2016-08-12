@@ -1,14 +1,17 @@
 package org.poormanscastle.products.hit2ass.renderer.domain;
 
-import org.poormanscastle.products.hit2ass.renderer.VelocityHelper;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
+import org.poormanscastle.products.hit2ass.renderer.VelocityHelper;
 
 import java.io.StringWriter;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * Created by georg.federmann@poormanscastle.com on 5/9/16.
@@ -31,6 +34,8 @@ public abstract class AbstractContainer implements Container {
 
     public AbstractContainer(String name, String templateName) {
         // DocDesign doesn't accept element names which contain an exclamation mark (!)
+        checkArgument(!StringUtils.isBlank(name));
+        checkArgument(!StringUtils.isBlank(templateName));
         this.name = name.replaceAll("!", " NOT ");
         this.templateName = templateName;
     }

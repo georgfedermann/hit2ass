@@ -44,8 +44,10 @@ import org.poormanscastle.products.hit2ass.renderer.domain.IfThenParagraph;
 import org.poormanscastle.products.hit2ass.renderer.domain.ListDeclaration;
 import org.poormanscastle.products.hit2ass.renderer.domain.Paragraph;
 import org.poormanscastle.products.hit2ass.renderer.domain.Text;
+import org.poormanscastle.products.hit2ass.renderer.domain.TextAlignment;
 import org.poormanscastle.products.hit2ass.renderer.domain.WhileLoopFlagValueFlavor;
 import org.poormanscastle.products.hit2ass.renderer.domain.Workspace;
+import org.poormanscastle.products.hit2ass.renderer.domain.WorkspaceContainer;
 
 import java.util.Stack;
 
@@ -105,6 +107,21 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         transformer.fontWeight = fontWeight;
         transformer.insideWhileLoop = insideWhileLoop;
         return transformer;
+    }
+
+    @Override
+    public void visitClouBaustein(ClouBausteinImpl clouBaustein) {
+        workspace = new Workspace();
+        containerStack.push(new Paragraph("CLOU Component Paragraph"));
+    }
+
+    @Override
+    public void leaveClouBaustein(ClouBausteinImpl clouBaustein) {
+        WorkspaceContainer workspaceContainer = new WorkspaceContainer();
+        for (Container container : containerStack) {
+            workspaceContainer.addContent(container);
+        }
+        workspace.setContentContainer(workspaceContainer);
     }
 
     @Override
@@ -212,6 +229,12 @@ public final class IRTransformer extends AstItemVisitorAdapter {
             fontWeight = FontWeight.BOLD;
         } else if (macroCallStatement.getMacroId().equals("FEAUS")) {
             fontWeight = FontWeight.INHERIT;
+        } else if (macroCallStatement.getMacroId().equals("TABU")) {
+            containerStack.peek().addContent(new Text("TABU", "       ", fontWeight));
+        } else if (macroCallStatement.getMacroId().equals("ZLTZ12")) {
+            containerStack.push(new Paragraph("TextAlignment Center", TextAlignment.CENTER));
+        } else if (macroCallStatement.getMacroId().equals("ZLTB12")) {
+            containerStack.push(new Paragraph("TextAlignment Justified", TextAlignment.JUSTIFIED));
         }
     }
 
@@ -390,17 +413,6 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     @Override
     public void visitFixedText(FixedText fixedText) {
         containerStack.peek().addContent(new Text("text", fixedText.getText(), fontWeight));
-    }
-
-    @Override
-    public void visitClouBaustein(ClouBausteinImpl clouBaustein) {
-        workspace = new Workspace();
-        containerStack.push(new Paragraph("CLOU Component Paragraph"));
-    }
-
-    @Override
-    public void leaveClouBaustein(ClouBausteinImpl clouBaustein) {
-        workspace.setContentContainer(containerStack.pop());
     }
 
     @Override

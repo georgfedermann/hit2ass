@@ -230,7 +230,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         } else if (macroCallStatement.getMacroId().equals("FEAUS")) {
             fontWeight = FontWeight.INHERIT;
         } else if (macroCallStatement.getMacroId().equals("TABU")) {
-            containerStack.peek().addContent(new Text("TABU", "       ", fontWeight));
+            containerStack.peek().addContent(new Text("TABU", "       ", fontWeight));
         } else if (macroCallStatement.getMacroId().equals("ZLTZ12")) {
             containerStack.push(new Paragraph("TextAlignment Center", TextAlignment.CENTER));
         } else if (macroCallStatement.getMacroId().equals("ZLTB12")) {

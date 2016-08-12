@@ -3,6 +3,7 @@ package org.poormanscastle.products.hit2ass.transformer;
 import org.poormanscastle.products.hit2ass.ast.domain.AstItemVisitorAdapter;
 import org.poormanscastle.products.hit2ass.ast.domain.CodePosition;
 import org.poormanscastle.products.hit2ass.ast.domain.FixedText;
+import org.poormanscastle.products.hit2ass.ast.domain.LastClouBausteinElementList;
 import org.poormanscastle.products.hit2ass.ast.domain.PairClouBausteinElementList;
 import org.poormanscastle.products.hit2ass.ast.domain.PrintStatement;
 
@@ -45,9 +46,31 @@ public class InsertBlanksVisitor extends AstItemVisitorAdapter {
             if (!fixedText.getText().endsWith("\"")) {
                 fixedText.appendText(" ", false);
             }
-        } else if (previousElementList != null && previousElementList.getHead() instanceof PrintStatement && pairClouBausteinElementList.getHead() instanceof PrintStatement) {
+        } else if (previousElementList != null &&
+                previousElementList.getHead() instanceof PrintStatement && pairClouBausteinElementList.getHead() instanceof PrintStatement) {
             previousElementList.setTail(new PairClouBausteinElementList(FixedText.create(CodePosition.createZeroPosition(), " "), pairClouBausteinElementList));
         }
         previousElementList = pairClouBausteinElementList;
+    }
+
+    @Override
+    public void visitLastClouBausteinElementList(LastClouBausteinElementList lastClouBausteinElementList) {
+        if (lastClouBausteinElementList.getHead() instanceof FixedText && previousElementList != null && previousElementList.getHead() instanceof PrintStatement) {
+            FixedText fixedText = (FixedText) lastClouBausteinElementList.getHead();
+            String content = fixedText.getText();
+            if (!Pattern.matches("\\p{Punct}|\"", content.substring(0, 1))) {
+                fixedText.reset();
+                fixedText.appendText(content, true);
+            }
+        } else if (lastClouBausteinElementList.getHead() instanceof PrintStatement && previousElementList != null && previousElementList.getHead() instanceof FixedText) {
+            FixedText fixedText = (FixedText) previousElementList.getHead();
+            if (!fixedText.getText().endsWith("\"")) {
+                fixedText.appendText(" ", false);
+            }
+        } else if (previousElementList != null &&
+                previousElementList.getHead() instanceof PrintStatement && lastClouBausteinElementList.getHead() instanceof PrintStatement) {
+            previousElementList.setTail(new PairClouBausteinElementList(FixedText.create(CodePosition.createZeroPosition(), " "), lastClouBausteinElementList));
+        }
+        previousElementList = null;
     }
 }

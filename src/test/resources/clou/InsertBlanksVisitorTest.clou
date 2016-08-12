@@ -10,4 +10,11 @@ You are #> firstName #> lastName.   #*  a blank is expected between fixed text a
 You are "#> firstName". #*  in this case, no blanks are expected.   #
 #^2"RETURN"
 Please give #> firstName my love.
+
+#* test the algorithm if PrintStatement is the last statement in its AST branch #
+#? firstName = "John" :
+   /J
+      You are #> firstName #> lastName
+#
+
 And so it ends.

@@ -13,8 +13,8 @@
                 <Attribute name="Rotation"><![CDATA[n0]]></Attribute>
                 <Attribute name="Width"><![CDATA[0 cm]]></Attribute>
                 <Attribute name="Height"><![CDATA[0 cm]]></Attribute>
-                <Attribute name="TextAlign"><![CDATA[inherit]]></Attribute>
-                <Attribute name="TextAlignLast"><![CDATA[inherit]]></Attribute>
+                <Attribute name="TextAlign"><![CDATA[${textAlignment}]]></Attribute>
+                <Attribute name="TextAlignLast"><![CDATA[#if($textAlignment=="justify")start#else${textAlignment}#end]]></Attribute>
                 <Attribute name="TextIndent"><![CDATA[0 cm]]></Attribute>
                 <Attribute name="LastlineEndIndent"><![CDATA[0 cm]]></Attribute>
                 <Attribute name="Span"><![CDATA[False]]></Attribute>

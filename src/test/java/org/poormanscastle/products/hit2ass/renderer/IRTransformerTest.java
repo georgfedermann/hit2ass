@@ -230,6 +230,16 @@ public class IRTransformerTest {
     }
 
     @Test
+    public void testIndexedVariableWithFunctionCall() throws Exception {
+        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("IndexedVariableWithFunctionCall"), "ISO8859_1");
+        baustein = parser.CB();
+        baustein.accept(merger);
+        baustein.accept(blanksVisitor);
+        String probe = baustein.toString();
+        assertEquals("argl", probe);
+    }
+
+    @Test
     public void testInsertBlanksVisitor() throws Exception {
         parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("InsertBlanksVisitorTest"), "ISO8859_1");
         baustein = parser.CB();

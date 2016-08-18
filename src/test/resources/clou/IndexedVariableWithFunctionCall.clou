@@ -1,0 +1,10 @@
+#
+#*  This baustein trains the system to process PrintStatements with indexed variables
+    whose index expressions contain CLOU standard function calls. As in:
+    > myList[listlen("myList")]
+#
+
+#L myList D { "Johnny", "goes", "to", "Hollywood", "." }
+#> myList[listlen("myList")]@
+
+And so it ends.

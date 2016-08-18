@@ -313,7 +313,14 @@ TOKEN : {
     < PS_IDX_NUM : (["0"-"9"])+ > |
     < PS_IDX_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
     < PS_IDX_ID : [ "_", "a"-"z", "A"-"Z"](["_", ",", "a"-"z", "A"-"Z", "0"-"9",
-        "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc", "\u00a0" ])* >
+        "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc", "\u00a0" ])* > |
+    < PS_IDX_TEXT : "\""
+        (
+            "\\" ~[]
+        |
+            ~["\""]     // this covers the HIT/CLOU protected space character and also all German Umlauts.
+        )*"\"" >
+
 }
 
 <COMMAND_MODE_SS> SKIP : {
@@ -1279,15 +1286,15 @@ Expression F() :
     }
     |
     ( valueToken = <IF_TEXT> | valueToken = <DS_TEXT> | valueToken = <AS_TEXT> | valueToken = <MS_TEXT> |
-        valueToken = <LS_BRACES_TEXT> | valueToken = <FOR_TEXT> | valueToken = <PS_TEXT> | valueToken = <PS_EL_TEXT> )
+        valueToken = <LS_BRACES_TEXT> | valueToken = <FOR_TEXT> | valueToken = <PS_TEXT> | valueToken = <PS_EL_TEXT> | valueToken = <PS_IDX_TEXT> )
     {
         return new TextExpression(CodePosition.createFromToken(valueToken), valueToken.image);
     }
     |
     // implements clou standard function, e.g. listlen("varname")
-    LOOKAHEAD(2) (( valueToken = <IF_ID> | valueToken = <AS_ID> | valueToken = <FOR_ID> | valueToken = <DS_ID> | valueToken = <PS_ID> )
-        ( <IF_LPAREN> | <AS_LPAREN> | <FOR_LPAREN> | <DS_LPAREN> | <PS_IDX_CHECK_LPAREN> )
-        expressionList = EL() ( <IF_RPAREN> | <AS_RPAREN> | <FOR_RPAREN> | <DS_RPAREN> | <PS_EL_RPAREN> ))
+    LOOKAHEAD(2) (( valueToken = <IF_ID> | valueToken = <AS_ID> | valueToken = <FOR_ID> | valueToken = <DS_ID> | valueToken = <PS_ID> | valueToken = <PS_IDX_ID> )
+        ( <IF_LPAREN> | <AS_LPAREN> | <FOR_LPAREN> | <DS_LPAREN> | <PS_IDX_CHECK_LPAREN> | <PS_IDX_LPAREN> )
+        expressionList = EL() ( <IF_RPAREN> | <AS_RPAREN> | <FOR_RPAREN> | <DS_RPAREN> | <PS_EL_RPAREN> | <PS_IDX_RPAREN> ))
     {
         return new ClouFunctionCall(CodePosition.createFromToken(valueToken), valueToken.image, expressionList);
     }

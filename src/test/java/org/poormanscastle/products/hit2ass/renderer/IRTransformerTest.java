@@ -230,6 +230,16 @@ public class IRTransformerTest {
     }
 
     @Test
+    public void testIndexedVariableWithFunctionCall() throws Exception {
+        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("IndexedVariableWithFunctionCall"), "ISO8859_1");
+        baustein = parser.CB();
+        baustein.accept(merger);
+        baustein.accept(blanksVisitor);
+        String probe = baustein.toString();
+        assertEquals("ClouBausteinImpl{codePosition=begin line/column 7/4; end line/column 7/9, clouBausteinElement=PairClouBausteinElementList{codePosition=begin line/column 7/4; end line/column 7/9, head=GlobalListDeclarationStatement{codePosition=begin line/column 7/4; end line/column 7/9, listId='myList', listExpression=PairExpressionList{head=TextExpression{codePosition=begin line/column 7/15; end line/column 7/22, value='Johnny'}, tail=PairExpressionList{head=TextExpression{codePosition=begin line/column 7/25; end line/column 7/30, value='goes'}, tail=PairExpressionList{head=TextExpression{codePosition=begin line/column 7/33; end line/column 7/36, value='to'}, tail=PairExpressionList{head=TextExpression{codePosition=begin line/column 7/39; end line/column 7/49, value='Hollywood'}, tail=LastExpressionList{codePosition=begin line/column 7/52; end line/column 7/54head='TextExpression{codePosition=begin line/column 7/52; end line/column 7/54, value='.'}}}}}}}, tail=PairClouBausteinElementList{codePosition=begin line/column 8/4; end line/column 8/9, head=PrintStatement{codePosition=begin line/column 8/4; end line/column 8/9, expression='IdExpression{id='myList', idxExp1=LastExpressionList{codePosition=begin line/column 8/11; end line/column 8/17head='ClouFunctionCall{codePosition=begin line/column 8/11; end line/column 8/17, functionName='listlen', args=( 'myList'  ) }}, idxExp2=null, valueType=null, value=null}'}, tail=PairClouBausteinElementList{codePosition=begin line/column 8/29; end line/column 8/29, head=SectionStatement{}, tail=PairClouBausteinElementList{codePosition=begin line/column 10/1; end line/column 10/3, head=FixedTextImpl{codePosition=begin line/column 10/1; end line/column 10/3, textBuffer=And so it ends.}, tail=LastClouBausteinElementList{head=FixedTextImpl{codePosition=begin line/column 10/11; end line/column 10/15, textBuffer=}}}}}}}", probe);
+    }
+
+    @Test
     public void testInsertBlanksVisitor() throws Exception {
         parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("InsertBlanksVisitorTest"), "ISO8859_1");
         baustein = parser.CB();

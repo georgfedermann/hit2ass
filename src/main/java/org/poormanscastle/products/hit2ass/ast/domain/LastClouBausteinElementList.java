@@ -5,7 +5,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Created by georg.federmann@poormanscastle.com on 29.03.2016.
  */
-public class LastClouBausteinElementList extends AbstractAstItem implements ClouBausteinElementList {
+public class LastClouBausteinElementList extends AbstractClouBausteinElementList implements ClouBausteinElementList {
 
     private final ClouBausteinElement head;
 
@@ -19,7 +19,8 @@ public class LastClouBausteinElementList extends AbstractAstItem implements Clou
         this(head.getCodePosition(), head);
     }
 
-    public ClouBausteinElement getHead() {
+    @Override
+    public final ClouBausteinElement getHead() {
         return head;
     }
 
@@ -31,8 +32,8 @@ public class LastClouBausteinElementList extends AbstractAstItem implements Clou
     @Override
     public void accept(AstItemVisitor visitor) {
         visitor.visitLastClouBausteinElementList(this);
-        if (head.handleProceedWith(visitor)) {
-            head.accept(visitor);
+        if (getHead().handleProceedWith(visitor)) {
+            getHead().accept(visitor);
         }
         visitor.leaveLastClouBausteinElementList(this);
     }
@@ -40,7 +41,7 @@ public class LastClouBausteinElementList extends AbstractAstItem implements Clou
     @Override
     public String toString() {
         return "LastClouBausteinElementList{" +
-                "head=" + head +
+                "head=" + getHead() +
                 '}';
     }
 }

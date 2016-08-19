@@ -757,7 +757,7 @@ ForStatement FOR() :
 }
 
 ConditionalStatement IF() :
-{ Expression condition; ClouBausteinElement thenElement; ClouBausteinElement elseElement; Token debugToken; }
+{ Expression condition; ClouBausteinElementList thenElement; ClouBausteinElementList elseElement; Token debugToken; }
 {
     debugToken = <IF> condition = E() <IF_COLON> thenElement = THEN() elseElement = ELSE() <ENDIF>
     {
@@ -765,8 +765,8 @@ ConditionalStatement IF() :
     }
 }
 
-ClouBausteinElement THEN() :
- { ClouBausteinElement thenStatement; }
+ClouBausteinElementList THEN() :
+ { ClouBausteinElementList thenStatement; }
  {
      (<THEN> thenStatement = CBE()
      {
@@ -777,8 +777,8 @@ ClouBausteinElement THEN() :
      }
  }
 
- ClouBausteinElement ELSE() :
- { ClouBausteinElement elseStatement; }
+ ClouBausteinElementList ELSE() :
+ { ClouBausteinElementList elseStatement; }
  {
      (<ELSE> elseStatement = CBE()
      {

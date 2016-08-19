@@ -9,4 +9,18 @@ package org.poormanscastle.products.hit2ass.ast.domain;
  */
 public interface ClouBausteinElementList extends ClouBausteinElement {
 
+    ClouBausteinElement getHead();
+
+    default ClouBausteinElementList getTail() {
+        return null;
+    }
+
+    default void replaceTail(ClouBausteinElementList oldTail, ClouBausteinElementList newTail) {
+        throw new UnsupportedOperationException();
+    }
+
+    ClouBausteinElementList getParent();
+
+    void setParent(ClouBausteinElementList parent);
+
 }

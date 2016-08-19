@@ -240,7 +240,7 @@ public class HitAssAstParser implements HitAssAstParserConstants {
     throw new Error("Missing return statement in function");
   }
 
-  final public ConditionalStatement IF() throws ParseException {Expression condition; ClouBausteinElement thenElement; ClouBausteinElement elseElement; Token debugToken;
+  final public ConditionalStatement IF() throws ParseException {Expression condition; ClouBausteinElementList thenElement; ClouBausteinElementList elseElement; Token debugToken;
     debugToken = jj_consume_token(IF);
     condition = E();
     jj_consume_token(IF_COLON);
@@ -251,7 +251,7 @@ public class HitAssAstParser implements HitAssAstParserConstants {
     throw new Error("Missing return statement in function");
   }
 
-  final public ClouBausteinElement THEN() throws ParseException {ClouBausteinElement thenStatement;
+  final public ClouBausteinElementList THEN() throws ParseException {ClouBausteinElementList thenStatement;
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case THEN:{
       jj_consume_token(THEN);
@@ -267,7 +267,7 @@ public class HitAssAstParser implements HitAssAstParserConstants {
     throw new Error("Missing return statement in function");
   }
 
-  final public ClouBausteinElement ELSE() throws ParseException {ClouBausteinElement elseStatement;
+  final public ClouBausteinElementList ELSE() throws ParseException {ClouBausteinElementList elseStatement;
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case ELSE:{
       jj_consume_token(ELSE);

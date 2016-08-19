@@ -25,7 +25,7 @@ public class FixedTextMerger extends AstItemVisitorAdapter {
     private FixedText master;
 
     @Override
-    public void visitPairClouBausteinElementList(PairClouBausteinElementList pairClouBausteinElementList) {
+    public void visitPairClouBausteinElementList(final PairClouBausteinElementList pairClouBausteinElementList) {
         if (pairClouBausteinElementList.getHead() instanceof FixedText) {
             if (parent == null) {
                 parent = pairClouBausteinElementList;
@@ -34,7 +34,7 @@ public class FixedTextMerger extends AstItemVisitorAdapter {
                 FixedText followingText = ((FixedText) pairClouBausteinElementList.getHead());
                 boolean withBlank = !(master.getText().endsWith("\"") && followingText.getText().startsWith("."));
                 master.appendText(((FixedText) pairClouBausteinElementList.getHead()).getText(), withBlank);
-                parent.setTail(pairClouBausteinElementList.getTail());
+                parent.replaceTail(pairClouBausteinElementList, pairClouBausteinElementList.getTail());
             }
         } else {
             parent = null;
@@ -43,11 +43,13 @@ public class FixedTextMerger extends AstItemVisitorAdapter {
     }
 
     @Override
-    public void visitLastClouBausteinElementList(LastClouBausteinElementList lastClouBausteinElementList) {
+    public void visitLastClouBausteinElementList(final LastClouBausteinElementList lastClouBausteinElementList) {
         if (lastClouBausteinElementList.getHead() instanceof FixedText && parent != null) {
             FixedText fixedText = (FixedText) lastClouBausteinElementList.getHead();
             master.appendText(fixedText.getText(), true);
-            fixedText.reset();
+            // In this case, the FixedText streak ends in a LastClouBausteinElementList, which would render an
+            // appendix with an empty FixedText element. Which just is not beautiful. So, we will remove the appendix.
+            parent.getParent().replaceTail(parent, new LastClouBausteinElementList(parent.getCodePosition(), parent.getHead()));
             parent = null;
             master = null;
         } else if (!(lastClouBausteinElementList.getHead() instanceof FixedText)) {

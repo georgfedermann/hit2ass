@@ -5,34 +5,39 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Created by georg.federmann@poormanscastle.com on 29.03.2016.
  */
-public class PairClouBausteinElementList extends AbstractAstItem implements ClouBausteinElementList {
+public class PairClouBausteinElementList extends AbstractClouBausteinElementList implements ClouBausteinElementList {
 
     private final ClouBausteinElement head;
 
-    private ClouBausteinElement tail;
+    private ClouBausteinElementList tail;
 
-    public PairClouBausteinElementList(CodePosition codePosition, ClouBausteinElement head, ClouBausteinElement tail) {
+    public PairClouBausteinElementList(CodePosition codePosition, ClouBausteinElement head, ClouBausteinElementList tail) {
         super(codePosition);
         checkNotNull(head);
-        checkNotNull(tail);
         this.head = head;
+        checkNotNull(tail);
         this.tail = tail;
+        this.tail.setParent(this);
     }
 
-    public PairClouBausteinElementList(ClouBausteinElement head, ClouBausteinElement tail) {
+    public PairClouBausteinElementList(ClouBausteinElement head, ClouBausteinElementList tail) {
         this(head.getCodePosition(), head, tail);
     }
 
-    public void setTail(ClouBausteinElement tail) {
-        this.tail = tail;
-    }
-
-    public ClouBausteinElement getTail() {
-        return tail;
-    }
-
-    public ClouBausteinElement getHead() {
+    @Override
+    public final ClouBausteinElement getHead() {
         return head;
+    }
+
+    @Override
+    public void replaceTail(ClouBausteinElementList oldTail, ClouBausteinElementList newTail) {
+        this.tail = newTail;
+        this.tail.setParent(this);
+    }
+
+    @Override
+    public ClouBausteinElementList getTail() {
+        return tail;
     }
 
     @Override
@@ -43,8 +48,8 @@ public class PairClouBausteinElementList extends AbstractAstItem implements Clou
     @Override
     public void accept(AstItemVisitor visitor) {
         visitor.visitPairClouBausteinElementList(this);
-        if (head.handleProceedWith(visitor)) {
-            head.accept(visitor);
+        if (getHead().handleProceedWith(visitor)) {
+            getHead().accept(visitor);
         }
         if (tail.handleProceedWith(visitor)) {
             tail.accept(visitor);
@@ -56,7 +61,7 @@ public class PairClouBausteinElementList extends AbstractAstItem implements Clou
     public String toString() {
         return "PairClouBausteinElementList{" +
                 "codePosition=" + getCodePosition() +
-                ", head=" + head +
+                ", head=" + getHead() +
                 ", tail=" + tail +
                 '}';
     }

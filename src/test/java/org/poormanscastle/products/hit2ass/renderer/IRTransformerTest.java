@@ -1,5 +1,10 @@
 package org.poormanscastle.products.hit2ass.renderer;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.poormanscastle.products.hit2ass.TestUtils;
@@ -8,11 +13,6 @@ import org.poormanscastle.products.hit2ass.parser.javacc.HitAssAstParser;
 import org.poormanscastle.products.hit2ass.renderer.domain.Workspace;
 import org.poormanscastle.products.hit2ass.transformer.FixedTextMerger;
 import org.poormanscastle.products.hit2ass.transformer.InsertBlanksVisitor;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by georg.federmann@poormanscastle.com on 5/9/16.
@@ -238,6 +238,18 @@ public class IRTransformerTest {
         String probe = baustein.toString();
         assertEquals("ClouBausteinImpl{codePosition=begin line/column 7/4; end line/column 7/9, clouBausteinElement=PairClouBausteinElementList{codePosition=begin line/column 7/4; end line/column 7/9, head=GlobalListDeclarationStatement{codePosition=begin line/column 7/4; end line/column 7/9, listId='myList', listExpression=PairExpressionList{head=TextExpression{codePosition=begin line/column 7/15; end line/column 7/22, value='Johnny'}, tail=PairExpressionList{head=TextExpression{codePosition=begin line/column 7/25; end line/column 7/30, value='goes'}, tail=PairExpressionList{head=TextExpression{codePosition=begin line/column 7/33; end line/column 7/36, value='to'}, tail=PairExpressionList{head=TextExpression{codePosition=begin line/column 7/39; end line/column 7/49, value='Hollywood'}, tail=LastExpressionList{codePosition=begin line/column 7/52; end line/column 7/54head='TextExpression{codePosition=begin line/column 7/52; end line/column 7/54, value='.'}}}}}}}, tail=PairClouBausteinElementList{codePosition=begin line/column 8/4; end line/column 8/9, head=PrintStatement{codePosition=begin line/column 8/4; end line/column 8/9, expression='IdExpression{id='myList', idxExp1=LastExpressionList{codePosition=begin line/column 8/11; end line/column 8/17head='ClouFunctionCall{codePosition=begin line/column 8/11; end line/column 8/17, functionName='listlen', args=( 'myList'  ) }}, idxExp2=null, valueType=null, value=null}'}, tail=PairClouBausteinElementList{codePosition=begin line/column 8/29; end line/column 8/29, head=SectionStatement{}, tail=PairClouBausteinElementList{codePosition=begin line/column 10/1; end line/column 10/3, head=FixedTextImpl{codePosition=begin line/column 10/1; end line/column 10/3, textBuffer=And so it ends.}, tail=LastClouBausteinElementList{head=FixedTextImpl{codePosition=begin line/column 10/11; end line/column 10/15, textBuffer=}}}}}}}", probe);
     }
+
+
+    @Test
+    public void testFixedTextMergerWithIf() throws Exception {
+        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("FixedTextMergerWithIf"), "ISO8859_1");
+        baustein = parser.CB();
+        baustein.accept(merger);
+        baustein.accept(blanksVisitor);
+        String probe = baustein.toString();
+        assertEquals("ClouBausteinImpl{codePosition=begin line/column 5/11; end line/column 5/13, clouBausteinElement=PairClouBausteinElementList{codePosition=begin line/column 5/11; end line/column 5/13, head=GlobalDeclarationStatement{codePosition=begin line/column 5/11; end line/column 5/13, expression=TextExpression{codePosition=begin line/column 5/11; end line/column 5/13, value='m'}, id='gender', formatDefinition=''}, tail=PairClouBausteinElementList{codePosition=begin line/column 7/1; end line/column 7/6, head=FixedTextImpl{codePosition=begin line/column 7/1; end line/column 7/6, textBuffer=Please note:}, tail=PairClouBausteinElementList{codePosition=begin line/column 8/4; end line/column 8/9, head=ConditionalStatement{codePosition=begin line/column 8/4; end line/column 8/9, condition=BinaryOperatorExpression{codePosition=begin line/column 8/4; end line/column 8/9, lhs=IdExpression{id='gender', idxExp1=null, idxExp2=null, valueType=null, value=null}, operator=EQ, rhs=TextExpression{codePosition=begin line/column 8/13; end line/column 8/15, value='m'}, value=null}, thenElement=LastClouBausteinElementList{head=FixedTextImpl{codePosition=begin line/column 10/9; end line/column 10/11, textBuffer=Men}}, elseElement=LastClouBausteinElementList{head=FixedTextImpl{codePosition=begin line/column 12/9; end line/column 12/13, textBuffer=Women}}}, tail=PairClouBausteinElementList{codePosition=begin line/column 14/1; end line/column 14/6, head=FixedTextImpl{codePosition=begin line/column 14/1; end line/column 14/6, textBuffer=cannot attend the festivity.}, tail=PairClouBausteinElementList{codePosition=begin line/column 14/29; end line/column 14/29, head=SectionStatement{}, tail=PairClouBausteinElementList{codePosition=begin line/column 15/1; end line/column 15/3, head=FixedTextImpl{codePosition=begin line/column 15/1; end line/column 15/3, textBuffer=And so it ends.}, tail=LastClouBausteinElementList{head=SectionStatement{}}}}}}}}}", probe);
+    }
+
 
     @Test
     public void testInsertBlanksVisitor() throws Exception {

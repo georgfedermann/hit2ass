@@ -46,13 +46,13 @@ public class ClouChunkTests {
 
         ConditionalStatement ifStatement = (ConditionalStatement) elementList.getHead();
         ifStatement.getThenElement().getHead();
-        assertEquals("will", ((FixedText) ifStatement.getThenElement().getTail().getHead()).getText());
-        assertEquals("won't", ((FixedText) ifStatement.getElseElement().getTail().getHead()).getText());
+        assertEquals(" will", ((FixedText) ifStatement.getThenElement().getTail().getHead()).getText());
+        assertEquals(" won't", ((FixedText) ifStatement.getElseElement().getTail().getHead()).getText());
 
         elementList = elementList.getTail();
         assertTrue(elementList.getHead() instanceof NewLine);
         elementList = elementList.getTail();
-        assertEquals("process your order.", ((FixedText) elementList.getHead()).getText());
+        assertEquals(" process your order.", ((FixedText) elementList.getHead()).getText());
     }
 
     @Test

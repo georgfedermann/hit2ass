@@ -5,6 +5,7 @@ import static com.google.common.base.Preconditions.checkState;
 import org.apache.commons.lang3.StringUtils;
 import org.poormanscastle.products.hit2ass.ast.domain.AstItemVisitorAdapter;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouBausteinElementList;
+import org.poormanscastle.products.hit2ass.ast.domain.ConditionalStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.FixedText;
 import org.poormanscastle.products.hit2ass.ast.domain.LastClouBausteinElementList;
 import org.poormanscastle.products.hit2ass.ast.domain.NewLine;
@@ -31,8 +32,14 @@ public class EraseBlanksVisitor extends AstItemVisitorAdapter {
         // is NewLine, and the parent of NewLine is not null and (FixedText or PrintStatement), let there be one leading blank. Truncate all
         // leading blanks in all other cases.
         // 3. If there is a FixedText with a single blank, leave it (especially if it appears between otherwise sequential Print Statements.
-        // 4. If there is a FixedText which solely consists of more than one blank, erase it completely. It should stem from an empty line with indentation.
+        // 4. If there is a FixedText which solely consists of blanks and more than one blank, erase it completely. It should stem from an empty line with indentation.
         // 5. If the direct predecessor is a PrintStatement leave leading blanks as found.
+        // 6. If the parent ClouBausteinElementList is null leave one leading blank. DocFamily will only display it, if
+        // it occurs within a text flow and erase it if it appears at the start of a paragraph. So this should be save
+        // to resolve the problem where text that continues within an IF statement will miss blanks.
+        // 7. To resolve situations where the text flow fully encloses a conditional statement, allow a single leading blank
+        // in the first FixedText element after the IF. If flow text passes through the IF, that's good. If new text
+        // starts after the IF, there is hope that a new paragraph is started and thus the blank is erased by DocFamily.
         if (!(clouBausteinElementList.getHead() instanceof FixedText)) {
             return;
         }
@@ -58,10 +65,28 @@ public class EraseBlanksVisitor extends AstItemVisitorAdapter {
             // Rule 2
             boolean conserveOneLeadingBlank = clouBausteinElementList.getParent() != null && clouBausteinElementList.getParent().getHead() instanceof NewLine
                     && clouBausteinElementList.getParent().getParent() != null &&
-                    ((clouBausteinElementList.getParent().getParent().getHead() instanceof FixedText) || (clouBausteinElementList.getParent().getParent().getHead() instanceof PrintStatement));
+                    ((clouBausteinElementList.getParent().getParent().getHead() instanceof FixedText)
+                            || (clouBausteinElementList.getParent().getParent().getHead() instanceof PrintStatement)
+                    );
+            // Rule 6: first FixedText within a THEN or ELSE shall have a leading blank.
+            conserveOneLeadingBlank |= clouBausteinElementList.getParent() != null && clouBausteinElementList.getParent().getParent() == null;
+            // Rule 7
+            conserveOneLeadingBlank |= isPrecedingElementConditional(clouBausteinElementList.getParent());
             strippedText = StringUtils.stripStart(strippedText, null);
             fixedText.reset();
             fixedText.appendText(strippedText, conserveOneLeadingBlank);
+        }
+    }
+
+    private boolean isPrecedingElementConditional(ClouBausteinElementList elementList) {
+        if (elementList == null) {
+            return false;
+        } else if (elementList.getHead() instanceof ConditionalStatement) {
+            return true;
+        } else if (elementList.getHead() instanceof NewLine) {
+            return isPrecedingElementConditional(elementList.getParent());
+        } else {
+            return false;
         }
     }
 

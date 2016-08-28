@@ -279,4 +279,10 @@ public interface AstItemVisitor {
 
     void leaveBooleanExpression(BooleanExpression booleanExpression);
 
+    boolean proceedWithNewLine(NewLine newLine);
+
+    void visitNewLine(NewLine newLine);
+
+    void leaveNewLine(NewLine newLine);
+
 }

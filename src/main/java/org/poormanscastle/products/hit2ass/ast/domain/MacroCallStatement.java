@@ -1,8 +1,8 @@
 package org.poormanscastle.products.hit2ass.ast.domain;
 
-import org.apache.commons.lang3.StringUtils;
-
 import static com.google.common.base.Preconditions.checkArgument;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by georg.federmann@poormanscastle.com on 4/19/16.
@@ -29,6 +29,10 @@ public class MacroCallStatement extends AbstractAstItem implements Statement {
 
     public String getMacroId() {
         return macroId;
+    }
+
+    public ExpressionList getArgumentList() {
+        return argumentList;
     }
 
     @Override

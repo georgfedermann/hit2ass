@@ -9,4 +9,14 @@ package org.poormanscastle.products.hit2ass.ast.domain;
  */
 public interface ClouBausteinElementList extends ClouBausteinElement {
 
+    ClouBausteinElementList getParent();
+
+    void setParent(ClouBausteinElementList parent);
+
+    ClouBausteinElement getHead();
+
+    default ClouBausteinElementList getTail() {
+        return null;
+    }
+
 }

@@ -5,29 +5,30 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Created by georg.federmann@poormanscastle.com on 29.03.2016.
  */
-public class PairClouBausteinElementList extends AbstractAstItem implements ClouBausteinElementList {
+public class PairClouBausteinElementList extends AbstractClouBausteinElementList {
 
     private final ClouBausteinElement head;
 
-    private ClouBausteinElement tail;
+    private ClouBausteinElementList tail;
 
-    public PairClouBausteinElementList(CodePosition codePosition, ClouBausteinElement head, ClouBausteinElement tail) {
+    public PairClouBausteinElementList(CodePosition codePosition, ClouBausteinElement head, ClouBausteinElementList tail) {
         super(codePosition);
         checkNotNull(head);
         checkNotNull(tail);
         this.head = head;
         this.tail = tail;
+        this.tail.setParent(this);
     }
 
-    public PairClouBausteinElementList(ClouBausteinElement head, ClouBausteinElement tail) {
+    public PairClouBausteinElementList(ClouBausteinElement head, ClouBausteinElementList tail) {
         this(head.getCodePosition(), head, tail);
     }
 
-    public void setTail(ClouBausteinElement tail) {
+    public void setTail(ClouBausteinElementList tail) {
         this.tail = tail;
     }
 
-    public ClouBausteinElement getTail() {
+    public ClouBausteinElementList getTail() {
         return tail;
     }
 

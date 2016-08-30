@@ -352,6 +352,7 @@ TOKEN : {
     "\n" : TXT_MODE | "\r" : TXT_MODE | "\t" | " "
 }
 <COMMAND_MODE_MS> TOKEN : {
+    < MS_PS : "#>" > : COMMAND_MODE_PS |
     < MS_EQ : "=" > |
     < MS_EQ_STRICT : "==" > |
     < MS_OR : "oder" > |
@@ -980,7 +981,7 @@ DynamicValue DV() :
 PrintStatement PS() :
 { Token debugToken; Expression expression; }
 {
-    debugToken = <PS> expression = E()
+    (debugToken = <PS> | debugToken = <MS_PS>) expression = E()
     {
         return new PrintStatement(expression.getCodePosition(), expression);
     }

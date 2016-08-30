@@ -282,7 +282,8 @@ TOKEN : {
     < PS_IDX_CHECK_LBRACKET : "[" > : COMMAND_MODE_PS_IDX |
     < PS_IDX_CHECK_LPAREN : "(" > : COMMAND_MODE_PS_EL |
     < PS_IDX_CHECK_FIXED_TEXT : ( ~[ "\n", "\r", "\t", "#", "@", "[", "(" ] )+ > : TXT_MODE |
-    < PS_IDX_SB : "@" > : TXT_MODE
+    < PS_IDX_SB : "@" > : TXT_MODE |
+    < PS_IDX_CHECK_MS : "#$" > : COMMAND_MODE_MS
 }
 // this mode parses index expressions, if a [ was found after as PS_ID
 <COMMAND_MODE_PS_IDX_CHECK> SKIP : {
@@ -879,7 +880,7 @@ CaseStatement CASE() :
 MacroCallStatement MS() :
 { Token idToken; ExpressionList argumentList; }
 {
-    <MS> idToken = <MS_ID> argumentList = AL()
+    (<MS>|<PS_IDX_CHECK_MS>) idToken = <MS_ID> argumentList = AL()
     {
         return new MacroCallStatement(CodePosition.createFromToken(idToken), idToken.image, argumentList);
     }

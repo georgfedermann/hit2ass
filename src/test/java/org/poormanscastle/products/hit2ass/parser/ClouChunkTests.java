@@ -25,6 +25,72 @@ import org.poormanscastle.products.hit2ass.transformer.EraseBlanksVisitor;
 public class ClouChunkTests {
 
     @Test
+    public void testPrintStatementMacroCallSequence() throws Exception {
+        // #
+        // #> currency#$TABU#*##> amount@
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("PrintStatementMacroCallSequence"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
+        assertEquals("currency", ((IdExpression) ((PrintStatement) elementList.getHead()).getExpression()).getId());
+        elementList = elementList.getTail();
+        assertEquals("TABU", ((MacroCallStatement) elementList.getHead()).getMacroId());
+        elementList = elementList.getTail();
+        assertEquals("amount", ((IdExpression) ((PrintStatement) elementList.getHead()).getExpression()).getId());
+        elementList = elementList.getTail();
+        assertTrue(elementList.getHead() instanceof SectionStatement);
+    }
+
+    @Test
+    public void testFixedTextConditionWithPrintStatement() throws Exception {
+        // #
+        // And now
+        // #? power > 5 :
+        //  /J
+        //      #> firstName
+        //  /N
+        //      #> lastName
+        // #
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("FixedTextConditionWithPrintStatement"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
+        assertEquals("And now ", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        assertTrue(elementList.getHead() instanceof NewLine);
+        elementList = elementList.getTail();
+        assertTrue(elementList.getHead() instanceof ConditionalStatement);
+    }
+
+    @Test
+    public void testFixedTextNewLinePrintStatementSequence() throws Exception {
+        // #
+        // and
+        // #> lastMember
+        //     and
+        //     #> lastMember
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("FixedTextNewLinePrintStatementSequence"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
+        assertEquals("and ", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        assertTrue(elementList.getHead() instanceof NewLine);
+        elementList = elementList.getTail();
+        assertEquals("lastMember", ((IdExpression) ((PrintStatement) elementList.getHead()).getExpression()).getId());
+        elementList = elementList.getTail();
+        assertTrue(elementList.getHead() instanceof NewLine);
+        elementList = elementList.getTail();
+        assertEquals(" and ", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        assertTrue(elementList.getHead() instanceof NewLine);
+        elementList = elementList.getTail();
+        assertEquals("", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        assertEquals("lastMember", ((IdExpression) ((PrintStatement) elementList.getHead()).getExpression()).getId());
+    }
+
+    @Test
     public void testFixedTextIfFixedTextSequence() throws Exception {
         // #
         // Please note that we

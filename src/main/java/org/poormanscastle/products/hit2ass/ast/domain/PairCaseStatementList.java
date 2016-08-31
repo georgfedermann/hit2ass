@@ -9,9 +9,9 @@ public class PairCaseStatementList extends AbstractAstItem implements CaseStatem
 
     private final CaseStatement head;
 
-    private final CaseStatement tail;
+    private final CaseStatementList tail;
 
-    public PairCaseStatementList(CodePosition codePosition, CaseStatement head, CaseStatement tail) {
+    public PairCaseStatementList(CodePosition codePosition, CaseStatement head, CaseStatementList tail) {
         super(codePosition);
         checkNotNull(head);
         checkNotNull(tail);
@@ -19,8 +19,23 @@ public class PairCaseStatementList extends AbstractAstItem implements CaseStatem
         this.tail = tail;
     }
 
-    public PairCaseStatementList(CaseStatement head, CaseStatement tail) {
+    public PairCaseStatementList(CaseStatement head, CaseStatementList tail) {
         this(head.getCodePosition(), head, tail);
+    }
+
+    @Override
+    public CaseStatement getHead() {
+        return head;
+    }
+
+    @Override
+    public CaseStatementList getTail() {
+        return tail;
+    }
+
+    @Override
+    public String getMatch() {
+        throw new UnsupportedOperationException("Call this method directly on the CaseStatement, via getHead().getMatch()");
     }
 
     @Override

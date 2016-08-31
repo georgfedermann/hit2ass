@@ -1,9 +1,8 @@
 package org.poormanscastle.products.hit2ass.ast.domain;
 
-import org.apache.commons.lang3.StringUtils;
-
 import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by georg.federmann@poormanscastle.com on 4/18/16.
@@ -19,7 +18,12 @@ public class CaseStatementImpl extends AbstractAstItem implements CaseStatement 
         checkArgument(!StringUtils.isBlank(match));
         // 2016-07-04 15:17 ClouBausteinElement can be null, e.g. in default block, you can just write: /:
         // checkNotNull(clouBausteinElement);
-        this.match = match;
+        match = match.trim();
+        checkArgument(match.startsWith("/"));
+        match = StringUtils.stripStart(match, "/");
+        match = StringUtils.stripEnd(match, ":");
+        match = StringUtils.strip(match, "\"");
+        this.match = match.trim();
         this.clouBausteinElement = clouBausteinElement;
     }
 
@@ -27,6 +31,7 @@ public class CaseStatementImpl extends AbstractAstItem implements CaseStatement 
         this(clouBausteinElement.getCodePosition(), match, clouBausteinElement);
     }
 
+    @Override
     public String getMatch() {
         return match;
     }

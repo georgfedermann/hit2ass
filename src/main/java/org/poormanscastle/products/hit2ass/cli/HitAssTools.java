@@ -11,6 +11,7 @@ import org.poormanscastle.products.hit2ass.prettyprint.PrettyPrintVisitor;
 import org.poormanscastle.products.hit2ass.renderer.IRTransformer;
 import org.poormanscastle.products.hit2ass.renderer.xmlcreator.UserDataServiceBean;
 import org.poormanscastle.products.hit2ass.transformer.ClouBausteinMergerVisitor;
+import org.poormanscastle.products.hit2ass.transformer.EraseBlanksVisitor;
 import org.poormanscastle.products.hit2ass.transformer.FixedTextMerger;
 import org.poormanscastle.products.hit2ass.transformer.InsertBlanksVisitor;
 
@@ -60,8 +61,7 @@ public final class HitAssTools {
                     System.getProperty("hit2ass.clou.encoding")));
             ClouBaustein baustein = new HitAssAstParser(System.in, System.getProperty("hit2ass.clou.encoding")).CB();
             baustein.accept(new ClouBausteinMergerVisitor());
-            baustein.accept(new FixedTextMerger());
-            baustein.accept(new InsertBlanksVisitor());
+            baustein.accept(new EraseBlanksVisitor());
             IRTransformer irTransformer = new IRTransformer();
             baustein.accept(irTransformer);
             return irTransformer.getWorkspace().getContent();
@@ -79,8 +79,7 @@ public final class HitAssTools {
                 System.getProperty("hit2ass.clou.encoding")));
         ClouBaustein clouBaustein = new HitAssAstParser(System.in, System.getProperty("hit2ass.clou.encoding")).CB();
         clouBaustein.accept(new ClouBausteinMergerVisitor());
-        clouBaustein.accept(new FixedTextMerger());
-        clouBaustein.accept(new InsertBlanksVisitor());
+        clouBaustein.accept(new EraseBlanksVisitor());
         PrettyPrintVisitor prettyPrinter = new PrettyPrintVisitor();
         clouBaustein.accept(prettyPrinter);
         return prettyPrinter.serialize();

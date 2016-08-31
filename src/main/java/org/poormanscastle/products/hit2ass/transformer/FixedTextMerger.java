@@ -10,6 +10,9 @@ import org.poormanscastle.products.hit2ass.ast.domain.PairClouBausteinElementLis
  * in the AST and in memory, and produce a less complex AST for further processing.
  * <p/>
  * Created by georg.federmann@poormanscastle.com on 08.04.2016.
+ *
+ * @deprecated Is no more needed with the new parser strategy of respecting blanks and new lines
+ * for later processing stages.
  */
 public class FixedTextMerger extends AstItemVisitorAdapter {
 

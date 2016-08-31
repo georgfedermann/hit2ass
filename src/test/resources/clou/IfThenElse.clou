@@ -11,10 +11,10 @@
   #? bauname = "AL001" :
     /J
       #* THEN #
-      den Pensionsakt
+      den Pensionsakt   
     /N
       #* ELSE #
-      den Treppenakt
+      den Treppenakt   
   #
   #^ anzahlLeerzeilen "RETURN"
 Halfway through...
@@ -22,10 +22,10 @@ Halfway through...
   #? bauname <> "AL001" :
     /J
       #* THEN #
-      den Pensionsakt
+      den Pensionsakt   
     /N
       #* ELSE #
-      den Treppenakt
+      den Treppenakt   
   #
   #^ anzahlLeerzeilen "RETURN"
 And so it ends.

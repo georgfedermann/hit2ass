@@ -25,7 +25,7 @@ public class WhileStatement extends AbstractAstItem implements Statement {
         this.whileBody = whileBody;
     }
 
-    public WhileStatement(Expression condition, ClouBausteinElement whileBody) {
+    public WhileStatement(Expression condition, ClouBausteinElementList whileBody) {
         this(condition.getCodePosition(), condition, whileBody);
     }
 

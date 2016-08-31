@@ -17,13 +17,13 @@ public final class ConditionalStatement extends AbstractAstItem implements State
     /**
      * may be {@code null} if there is no THEN statement in the CLOU component.
      */
-    private final ClouBausteinElement thenElement;
+    private final ClouBausteinElementList thenElement;
     /**
      * may be {@code null} if there is no ELSE statement in the CLOU component.
      */
-    private final ClouBausteinElement elseElement;
+    private final ClouBausteinElementList elseElement;
 
-    public ConditionalStatement(CodePosition codePosition, Expression condition, ClouBausteinElement thenElement, ClouBausteinElement elseElement) {
+    public ConditionalStatement(CodePosition codePosition, Expression condition, ClouBausteinElementList thenElement, ClouBausteinElementList elseElement) {
         super(codePosition);
         checkNotNull(condition);
         this.condition = condition;
@@ -31,7 +31,7 @@ public final class ConditionalStatement extends AbstractAstItem implements State
         this.elseElement = elseElement;
     }
 
-    public ConditionalStatement(Expression condition, ClouBausteinElement thenElement, ClouBausteinElement elseElement) {
+    public ConditionalStatement(Expression condition, ClouBausteinElementList thenElement, ClouBausteinElementList elseElement) {
         this(condition.getCodePosition(), condition, thenElement, elseElement);
     }
 
@@ -39,11 +39,11 @@ public final class ConditionalStatement extends AbstractAstItem implements State
         return condition;
     }
 
-    public ClouBausteinElement getThenElement() {
+    public ClouBausteinElementList getThenElement() {
         return thenElement;
     }
 
-    public ClouBausteinElement getElseElement() {
+    public ClouBausteinElementList getElseElement() {
         return elseElement;
     }
 

@@ -1,5 +1,7 @@
 package org.poormanscastle.products.hit2ass.renderer;
 
+import java.util.Stack;
+
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -48,8 +50,6 @@ import org.poormanscastle.products.hit2ass.renderer.domain.TextAlignment;
 import org.poormanscastle.products.hit2ass.renderer.domain.WhileLoopFlagValueFlavor;
 import org.poormanscastle.products.hit2ass.renderer.domain.Workspace;
 import org.poormanscastle.products.hit2ass.renderer.domain.WorkspaceContainer;
-
-import java.util.Stack;
 
 /**
  * Iterates an AST representing a HIT/CLOU text component and converts it into an
@@ -412,7 +412,9 @@ public final class IRTransformer extends AstItemVisitorAdapter {
 
     @Override
     public void visitFixedText(FixedText fixedText) {
-        containerStack.peek().addContent(new Text("text", fixedText.getText(), fontWeight));
+        if (!StringUtils.isBlank(fixedText.getText()) || " ".equals(fixedText.getText())) {
+            containerStack.peek().addContent(new Text("text", fixedText.getText(), fontWeight));
+        }
     }
 
     @Override

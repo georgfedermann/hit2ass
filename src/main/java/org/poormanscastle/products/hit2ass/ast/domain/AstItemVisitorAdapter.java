@@ -27,8 +27,23 @@ public abstract class AstItemVisitorAdapter implements AstItemVisitor {
     }
 
     @Override
+    public boolean proceedWithNewLine(NewLine newLine) {
+        return this.defaultVisitNodes;
+    }
+
+    @Override
+    public void visitNewLine(NewLine newLine) {
+
+    }
+
+    @Override
+    public void leaveNewLine(NewLine newLine) {
+
+    }
+
+    @Override
     public boolean proceedWithBooleanExpression(BooleanExpression booleanExpression) {
-        return false;
+        return this.defaultVisitNodes;
     }
 
     @Override

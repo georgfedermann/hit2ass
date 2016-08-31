@@ -5,7 +5,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Created by georg.federmann@poormanscastle.com on 29.03.2016.
  */
-public class LastClouBausteinElementList extends AbstractAstItem implements ClouBausteinElementList {
+public class LastClouBausteinElementList extends AbstractClouBausteinElementList {
 
     private final ClouBausteinElement head;
 

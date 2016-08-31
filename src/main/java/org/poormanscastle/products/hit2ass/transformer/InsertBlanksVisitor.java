@@ -1,5 +1,7 @@
 package org.poormanscastle.products.hit2ass.transformer;
 
+import java.util.regex.Pattern;
+
 import org.apache.commons.lang3.StringUtils;
 import org.poormanscastle.products.hit2ass.ast.domain.AstItemVisitorAdapter;
 import org.poormanscastle.products.hit2ass.ast.domain.CodePosition;
@@ -11,8 +13,6 @@ import org.poormanscastle.products.hit2ass.ast.domain.MacroCallStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.PairClouBausteinElementList;
 import org.poormanscastle.products.hit2ass.ast.domain.PrintStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.SectionStatement;
-
-import java.util.regex.Pattern;
 
 /**
  * To be executed after the FixedTextMerger.
@@ -29,6 +29,9 @@ import java.util.regex.Pattern;
  * direct successions of FixedText objects and dynamic values and will insert blanks there.
  * <p>
  * Created by georg on 7/10/16.
+ *
+ * @deprecated Is not needed any more with the new parser strategy of respecting
+ * blanks and new lines and keeping them for later processing stages.
  */
 public class InsertBlanksVisitor extends AstItemVisitorAdapter {
 
@@ -125,4 +128,6 @@ public class InsertBlanksVisitor extends AstItemVisitorAdapter {
         }
         previousElementList = null;
     }
+
+
 }

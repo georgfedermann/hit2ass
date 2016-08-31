@@ -1335,9 +1335,9 @@ Expression F() :
     }
     |
     // implements clou standard function, e.g. listlen("varname")
-    LOOKAHEAD(2) (( valueToken = <IF_ID> | valueToken = <AS_ID> | valueToken = <FOR_ID> | valueToken = <DS_ID> | valueToken = <PS_ID> | valueToken = <PS_IDX_ID> )
-        ( <IF_LPAREN> | <AS_LPAREN> | <FOR_LPAREN> | <DS_LPAREN> | <PS_IDX_CHECK_LPAREN> | <PS_IDX_LPAREN> )
-        expressionList = EL() ( <IF_RPAREN> | <AS_RPAREN> | <FOR_RPAREN> | <DS_RPAREN> | <PS_EL_RPAREN> | <PS_IDX_RPAREN> ))
+    LOOKAHEAD(2) (( valueToken = <IF_ID> | valueToken = <AS_ID> | valueToken = <FOR_ID> | valueToken = <DS_ID> | valueToken = <PS_ID> | valueToken = <PS_IDX_ID> | valueToken = <SS_ID> )
+        ( <IF_LPAREN> | <AS_LPAREN> | <FOR_LPAREN> | <DS_LPAREN> | <PS_IDX_CHECK_LPAREN> | <PS_IDX_LPAREN> | <SS_LPAREN> )
+        expressionList = EL() ( <IF_RPAREN> | <AS_RPAREN> | <FOR_RPAREN> | <DS_RPAREN> | <PS_EL_RPAREN> | <PS_IDX_RPAREN> | <SS_RPAREN> ))
     {
         return new ClouFunctionCall(CodePosition.createFromToken(valueToken), valueToken.image, expressionList);
     }

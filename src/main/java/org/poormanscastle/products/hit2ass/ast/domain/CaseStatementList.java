@@ -7,4 +7,10 @@ package org.poormanscastle.products.hit2ass.ast.domain;
  */
 public interface CaseStatementList extends CaseStatement {
 
+    CaseStatement getHead();
+
+    default CaseStatementList getTail() {
+        return null;
+    }
+
 }

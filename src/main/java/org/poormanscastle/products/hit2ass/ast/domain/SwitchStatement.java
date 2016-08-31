@@ -30,6 +30,14 @@ public class SwitchStatement extends AbstractAstItem implements Statement {
         this(condition.getCodePosition(), condition, caseStatement);
     }
 
+    public Expression getExpression() {
+        return expression;
+    }
+
+    public CaseStatement getCaseStatement() {
+        return caseStatement;
+    }
+
     @Override
     public boolean handleProceedWith(AstItemVisitor visitor) {
         return visitor.proceedWithSwitchStatement(this);

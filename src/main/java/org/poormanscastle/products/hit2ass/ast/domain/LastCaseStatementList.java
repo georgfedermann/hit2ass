@@ -20,6 +20,16 @@ public class LastCaseStatementList extends AbstractAstItem implements CaseStatem
     }
 
     @Override
+    public String getMatch() {
+        throw new UnsupportedOperationException("Call this method directly on the CaseStatement, via getHead().getMatch()");
+    }
+
+    @Override
+    public CaseStatement getHead() {
+        return head;
+    }
+
+    @Override
     public boolean handleProceedWith(AstItemVisitor visitor) {
         return visitor.proceedWithLastCaseStatementList(this);
     }

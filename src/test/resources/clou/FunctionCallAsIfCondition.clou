@@ -3,7 +3,9 @@
 
 #D myVar "Hello, World!"
 #? 5 = listlen("myVar"):
-  /J This should not be printed.
-  /N This should be printed.
+  /J
+        This should not be printed.
+  /N
+        This should be printed.
 #
 And so it ends.

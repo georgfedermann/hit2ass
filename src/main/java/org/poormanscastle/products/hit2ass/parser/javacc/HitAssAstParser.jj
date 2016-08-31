@@ -143,14 +143,15 @@ TOKEN : {
 /*  TEXT_MODE switching to COMMAND_MODE.    */
 <TXT_MODE> TOKEN : {
     < IF : "#?" > : COMMAND_MODE_IF |
-    < THEN : "/J" > : TXT_MODE |
-    < ELSE : "/N" > : TXT_MODE |
+    < NEW_LINE : (["\n", "\r"]) > |
+    < THEN : ([" ", "\t"])*"/J" > : TXT_MODE |
+    < ELSE : ([" ", "\t"])*"/N" > : TXT_MODE |
     < ENDIF : "#" > : TXT_MODE |            //
     < SB : "@" > : TXT_MODE |          // represents a section break. TODO when adapting this tool to a project, find a character that fits your document base and configure procon accordingly
     < WS : "#S" > : COMMAND_MODE_IF |       // While loop statement
     < FS : "#W" > : COMMAND_MODE_FOR |       // FOR loop, fixed number of repetitions; a new mode is in order because FOR loops have their own syntax, thus mode switches in command_mode_for occur differently than it's the case in command_mode_if
     < SS : "#C" > : COMMAND_MODE_SS |       // Switch statement
-    < CA : "/"(((["0"-"9"])+)|("\""(["0"-"9","a"-"z", "A"-"Z"])+"\"")?)":" > : TXT_MODE | // < CA : "/"(["0"-"9"])+|("\""(["0"-"9","a"-"z", "A"-"Z"])+"\"")":" >
+    < CA : ([" ", "\t", "\r", "\n"])*"/"(((["0"-"9"])+)|("\""(["0"-"9","a"-"z", "A"-"Z"])+"\"")?)":" > : TXT_MODE | // < CA : "/"(["0"-"9"])+|("\""(["0"-"9","a"-"z", "A"-"Z"])+"\"")":" >
     < MS : "#$" > : COMMAND_MODE_MS |       // execute Macro
     < HC : "#^" > : COMMAND_MODE_HC |       // execute Hit command
     < GS : "#G" > : COMMAND_MODE_DS |       // set cursor location in row
@@ -170,11 +171,11 @@ TOKEN : {
 
 /*  Fixed text mode */
 <TXT_MODE> TOKEN : {
-    <FIXED_TEXT : (~["\n", "\r", "\t", " ", "#", "@" ])+ >
+    <FIXED_TEXT : (~["\n", "\r", "\t", "#", "@" ])+ >
 }
 
 <TXT_MODE> SKIP : {
-    "\n" | "\r" | "\t" | " "
+    "\t"
 }
 <COMMAND_MODE_DV> TOKEN : {
     < DV_ID : [ "_", "a"-"z", "A"-"Z"]([ "_", "a"-"z", "A"-"Z", "0"-"9" ])* > : TXT_MODE
@@ -276,14 +277,18 @@ TOKEN : {
 // This mode checks for the occurence of [ and ( right after a PS_ID to decide whether there is
 // a field expression or a CLOU function call.
 <COMMAND_MODE_PS_IDX_CHECK> TOKEN : {
+    // < PS_IDX_CHECK_BLANK : [ " ", "\t" ] > : TXT_MODE |
+    < PS_IDX_CHECK_NEWLINE : [ "\r", "\n" ] > : TXT_MODE |
     < PS_IDX_CHECK_LBRACKET : "[" > : COMMAND_MODE_PS_IDX |
     < PS_IDX_CHECK_LPAREN : "(" > : COMMAND_MODE_PS_EL |
-    < PS_IDX_CHECK_FIXED_TEXT : ( ~[ "\n", "\r", "\t", " ", "#", "@", "[", "(" ] ) > : TXT_MODE |
-    < PS_IDX_SB : "@" > : TXT_MODE
+    < PS_IDX_CHECK_FIXED_TEXT : ( ~[ "\n", "\r", "\t", "#", "@", "[", "(" ] )+ > : TXT_MODE |
+    < PS_IDX_SB : "@" > : TXT_MODE |
+    < PS_IDX_CHECK_MS : "#$" > : COMMAND_MODE_MS
 }
 // this mode parses index expressions, if a [ was found after as PS_ID
 <COMMAND_MODE_PS_IDX_CHECK> SKIP : {
-    < PS_IDX_CHECK_SKIP : [ "\n", "\r", "\t", " " ] > : TXT_MODE
+     < PS_IDX_CHECK_SKIP : [ "\r", "\n" ] > : TXT_MODE |
+     < PS_IDX_PSEUDO_COMMENT : "#*#" > : TXT_MODE
 }
 <COMMAND_MODE_PS_IDX> SKIP : {
     "\n" : TXT_MODE | "\t" : TXT_MODE | "\r" : TXT_MODE | " " : TXT_MODE
@@ -347,6 +352,7 @@ TOKEN : {
     "\n" : TXT_MODE | "\r" : TXT_MODE | "\t" | " "
 }
 <COMMAND_MODE_MS> TOKEN : {
+    < MS_PS : "#>" > : COMMAND_MODE_PS |
     < MS_EQ : "=" > |
     < MS_EQ_STRICT : "==" > |
     < MS_OR : "oder" > |
@@ -695,6 +701,11 @@ ClouBausteinElement CBES() :
         return element;
     }
     |
+    element = NL()
+    {
+        return element;
+    }
+    |
     element = SK()
     {
         return element;
@@ -745,6 +756,38 @@ ClouBausteinElement CBES() :
     {
         return element;
     }
+    |
+    element = PSNL()
+    {
+        return element;
+    }
+    /*
+    |
+    element = PSB()
+    {
+        return element;
+    }
+    */
+}
+
+/*
+FixedText PSB() :
+{ Token token; }
+{
+    token = <PS_IDX_CHECK_BLANK>
+    {
+        return FixedText.create(CodePosition.createFromToken(token), " ");
+    }
+}
+*/
+
+NewLine PSNL() :
+{ Token token; }
+{
+    token = <PS_IDX_CHECK_NEWLINE>
+    {
+        return NewLine.create(CodePosition.createFromToken(token));
+    }
 }
 
 ForStatement FOR() :
@@ -757,16 +800,16 @@ ForStatement FOR() :
 }
 
 ConditionalStatement IF() :
-{ Expression condition; ClouBausteinElement thenElement; ClouBausteinElement elseElement; Token debugToken; }
+{ Expression condition; ClouBausteinElementList thenElement; ClouBausteinElementList elseElement; Token debugToken; }
 {
-    debugToken = <IF> condition = E() <IF_COLON> thenElement = THEN() elseElement = ELSE() <ENDIF>
+    debugToken = <IF> condition = E() <IF_COLON><NEW_LINE> thenElement = THEN() elseElement = ELSE() <ENDIF>
     {
         return new ConditionalStatement(condition, thenElement, elseElement);
     }
 }
 
-ClouBausteinElement THEN() :
- { ClouBausteinElement thenStatement; }
+ClouBausteinElementList THEN() :
+ { ClouBausteinElementList thenStatement; }
  {
      (<THEN> thenStatement = CBE()
      {
@@ -777,8 +820,8 @@ ClouBausteinElement THEN() :
      }
  }
 
- ClouBausteinElement ELSE() :
- { ClouBausteinElement elseStatement; }
+ ClouBausteinElementList ELSE() :
+ { ClouBausteinElementList elseStatement; }
  {
      (<ELSE> elseStatement = CBE()
      {
@@ -838,7 +881,7 @@ CaseStatement CASE() :
 MacroCallStatement MS() :
 { Token idToken; ExpressionList argumentList; }
 {
-    <MS> idToken = <MS_ID> argumentList = AL()
+    (<MS>|<PS_IDX_CHECK_MS>) idToken = <MS_ID> argumentList = AL()
     {
         return new MacroCallStatement(CodePosition.createFromToken(idToken), idToken.image, argumentList);
     }
@@ -938,7 +981,7 @@ DynamicValue DV() :
 PrintStatement PS() :
 { Token debugToken; Expression expression; }
 {
-    debugToken = <PS> expression = E()
+    (debugToken = <PS> | debugToken = <MS_PS>) expression = E()
     {
         return new PrintStatement(expression.getCodePosition(), expression);
     }
@@ -1370,5 +1413,14 @@ FixedText FX() :
     ( valueToken = <FIXED_TEXT> | valueToken = <PS_IDX_CHECK_FIXED_TEXT> )
     {
         return FixedText.create(CodePosition.createFromToken(valueToken), valueToken.image);
+    }
+}
+
+NewLine NL() :
+{ Token debugToken; }
+{
+    ( debugToken = <NEW_LINE> )
+    {
+        return NewLine.create(CodePosition.createFromToken(debugToken));
     }
 }

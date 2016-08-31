@@ -1,5 +1,11 @@
 package org.poormanscastle.products.hit2ass.prettyprint;
 
+import static com.google.common.base.Preconditions.checkState;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Stack;
+
 import org.apache.commons.lang3.StringUtils;
 import org.poormanscastle.products.hit2ass.ast.domain.AssignmentStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.AstItemVisitorAdapter;
@@ -30,6 +36,7 @@ import org.poormanscastle.products.hit2ass.ast.domain.LocalDeclarationStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.LocalListDeclarationStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.MacroCallStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.MacroDefinitionStatement;
+import org.poormanscastle.products.hit2ass.ast.domain.NewLine;
 import org.poormanscastle.products.hit2ass.ast.domain.NumExpression;
 import org.poormanscastle.products.hit2ass.ast.domain.OpenFileCommand;
 import org.poormanscastle.products.hit2ass.ast.domain.PairCaseStatementList;
@@ -46,12 +53,6 @@ import org.poormanscastle.products.hit2ass.ast.domain.UnaryOperatorExpression;
 import org.poormanscastle.products.hit2ass.ast.domain.WhileStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.WriteStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.ZStatement;
-
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Stack;
-
-import static com.google.common.base.Preconditions.checkState;
 
 /**
  * creates a graphical view of the AST of an v0.1 grammar program using DOT syntax.
@@ -143,6 +144,17 @@ public class PrettyPrintVisitor extends AstItemVisitorAdapter {
 
     @Override
     public void leaveFixedText(FixedText fixedText) {
+        itemStack.pop();
+    }
+
+    @Override
+    public void visitNewLine(NewLine newLine) {
+        addItem("NL", "<-|");
+        addBufferLine();
+    }
+
+    @Override
+    public void leaveNewLine(NewLine newLine) {
         itemStack.pop();
     }
 

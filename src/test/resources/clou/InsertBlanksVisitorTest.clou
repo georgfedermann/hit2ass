@@ -4,17 +4,20 @@
 
 #D firstName "John"
 #D lastName "Connor"
+#D temperature 312
 
 You are #> firstName #> lastName.   #*  a blank is expected between fixed text and firstName, and firstName and lastName, not before the dot! #
 #^2"RETURN"
 You are "#> firstName". #*  in this case, no blanks are expected.   #
 #^2"RETURN"
-Please give #> firstName my love.
+Please give #> firstName my love.@
 
-#* test the algorithm if PrintStatement is the last statement in its ASTÂ branch #
+#* test the algorithm if PrintStatement is the last statement in its AST branch #
 #? firstName = "John" :
    /J
-      You are #> firstName #> lastName
+      You are #> firstName #> lastName@
 #
+Test PrintStatement without blank in the end: #> temperature#*#C.@@
 
+Add another text to check if new lines in fixed texts are handled correctly.
 And so it ends.

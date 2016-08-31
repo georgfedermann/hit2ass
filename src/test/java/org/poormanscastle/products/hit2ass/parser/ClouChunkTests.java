@@ -1,0 +1,321 @@
+package org.poormanscastle.products.hit2ass.parser;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+import org.poormanscastle.products.hit2ass.TestUtils;
+import org.poormanscastle.products.hit2ass.ast.domain.ClouBaustein;
+import org.poormanscastle.products.hit2ass.ast.domain.ClouBausteinElementList;
+import org.poormanscastle.products.hit2ass.ast.domain.ConditionalStatement;
+import org.poormanscastle.products.hit2ass.ast.domain.FixedText;
+import org.poormanscastle.products.hit2ass.ast.domain.IdExpression;
+import org.poormanscastle.products.hit2ass.ast.domain.MacroCallStatement;
+import org.poormanscastle.products.hit2ass.ast.domain.NewLine;
+import org.poormanscastle.products.hit2ass.ast.domain.PairClouBausteinElementList;
+import org.poormanscastle.products.hit2ass.ast.domain.PrintStatement;
+import org.poormanscastle.products.hit2ass.ast.domain.SectionStatement;
+import org.poormanscastle.products.hit2ass.parser.javacc.HitAssAstParser;
+import org.poormanscastle.products.hit2ass.transformer.EraseBlanksVisitor;
+
+/**
+ * Created by georg on 28.08.16.
+ */
+public class ClouChunkTests {
+
+    @Test
+    public void testMacroStatementPrintStatementSequence() throws Exception {
+        // #
+        //#$TABU #> currency #> amount.
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("MacroStatementPrintStatementSequence"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
+        assertEquals("TABU", ((MacroCallStatement) elementList.getHead()).getMacroId());
+        elementList = elementList.getTail();
+        assertEquals("currency", ((IdExpression) ((PrintStatement) elementList.getHead()).getExpression()).getId());
+        elementList = elementList.getTail();
+        assertEquals(" ", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        assertEquals("amount", ((IdExpression) ((PrintStatement) elementList.getHead()).getExpression()).getId());
+        elementList = elementList.getTail();
+        assertEquals(".", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        assertTrue(elementList.getHead() instanceof NewLine);
+        elementList = elementList.getTail();
+        assertEquals("TABU", ((MacroCallStatement) elementList.getHead()).getMacroId());
+        elementList = elementList.getTail();
+        assertEquals("currency", ((IdExpression) ((PrintStatement) elementList.getHead()).getExpression()).getId());
+        elementList = elementList.getTail();
+        assertEquals(" ", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        assertEquals("amount", ((IdExpression) ((PrintStatement) elementList.getHead()).getExpression()).getId());
+    }
+
+    @Test
+    public void testPrintStatementMacroCallSequence() throws Exception {
+        // #
+        // #> currency#$TABU#*##> amount@
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("PrintStatementMacroCallSequence"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
+        assertEquals("currency", ((IdExpression) ((PrintStatement) elementList.getHead()).getExpression()).getId());
+        elementList = elementList.getTail();
+        assertEquals("TABU", ((MacroCallStatement) elementList.getHead()).getMacroId());
+        elementList = elementList.getTail();
+        assertEquals("amount", ((IdExpression) ((PrintStatement) elementList.getHead()).getExpression()).getId());
+        elementList = elementList.getTail();
+        assertTrue(elementList.getHead() instanceof SectionStatement);
+    }
+
+    @Test
+    public void testFixedTextConditionWithPrintStatement() throws Exception {
+        // #
+        // And now
+        // #? power > 5 :
+        //  /J
+        //      #> firstName
+        //  /N
+        //      #> lastName
+        // #
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("FixedTextConditionWithPrintStatement"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
+        assertEquals("And now ", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        assertTrue(elementList.getHead() instanceof NewLine);
+        elementList = elementList.getTail();
+        assertTrue(elementList.getHead() instanceof ConditionalStatement);
+    }
+
+    @Test
+    public void testFixedTextNewLinePrintStatementSequence() throws Exception {
+        // #
+        // and
+        // #> lastMember
+        //     and
+        //     #> lastMember
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("FixedTextNewLinePrintStatementSequence"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
+        assertEquals("and ", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        assertTrue(elementList.getHead() instanceof NewLine);
+        elementList = elementList.getTail();
+        assertEquals("lastMember", ((IdExpression) ((PrintStatement) elementList.getHead()).getExpression()).getId());
+        elementList = elementList.getTail();
+        assertTrue(elementList.getHead() instanceof NewLine);
+        elementList = elementList.getTail();
+        assertEquals(" and ", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        assertTrue(elementList.getHead() instanceof NewLine);
+        elementList = elementList.getTail();
+        assertEquals("", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        assertEquals("lastMember", ((IdExpression) ((PrintStatement) elementList.getHead()).getExpression()).getId());
+    }
+
+    @Test
+    public void testFixedTextIfFixedTextSequence() throws Exception {
+        // #
+        // Please note that we
+        // #? someVar = 1 :
+        //    /J
+        //      will
+        //    /N
+        //      won't
+        // #
+        // process your order.
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("FixedTextIfFixedTextSequence"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
+        assertEquals("Please note that we", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        assertTrue(elementList.getHead() instanceof NewLine);
+        elementList = elementList.getTail();
+
+        ConditionalStatement ifStatement = (ConditionalStatement) elementList.getHead();
+        ifStatement.getThenElement().getHead();
+        assertEquals(" will", ((FixedText) ifStatement.getThenElement().getTail().getHead()).getText());
+        assertEquals(" won't", ((FixedText) ifStatement.getElseElement().getTail().getHead()).getText());
+
+        elementList = elementList.getTail();
+        assertTrue(elementList.getHead() instanceof NewLine);
+        elementList = elementList.getTail();
+        assertEquals(" process your order.", ((FixedText) elementList.getHead()).getText());
+    }
+
+    @Test
+    public void testPrintStatementBlankFixedTextSequence() throws Exception {
+        // #
+        // Since your name is #> firstName you will get a present.
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("PrintStatementBlankFixedTextSequence"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
+        assertEquals("Since your name is ", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        assertEquals("firstName", ((IdExpression) ((PrintStatement) elementList.getHead()).getExpression()).getId());
+        elementList = elementList.getTail();
+        assertEquals(" you will get a present.", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        assertTrue(elementList.getHead() instanceof NewLine);
+    }
+
+    @Test
+    public void testFixedTextWithSpecialCharacters() throws Exception {
+        // #
+        // äöüÄÖÜß()""_-.,ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("FixedTextWithSpecialCharacters"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
+        assertEquals("äöüÄÖÜß()\"\"_-.,ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", ((FixedText) elementList.getHead()).getText());
+    }
+
+    @Test
+    public void testPrintStatementNewLineFixedTextSequence() throws Exception {
+        // #
+        // Your name is #> firstname
+        // and that is great!@
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("PrintStatementNewLineFixedTextSequence"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
+        assertEquals("Your name is ", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        assertEquals("firstname", ((IdExpression) ((PrintStatement) elementList.getHead()).getExpression()).getId());
+        elementList = elementList.getTail();
+        assertTrue(elementList.getHead() instanceof NewLine);
+        elementList = elementList.getTail();
+        assertEquals(" and that is great!", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        assertTrue(elementList.getHead() instanceof SectionStatement);
+        elementList = elementList.getTail();
+        assertTrue(elementList.getHead() instanceof NewLine);
+    }
+
+    @Test
+    public void testSectionStatement() throws Exception {
+        // #
+        // SectionStatement after FixedText.@
+        // SectionStatement after a PrintStatement #> firstName@
+        // SectionStatement alone in a line@
+        // @
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("SectionStatement"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
+        // check that FixedText and SectionStatement are correctly separated
+        assertEquals("SectionStatement after FixedText.", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        // check that SectionStatement is correctly scanned
+        assertTrue(elementList.getHead() instanceof SectionStatement);
+        elementList = elementList.getTail();
+        // check that NewLine is preserved
+        assertTrue(elementList.getHead() instanceof NewLine);
+        elementList = elementList.getTail();
+        assertEquals("SectionStatement after a PrintStatement ", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        assertEquals("firstName", ((IdExpression) ((PrintStatement) elementList.getHead()).getExpression()).getId());
+        elementList = elementList.getTail();
+        // check that SectionStatement is recognized directly after a PrintStatement
+        assertTrue(elementList.getHead() instanceof SectionStatement);
+        elementList = elementList.getTail();
+        assertTrue(elementList.getHead() instanceof NewLine);
+        elementList = elementList.getTail();
+        assertEquals("SectionStatement alone in a line", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        assertTrue(elementList.getHead() instanceof SectionStatement);
+        elementList = elementList.getTail();
+        assertTrue(elementList.getHead() instanceof NewLine);
+        elementList = elementList.getTail();
+        assertTrue(elementList.getHead() instanceof SectionStatement);
+        elementList = elementList.getTail();
+        assertTrue(elementList.getHead() instanceof NewLine);
+    }
+
+    @Test
+    public void testPrintStatementWithQuotes() throws Exception {
+        // #
+        // You are "#> firstName".
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("PrintStatementWithQuotes"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
+        // Check that FixedText is parsed correctly including quotes
+        assertEquals("You are \"", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        // Check that PrintStatement directly follows FixedText without a blank in between.
+        assertEquals("firstName", ((IdExpression) ((PrintStatement) elementList.getHead()).getExpression()).getId());
+        elementList = elementList.getTail();
+        // Check that the quote directly follows the PrintStatement, without a blank in between.
+        assertEquals("\".", ((FixedText) elementList.getHead()).getText());
+    }
+
+
+    @Test
+    public void testMultipleBlanksBetweenFixedTextAndComment() throws Exception {
+        // #
+        // You are #> firstName #> lastName.     #* one blank should remain after the dot. #
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("MultipleBlanksBetweenFixedTextAndComment"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
+        // Check that multiple sequential words are read into one FixedText element, and that single blanks
+        // are preserved between FixedText and PrintStatements
+        assertEquals("You are ", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        // check that the PrintStatement is recognized, and that the ID is correctly scanned, without leading or trailing blanks.
+        assertEquals("firstName", ((IdExpression) ((PrintStatement) elementList.getHead()).getExpression()).getId());
+        elementList = elementList.getTail();
+        // check that the blank between PrintStatements is preserved
+        assertEquals(" ", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        // check that the PrintStatement is recognized
+        assertEquals("lastName", ((IdExpression) ((PrintStatement) elementList.getHead()).getExpression()).getId());
+        elementList = elementList.getTail();
+        // check that the trailing text is correctly scanned and that trailing blanks between FixedText and comment get stripped.
+        assertEquals(". ", ((FixedText) elementList.getHead()).getText());
+    }
+
+    @Test
+    public void testTabuMakro() throws Exception {
+        // #
+        // Your name is#$TABU#*##> firstName, right?@
+        // And so it ends.
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("TabuMakroTest"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
+        // check that no blanks are inserted between FixedText and directly following macro call
+        assertEquals("Your name is", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        // check that the macro call is recognized and the command is correctly scanned.
+        MacroCallStatement macroCall = (MacroCallStatement) elementList.getHead();
+        assertEquals("TABU", macroCall.getMacroId());
+        assertNull(macroCall.getArgumentList());
+        elementList = elementList.getTail();
+        // check that the pseudo comment #*# suppresses insertion of blanks and that so the next element is the PrintStatement
+        assertEquals("firstName", ((IdExpression) ((PrintStatement) elementList.getHead()).getExpression()).getId());
+        elementList = elementList.getTail();
+        // check that the complete string ", right?" is parsed as one fixed text token, and that the @ goes into the next token.
+        assertEquals(", right?", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        // check that the @ is recognized as a SectionStatement
+        assertTrue(elementList.getHead() instanceof SectionStatement);
+        elementList = elementList.getTail();
+        // assert that the NewLine after the SectionStatement is preserved
+        assertTrue(elementList.getHead() instanceof NewLine);
+        elementList = elementList.getTail();
+        // assert that the next line is recognized as a FixedText, and that no leading blank is added, since this line
+        // is not part of a longer flow text.
+        assertEquals("And so it ends.", ((FixedText) elementList.getHead()).getText());
+    }
+
+}

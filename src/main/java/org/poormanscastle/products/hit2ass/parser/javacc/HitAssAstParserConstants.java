@@ -263,311 +263,313 @@ public interface HitAssAstParserConstants {
   /** RegularExpression Id. */
   int MS_PS = 169;
   /** RegularExpression Id. */
-  int MS_EQ = 170;
+  int MS_MS = 170;
   /** RegularExpression Id. */
-  int MS_EQ_STRICT = 171;
+  int MS_EQ = 171;
   /** RegularExpression Id. */
-  int MS_OR = 172;
+  int MS_EQ_STRICT = 172;
   /** RegularExpression Id. */
-  int MS_AND = 173;
+  int MS_OR = 173;
   /** RegularExpression Id. */
-  int MS_XOR = 174;
+  int MS_AND = 174;
   /** RegularExpression Id. */
-  int MS_NOT = 175;
+  int MS_XOR = 175;
   /** RegularExpression Id. */
-  int MS_NEQ = 176;
+  int MS_NOT = 176;
   /** RegularExpression Id. */
-  int MS_LT = 177;
+  int MS_NEQ = 177;
   /** RegularExpression Id. */
-  int MS_LTE = 178;
+  int MS_LT = 178;
   /** RegularExpression Id. */
-  int MS_GT = 179;
+  int MS_LTE = 179;
   /** RegularExpression Id. */
-  int MS_GTE = 180;
+  int MS_GT = 180;
   /** RegularExpression Id. */
-  int MS_PLUS = 181;
+  int MS_GTE = 181;
   /** RegularExpression Id. */
-  int MS_MINUS = 182;
+  int MS_PLUS = 182;
   /** RegularExpression Id. */
-  int MS_TIMES = 183;
+  int MS_MINUS = 183;
   /** RegularExpression Id. */
-  int MS_DIV = 184;
+  int MS_TIMES = 184;
   /** RegularExpression Id. */
-  int MS_LPAREN = 185;
+  int MS_DIV = 185;
   /** RegularExpression Id. */
-  int MS_RPAREN = 186;
+  int MS_LPAREN = 186;
   /** RegularExpression Id. */
-  int MS_LBRACKET = 187;
+  int MS_RPAREN = 187;
   /** RegularExpression Id. */
-  int MS_RBRACKET = 188;
+  int MS_LBRACKET = 188;
   /** RegularExpression Id. */
-  int MS_COMMA = 189;
+  int MS_RBRACKET = 189;
   /** RegularExpression Id. */
-  int MS_NUM = 190;
+  int MS_COMMA = 190;
   /** RegularExpression Id. */
-  int MS_DEC = 191;
+  int MS_NUM = 191;
   /** RegularExpression Id. */
-  int MS_ID = 192;
+  int MS_DEC = 192;
   /** RegularExpression Id. */
-  int MS_TEXT = 193;
+  int MS_ID = 193;
   /** RegularExpression Id. */
-  int IF_EQ = 194;
+  int MS_TEXT = 194;
   /** RegularExpression Id. */
-  int IF_EQ_STRICT = 195;
+  int IF_EQ = 195;
   /** RegularExpression Id. */
-  int IF_OR = 196;
+  int IF_EQ_STRICT = 196;
   /** RegularExpression Id. */
-  int IF_AND = 197;
+  int IF_OR = 197;
   /** RegularExpression Id. */
-  int IF_XOR = 198;
+  int IF_AND = 198;
   /** RegularExpression Id. */
-  int IF_NOT = 199;
+  int IF_XOR = 199;
   /** RegularExpression Id. */
-  int IF_NEQ = 200;
+  int IF_NOT = 200;
   /** RegularExpression Id. */
-  int IF_LT = 201;
+  int IF_NEQ = 201;
   /** RegularExpression Id. */
-  int IF_LTE = 202;
+  int IF_LT = 202;
   /** RegularExpression Id. */
-  int IF_GT = 203;
+  int IF_LTE = 203;
   /** RegularExpression Id. */
-  int IF_GTE = 204;
+  int IF_GT = 204;
   /** RegularExpression Id. */
-  int IF_PLUS = 205;
+  int IF_GTE = 205;
   /** RegularExpression Id. */
-  int IF_MINUS = 206;
+  int IF_PLUS = 206;
   /** RegularExpression Id. */
-  int IF_TIMES = 207;
+  int IF_MINUS = 207;
   /** RegularExpression Id. */
-  int IF_DIV = 208;
+  int IF_TIMES = 208;
   /** RegularExpression Id. */
-  int IF_QUOTE = 209;
+  int IF_DIV = 209;
   /** RegularExpression Id. */
-  int IF_COLON = 210;
+  int IF_QUOTE = 210;
   /** RegularExpression Id. */
-  int IF_LPAREN = 211;
+  int IF_COLON = 211;
   /** RegularExpression Id. */
-  int IF_RPAREN = 212;
+  int IF_LPAREN = 212;
   /** RegularExpression Id. */
-  int IF_NUM = 213;
+  int IF_RPAREN = 213;
   /** RegularExpression Id. */
-  int IF_LBRACKET = 214;
+  int IF_NUM = 214;
   /** RegularExpression Id. */
-  int IF_RBRACKET = 215;
+  int IF_LBRACKET = 215;
   /** RegularExpression Id. */
-  int IF_DEC = 216;
+  int IF_RBRACKET = 216;
   /** RegularExpression Id. */
-  int IF_ID = 217;
+  int IF_DEC = 217;
   /** RegularExpression Id. */
-  int IF_TEXT = 218;
+  int IF_ID = 218;
   /** RegularExpression Id. */
-  int FOR_EQ = 223;
+  int IF_TEXT = 219;
   /** RegularExpression Id. */
-  int FOR_EQ_STRICT = 224;
+  int FOR_EQ = 224;
   /** RegularExpression Id. */
-  int FOR_OR = 225;
+  int FOR_EQ_STRICT = 225;
   /** RegularExpression Id. */
-  int FOR_AND = 226;
+  int FOR_OR = 226;
   /** RegularExpression Id. */
-  int FOR_XOR = 227;
+  int FOR_AND = 227;
   /** RegularExpression Id. */
-  int FOR_NOT = 228;
+  int FOR_XOR = 228;
   /** RegularExpression Id. */
-  int FOR_NEQ = 229;
+  int FOR_NOT = 229;
   /** RegularExpression Id. */
-  int FOR_LT = 230;
+  int FOR_NEQ = 230;
   /** RegularExpression Id. */
-  int FOR_LTE = 231;
+  int FOR_LT = 231;
   /** RegularExpression Id. */
-  int FOR_GT = 232;
+  int FOR_LTE = 232;
   /** RegularExpression Id. */
-  int FOR_GTE = 233;
+  int FOR_GT = 233;
   /** RegularExpression Id. */
-  int FOR_PLUS = 234;
+  int FOR_GTE = 234;
   /** RegularExpression Id. */
-  int FOR_MINUS = 235;
+  int FOR_PLUS = 235;
   /** RegularExpression Id. */
-  int FOR_TIMES = 236;
+  int FOR_MINUS = 236;
   /** RegularExpression Id. */
-  int FOR_DIV = 237;
+  int FOR_TIMES = 237;
   /** RegularExpression Id. */
-  int FOR_QUOTE = 238;
+  int FOR_DIV = 238;
   /** RegularExpression Id. */
-  int FOR_COLON = 239;
+  int FOR_QUOTE = 239;
   /** RegularExpression Id. */
-  int FOR_LPAREN = 240;
+  int FOR_COLON = 240;
   /** RegularExpression Id. */
-  int FOR_RPAREN = 241;
+  int FOR_LPAREN = 241;
   /** RegularExpression Id. */
-  int FOR_NUM = 242;
+  int FOR_RPAREN = 242;
   /** RegularExpression Id. */
-  int FOR_LBRACKET = 243;
+  int FOR_NUM = 243;
   /** RegularExpression Id. */
-  int FOR_RBRACKET = 244;
+  int FOR_LBRACKET = 244;
   /** RegularExpression Id. */
-  int FOR_DEC = 245;
+  int FOR_RBRACKET = 245;
   /** RegularExpression Id. */
-  int FOR_ID = 246;
+  int FOR_DEC = 246;
   /** RegularExpression Id. */
-  int FOR_TEXT = 247;
+  int FOR_ID = 247;
   /** RegularExpression Id. */
-  int DS_EQ = 252;
+  int FOR_TEXT = 248;
   /** RegularExpression Id. */
-  int DS_EQ_STRICT = 253;
+  int DS_EQ = 253;
   /** RegularExpression Id. */
-  int DS_OR = 254;
+  int DS_EQ_STRICT = 254;
   /** RegularExpression Id. */
-  int DS_AND = 255;
+  int DS_OR = 255;
   /** RegularExpression Id. */
-  int DS_XOR = 256;
+  int DS_AND = 256;
   /** RegularExpression Id. */
-  int DS_NOT = 257;
+  int DS_XOR = 257;
   /** RegularExpression Id. */
-  int DS_NEQ = 258;
+  int DS_NOT = 258;
   /** RegularExpression Id. */
-  int DS_LT = 259;
+  int DS_NEQ = 259;
   /** RegularExpression Id. */
-  int DS_LTE = 260;
+  int DS_LT = 260;
   /** RegularExpression Id. */
-  int DS_GT = 261;
+  int DS_LTE = 261;
   /** RegularExpression Id. */
-  int DS_GTE = 262;
+  int DS_GT = 262;
   /** RegularExpression Id. */
-  int DS_STRING_CONCAT = 263;
+  int DS_GTE = 263;
   /** RegularExpression Id. */
-  int DS_PLUS = 264;
+  int DS_STRING_CONCAT = 264;
   /** RegularExpression Id. */
-  int DS_MINUS = 265;
+  int DS_PLUS = 265;
   /** RegularExpression Id. */
-  int DS_TIMES = 266;
+  int DS_MINUS = 266;
   /** RegularExpression Id. */
-  int DS_DIV = 267;
+  int DS_TIMES = 267;
   /** RegularExpression Id. */
-  int DS_QUOTE = 268;
+  int DS_DIV = 268;
   /** RegularExpression Id. */
-  int DS_COLON = 269;
+  int DS_QUOTE = 269;
   /** RegularExpression Id. */
-  int DS_COMMA = 270;
+  int DS_COLON = 270;
   /** RegularExpression Id. */
-  int DS_LPAREN = 271;
+  int DS_COMMA = 271;
   /** RegularExpression Id. */
-  int DS_RPAREN = 272;
+  int DS_LPAREN = 272;
   /** RegularExpression Id. */
-  int DS_LBRACKET = 273;
+  int DS_RPAREN = 273;
   /** RegularExpression Id. */
-  int DS_RBRACKET = 274;
+  int DS_LBRACKET = 274;
   /** RegularExpression Id. */
-  int DS_NUM = 275;
+  int DS_RBRACKET = 275;
   /** RegularExpression Id. */
-  int DS_DEC = 276;
+  int DS_NUM = 276;
   /** RegularExpression Id. */
-  int DS_ID = 277;
+  int DS_DEC = 277;
   /** RegularExpression Id. */
-  int DS_TEXT = 278;
+  int DS_ID = 278;
   /** RegularExpression Id. */
-  int AS_SB = 283;
+  int DS_TEXT = 279;
   /** RegularExpression Id. */
-  int AS_EQ = 284;
+  int AS_SB = 284;
   /** RegularExpression Id. */
-  int AS_EQ_STRICT = 285;
+  int AS_EQ = 285;
   /** RegularExpression Id. */
-  int AS_OR = 286;
+  int AS_EQ_STRICT = 286;
   /** RegularExpression Id. */
-  int AS_AND = 287;
+  int AS_OR = 287;
   /** RegularExpression Id. */
-  int AS_XOR = 288;
+  int AS_AND = 288;
   /** RegularExpression Id. */
-  int AS_NOT = 289;
+  int AS_XOR = 289;
   /** RegularExpression Id. */
-  int AS_NEQ = 290;
+  int AS_NOT = 290;
   /** RegularExpression Id. */
-  int AS_LT = 291;
+  int AS_NEQ = 291;
   /** RegularExpression Id. */
-  int AS_LTE = 292;
+  int AS_LT = 292;
   /** RegularExpression Id. */
-  int AS_GT = 293;
+  int AS_LTE = 293;
   /** RegularExpression Id. */
-  int AS_GTE = 294;
+  int AS_GT = 294;
   /** RegularExpression Id. */
-  int AS_COMMA = 295;
+  int AS_GTE = 295;
   /** RegularExpression Id. */
-  int AS_STRING_CONCAT = 296;
+  int AS_COMMA = 296;
   /** RegularExpression Id. */
-  int AS_PLUS = 297;
+  int AS_STRING_CONCAT = 297;
   /** RegularExpression Id. */
-  int AS_MINUS = 298;
+  int AS_PLUS = 298;
   /** RegularExpression Id. */
-  int AS_TIMES = 299;
+  int AS_MINUS = 299;
   /** RegularExpression Id. */
-  int AS_DIV = 300;
+  int AS_TIMES = 300;
   /** RegularExpression Id. */
-  int AS_QUOTE = 301;
+  int AS_DIV = 301;
   /** RegularExpression Id. */
-  int AS_COLON = 302;
+  int AS_QUOTE = 302;
   /** RegularExpression Id. */
-  int AS_LPAREN = 303;
+  int AS_COLON = 303;
   /** RegularExpression Id. */
-  int AS_RPAREN = 304;
+  int AS_LPAREN = 304;
   /** RegularExpression Id. */
-  int AS_LBRACKET = 305;
+  int AS_RPAREN = 305;
   /** RegularExpression Id. */
-  int AS_RBRACKET = 306;
+  int AS_LBRACKET = 306;
   /** RegularExpression Id. */
-  int AS_NUM = 307;
+  int AS_RBRACKET = 307;
   /** RegularExpression Id. */
-  int AS_DEC = 308;
+  int AS_NUM = 308;
   /** RegularExpression Id. */
-  int AS_ID = 309;
+  int AS_DEC = 309;
   /** RegularExpression Id. */
-  int AS_TEXT = 310;
+  int AS_ID = 310;
   /** RegularExpression Id. */
-  int LS_AMPERSAND = 315;
+  int AS_TEXT = 311;
   /** RegularExpression Id. */
-  int LS_LBRACE = 316;
+  int LS_AMPERSAND = 316;
   /** RegularExpression Id. */
-  int LS_GD = 317;
+  int LS_LBRACE = 317;
   /** RegularExpression Id. */
-  int LS_LD = 318;
+  int LS_GD = 318;
   /** RegularExpression Id. */
-  int LS_LBRACKET = 319;
+  int LS_LD = 319;
   /** RegularExpression Id. */
-  int LS_RBRACKET = 320;
+  int LS_LBRACKET = 320;
   /** RegularExpression Id. */
-  int LS_ID = 321;
+  int LS_RBRACKET = 321;
   /** RegularExpression Id. */
-  int LS_TEXT = 322;
+  int LS_ID = 322;
   /** RegularExpression Id. */
-  int DUMP_TEXT = 331;
+  int LS_TEXT = 323;
   /** RegularExpression Id. */
-  int LS_BRACES_AMPERSAND = 332;
+  int DUMP_TEXT = 332;
   /** RegularExpression Id. */
-  int LS_BRACES_COMMA = 333;
+  int LS_BRACES_AMPERSAND = 333;
   /** RegularExpression Id. */
-  int LS_BRACES_RBRACE = 334;
+  int LS_BRACES_COMMA = 334;
   /** RegularExpression Id. */
-  int LS_BRACES_LBRACKET = 335;
+  int LS_BRACES_RBRACE = 335;
   /** RegularExpression Id. */
-  int LS_BRACES_RBRACKET = 336;
+  int LS_BRACES_LBRACKET = 336;
   /** RegularExpression Id. */
-  int LS_BRACES_NUM = 337;
+  int LS_BRACES_RBRACKET = 337;
   /** RegularExpression Id. */
-  int LS_BRACES_DEC = 338;
+  int LS_BRACES_NUM = 338;
   /** RegularExpression Id. */
-  int LS_BRACES_ID = 339;
+  int LS_BRACES_DEC = 339;
   /** RegularExpression Id. */
-  int LS_BRACES_TEXT = 340;
+  int LS_BRACES_ID = 340;
   /** RegularExpression Id. */
-  int HC_HC = 345;
+  int LS_BRACES_TEXT = 341;
   /** RegularExpression Id. */
-  int HC_NUM = 346;
+  int HC_HC = 346;
   /** RegularExpression Id. */
-  int HC_LBRACKET = 347;
+  int HC_NUM = 347;
   /** RegularExpression Id. */
-  int HC_RBRACKET = 348;
+  int HC_LBRACKET = 348;
   /** RegularExpression Id. */
-  int HC_ID = 349;
+  int HC_RBRACKET = 349;
   /** RegularExpression Id. */
-  int HC_NAME = 350;
+  int HC_ID = 350;
+  /** RegularExpression Id. */
+  int HC_NAME = 351;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -784,6 +786,7 @@ public interface HitAssAstParserConstants {
     "\"\\t\"",
     "\" \"",
     "\"#>\"",
+    "\"#$\"",
     "\"=\"",
     "\"==\"",
     "\"oder\"",

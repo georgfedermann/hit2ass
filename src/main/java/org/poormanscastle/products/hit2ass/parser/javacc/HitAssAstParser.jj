@@ -348,11 +348,14 @@ TOKEN : {
 <COMMAND_MODE_SK> SKIP :{
     " " | "\n" | "\t" | "\r"
 }
+// Macro Statement
 <COMMAND_MODE_MS> SKIP : {
     "\n" : TXT_MODE | "\r" : TXT_MODE | "\t" | " "
 }
+// Macro Statement
 <COMMAND_MODE_MS> TOKEN : {
     < MS_PS : "#>" > : COMMAND_MODE_PS |
+    < MS_MS : "#$" > |
     < MS_EQ : "=" > |
     < MS_EQ_STRICT : "==" > |
     < MS_OR : "oder" > |
@@ -375,7 +378,7 @@ TOKEN : {
     < MS_COMMA : "," > |
     < MS_NUM : (["0"-"9"])+ > |
     < MS_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
-    < MS_ID : ( ~["#", "(", ")", ",", " ", "\t", "\n", "\r"])+ > | /* I've switched here from white list to black list because of the Umlauts in the actual Bausteins, but that might come back to hount me, either. */
+    < MS_ID : ( ~["#", "(", ")", ",", " ", "\t", "\n", "\r"])+ > | /* I've switched here from white list to black list because of the Umlauts in the actual Bausteins, but that might come back to haunt me, either. */
     < MS_TEXT : "\""
         (
             "\\" ~[]
@@ -881,7 +884,7 @@ CaseStatement CASE() :
 MacroCallStatement MS() :
 { Token idToken; ExpressionList argumentList; }
 {
-    (<MS>|<PS_IDX_CHECK_MS>) idToken = <MS_ID> argumentList = AL()
+    (<MS>|<PS_IDX_CHECK_MS>|<MS_MS>) idToken = <MS_ID> argumentList = AL()
     {
         return new MacroCallStatement(CodePosition.createFromToken(idToken), idToken.image, argumentList);
     }

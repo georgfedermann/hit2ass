@@ -324,7 +324,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
             containerStack.peek().addContent(new DynamicContentReference(
                     StringUtils.join("Assign from Userdata XML (oWL): ", dynamicValue.getName()),
                     StringUtils.join(" hit2assext:setScalarVariableValue(var:read('renderSessionUuid'), '", dynamicValue.getName(),
-                            "', /UserData/payload/line[@lineNr = hit2assext:getXmlSequence(var:read('renderSessionUuid'))]) ",
+                            "', /Briefdaten/payload/line[@lineNr = hit2assext:getXmlSequence(var:read('renderSessionUuid'))]) ",
                             "| hit2assext:incrementXmlSequence(var:read('renderSessionUuid')) "),
                     fontWeight));
         }

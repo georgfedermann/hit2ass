@@ -17,7 +17,7 @@
             <Properties>
               <Attributes>
                 <Attribute name="IsXPath"><![CDATA[True]]></Attribute>
-                <Attribute name="XPath"><![CDATA[if ( not( hit2assext:getScalarVariableValue(var:read('renderSessionUuid'), '${loopVariable}') = ${flagValue} ) ) then /UserData/payload/line[ position() >= hit2assext:getXmlSequence(var:read('renderSessionUuid')) and position() <= (count( /UserData/payload/line[ position() >= hit2assext:getXmlSequence(var:read('renderSessionUuid')) and  . = ${flagValue} ][1]/preceding-sibling::line) + 1)] else /UserData/returnEmptySequence ]]></Attribute>
+                <Attribute name="XPath"><![CDATA[if ( not( hit2assext:getScalarVariableValue(var:read('renderSessionUuid'), '${loopVariable}') = ${flagValue} ) ) then /Briefdaten/payload/line[ position() >= hit2assext:getXmlSequence(var:read('renderSessionUuid')) and position() <= (count( /Briefdaten/payload/line[ position() >= hit2assext:getXmlSequence(var:read('renderSessionUuid')) and  . = ${flagValue} ][1]/preceding-sibling::line) + 1)] else /Briefdaten/returnEmptySequence ]]></Attribute>
                 <Attribute name="XPathWithName"><![CDATA[]]></Attribute>
               </Attributes>
               <Relations>

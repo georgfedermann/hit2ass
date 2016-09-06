@@ -28,6 +28,21 @@ import org.poormanscastle.products.hit2ass.transformer.EraseBlanksVisitor;
 public class ClouChunkTest {
 
     @Test
+    public void testMacroCallMacroCallSequence() throws Exception {
+        // #
+        // #$TABU#$BOLDON#$BOLDOFF
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("MacroCallMacroCallSequence"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
+        assertEquals("TABU", ((MacroCallStatement) elementList.getHead()).getMacroId());
+        elementList = elementList.getTail();
+        assertEquals("BOLDON", ((MacroCallStatement) elementList.getHead()).getMacroId());
+        elementList = elementList.getTail();
+        assertEquals("BOLDOFF", ((MacroCallStatement) elementList.getHead()).getMacroId());
+    }
+
+    @Test
     public void testSwitchWithClouFunctionCall() throws Exception {
         // #
         // #C strlen(zahlpunktdazu)

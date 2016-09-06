@@ -1,12 +1,11 @@
 package org.poormanscastle.products.hit2ass.transformer;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.poormanscastle.products.hit2ass.TestUtils;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouBaustein;
 import org.poormanscastle.products.hit2ass.parser.javacc.HitAssAstParser;
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 /**
  * TODO migrate old unit tests to new test strategy based on AST analyzation.
@@ -16,14 +15,12 @@ public class ClouBausteinMergerVisitorTest {
 
     private HitAssAstParser parser;
     private ClouBausteinMergerVisitor bausteinMerger = new ClouBausteinMergerVisitor();
-    private FixedTextMerger merger = new FixedTextMerger();
     private ClouBaustein baustein;
 
     // @Test
     public void visitIncludeBausteinStatement() throws Exception {
         parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("IncludeBausteinParent"), "UTF-8");
         baustein = parser.CB();
-        baustein.accept(merger);
         baustein.accept(bausteinMerger);
         String probe = baustein.toString();
         assertNotNull(probe);

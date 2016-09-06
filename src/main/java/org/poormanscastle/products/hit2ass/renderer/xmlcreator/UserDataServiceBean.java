@@ -30,9 +30,9 @@ public class UserDataServiceBean implements UserDataService {
         try {
             inputText = IOUtils.toString(dataInputStream);
             Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
-            Element documentElement = document.createElement("UserData");
+            Element documentElement = document.createElement("Briefdaten");
             document.appendChild(documentElement);
-            Element metadata = document.createElement("Metadata");
+            Element metadata = document.createElement("MD");
             documentElement.appendChild(metadata);
             Element payload = document.createElement("payload");
             documentElement.appendChild(payload);

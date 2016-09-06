@@ -1,5 +1,7 @@
 package org.poormanscastle.products.hit2ass.cli;
 
+import java.io.IOException;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -12,10 +14,6 @@ import org.poormanscastle.products.hit2ass.renderer.IRTransformer;
 import org.poormanscastle.products.hit2ass.renderer.xmlcreator.UserDataServiceBean;
 import org.poormanscastle.products.hit2ass.transformer.ClouBausteinMergerVisitor;
 import org.poormanscastle.products.hit2ass.transformer.EraseBlanksVisitor;
-import org.poormanscastle.products.hit2ass.transformer.FixedTextMerger;
-import org.poormanscastle.products.hit2ass.transformer.InsertBlanksVisitor;
-
-import java.io.IOException;
 
 /**
  * HitAssTools is meant to be used as cmd line tool to work with grammars.

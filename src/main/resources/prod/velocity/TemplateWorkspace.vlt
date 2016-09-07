@@ -1,6 +1,9 @@
 #set($pageId=${docFamUtils.CockpitElementId})
 #set($variableCollectionId=${docFamUtils.CockpitElementId})
 #set($H='#')
+#set($headerId=${docFamUtils.CockpitElementId})
+#set($footerId=${docFamUtils.CockpitElementId})
+#set($deployedModuleCompositionId=${docFamUtils.CockpitElementId})
 <?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
 <Cockpit version="5.10.03.072744" export="07.05.2016 16:27:05">
   <!--Assentis DocDesign workspace - do not modify this file at any time!-->
@@ -806,8 +809,8 @@
               <Attribute name="WritingMode"><![CDATA[inherit]]></Attribute>
             </Attributes>
             <Relations>
-              <Relation name="TopRegion" refTo=""/>
-              <Relation name="BottomRegion" refTo=""/>
+              <Relation name="TopRegion" refTo="${headerId}"/>
+              <Relation name="BottomRegion" refTo="${footerId}"/>
               <Relation name="StartRegion" refTo=""/>
               <Relation name="EndRegion" refTo=""/>
               <Relation name="FootnoteSeparation" refTo=""/>
@@ -1075,12 +1078,170 @@ ${content}
         <Attributes/>
         <Relations/>
       </Properties>
+              <Object id="${headerId}" name="Header" enabled="True" type="com.assentis.cockpit.bo.BoTopRegion">
+                <Properties>
+                  <Attributes>
+                    <Attribute name="Notes"><![CDATA[]]></Attribute>
+                    <Attribute name="Hyphenate"><![CDATA[inherit]]></Attribute>
+                    <Attribute name="FOLang"><![CDATA[Inherit]]></Attribute>
+                    <Attribute name="RegionHeight"><![CDATA[12.5 mm]]></Attribute>
+                    <Attribute name="VerticalAlign"><![CDATA[before]]></Attribute>
+                    <Attribute name="LineSpacing"><![CDATA[10 pt]]></Attribute>
+                    <Attribute name="LineStackingStrategy"><![CDATA[inherited]]></Attribute>
+                    <Attribute name="LetterSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                    <Attribute name="WordSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                    <Attribute name="LetterSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                    <Attribute name="WordSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                    <Attribute name="XMLNamespaces">
+                      <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoNamespaceCollection">
+                        <Properties>
+                          <Attributes>
+                            <Attribute name="Notes"><![CDATA[]]></Attribute>
+                          </Attributes>
+                          <Relations/>
+                        </Properties>
+                      </Object>
+                    </Attribute>
+                    <Attribute name="XSLParams">
+                      <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXSLParamCollection">
+                        <Properties>
+                          <Attributes/>
+                          <Relations/>
+                        </Properties>
+                      </Object>
+                    </Attribute>
+                    <Attribute name="WritingMode"><![CDATA[inherit]]></Attribute>
+                  </Attributes>
+                  <Relations/>
+                </Properties>
+                <Object id="${docFamUtils.CockpitElementId}" name="Kopf_PVA" enabled="True" type="com.assentis.cockpit.bo.BoDeployedModuleDock">
+                  <Properties>
+                    <Attributes>
+                      <Attribute name="Notes"><![CDATA[]]></Attribute>
+                      <Attribute name="XSLSetParamCollection">
+                        <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXSLSetParamCollection">
+                          <Properties>
+                            <Attributes>
+                              <Attribute name="Representing"><![CDATA[com.assentis.cockpit.bo.BoDeployedModuleComposition]]></Attribute>
+                            </Attributes>
+                            <Relations/>
+                          </Properties>
+                        </Object>
+                      </Attribute>
+                      <Attribute name="CallModule"><![CDATA[Kopf_PVA]]></Attribute>
+                      <Attribute name="CallModuleName"><![CDATA[Mod20080326T133544.908-593.72691300.7482131.463]]></Attribute>
+                    </Attributes>
+                    <Relations>
+                      <Relation name="DeployedModuleComposition" refTo="${deployedModuleCompositionId}"/>
+                    </Relations>
+                  </Properties>
+                </Object>
+              </Object>
+              <Object id="${footerId}" name="Footer" enabled="True" type="com.assentis.cockpit.bo.BoBottomRegion">
+                <Properties>
+                  <Attributes>
+                    <Attribute name="Notes"><![CDATA[]]></Attribute>
+                    <Attribute name="Hyphenate"><![CDATA[inherit]]></Attribute>
+                    <Attribute name="FOLang"><![CDATA[Inherit]]></Attribute>
+                    <Attribute name="RegionHeight"><![CDATA[12.5 mm]]></Attribute>
+                    <Attribute name="VerticalAlign"><![CDATA[before]]></Attribute>
+                    <Attribute name="LineSpacing"><![CDATA[10 pt]]></Attribute>
+                    <Attribute name="LineStackingStrategy"><![CDATA[inherited]]></Attribute>
+                    <Attribute name="LetterSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                    <Attribute name="WordSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                    <Attribute name="LetterSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                    <Attribute name="WordSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                    <Attribute name="XMLNamespaces">
+                      <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoNamespaceCollection">
+                        <Properties>
+                          <Attributes>
+                            <Attribute name="Notes"><![CDATA[]]></Attribute>
+                          </Attributes>
+                          <Relations/>
+                        </Properties>
+                      </Object>
+                    </Attribute>
+                    <Attribute name="XSLParams">
+                      <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXSLParamCollection">
+                        <Properties>
+                          <Attributes/>
+                          <Relations/>
+                        </Properties>
+                      </Object>
+                    </Attribute>
+                    <Attribute name="WritingMode"><![CDATA[inherit]]></Attribute>
+                  </Attributes>
+                  <Relations/>
+                </Properties>
+                <Object id="${docFamUtils.CockpitElementId}" name="FUSS_PVA" enabled="True" type="com.assentis.cockpit.bo.BoDeployedModuleDock">
+                  <Properties>
+                    <Attributes>
+                      <Attribute name="Notes"><![CDATA[]]></Attribute>
+                      <Attribute name="XSLSetParamCollection">
+                        <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXSLSetParamCollection">
+                          <Properties>
+                            <Attributes>
+                              <Attribute name="Representing"><![CDATA[com.assentis.cockpit.bo.BoDeployedModuleComposition]]></Attribute>
+                            </Attributes>
+                            <Relations/>
+                          </Properties>
+                        </Object>
+                      </Attribute>
+                      <Attribute name="CallModule"><![CDATA[FUSS_PVA]]></Attribute>
+                      <Attribute name="CallModuleName"><![CDATA[Mod20080326T133751.308-2609.9852065.9711088.546]]></Attribute>
+                    </Attributes>
+                    <Relations>
+                      <Relation name="DeployedModuleComposition" refTo="${deployedModuleCompositionId}"/>
+                    </Relations>
+                  </Properties>
+                </Object>
+              </Object>
     </Object>
     <Object id="${docFamUtils.CockpitElementId}" name="Modules" enabled="True" type="com.assentis.cockpit.bo.BoModuleGroup">
       <Properties>
         <Attributes/>
         <Relations/>
       </Properties>
+      <Object id="${deployedModuleCompositionId}" name="Deployed Modules" enabled="True" type="com.assentis.cockpit.bo.BoDeployedModuleComposition">
+        <Properties>
+          <Attributes>
+            <Attribute name="Notes"><![CDATA[]]></Attribute>
+            <Attribute name="Keyword"><![CDATA[]]></Attribute>
+            <Attribute name="PurposeList">
+              <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoPurposeList">
+                <Properties>
+                  <Attributes/>
+                  <Relations/>
+                </Properties>
+              </Object>
+            </Attribute>
+            <Attribute name="URI">
+              <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoURI">
+                <Properties>
+                  <Attributes>
+                    <Attribute name="FileURL"><![CDATA[]]></Attribute>
+                    <Attribute name="FileRelative"><![CDATA[False]]></Attribute>
+                    <Attribute name="WebURL"><![CDATA[]]></Attribute>
+                    <Attribute name="RepoElementID"><![CDATA[20080326T133345.883-2163.1961461.611900.0318.dp]]></Attribute>
+                    <Attribute name="RepoElementName"><![CDATA[DPLibKopfFuss]]></Attribute>
+                    <Attribute name="RepoElementVersion"><![CDATA[]]></Attribute>
+                    <Attribute name="RepoElementLabel"><![CDATA[]]></Attribute>
+                    <Attribute name="RepoElementExtension"><![CDATA[dpmodlib]]></Attribute>
+                    <Attribute name="RepoElementDBID"><![CDATA[5636]]></Attribute>
+                    <Attribute name="IsRepositoryFolder"><![CDATA[False]]></Attribute>
+                    <Attribute name="DBPath"><![CDATA[]]></Attribute>
+                    <Attribute name="RepoAdditionalRequestParams"><![CDATA[&XSLTDOCTYPE=FO]]></Attribute>
+                    <Attribute name="URLType"><![CDATA[128]]></Attribute>
+                    <Attribute name="TypeNode"><![CDATA[True]]></Attribute>
+                  </Attributes>
+                  <Relations/>
+                </Properties>
+              </Object>
+            </Attribute>
+          </Attributes>
+          <Relations/>
+        </Properties>
+      </Object>
     </Object>
     <Object id="${docFamUtils.CockpitElementId}" name="Editor Configuration Group" enabled="True" type="com.assentis.cockpit.bo.BoEditorConfigurationGroup">
       <Properties>

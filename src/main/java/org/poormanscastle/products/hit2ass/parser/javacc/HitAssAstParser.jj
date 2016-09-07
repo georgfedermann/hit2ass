@@ -147,26 +147,26 @@ TOKEN : {
     < THEN : ([" ", "\t"])*"/J" > : TXT_MODE |
     < ELSE : ([" ", "\t"])*"/N" > : TXT_MODE |
     < ENDIF : "#" > : TXT_MODE |            //
-    < SB : "@" > : TXT_MODE |          // represents a section break. TODO when adapting this tool to a project, find a character that fits your document base and configure procon accordingly
-    < WS : "#S" > : COMMAND_MODE_IF |       // While loop statement
-    < FS : "#W" > : COMMAND_MODE_FOR |       // FOR loop, fixed number of repetitions; a new mode is in order because FOR loops have their own syntax, thus mode switches in command_mode_for occur differently than it's the case in command_mode_if
-    < SS : "#C" > : COMMAND_MODE_SS |       // Switch statement
+    < SB : "@" > : TXT_MODE |                       // represents a section break. TODO when adapting this tool to a project, find a character that fits your document base and configure procon accordingly
+    < WS : "#S" > : COMMAND_MODE_IF |               // While loop statement
+    < FS : "#W" > : COMMAND_MODE_FOR |              // FOR loop, fixed number of repetitions; a new mode is in order because FOR loops have their own syntax, thus mode switches in command_mode_for occur differently than it's the case in command_mode_if
+    < SS : "#C" > : COMMAND_MODE_SS |               // Switch statement
     < CA : ([" ", "\t", "\r", "\n"])*"/"(((["0"-"9"])+)|("\""(["0"-"9","a"-"z", "A"-"Z"])+"\"")?)":" > : TXT_MODE | // < CA : "/"(["0"-"9"])+|("\""(["0"-"9","a"-"z", "A"-"Z"])+"\"")":" >
-    < MS : "#$" > : COMMAND_MODE_MS |       // execute Macro
-    < HC : "#^" > : COMMAND_MODE_HC |       // execute Hit command
-    < GS : "#G" > : COMMAND_MODE_DS |       // set cursor location in row
-    < JS : "#J" > : COMMAND_MODE_DS |       // set cursor location row/column
-    < ZS : "#Z" > : COMMAND_MODE_DS |       // Query cursor location
-    < GD : "#D" > : COMMAND_MODE_DS |       // Global variable declaration statements
-    < LD : "#d" > : COMMAND_MODE_DS |       // Local variable declaration statements
-    < LIST : "#L" > : COMMAND_MODE_LS |     // List Manipulations
+    < MS : "#$" > : COMMAND_MODE_MS_BEFORE_ID |     // execute Macro
+    < HC : "#^" > : COMMAND_MODE_HC |               // execute Hit command
+    < GS : "#G" > : COMMAND_MODE_DS |               // set cursor location in row
+    < JS : "#J" > : COMMAND_MODE_DS |               // set cursor location row/column
+    < ZS : "#Z" > : COMMAND_MODE_DS |               // Query cursor location
+    < GD : "#D" > : COMMAND_MODE_DS |               // Global variable declaration statements
+    < LD : "#d" > : COMMAND_MODE_DS |               // Local variable declaration statements
+    < LIST : "#L" > : COMMAND_MODE_LS |             // List Manipulations
     < DUMP : "#q" > : COMMAND_MODE_DUMP |
-    < AS : "#=" > : COMMAND_MODE_AS |       // Assignment Statemeent
-    < IB : "#B" > : COMMAND_MODE_IB |       // Include Baustein statement
-    < OF : "#X" > : COMMAND_MODE_FILE |     // File manipulation statements, like: open file, close file, read value from file.
+    < AS : "#=" > : COMMAND_MODE_AS |               // Assignment Statemeent
+    < IB : "#B" > : COMMAND_MODE_IB |               // Include Baustein statement
+    < OF : "#X" > : COMMAND_MODE_FILE |             // File manipulation statements, like: open file, close file, read value from file.
     < DV : "#X"([" ", "\n", "\r", "\t"])*"<" > : COMMAND_MODE_DV |
-    < PS : "#>" >  : COMMAND_MODE_PS |      // Print-Statement: Insert value of some given expression at the current position into the current document
-    < SK : "#!" > : COMMAND_MODE_SK         // Execute Shell command
+    < PS : "#>" >  : COMMAND_MODE_PS |              // Print-Statement: Insert value of some given expression at the current position into the current document
+    < SK : "#!" > : COMMAND_MODE_SK                 // Execute Shell command
 }
 
 /*  Fixed text mode */
@@ -283,7 +283,7 @@ TOKEN : {
     < PS_IDX_CHECK_LPAREN : "(" > : COMMAND_MODE_PS_EL |
     < PS_IDX_CHECK_FIXED_TEXT : ( ~[ "\n", "\r", "\t", "#", "@", "[", "(" ] )+ > : TXT_MODE |
     < PS_IDX_SB : "@" > : TXT_MODE |
-    < PS_IDX_CHECK_MS : "#$" > : COMMAND_MODE_MS
+    < PS_IDX_CHECK_MS : "#$" > : COMMAND_MODE_MS_BEFORE_ID
 }
 // this mode parses index expressions, if a [ was found after as PS_ID
 <COMMAND_MODE_PS_IDX_CHECK> SKIP : {
@@ -349,13 +349,15 @@ TOKEN : {
     " " | "\n" | "\t" | "\r"
 }
 // Macro Statement
+// the Macro Statement logic is divided in two parts: before a macro/function id and afterwards.
+// this is before the macro id, and here blanks and tabs are permitted. the macro statement will just go on.
 <COMMAND_MODE_MS> SKIP : {
-    "\n" : TXT_MODE | "\r" : TXT_MODE | "\t" | " "
+    "\n" : TXT_MODE | "\r" : TXT_MODE | "\t" : TXT_MODE | " " : TXT_MODE
 }
 // Macro Statement
 <COMMAND_MODE_MS> TOKEN : {
     < MS_PS : "#>" > : COMMAND_MODE_PS |
-    < MS_MS : "#$" > |
+    < MS_MS : "#$" > : COMMAND_MODE_MS_BEFORE_ID |
     < MS_EQ : "=" > |
     < MS_EQ_STRICT : "==" > |
     < MS_OR : "oder" > |
@@ -378,7 +380,6 @@ TOKEN : {
     < MS_COMMA : "," > |
     < MS_NUM : (["0"-"9"])+ > |
     < MS_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
-    < MS_ID : ( ~["#", "(", ")", ",", " ", "\t", "\n", "\r"])+ > | /* I've switched here from white list to black list because of the Umlauts in the actual Bausteins, but that might come back to haunt me, either. */
     < MS_TEXT : "\""
         (
             "\\" ~[]
@@ -387,6 +388,16 @@ TOKEN : {
         )*"\"" >
 
 }
+
+// this is before the macro id. Here, 
+<COMMAND_MODE_MS_BEFORE_ID> SKIP  : {
+    "\t" | " "
+}
+
+<COMMAND_MODE_MS_BEFORE_ID> TOKEN : {
+    < MS_ID : ( ~["#", "(", ")", ",", " ", "\t", "\n", "\r"])+ > : COMMAND_MODE_MS /* I've switched here from white list to black list because of the Umlauts in the actual Bausteins, but that might come back to haunt me, either. */
+}
+
 <COMMAND_MODE_IF> TOKEN : {
     < IF_EQ : "=" > |
     < IF_EQ_STRICT : "==" > |

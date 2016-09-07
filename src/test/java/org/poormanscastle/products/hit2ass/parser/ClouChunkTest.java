@@ -28,6 +28,21 @@ import org.poormanscastle.products.hit2ass.transformer.EraseBlanksVisitor;
 public class ClouChunkTest {
 
     @Test
+    public void testMacroStatementFixedTextSequence() throws Exception {
+        // #
+        // #$ BOLD_ON Please note $# BOLD_OFF
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("MacroStatementFixedTextSequence"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
+        assertEquals("BOLD_ON", ((MacroCallStatement) elementList.getHead()).getMacroId());
+        elementList = elementList.getTail();
+        assertEquals(" Please note ", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        assertEquals("BOLD_OFF", ((MacroCallStatement) elementList.getHead()).getMacroId());
+    }
+
+    @Test
     public void testMacroCallMacroCallSequence() throws Exception {
         // #
         // #$TABU#$BOLDON#$BOLDOFF

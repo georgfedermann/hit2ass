@@ -413,6 +413,81 @@
                     <Attributes/>
                     <Relations/>
                   </Properties>
+                    <Object id="${docFamUtils.CockpitElementId}" name="" enabled="True" type="com.assentis.cockpit.bo.BoXSLParamVariable">
+                      <Properties>
+                        <Attributes>
+                          <Attribute name="Notes"><![CDATA[]]></Attribute>
+                          <Attribute name="XSLParamName"><![CDATA[SpruchSchlzl]]></Attribute>
+                          <Attribute name="InitialValue">
+                            <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXPathTextVariable">
+                              <Properties>
+                                <Attributes>
+                                  <Attribute name="IsXPath"><![CDATA[True]]></Attribute>
+                                  <Attribute name="XPath"><![CDATA["TEST"]]></Attribute>
+                                  <Attribute name="XPathWithName"><![CDATA[./.]]></Attribute>
+                                </Attributes>
+                                <Relations>
+                                  <Relation name="XPathTextVariable" refTo=""/>
+                                  <ManyRelation name="QueryXPathTextVariable"/>
+                                </Relations>
+                              </Properties>
+                            </Object>
+                          </Attribute>
+                          <Attribute name="InsideRepetition"><![CDATA[True]]></Attribute>
+                        </Attributes>
+                        <Relations/>
+                      </Properties>
+                    </Object>
+                    <Object id="${docFamUtils.CockpitElementId}" name="" enabled="True" type="com.assentis.cockpit.bo.BoXSLParamVariable">
+                      <Properties>
+                        <Attributes>
+                          <Attribute name="Notes"><![CDATA[]]></Attribute>
+                          <Attribute name="XSLParamName"><![CDATA[VT]]></Attribute>
+                          <Attribute name="InitialValue">
+                            <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXPathTextVariable">
+                              <Properties>
+                                <Attributes>
+                                  <Attribute name="IsXPath"><![CDATA[True]]></Attribute>
+                                  <Attribute name="XPath"><![CDATA["20"]]></Attribute>
+                                  <Attribute name="XPathWithName"><![CDATA[./.]]></Attribute>
+                                </Attributes>
+                                <Relations>
+                                  <Relation name="XPathTextVariable" refTo=""/>
+                                  <ManyRelation name="QueryXPathTextVariable"/>
+                                </Relations>
+                              </Properties>
+                            </Object>
+                          </Attribute>
+                          <Attribute name="InsideRepetition"><![CDATA[True]]></Attribute>
+                        </Attributes>
+                        <Relations/>
+                      </Properties>
+                    </Object>
+                    <Object id="${docFamUtils.CockpitElementId}" name="" enabled="True" type="com.assentis.cockpit.bo.BoXSLParamVariable">
+                      <Properties>
+                        <Attributes>
+                          <Attribute name="Notes"><![CDATA[]]></Attribute>
+                          <Attribute name="XSLParamName"><![CDATA[LD]]></Attribute>
+                          <Attribute name="InitialValue">
+                            <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXPathTextVariable">
+                              <Properties>
+                                <Attributes>
+                                  <Attribute name="IsXPath"><![CDATA[True]]></Attribute>
+                                  <Attribute name="XPath"><![CDATA["20"]]></Attribute>
+                                  <Attribute name="XPathWithName"><![CDATA[./.]]></Attribute>
+                                </Attributes>
+                                <Relations>
+                                  <Relation name="XPathTextVariable" refTo=""/>
+                                  <ManyRelation name="QueryXPathTextVariable"/>
+                                </Relations>
+                              </Properties>
+                            </Object>
+                          </Attribute>
+                          <Attribute name="InsideRepetition"><![CDATA[True]]></Attribute>
+                        </Attributes>
+                        <Relations/>
+                      </Properties>
+                    </Object>
                 </Object>
               </Attribute>
               <Attribute name="TargetDocumentResolution"><![CDATA[trDocBaseDefault]]></Attribute>

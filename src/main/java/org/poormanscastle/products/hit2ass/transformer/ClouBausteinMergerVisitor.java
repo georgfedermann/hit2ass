@@ -41,7 +41,6 @@ public class ClouBausteinMergerVisitor extends AstItemVisitorAdapter {
 
             ClouBaustein baustein = new HitAssAstParser(
                     HitAssTools.getClouBausteinAsInputStream(bausteinName), System.getProperty("hit2ass.clou.encoding")).CB();
-            baustein.accept(new FixedTextMerger());
             includeBausteinStatement.setContent(baustein.getClouBausteinElement());
         } catch (Throwable e) {
             throw new BausteinMergerException(StringUtils.join("Could not parse child Baustein ", includeBausteinStatement.getPathToBaustein(), " because: ", e.getMessage()), e);

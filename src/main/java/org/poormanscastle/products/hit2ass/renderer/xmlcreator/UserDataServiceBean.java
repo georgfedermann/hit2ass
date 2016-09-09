@@ -51,6 +51,8 @@ public class UserDataServiceBean implements UserDataService {
             // add direct inward dial (Durchwahl)
             ((Element) document.getElementsByTagName("Kopf").item(0)).setAttribute("Klappe",
                     inferDid(bausteinName, document.getElementsByTagName("line").item(16).getTextContent()));
+            // add fax
+            ((Element) document.getElementsByTagName("Kopf").item(0)).setAttribute("Faxnr", "23891");
 
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             TransformerFactory.newInstance().newTransformer().transform(new DOMSource(document), new StreamResult(outputStream));

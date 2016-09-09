@@ -14,9 +14,20 @@ public interface UserDataService {
      * and turns is into a generic XML document, holding a <line /> element for
      * each line in the input text file.
      *
-     * @param dataInputStream
+     * @param dataInputStream œparam clouBausteinName the name of the CLOU Baustein to be processed.
+     *                        XML creation might infer business rules from the semantics of the given Baustein.
      * @return
      */
-    public InputStream getUserdataXml(InputStream dataInputStream);
+    InputStream getUserdataXml(InputStream dataInputStream, String clouBausteinName);
+
+    /**
+     * infers the telephone direct inward dial (Telefondurchwahl) for the given baustein.
+     * TODO provide a hook point on the generated XML and move this logic to an Interceptor or FilterChain.
+     *
+     * @param bausteinName
+     * @param dataBlock    holds diverse DIDs, the method chooses the correct one given the bausteinName.
+     * @return
+     */
+    String inferDid(String bausteinName, String dataBlock);
 
 }

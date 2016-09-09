@@ -22,6 +22,16 @@ public class UserDataServiceBeanTest {
     UserDataServiceBean userDataService = new UserDataServiceBean();
 
     @Test
+    public void testUuid() throws Exception {
+        String result = IOUtils.toString(userDataService.getUserdataXml(new BufferedInputStream(getClass().getResource(
+                "/HitClouTextInputData/OrderData.dat").openStream()), "UE108"));
+        assertFalse(StringUtils.isBlank(result));
+        Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
+                new ByteArrayInputStream(result.getBytes()));
+        assertEquals("1078300358", ((Element) document.getElementsByTagName("line").item(0)).getTextContent());
+    }
+
+    @Test
     public void testFax() throws Exception {
         String result = IOUtils.toString(userDataService.getUserdataXml(new BufferedInputStream(getClass().getResource(
                 "/HitClouTextInputData/OrderData.dat").openStream()), "UE108"));

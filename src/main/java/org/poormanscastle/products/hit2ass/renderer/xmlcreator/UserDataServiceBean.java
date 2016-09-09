@@ -53,6 +53,9 @@ public class UserDataServiceBean implements UserDataService {
                     inferDid(bausteinName, document.getElementsByTagName("line").item(16).getTextContent()));
             // add fax
             ((Element) document.getElementsByTagName("Kopf").item(0)).setAttribute("Faxnr", "23891");
+            // update uuid
+            ((Element) document.getElementsByTagName("Vsnr").item(0)).setTextContent(
+                    ((Element) document.getElementsByTagName("line").item(0)).getTextContent());
 
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             TransformerFactory.newInstance().newTransformer().transform(new DOMSource(document), new StreamResult(outputStream));

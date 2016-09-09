@@ -451,7 +451,7 @@
                               <Properties>
                                 <Attributes>
                                   <Attribute name="IsXPath"><![CDATA[True]]></Attribute>
-                                  <Attribute name="XPath"><![CDATA["20"]]></Attribute>
+                                  <Attribute name="XPath"><![CDATA["02"]]></Attribute>
                                   <Attribute name="XPathWithName"><![CDATA[./.]]></Attribute>
                                 </Attributes>
                                 <Relations>
@@ -476,7 +476,7 @@
                               <Properties>
                                 <Attributes>
                                   <Attribute name="IsXPath"><![CDATA[True]]></Attribute>
-                                  <Attribute name="XPath"><![CDATA["20"]]></Attribute>
+                                  <Attribute name="XPath"><![CDATA["H"]]></Attribute>
                                   <Attribute name="XPathWithName"><![CDATA[./.]]></Attribute>
                                 </Attributes>
                                 <Relations>
@@ -1084,7 +1084,7 @@ ${content}
                     <Attribute name="Notes"><![CDATA[]]></Attribute>
                     <Attribute name="Hyphenate"><![CDATA[inherit]]></Attribute>
                     <Attribute name="FOLang"><![CDATA[Inherit]]></Attribute>
-                    <Attribute name="RegionHeight"><![CDATA[12.5 mm]]></Attribute>
+                    <Attribute name="RegionHeight"><![CDATA[51 mm]]></Attribute>
                     <Attribute name="VerticalAlign"><![CDATA[before]]></Attribute>
                     <Attribute name="LineSpacing"><![CDATA[10 pt]]></Attribute>
                     <Attribute name="LineStackingStrategy"><![CDATA[inherited]]></Attribute>
@@ -1130,6 +1130,28 @@ ${content}
                       </Attribute>
                       <Attribute name="CallModule"><![CDATA[Kopf_PVA]]></Attribute>
                       <Attribute name="CallModuleName"><![CDATA[Mod20080326T133544.908-593.72691300.7482131.463]]></Attribute>
+                    </Attributes>
+                    <Relations>
+                      <Relation name="DeployedModuleComposition" refTo="${deployedModuleCompositionId}"/>
+                    </Relations>
+                  </Properties>
+                </Object>
+                <Object id="${docFamUtils.CockpitElementId}" name="Aktenzeichen Seite 1" enabled="True" type="com.assentis.cockpit.bo.BoDeployedModuleDock">
+                  <Properties>
+                    <Attributes>
+                      <Attribute name="Notes"><![CDATA[]]></Attribute>
+                      <Attribute name="XSLSetParamCollection">
+                        <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXSLSetParamCollection">
+                          <Properties>
+                            <Attributes>
+                              <Attribute name="Representing"><![CDATA[com.assentis.cockpit.bo.BoDeployedModuleComposition]]></Attribute>
+                            </Attributes>
+                            <Relations/>
+                          </Properties>
+                        </Object>
+                      </Attribute>
+                      <Attribute name="CallModule"><![CDATA[Aktenzeichen Seite 1]]></Attribute>
+                      <Attribute name="CallModuleName"><![CDATA[Mod20080326T133610.985-884.6243770.38641022.274]]></Attribute>
                     </Attributes>
                     <Relations>
                       <Relation name="DeployedModuleComposition" refTo="${deployedModuleCompositionId}"/>

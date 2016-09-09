@@ -6,6 +6,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouBaustein;
+import org.poormanscastle.products.hit2ass.exceptions.HitAssTransformerException;
 import org.poormanscastle.products.hit2ass.parser.javacc.HitAssAstParser;
 import org.poormanscastle.products.hit2ass.parser.javacc.ParseException;
 import org.poormanscastle.products.hit2ass.parser.javacc.TokenMgrError;
@@ -43,7 +44,13 @@ public final class HitAssTools {
                 } else if ("w".equals(arg)) {
                     System.out.println(HitAssTools.createDocDesignWorkspace());
                 } else if ("x".equals(arg)) {
-                    System.out.println(HitAssTools.createUserDataXml());
+                    try {
+                        System.out.println(HitAssTools.createUserDataXml(args[counter++]));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        throw new HitAssTransformerException(StringUtils.join("Could not process input text file since Baustein name (e.g. UE108) was missing. Please read help using hitAssTools -h."));
+                    }
                 }
             } while (counter < args.length);
         } catch (Exception exception) {
@@ -68,8 +75,8 @@ public final class HitAssTools {
         }
     }
 
-    private static String createUserDataXml() throws IOException, ParseException {
-        return IOUtils.toString(new UserDataServiceBean().getUserdataXml(System.in));
+    private static String createUserDataXml(String clouBausteinName) throws IOException, ParseException {
+        return IOUtils.toString(new UserDataServiceBean().getUserdataXml(System.in, clouBausteinName));
     }
 
     private static String createAstVisualization() throws IOException, ParseException {
@@ -94,9 +101,9 @@ public final class HitAssTools {
         System.out.println("  -v  print version information.");
         System.out.println("  -a  create AST diagram for the Clou component in dot format. Input data is read from the std input.");
         System.out.println("  -x  create DocFamily userdata XML from HIT/CLOU input text file.");
-        System.out.println("      usage: cat hitclou_Order60071.txt | hitAssTools -x > userdata_Order60071.xml");
+        System.out.println("      usage: cat hitclou_Order60071.txt | hitAssTools -x Bausteinname > userdata_Order60071.xml");
         System.out.println("      To get intented XML output you can use xmllint with the pipe redirect symbol - :");
-        System.out.println("      cat OrderData.dat | hitAssTools.sh -x | xmllint --format -");
+        System.out.println("      cat OrderData.dat | hitAssTools.sh -x UE108 | xmllint --format -");
         System.out.println("  -w  create DocFamily workspace from HIT/CLOU Baustein.");
     }
 

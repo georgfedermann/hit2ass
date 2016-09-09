@@ -1,13 +1,18 @@
 package org.poormanscastle.products.hit2ass.renderer.xmlcreator;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
-
-import java.io.BufferedInputStream;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * Created by georg on 7/8/16.
@@ -17,11 +22,64 @@ public class UserDataServiceBeanTest {
     UserDataServiceBean userDataService = new UserDataServiceBean();
 
     @Test
-    public void getUserdataXml() throws Exception {
+    public void testUuid() throws Exception {
         String result = IOUtils.toString(userDataService.getUserdataXml(new BufferedInputStream(getClass().getResource(
-                "/HitClouTextInputData/OrderData.dat").openStream())));
+                "/HitClouTextInputData/OrderData.dat").openStream()), "UE108"));
         assertFalse(StringUtils.isBlank(result));
-        assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><Briefdaten><MD/><payload><line lineNr=\"1\">16-47951-8</line><line lineNr=\"2\">John</line><line lineNr=\"3\">Connor</line><line lineNr=\"4\">m</line><line lineNr=\"5\">premium</line><line lineNr=\"6\">Terminator</line><line lineNr=\"7\">10</line><line lineNr=\"8\">2016-05-21</line></payload></Briefdaten>", result);
+        Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
+                new ByteArrayInputStream(result.getBytes()));
+        assertEquals("1078300358", ((Element) document.getElementsByTagName("line").item(0)).getTextContent());
+    }
+
+    @Test
+    public void testFax() throws Exception {
+        String result = IOUtils.toString(userDataService.getUserdataXml(new BufferedInputStream(getClass().getResource(
+                "/HitClouTextInputData/OrderData.dat").openStream()), "UE108"));
+        assertFalse(StringUtils.isBlank(result));
+        Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
+                new ByteArrayInputStream(result.getBytes()));
+        assertEquals("23891", ((Element) document.getElementsByTagName("Kopf").item(0)).getAttribute("Faxnr"));
+    }
+
+    @Test
+    public void getUserdataXmlTelMitarb() throws Exception {
+        String result = IOUtils.toString(userDataService.getUserdataXml(new BufferedInputStream(getClass().getResource(
+                "/HitClouTextInputData/OrderData.dat").openStream()), "UE108"));
+        assertFalse(StringUtils.isBlank(result));
+        Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
+                new ByteArrayInputStream(result.getBytes()));
+        assertEquals("23823", ((Element) document.getElementsByTagName("Kopf").item(0)).getAttribute("Klappe"));
+    }
+
+    @Test
+    public void getUserdataXmlTelV1() throws Exception {
+        String result = IOUtils.toString(userDataService.getUserdataXml(new BufferedInputStream(getClass().getResource(
+                "/HitClouTextInputData/OrderData.dat").openStream()), "SV111"));
+        assertFalse(StringUtils.isBlank(result));
+
+        Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
+                new ByteArrayInputStream(result.getBytes()));
+        assertEquals("27770", ((Element) document.getElementsByTagName("Kopf").item(0)).getAttribute("Klappe"));
+    }
+
+    @Test
+    public void getUserdataXmlTel308() throws Exception {
+        String result = IOUtils.toString(userDataService.getUserdataXml(new BufferedInputStream(getClass().getResource(
+                "/HitClouTextInputData/OrderData.dat").openStream()), "UE105"));
+        assertFalse(StringUtils.isBlank(result));
+        Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
+                new ByteArrayInputStream(result.getBytes()));
+        assertEquals("23870", ((Element) document.getElementsByTagName("Kopf").item(0)).getAttribute("Klappe"));
+    }
+
+    @Test
+    public void getUserdataXmlTelV2() throws Exception {
+        String result = IOUtils.toString(userDataService.getUserdataXml(new BufferedInputStream(getClass().getResource(
+                "/HitClouTextInputData/OrderData.dat").openStream()), "MA010"));
+        assertFalse(StringUtils.isBlank(result));
+        Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
+                new ByteArrayInputStream(result.getBytes()));
+        assertEquals("23861", ((Element) document.getElementsByTagName("Kopf").item(0)).getAttribute("Klappe"));
     }
 
 }

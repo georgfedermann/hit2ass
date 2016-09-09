@@ -8,7 +8,7 @@ HIT_CLOU_LIBRARY_PATH=`pwd`
 HIT_CLOU_ENCODING=ISO8859_1
 
 ARGS=
-while getopts "ac:hvwx" opt; do
+while getopts "ac:hvwx:" opt; do
   case $opt in
     a)
       ARGS="a $ARGS"
@@ -29,7 +29,7 @@ while getopts "ac:hvwx" opt; do
       ARGS="w $ARGS"
       ;;
     x)
-      ARGS="x $ARGS"
+      ARGS="x $OPTARG $ARGS"
       ;;
     :)
       # echo "Option -$OPTARG requires an argument." >&2

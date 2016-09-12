@@ -14,11 +14,14 @@ public interface UserDataService {
      * and turns is into a generic XML document, holding a <line /> element for
      * each line in the input text file.
      *
-     * @param dataInputStream œparam clouBausteinName the name of the CLOU Baustein to be processed.
-     *                        XML creation might infer business rules from the semantics of the given Baustein.
+     * @param dataInputStream
+     * @param clouBausteinName            the name of the CLOU Baustein to be processed.
+     *                                    XML creation might infer business rules from the semantics of the given Baustein.
+     * @param aenderungsUndFreigabeNummer is expected to be in the format ###/####, where #
+     *                                    is in [0,9]
      * @return
      */
-    InputStream getUserdataXml(InputStream dataInputStream, String clouBausteinName);
+    InputStream getUserdataXml(InputStream dataInputStream, String clouBausteinName, String aenderungsUndFreigabeNummer);
 
     /**
      * infers the telephone direct inward dial (Telefondurchwahl) for the given baustein.

@@ -1207,6 +1207,31 @@ ${content}
                             </Attributes>
                             <Relations/>
                           </Properties>
+                            <Object id="20160912T144818.519-206.55421730.256223.599" name="" enabled="True" type="com.assentis.cockpit.bo.BoXSLParamVariable">
+                              <Properties>
+                                <Attributes>
+                                  <Attribute name="Notes"><![CDATA[]]></Attribute>
+                                  <Attribute name="XSLParamName"><![CDATA[FUSSNAME]]></Attribute>
+                                  <Attribute name="InitialValue">
+                                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXPathTextVariable">
+                                      <Properties>
+                                        <Attributes>
+                                          <Attribute name="IsXPath"><![CDATA[True]]></Attribute>
+                                          <Attribute name="XPath"><![CDATA[concat(/Briefdaten/MD/Schreiben/Dokument,' - ',/Briefdaten/MD/Schreiben/SpruchSchlzl)]]></Attribute>
+                                          <Attribute name="XPathWithName"><![CDATA[]]></Attribute>
+                                        </Attributes>
+                                        <Relations>
+                                          <Relation name="XPathTextVariable" refTo=""/>
+                                          <ManyRelation name="QueryXPathTextVariable"/>
+                                        </Relations>
+                                      </Properties>
+                                    </Object>
+                                  </Attribute>
+                                  <Attribute name="InsideRepetition"><![CDATA[False]]></Attribute>
+                                </Attributes>
+                                <Relations/>
+                              </Properties>
+                            </Object>
                         </Object>
                       </Attribute>
                       <Attribute name="CallModule"><![CDATA[FUSS_PVA]]></Attribute>

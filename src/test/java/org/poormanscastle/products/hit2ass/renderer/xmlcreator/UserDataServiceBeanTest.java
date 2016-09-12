@@ -22,9 +22,22 @@ public class UserDataServiceBeanTest {
     UserDataServiceBean userDataService = new UserDataServiceBean();
 
     @Test
+    public void testAenderungsFreigabeNummer() throws Exception {
+        String result = IOUtils.toString(userDataService.getUserdataXml(new BufferedInputStream(getClass().getResource(
+                "/HitClouTextInputData/OrderData.dat").openStream()), "UE108", "130/0001"));
+        assertFalse(StringUtils.isBlank(result));
+        Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
+                new ByteArrayInputStream(result.getBytes()));
+        assertEquals("130", ((Element) document.getElementsByTagName("Aktionsnummer").item(0)).getTextContent());
+        assertEquals("0001", ((Element) document.getElementsByTagName("Korrekturnummer").item(0)).getTextContent());
+        assertEquals("UE", ((Element) document.getElementsByTagName("Dokument").item(0)).getTextContent());
+        assertEquals("108", ((Element) document.getElementsByTagName("SpruchSchlzl").item(0)).getTextContent());
+    }
+
+    @Test
     public void testUuid() throws Exception {
         String result = IOUtils.toString(userDataService.getUserdataXml(new BufferedInputStream(getClass().getResource(
-                "/HitClouTextInputData/OrderData.dat").openStream()), "UE108"));
+                "/HitClouTextInputData/OrderData.dat").openStream()), "UE108", "130/0001"));
         assertFalse(StringUtils.isBlank(result));
         Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
                 new ByteArrayInputStream(result.getBytes()));
@@ -34,7 +47,7 @@ public class UserDataServiceBeanTest {
     @Test
     public void testFax() throws Exception {
         String result = IOUtils.toString(userDataService.getUserdataXml(new BufferedInputStream(getClass().getResource(
-                "/HitClouTextInputData/OrderData.dat").openStream()), "UE108"));
+                "/HitClouTextInputData/OrderData.dat").openStream()), "UE108", "130/0001"));
         assertFalse(StringUtils.isBlank(result));
         Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
                 new ByteArrayInputStream(result.getBytes()));
@@ -44,7 +57,7 @@ public class UserDataServiceBeanTest {
     @Test
     public void getUserdataXmlTelMitarb() throws Exception {
         String result = IOUtils.toString(userDataService.getUserdataXml(new BufferedInputStream(getClass().getResource(
-                "/HitClouTextInputData/OrderData.dat").openStream()), "UE108"));
+                "/HitClouTextInputData/OrderData.dat").openStream()), "UE108", "130/0001"));
         assertFalse(StringUtils.isBlank(result));
         Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
                 new ByteArrayInputStream(result.getBytes()));
@@ -54,7 +67,7 @@ public class UserDataServiceBeanTest {
     @Test
     public void getUserdataXmlTelV1() throws Exception {
         String result = IOUtils.toString(userDataService.getUserdataXml(new BufferedInputStream(getClass().getResource(
-                "/HitClouTextInputData/OrderData.dat").openStream()), "SV111"));
+                "/HitClouTextInputData/OrderData.dat").openStream()), "SV111", "130/0001"));
         assertFalse(StringUtils.isBlank(result));
 
         Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
@@ -65,7 +78,7 @@ public class UserDataServiceBeanTest {
     @Test
     public void getUserdataXmlTel308() throws Exception {
         String result = IOUtils.toString(userDataService.getUserdataXml(new BufferedInputStream(getClass().getResource(
-                "/HitClouTextInputData/OrderData.dat").openStream()), "UE105"));
+                "/HitClouTextInputData/OrderData.dat").openStream()), "UE105", "130/0001"));
         assertFalse(StringUtils.isBlank(result));
         Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
                 new ByteArrayInputStream(result.getBytes()));
@@ -75,7 +88,7 @@ public class UserDataServiceBeanTest {
     @Test
     public void getUserdataXmlTelV2() throws Exception {
         String result = IOUtils.toString(userDataService.getUserdataXml(new BufferedInputStream(getClass().getResource(
-                "/HitClouTextInputData/OrderData.dat").openStream()), "MA010"));
+                "/HitClouTextInputData/OrderData.dat").openStream()), "MA010", "130/0001"));
         assertFalse(StringUtils.isBlank(result));
         Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
                 new ByteArrayInputStream(result.getBytes()));

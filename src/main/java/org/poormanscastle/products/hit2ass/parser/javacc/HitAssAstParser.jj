@@ -119,7 +119,8 @@ TOKEN : {
 
 // CLOU comments; single line, multi-line and empty comments
 <TXT_MODE> MORE : {
-    "#*" : COMMENT_MODE
+    < COMMENT_1 : "#*" > : COMMENT_MODE |
+    < COMMENT_2 : ["^"]  > : COMMENT_MODE_2
 }
 <COMMAND_MODE_DS> MORE : {
     "#*" : COMMENT_MODE
@@ -134,10 +135,16 @@ TOKEN : {
     "#*" : COMMENT_MODE
 }
 <COMMENT_MODE> SPECIAL_TOKEN : {
-    <END_COMMENT : "#"> : TXT_MODE
+    < END_COMMENT_1 : "#"> : TXT_MODE
 }
 <COMMENT_MODE> MORE : {
     <~["#"]>
+}
+<COMMENT_MODE_2> SPECIAL_TOKEN : {
+    < END_COMMENT_2 : ["^"]" "["^"]"?" > : TXT_MODE
+}
+<COMMENT_MODE_2> MORE : {
+    <~[]>
 }
 
 /*  TEXT_MODE switching to COMMAND_MODE.    */
@@ -171,7 +178,7 @@ TOKEN : {
 
 /*  Fixed text mode */
 <TXT_MODE> TOKEN : {
-    <FIXED_TEXT : (~["\n", "\r", "\t", "#", "@" ])+ >
+    <FIXED_TEXT : (~["\n", "\r", "\t", "#", "@", "^" ])+ >
 }
 
 <TXT_MODE> SKIP : {

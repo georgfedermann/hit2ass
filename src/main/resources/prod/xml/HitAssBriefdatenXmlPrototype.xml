@@ -3,10 +3,18 @@
         <Aktenzeichen>
             <Vstr>02</Vstr>
             <Vsnr>1234011081</Vsnr>
+            <!-- Aktionsnummer wird als Aenderungsnummer verwendet -->
+            <Aktionsnummer />
+            <!-- Korrekturnummer wird als Freigabenummer verwendet -->
+            <Korrekturnummer />
         </Aktenzeichen>
         <Schreiben>
-            <Kopf LdstKz="H" Klappe="12345" Faxnr="12345" />
             <Abtkz>HVBA</Abtkz>
+            <!-- Dokument wird als Herkunft verwendet (Buchstaben in EK015, WV###, SV###, etc.) -->
+            <Dokument />
+            <Kopf LdstKz="H" Klappe="12345" Faxnr="12345" />
+            <!-- SpruchSchlzl wird als Dokumenttyp verwendet (Zahl in EK015, etc.) -->
+            <SpruchSchlzl />
         </Schreiben>
     </MD>
     <Spruch>

@@ -27,7 +27,7 @@ import org.w3c.dom.Element;
 public class UserDataServiceBean implements UserDataService {
 
     @Override
-    public InputStream getUserdataXml(InputStream dataInputStream, String bausteinName) {
+    public InputStream getUserdataXml(InputStream dataInputStream, String bausteinName, String aenderungsUndFreigabeNummer) {
         String inputText = "If you can read this, the actual dataInputStream was corrupted and could not be read.";
         try {
             inputText = IOUtils.toString(dataInputStream);
@@ -56,6 +56,14 @@ public class UserDataServiceBean implements UserDataService {
             // update uuid
             ((Element) document.getElementsByTagName("Vsnr").item(0)).setTextContent(
                     ((Element) document.getElementsByTagName("line").item(0)).getTextContent());
+            String[] numbers = aenderungsUndFreigabeNummer.split("/");
+            // update Aenderungsnummer
+            ((Element) document.getElementsByTagName("Aktionsnummer").item(0)).setTextContent(numbers[0]);
+            // update Freigabenummer
+            ((Element) document.getElementsByTagName("Korrekturnummer").item(0)).setTextContent(numbers[1]);
+            // update Dokument EK015
+            ((Element) document.getElementsByTagName("Dokument").item(0)).setTextContent(bausteinName.substring(0, 2));
+            ((Element) document.getElementsByTagName("SpruchSchlzl").item(0)).setTextContent(bausteinName.substring(2, 5));
 
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             TransformerFactory.newInstance().newTransformer().transform(new DOMSource(document), new StreamResult(outputStream));

@@ -1,6 +1,7 @@
 package org.poormanscastle.products.hit2ass.cli;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -26,6 +27,8 @@ public final class HitAssTools {
     private final static Logger logger = Logger.getLogger(HitAssTools.class);
 
     public static void main(String[] args) {
+        logger.info("hitAssTools.sh was called with these arguments:");
+        Arrays.stream(args).forEach(logger::info);
         try {
             if (args.length == 0) {
                 printHelp();
@@ -45,7 +48,7 @@ public final class HitAssTools {
                     System.out.println(HitAssTools.createDocDesignWorkspace());
                 } else if ("x".equals(arg)) {
                     try {
-                        System.out.println(HitAssTools.createUserDataXml(args[counter++]));
+                        System.out.println(HitAssTools.createUserDataXml(args[counter++], args[counter++]));
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (ArrayIndexOutOfBoundsException e) {
@@ -75,8 +78,8 @@ public final class HitAssTools {
         }
     }
 
-    private static String createUserDataXml(String clouBausteinName) throws IOException, ParseException {
-        return IOUtils.toString(new UserDataServiceBean().getUserdataXml(System.in, clouBausteinName));
+    private static String createUserDataXml(String clouBausteinName, String aenderungsFreigabeNummer) throws IOException, ParseException {
+        return IOUtils.toString(new UserDataServiceBean().getUserdataXml(System.in, clouBausteinName, aenderungsFreigabeNummer));
     }
 
     private static String createAstVisualization() throws IOException, ParseException {
@@ -101,7 +104,8 @@ public final class HitAssTools {
         System.out.println("  -v  print version information.");
         System.out.println("  -a  create AST diagram for the Clou component in dot format. Input data is read from the std input.");
         System.out.println("  -x  create DocFamily userdata XML from HIT/CLOU input text file.");
-        System.out.println("      usage: cat hitclou_Order60071.txt | hitAssTools -x Bausteinname > userdata_Order60071.xml");
+        System.out.println("      Additionally, the script needs to be configured with the Bausteinname and the AeFrNr.");
+        System.out.println("      usage: cat hitclou_Order60071.txt | hitAssTools -x \"EK015 130/0001\" > userdata_Order60071.xml");
         System.out.println("      To get intented XML output you can use xmllint with the pipe redirect symbol - :");
         System.out.println("      cat OrderData.dat | hitAssTools.sh -x UE108 | xmllint --format -");
         System.out.println("  -w  create DocFamily workspace from HIT/CLOU Baustein.");

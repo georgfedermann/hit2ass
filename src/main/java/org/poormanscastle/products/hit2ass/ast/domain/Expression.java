@@ -2,7 +2,6 @@ package org.poormanscastle.products.hit2ass.ast.domain;
 
 /**
  * An expression can be evaluated to a value of various types defined by the given grammar.
- * <p/>
  * Created by georg.federmann@poormanscastle.com on 05.04.2016.
  */
 public interface Expression<T> extends AstItem {
@@ -15,7 +14,7 @@ public interface Expression<T> extends AstItem {
      * root. The result is a string holding a String representation of an XPath representation
      * of this expression.
      *
-     * @return
+     * @return an XPath representation for this expression
      */
     String toXPathString();
 
@@ -23,7 +22,7 @@ public interface Expression<T> extends AstItem {
      * Can be used to query the state of the given expression.
      * This state is determined during semantic analysis.
      *
-     * @return
+     * @return whether this expression is valid or corrupted.
      */
     ExpressionState getState();
 
@@ -33,7 +32,6 @@ public interface Expression<T> extends AstItem {
      * the return value is statically implemented in the expression. For IdExpression, the
      * value must be looked up in the symbol table. For OperatorExpressions, the value is
      * inferred from their sub expressions.
-     * <p>
      * correcting above statement (2016-06-28): the target system is a DocDesign workspace.
      * As far as I see all epxressions here will be turned to XPath expressions which will
      * later be evaluated by some DocFamily XSL transformer engines. Thus, we do not really

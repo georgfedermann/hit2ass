@@ -8,13 +8,10 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 /**
  * This is a language symbol which is managed in a symbol table.
- * <p/>
  * A symbol is any identifier, like the names of variables, names of makros or names of functions.
- * <p/>
  * requirements into the symbol implementation: comparing symbols for equality has to be fast.
  * Calculating an int hash key for a symbol has to be fast. Comparing 2 symbols for "greater than"
  * has to be fast.
- * <p/>
  * Created by georg.federmann@poormanscastle.com on 08.04.2016.
  */
 public class Symbol {
@@ -64,4 +61,5 @@ public class Symbol {
     public String toString() {
         return ReflectionToStringBuilder.toString(this);
     }
+    
 }

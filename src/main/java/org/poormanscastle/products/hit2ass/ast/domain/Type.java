@@ -106,9 +106,9 @@ public enum Type {
      * when two differently typed operands occur within an expression, this method helps to determine what the
      * overall type of the parent expression has to be.
      *
-     * @param lhsType
-     * @param rhsType
-     * @return
+     * @param lhsType the type of the left hand side operand
+     * @param rhsType the type of the right hand side operand
+     * @return the inferred type given the types of the left hand and right hand side operands
      */
     public static Type getInferredType(Type lhsType, Type rhsType) {
         switch (lhsType.id | rhsType.id) {

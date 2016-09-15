@@ -19,7 +19,6 @@ import org.poormanscastle.products.hit2ass.transformer.EraseBlanksVisitor;
 
 /**
  * HitAssTools is meant to be used as cmd line tool to work with grammars.
- * <p/>
  * Created by georg.federmann@poormanscastle.com on 17.02.2016.
  */
 public final class HitAssTools {

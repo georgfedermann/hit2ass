@@ -3,7 +3,6 @@ package org.poormanscastle.products.hit2ass.ast.domain;
 /**
  * Implements aspects of the Hit/Clou AstTree, like semantic analysis, expression evaluation
  * and translation to DocDesign Workspaces.
- * <p/>
  * Created by georg.federmann@poormanscastle.com on 29.03.2016.
  */
 public interface AstItemVisitor {
@@ -11,7 +10,7 @@ public interface AstItemVisitor {
     /**
      * This method states whether the given Hit/Clou text component was found to be valid or not.
      *
-     * @return
+     * @return true if this AST can be processed, false if errors occur during processing.
      */
     boolean isAstValid();
 

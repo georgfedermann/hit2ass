@@ -13,11 +13,9 @@ import org.apache.commons.lang3.StringUtils;
  * inherited to nested environments. Environments can also be referenced as is the
  * case with e.g. static class members: T.b the field b in class T. So T is kind
  * of environment here.
- * <p/>
  * New environments are created when new scopes are added, like blocks of a conditional
  * statement. When a scope goes out of scope (end of a function, end of a block), the
  * whole environment with all its registered symbols (variables) gets removed.
- * <p/>
  * Created by georg.federmann@poormanscastle.com on 08.04.2016.
  */
 public class Environment {

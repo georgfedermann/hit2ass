@@ -6,7 +6,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Creates a new ListExpression from an existing ListExpression by
  * defining a sublist of the original list by giving a start index
  * and an end index.
- * <p>
  * Created by georg.federmann@poormanscastle.com on 5/3/16.
  */
 public class SubListExpression extends AbstractExpression<List> {
@@ -43,8 +42,8 @@ public class SubListExpression extends AbstractExpression<List> {
      * Convenience constructor for single element sub lists, where startIndex
      * equals endIndex.
      *
-     * @param codePosition
-     * @param startIndex
+     * @param codePosition the position within the source code
+     * @param startIndex the starting index of the sublist
      */
     public SubListExpression(CodePosition codePosition, Expression startIndex) {
         this(codePosition, startIndex, startIndex);

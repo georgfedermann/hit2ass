@@ -8,7 +8,7 @@ public class ClouBausteinImpl extends AbstractAstItem implements ClouBaustein {
     private final ClouBausteinElement clouBausteinElement;
 
     /**
-     * @param codePosition
+     * @param codePosition colum/row position
      * @param clouBausteinElement may be {@code null} if the ClouBaustein is empty.
      */
     public ClouBausteinImpl(CodePosition codePosition, ClouBausteinElement clouBausteinElement) {

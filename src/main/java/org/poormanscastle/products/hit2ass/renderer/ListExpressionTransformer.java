@@ -22,17 +22,14 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * Transforms a list expression into a sequence of DynamicContentReference instances.
- * <p>
  * E.g. in the statement #L newList D someOldList & anotherOldList & { 1, 2, 3, 4, 5 }
  * the list concatenation of two list objects and a statically created list needs to be
  * transformed into a sequence of hit2assext:appendList and hit2assext:addListValue
  * statements. These hit2assext statements are called via DynamicContentReference elements.
- * <p>
  * This type is a visitor that traverses the expression used to initialize the list
  * or to perform a list concatenation. The result is a list of DynamicContentReference
  * elements that can be added to the IRTree right after the creation of the given
  * list, or wherever it seems fit.
- * <p>
  * Created by georg.federmann@poormanscastle.org on 8/4/16.
  */
 public class ListExpressionTransformer {

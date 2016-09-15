@@ -11,7 +11,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * some default value. If no meaningful value can be given com declaration time, it
  * is custom to initialize variables to 0 or "", depending on if they shall be
  * interpreted as numeral or textual values.
- * <p/>
  * Created by georg.federmann@poormanscastle.com on 07.04.2016.
  */
 public abstract class DeclarationStatement extends AbstractAstItem implements Statement {

@@ -61,6 +61,11 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.5.1</version>
                 <configuration>
@@ -76,7 +81,8 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>org.poormanscastle.studies.compilers.utils.grammartools.ll1.LL1TableCreator</mainClass>
+                            <mainClass>org.poormanscastle.studies.compilers.utils.grammartools.ll1.LL1TableCreator
+                            </mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -144,19 +150,17 @@
             </plugin>
         </plugins>
     </reporting>
-    <developers>
-        <developer>
-            <id>georg.federmann</id>
-            <name>Georg Federmann</name>
-            <email>georg.federmann@gmail.com</email>
-            <organization>poormanscastle</organization>
-            <organizationUrl>http://www.poormanscastle.org</organizationUrl>
-            <roles>
-                <role>architect</role>
-                <role>developer</role>
-            </roles>
-        </developer>
-    </developers>
+    <distributionManagement>
+        <repository>
+            <id>hitass-releases</id>
+            <url>http://dev.federmann.co.at:37956/nexus/content/repositories/releases/</url>
+        </repository>
+    </distributionManagement>
+    <scm>
+        <connection>scm:git:https://github.com/georgfedermann/hit2ass.git</connection>
+        <url>https://github.com/georgfedermann/hit2ass</url>
+        <developerConnection>scm:git:https://github.com/georgfedermann/hit2ass.git</developerConnection>
+    </scm>
     <profiles>
         <profile>
             <id>dev</id>
@@ -182,4 +186,17 @@
             </build>
         </profile>
     </profiles>
+    <developers>
+        <developer>
+            <id>georg.federmann</id>
+            <name>Georg Federmann</name>
+            <email>georg.federmann@gmail.com</email>
+            <organization>poormanscastle</organization>
+            <organizationUrl>http://www.poormanscastle.org</organizationUrl>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+        </developer>
+    </developers>
 </project>

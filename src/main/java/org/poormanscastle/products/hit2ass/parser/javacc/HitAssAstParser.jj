@@ -406,6 +406,7 @@ TOKEN : {
 }
 
 <COMMAND_MODE_IF> TOKEN : {
+    < IF_COMMA : "," > |
     < IF_EQ : "=" > |
     < IF_EQ_STRICT : "==" > |
     < IF_OR : "oder" > |
@@ -929,7 +930,7 @@ ExpressionList EL() :
 ExpressionList ELPrime() :
 { Expression expression; ExpressionList expressionList; }
 {
-    ((<MS_COMMA>|<LS_BRACES_COMMA>|<DS_COMMA>|<AS_COMMA>|<SS_COMMA>|<PS_IDX_COMMA>|<PS_EL_COMMA>) expression = E() expressionList = ELPrime()
+    ((<MS_COMMA>|<LS_BRACES_COMMA>|<DS_COMMA>|<AS_COMMA>|<SS_COMMA>|<PS_IDX_COMMA>|<PS_EL_COMMA>|<IF_COMMA>) expression = E() expressionList = ELPrime()
     {
         return expressionList == null ? new LastExpressionList(expression) : new PairExpressionList(expression, expressionList);
     })?{ return null; }

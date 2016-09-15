@@ -22,7 +22,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * Transforms a list expression into a sequence of DynamicContentReference instances.
- * E.g. in the statement #L newList D someOldList & anotherOldList & { 1, 2, 3, 4, 5 }
+ * E.g. in the statement #L newList D someOldList &amp; anotherOldList &amp; { 1, 2, 3, 4, 5 }
  * the list concatenation of two list objects and a statically created list needs to be
  * transformed into a sequence of hit2assext:appendList and hit2assext:addListValue
  * statements. These hit2assext statements are called via DynamicContentReference elements.

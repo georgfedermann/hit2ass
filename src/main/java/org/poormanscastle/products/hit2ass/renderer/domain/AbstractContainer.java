@@ -82,7 +82,7 @@ public abstract class AbstractContainer implements Container {
      * by implementing this method extension classes can add their 2 cents
      * to the velocity context before rendering.
      *
-     * @param context
+     * @param context the velocity context
      */
     public abstract void setupContext(VelocityContext context);
 }

@@ -5,7 +5,7 @@ package org.poormanscastle.products.hit2ass.ast.domain;
  * Operators can be overloaded to operate on different types, like + operates on num, dec and text values.
  * There are binary and unary operators.
  * Operators can return the same value type as their operands, or different ones. like == operates on
- * all data types but always returns boolean values. < operates on int and double and returns boolean.
+ * all data types but always returns boolean values. &lt; operates on int and double and returns boolean.
  * Created by georg.federmann@poormanscastle.com on 23.02.2016.
  */
 public interface Operator {

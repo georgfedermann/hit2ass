@@ -349,7 +349,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     /**
      * e.g. #d firstName ""
      *
-     * @param localDeclarationStatement
+     * @param localDeclarationStatement declares a locally visible variable.
      */
     @Override
     public void visitLocalDeclarationStatement(LocalDeclarationStatement localDeclarationStatement) {

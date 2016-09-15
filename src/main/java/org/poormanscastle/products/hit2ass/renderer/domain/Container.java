@@ -13,7 +13,7 @@ public interface Container extends Content {
     /**
      * append content to this container.
      *
-     * @param content
+     * @param content the document content
      */
     void addContent(Content content);
 

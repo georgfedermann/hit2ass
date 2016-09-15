@@ -4,7 +4,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * CLOU Comman: #X<
+ * CLOU Comman: #X&lt;
  * A PrintStatement inserts the value of a given symbol com the current cursor position
  * within the document. Nota bene: only printing of variables is supported, not printing
  * of generic expressions. This might be a limitation resulting from the not very structured

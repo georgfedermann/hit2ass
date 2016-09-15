@@ -57,6 +57,8 @@ public interface Expression<T> extends AstItem {
      * of the HIT/CLOU2ASS transformer.
      * The decision was made against deleting this method because it is used by PrettyPrintVisitor
      * for static Expressions (like NumExpression, TextExpression, etc.)
+     * @param value backup a value for this expression. needed in interpreter mode which is not
+     *              available for the hit2ass project.
      */
     void setValue(T value);
 

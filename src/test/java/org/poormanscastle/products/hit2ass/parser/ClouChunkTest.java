@@ -28,6 +28,50 @@ import org.poormanscastle.products.hit2ass.transformer.EraseBlanksVisitor;
 public class ClouChunkTest {
 
     @Test
+    public void strangeVariableIfSequenceTest() throws Exception {
+        // #
+        // Some fixed text.@
+        // ^1( var ^ ^?
+        // #? a > 0 :
+        //    /J
+        //        yes@
+        //    /N
+        //        no@
+        // #
+        // More text.@
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("StrangeVariableIfSequence"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
+        assertEquals("Some fixed text.", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        assertTrue(elementList.getHead() instanceof SectionStatement);
+        elementList = elementList.getTail();
+        assertTrue(elementList.getHead() instanceof NewLine);
+        elementList = elementList.getTail();
+        assertTrue(elementList.getHead() instanceof NewLine);
+    }
+
+    @Test
+    public void strangeVariableTest() throws Exception {
+        // #
+        // Some fixed text
+        // ^1( var ^ ^?
+        // More text
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("StrangeVariable"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
+        assertEquals("Some fixed text", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        assertTrue(elementList.getHead() instanceof NewLine);
+        elementList = elementList.getTail();
+        assertTrue(elementList.getHead() instanceof NewLine);
+        elementList = elementList.getTail();
+        assertEquals("More text", ((FixedText) elementList.getHead()).getText());
+    }
+
+    @Test
     public void testMacroStatementFixedTextSequence() throws Exception {
         // #
         // #$ BOLD_ON Please note $# BOLD_OFF

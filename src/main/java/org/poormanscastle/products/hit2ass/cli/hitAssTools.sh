@@ -29,7 +29,7 @@ while getopts "ac:hvwx:" opt; do
       ARGS="w $ARGS"
       ;;
     x)
-      ARGS="x $OPTARG $ARGS"
+      ARGS="x $OPTARG $ARG"
       ;;
     :)
       # echo "Option -$OPTARG requires an argument." >&2

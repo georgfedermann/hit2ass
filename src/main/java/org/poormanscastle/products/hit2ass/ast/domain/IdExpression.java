@@ -1,9 +1,9 @@
 package org.poormanscastle.products.hit2ass.ast.domain;
 
-import org.apache.commons.lang3.StringUtils;
-
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * resolves to the value of a variable identified by an id.
@@ -64,6 +64,14 @@ public final class IdExpression extends AbstractExpression<Object> {
 //            return StringUtils.join(" substring(var:read('", id, "'), ", head.toXPathString(), ", ", tail.toXPathString(),
 //                    " + 1 - ", head.toXPathString(), " ) ");
             return StringUtils.join(" substring(hit2assext:getScalarVariableValue(var:read('renderSessionUuid'), '", id, "'), ",
+                    head.toXPathString(), ", ", tail.toXPathString(), " + 1 - ", head.toXPathString(), " ) ");
+        } else if ((idxExp1 instanceof LastExpressionList) && (idxExp2 instanceof PairExpressionList)) {
+            // this is the syntax to substring the value at a given index. As in myStringArray[5][1,5]
+            PairExpressionList head = (PairExpressionList) idxExp2;
+            checkState(head.getTail() instanceof LastExpressionList);
+            LastExpressionList tail = (LastExpressionList) head.getTail();
+
+            return StringUtils.join(" substring( hit2assext:getListValueAt(var:read('renderSessionUuid'), '", id, "', ", idxExp1.toXPathString(), "), ",
                     head.toXPathString(), ", ", tail.toXPathString(), " + 1 - ", head.toXPathString(), " ) ");
         } else {
             throw new IllegalStateException(StringUtils.join("Cannot create an XPath expression for this IdExpression: ", toString()));

@@ -19,7 +19,7 @@ public class DocFamUtils {
      * DocFamily Cockpit Elemente haben eine ID, die sich aus dem Datum und der Uhrzeit der Erzeugung des
      * Elements, und einem nachfolgenden, nicht näher spezfizierten Teil zusammen setzt.
      *
-     * @return
+     * @return creates a cockpit element id which tries to be similar to IDs created by DocFamily DocRepo.
      */
     public String getCockpitElementId() {
         return StringUtils.join(dateFormatObjectId.format(new Date()), ".",

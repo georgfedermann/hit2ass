@@ -4,7 +4,6 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * evaluates to an integer expression.
- * <p/>
  * Created by georg.federmann@poormanscastle.com on 17.02.2016.
  */
 public final class NumExpression extends AbstractExpression<Integer> {

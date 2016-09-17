@@ -3,7 +3,6 @@ package org.poormanscastle.products.hit2ass.ast.domain;
 /**
  * Enumerates the various states an expression can be in during and
  * after semantic analysis of the AST.
- * <p/>
  * Created by georg.federmann@poormanscastle.com on 05.04.2016.
  */
 public enum ExpressionState {
@@ -12,7 +11,6 @@ public enum ExpressionState {
      * operands are compatible, i.e. they have equal types, or their types can
      * automatically be cast to fit by the compiler.
      * e.g. boolean and text, or double and int.
-     * <p/>
      * operator and operands are compatible.
      */
     VALID,

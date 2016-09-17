@@ -4,18 +4,15 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * CLOU Comman: #X<
+ * CLOU Comman: #X&lt;
  * A PrintStatement inserts the value of a given symbol com the current cursor position
  * within the document. Nota bene: only printing of variables is supported, not printing
  * of generic expressions. This might be a limitation resulting from the not very structured
  * approach chosen in the implementation of the HIT/CLOU templating language.
- * <p>
  * Sample code from an actual HIT/CLOU text component:
- * <p>
  * Wir teilen Ihnen mit, dass Ihre Zahlung
- * von #> W #> zahlung
- * am #> eingdat bei uns eingelangt ist.
- * <p>
+ * von #&gt; W #&gt; zahlung
+ * am #&gt; eingdat bei uns eingelangt ist.
  * Created by georg.federmann@poormanscastle.com on 4/28/16.
  */
 public final class PrintStatement extends AbstractAstItem implements Statement {

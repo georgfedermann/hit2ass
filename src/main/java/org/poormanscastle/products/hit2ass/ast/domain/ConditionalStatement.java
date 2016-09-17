@@ -4,7 +4,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Represents a CLOU IF statement.
- * <p/>
  * Created by georg.federmann@poormanscastle.com on 01.04.2016.
  */
 public final class ConditionalStatement extends AbstractAstItem implements Statement {

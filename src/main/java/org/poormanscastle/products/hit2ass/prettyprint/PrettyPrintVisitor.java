@@ -56,7 +56,6 @@ import org.poormanscastle.products.hit2ass.ast.domain.ZStatement;
 
 /**
  * creates a graphical view of the AST of an v0.1 grammar program using DOT syntax.
- * <p/>
  * Created by georg.federmann@poormanscastle.com on 18.02.2016.
  */
 public class PrettyPrintVisitor extends AstItemVisitorAdapter {

@@ -10,7 +10,6 @@ import static com.google.common.base.Preconditions.checkArgument;
  * This statement gets hooked into the AST as is. It's the duty of a later
  * phase of AST processing to replace this statement with the actual CLOU
  * text component, after it was parsed into an AST and processed itself, of course.
- * <p/>
  * Created by georg.federmann@poormanscastle.com on 12.04.2016.
  */
 public class IncludeBausteinStatement extends AbstractAstItem implements Statement {

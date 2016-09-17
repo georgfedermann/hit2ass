@@ -8,13 +8,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * In a SymbolTable, each variable name and formal-parameter name are bound to their metadata.
  * In the case of HIT/CLOU textcomponents, those are the formatting of the respective variables,
  * since HIT/CLOU does not support typed variables.
- * <p/>
  * Each function is bound to its parameters, its result type and its local variables.
- * <p/>
  * Each class name is bound to its variable declarations and its method declarations.
- * <p/>
  * The Binding type is capable of storing all of this information.
- * <p/>
  * Created by georg.federmann@poormanscastle.com on 08.04.2016.
  */
 public class Binding {

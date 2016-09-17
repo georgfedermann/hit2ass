@@ -7,7 +7,6 @@ import static com.google.common.base.Preconditions.checkState;
 
 /**
  * resolves to the value of a variable identified by an id.
- * <p/>
  * Created by georg.federmann@poormanscastle.com on 17.02.2016.
  */
 public final class IdExpression extends AbstractExpression<Object> {

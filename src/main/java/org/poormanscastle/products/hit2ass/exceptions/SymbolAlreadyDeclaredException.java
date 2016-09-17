@@ -3,7 +3,6 @@ package org.poormanscastle.products.hit2ass.exceptions;
 /**
  * This exception type shall be used to indicate that a symbol was already declared
  * in a given scope and taht the current action cannot complete.
- * <p/>
  * Created by georg.federmann@poormanscastle.com on 08.04.2016.
  */
 public class SymbolAlreadyDeclaredException extends HitAssTransformerException {

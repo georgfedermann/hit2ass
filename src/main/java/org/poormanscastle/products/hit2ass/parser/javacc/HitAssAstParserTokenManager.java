@@ -6,12 +6,12 @@ import org.poormanscastle.products.hit2ass.exceptions.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-/** Token Manager. */
+/* Token Manager. */
 @SuppressWarnings("unused")public class HitAssAstParserTokenManager implements HitAssAstParserConstants {
 
-  /** Debug output. */
+  /* Debug output. */
   public  java.io.PrintStream debugStream = System.out;
-  /** Set debug output. */
+  /* Set debug output. */
   public  void setDebugStream(java.io.PrintStream ds) { debugStream = ds; }
 private final int jjStopStringLiteralDfa_21(int pos, long active0, long active1, long active2, long active3, long active4, long active5){
    switch (pos)
@@ -5361,7 +5361,7 @@ static final int[] jjnextStates = {
    6, 5, 15, 17, 18, 20, 7, 8, 10, 11, 4, 6, 7, 
 };
 
-/** Token literal values. */
+/* Token literal values. */
 public static final String[] jjstrLiteralImages = {
 "", null, null, null, null, null, null, null, null, null, null, null, 
 "\43\77", null, null, null, "\43", "\100", "\43\123", "\43\127", "\43\103", null, 
@@ -5431,7 +5431,7 @@ int jjround;
 int jjmatchedPos;
 int jjmatchedKind;
 
-/** Get the next Token. */
+/* Get the next Token. */
 public Token getNextToken() 
 {
   Token specialToken = null;
@@ -5763,7 +5763,7 @@ private void jjCheckNAddStates(int start, int end)
    } while (start++ != end);
 }
 
-    /** Constructor. */
+    /* Constructor. */
     public HitAssAstParserTokenManager(SimpleCharStream stream){
 
       if (SimpleCharStream.staticFlag)
@@ -5772,13 +5772,13 @@ private void jjCheckNAddStates(int start, int end)
     input_stream = stream;
   }
 
-  /** Constructor. */
+  /* Constructor. */
   public HitAssAstParserTokenManager (SimpleCharStream stream, int lexState){
     ReInit(stream);
     SwitchTo(lexState);
   }
 
-  /** Reinitialise parser. */
+  /* Reinitialise parser. */
   public void ReInit(SimpleCharStream stream)
   {
     jjmatchedPos = jjnewStateCnt = 0;
@@ -5795,14 +5795,14 @@ private void jjCheckNAddStates(int start, int end)
       jjrounds[i] = 0x80000000;
   }
 
-  /** Reinitialise parser. */
+  /* Reinitialise parser. */
   public void ReInit(SimpleCharStream stream, int lexState)
   {
     ReInit(stream);
     SwitchTo(lexState);
   }
 
-  /** Switch to specified lex state. */
+  /* Switch to specified lex state. */
   public void SwitchTo(int lexState)
   {
     if (lexState >= 23 || lexState < 0)
@@ -5811,7 +5811,7 @@ private void jjCheckNAddStates(int start, int end)
       curLexState = lexState;
   }
 
-/** Lexer state names. */
+/* Lexer state names. */
 public static final String[] lexStateNames = {
    "DEFAULT",
    "TXT_MODE",
@@ -5838,7 +5838,7 @@ public static final String[] lexStateNames = {
    "COMMAND_MODE_HC",
 };
 
-/** Lex State array. */
+/* Lex State array. */
 public static final int[] jjnewLexState = {
    -1, 1, 6, 7, 6, 6, 6, 6, 1, -1, 1, -1, 17, -1, -1, -1, -1, -1, 17, 18, 3, -1, 16, 22, 2, 
    2, 2, 2, 2, 19, 20, 4, 10, 9, 8, 11, 15, -1, -1, 1, -1, -1, -1, -1, -1, 1, 1, -1, -1, -1, 

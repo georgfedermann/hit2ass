@@ -5,13 +5,11 @@ import org.apache.commons.lang3.StringUtils;
 import static com.google.common.base.Preconditions.checkArgument;
 
 /**
- * CLOU Command: #X< variableName
- * This is the mapping from #X< (which stands for: read sequentially from file) to Dynamic values
+ * CLOU Command: #X&lt; variableName
+ * This is the mapping from #X&lt; (which stands for: read sequentially from file) to Dynamic values
  * in DocDesign Workspaces / Templates.
- * <p>
  * To map this element to Workspaces, I will need to find a way to map the strategy of
  * sequential reading from a data file in HIT/CLOU to XPaths in DocDesign.
- * <p>
  * Created by georg.federmann@poormanscastle.com on 4/14/16.
  */
 public class DynamicValue extends AbstractAstItem implements Statement {

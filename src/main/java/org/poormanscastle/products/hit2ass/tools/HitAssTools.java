@@ -13,23 +13,17 @@ import java.io.InputStream;
 /**
  * provides access to HIT / CLOU Bausteine etc.
  * Nota bene: for this to work, the system property hit2ass.clou.path has to be set.
- * <p>
  * Created by georg.federmann@poormanscastle.com on 4/27/16.
  */
 public final class HitAssTools {
 
     /**
-     * This field has to be made configurable.
-     */
-//    private static String pathToClouBausteinFolder = "/home/georg/pmc/projects/AT/products/HitAss/reverseEngineering/hit/Bau-Zentral/ba/hit2assentis";
-
-    /**
      * load a HIT / CLOU text component from the given path.
      *
-     * @param path
-     * @param bausteinName
-     * @return
-     * @throws ClouBausteinIoException
+     * @param path path to the HIT/CLOU Baustein
+     * @param bausteinName the name of the baustein
+     * @return an input stream from where the baustein data can be read
+     * @throws ClouBausteinIoException in case of errors
      */
     public final static InputStream getClouBausteinAsInputStream(String path, String bausteinName) throws ClouBausteinIoException {
         try {
@@ -43,9 +37,9 @@ public final class HitAssTools {
     /**
      * load a HIT / CLOU text component given its name.
      *
-     * @param bausteinName
-     * @return
-     * @throws ClouBausteinIoException
+     * @param bausteinName the name of the baustein
+     * @return an input stream from where the baustein data can be read
+     * @throws ClouBausteinIoException in case of errors
      */
     public static InputStream getClouBausteinAsInputStream(String bausteinName) throws ClouBausteinIoException {
         String path = System.getProperty("hit2ass.clou.path");

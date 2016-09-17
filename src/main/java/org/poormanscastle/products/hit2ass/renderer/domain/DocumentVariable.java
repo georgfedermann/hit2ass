@@ -4,11 +4,9 @@ import org.apache.velocity.VelocityContext;
 
 /**
  * Represents the type com.assentis.cockpit.bo.BoDocumentVariable.
- * <p>
  * This type provides support for imperial variables. i.e. variables whose
  * values can change in the course of execution. Which breaks the concept
  * of declarative / functional XSLT, I guess.
- * <p>
  * Created by georg.federmann@poormanscastle.com on 6/28/16.
  */
 public class DocumentVariable extends AbstractContainer {

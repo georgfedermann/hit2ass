@@ -58,7 +58,6 @@ import org.poormanscastle.products.hit2ass.renderer.domain.WorkspaceContainer;
  * workspace, paragraph, IfElseParagraph, etc. In the end, the workspace object can be
  * serialized to string using its getContent() method. This string contains the acr XML
  * that can be imported into DocDesign as a DocDesign Workspace.
- * <p>
  * Created by georg.federmann@poormanscastle.com on 5/9/16.
  */
 public final class IRTransformer extends AstItemVisitorAdapter {
@@ -100,7 +99,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
      * etc. To keep configurations like fontweight, the spin-off transformer will
      * inherit its parents configuration.
      *
-     * @return
+     * @return a new IRTransformer
      */
     private IRTransformer spinOff() {
         IRTransformer transformer = new IRTransformer();
@@ -304,9 +303,9 @@ public final class IRTransformer extends AstItemVisitorAdapter {
 
     /**
      * read a value from the user data XML and write it to a hit2assext scalar variable.
-     * e.g. #X< firstName
+     * e.g. #X&lt; firstName
      *
-     * @param dynamicValue
+     * @param dynamicValue stands for an element that is retrieved from the user data XML document
      */
     @Override
     public void visitDynamicValue(DynamicValue dynamicValue) {
@@ -333,7 +332,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     /**
      * e.g. #D firstName ""
      *
-     * @param globalDeclarationStatement
+     * @param globalDeclarationStatement declaration of a global variable
      */
     @Override
     public void visitGlobalDeclarationStatement(GlobalDeclarationStatement globalDeclarationStatement) {
@@ -350,7 +349,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     /**
      * e.g. #d firstName ""
      *
-     * @param localDeclarationStatement
+     * @param localDeclarationStatement declares a locally visible variable.
      */
     @Override
     public void visitLocalDeclarationStatement(LocalDeclarationStatement localDeclarationStatement) {

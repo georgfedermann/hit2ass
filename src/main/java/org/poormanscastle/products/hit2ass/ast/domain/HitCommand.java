@@ -2,7 +2,6 @@ package org.poormanscastle.products.hit2ass.ast.domain;
 
 /**
  * Represents the integration of HIT commands into CLOU text components.
- * <p/>
  * Created by georg.federmann@poormanscastle.com on 07.04.2016.
  */
 public enum HitCommand {

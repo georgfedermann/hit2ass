@@ -2,10 +2,8 @@ package org.poormanscastle.products.hit2ass.ast.domain;
 
 /**
  * These categories help strcuture operators in groups that can behave differently under certain circumstances.
- * <p/>
  * Imtroduced for the return value types of unary and binary operators: arithmetic operators evaluate to the value
  * type of the operands, relational operators to boolean values, etc.
- * <p/>
  * Created by georg.federmann@poormanscastle.com on 23.02.2016.
  */
 public enum OperatorCategory {

@@ -2913,12 +2913,12 @@ if(idxExp1 == null){
     return false;
   }
 
-  /** Generated Token Manager. */
+  /* Generated Token Manager. */
   public HitAssAstParserTokenManager token_source;
   SimpleCharStream jj_input_stream;
-  /** Current token. */
+  /* Current token. */
   public Token token;
-  /** Next token. */
+  /* Next token. */
   public Token jj_nt;
   private int jj_ntk;
   private Token jj_scanpos, jj_lastpos;
@@ -2991,11 +2991,11 @@ if(idxExp1 == null){
   private boolean jj_rescan = false;
   private int jj_gc = 0;
 
-  /** Constructor with InputStream. */
+  /* Constructor with InputStream. */
   public HitAssAstParser(java.io.InputStream stream) {
      this(stream, null);
   }
-  /** Constructor with InputStream and supplied encoding */
+  /* Constructor with InputStream and supplied encoding */
   public HitAssAstParser(java.io.InputStream stream, String encoding) {
     try { jj_input_stream = new SimpleCharStream(stream, encoding, 1, 1); } catch(java.io.UnsupportedEncodingException e) { throw new RuntimeException(e); }
     token_source = new HitAssAstParserTokenManager(jj_input_stream);
@@ -3006,11 +3006,11 @@ if(idxExp1 == null){
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
-  /** Reinitialise. */
+  /* Reinitialise. */
   public void ReInit(java.io.InputStream stream) {
      ReInit(stream, null);
   }
-  /** Reinitialise. */
+  /* Reinitialise. */
   public void ReInit(java.io.InputStream stream, String encoding) {
     try { jj_input_stream.ReInit(stream, encoding, 1, 1); } catch(java.io.UnsupportedEncodingException e) { throw new RuntimeException(e); }
     token_source.ReInit(jj_input_stream);
@@ -3021,7 +3021,7 @@ if(idxExp1 == null){
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
-  /** Constructor. */
+  /* Constructor. */
   public HitAssAstParser(java.io.Reader stream) {
     jj_input_stream = new SimpleCharStream(stream, 1, 1);
     token_source = new HitAssAstParserTokenManager(jj_input_stream);
@@ -3032,7 +3032,7 @@ if(idxExp1 == null){
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
-  /** Reinitialise. */
+  /* Reinitialise. */
   public void ReInit(java.io.Reader stream) {
     jj_input_stream.ReInit(stream, 1, 1);
     token_source.ReInit(jj_input_stream);
@@ -3043,7 +3043,7 @@ if(idxExp1 == null){
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
-  /** Constructor with generated Token Manager. */
+  /* Constructor with generated Token Manager. */
   public HitAssAstParser(HitAssAstParserTokenManager tm) {
     token_source = tm;
     token = new Token();
@@ -3053,7 +3053,7 @@ if(idxExp1 == null){
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
-  /** Reinitialise. */
+  /* Reinitialise. */
   public void ReInit(HitAssAstParserTokenManager tm) {
     token_source = tm;
     token = new Token();
@@ -3112,7 +3112,7 @@ if(idxExp1 == null){
   }
 
 
-/** Get the next Token. */
+/* Get the next Token. */
   final public Token getNextToken() {
     if (token.next != null) token = token.next;
     else token = token.next = token_source.getNextToken();
@@ -3121,7 +3121,7 @@ if(idxExp1 == null){
     return token;
   }
 
-/** Get the specific Token. */
+/* Get the specific Token. */
   final public Token getToken(int index) {
     Token t = token;
     for (int i = 0; i < index; i++) {
@@ -3169,7 +3169,7 @@ if(idxExp1 == null){
     }
   }
 
-  /** Generate ParseException. */
+  /* Generate ParseException. */
   public ParseException generateParseException() {
     jj_expentries.clear();
     boolean[] la1tokens = new boolean[361];
@@ -3236,11 +3236,11 @@ if(idxExp1 == null){
     return new ParseException(token, exptokseq, tokenImage);
   }
 
-  /** Enable tracing. */
+  /* Enable tracing. */
   final public void enable_tracing() {
   }
 
-  /** Disable tracing. */
+  /* Disable tracing. */
   final public void disable_tracing() {
   }
 

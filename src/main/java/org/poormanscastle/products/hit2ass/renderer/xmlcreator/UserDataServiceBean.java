@@ -20,8 +20,7 @@ import org.w3c.dom.Element;
 
 /**
  * Creates a generic XML from a HIT / CLOU business data input text file, by embedding the text data line by line
- * into <zeile /> elements in a new XML document.
- * <p>
+ * into &lt;zeile /&gt; elements in a new XML document.
  * Created by georg.federmann@poormanscastle.com on 7/8/16.
  */
 public class UserDataServiceBean implements UserDataService {

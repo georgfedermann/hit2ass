@@ -4,11 +4,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Represents the HIT / CLOU statement #^
- * <p>
  * sample: #^"RETURN"
- * <p>
  * Represents the integration of HIT commands into CLOU text components.
- * <p/>
  * Created by georg.federmann@poormanscastle.com on 07.04.2016.
  */
 public class HitCommandStatement extends AbstractAstItem implements Statement {

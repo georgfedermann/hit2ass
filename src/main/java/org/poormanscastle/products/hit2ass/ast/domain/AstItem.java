@@ -4,11 +4,9 @@ import java.io.Serializable;
 
 /**
  * An AstItem is part of an abstract syntax tree representing a HIT/CLOU text component.
- * <p/>
  * Additionally, this interface supports traversability for implementations of an AstVisitor,
  * implementing different aspects of the HIT/CLOU AstTree, like semantic analysis,
  * expression evaluation, and translation to DocDesign workspaces.
- * <p/>
  * Created by georg.federmann@poormanscastle.com on 29.03.2016.
  */
 public interface AstItem extends Serializable {

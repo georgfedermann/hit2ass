@@ -1,5 +1,7 @@
 package org.poormanscastle.products.hit2ass.transformer;
 
+import static com.google.common.base.Preconditions.checkState;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.poormanscastle.products.hit2ass.ast.domain.AstItemVisitorAdapter;
@@ -39,8 +41,10 @@ public class ClouBausteinMergerVisitor extends AstItemVisitorAdapter {
                 return;
             }
 
+            String encoding = System.getProperty("hit2ass.clou.encoding");
+            checkState(!StringUtils.isBlank(encoding), "baustein encoding not defined. Please set system property hit2ass.clou.encoding!");
             ClouBaustein baustein = new HitAssAstParser(
-                    HitAssTools.getClouBausteinAsInputStream(bausteinName), System.getProperty("hit2ass.clou.encoding")).CB();
+                    HitAssTools.getClouBausteinAsInputStream(bausteinName), encoding).CB();
             includeBausteinStatement.setContent(baustein.getClouBausteinElement());
         } catch (Throwable e) {
             throw new BausteinMergerException(StringUtils.join("Could not parse child Baustein ", includeBausteinStatement.getPathToBaustein(), " because: ", e.getMessage()), e);

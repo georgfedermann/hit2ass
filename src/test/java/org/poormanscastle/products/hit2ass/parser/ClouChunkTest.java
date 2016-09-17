@@ -28,6 +28,29 @@ import org.poormanscastle.products.hit2ass.transformer.EraseBlanksVisitor;
 public class ClouChunkTest {
 
     @Test
+    public void IndexedVariableSubstring() throws Exception {
+        //  #
+        //  #? stringArray[1][1,2] = "EN":
+        //      /J
+        //  This means war.
+        //      /N
+        //  Das bedeutet Krieg.
+        //  #
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("IndexedVariableSubstring"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
+        assertTrue(elementList.getHead() instanceof ConditionalStatement);
+
+        assertEquals(" This means war.", ((FixedText) ((ConditionalStatement) elementList.getHead()).getThenElement().getTail().getHead()).getText());
+        assertEquals(" Das bedeutet Krieg.", ((FixedText) ((ConditionalStatement) elementList.getHead()).getElseElement().getTail().getHead()).getText());
+
+        elementList = elementList.getTail();
+        assertTrue(elementList.getHead() instanceof NewLine);
+
+    }
+
+    @Test
     public void strangeVariableIfSequenceTest() throws Exception {
         // #
         // Some fixed text.@

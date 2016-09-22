@@ -932,6 +932,10 @@ ExpressionList ELPrime() :
 {
     ((<MS_COMMA>|<LS_BRACES_COMMA>|<DS_COMMA>|<AS_COMMA>|<SS_COMMA>|<PS_IDX_COMMA>|<PS_EL_COMMA>|<IF_COMMA>) expression = E() expressionList = ELPrime()
     {
+        if(expression == null){
+            Token token = getNextToken();
+            throw new RuntimeException("Expression is null at " + token.beginLine + "/" + token.beginColumn);
+        }
         return expressionList == null ? new LastExpressionList(expression) : new PairExpressionList(expression, expressionList);
     })?{ return null; }
 }

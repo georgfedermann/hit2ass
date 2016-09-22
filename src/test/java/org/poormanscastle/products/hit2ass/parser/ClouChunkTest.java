@@ -26,6 +26,19 @@ import org.poormanscastle.products.hit2ass.transformer.EraseBlanksVisitor;
  * Created by georg on 28.08.16.
  */
 public class ClouChunkTest {
+    
+    //@Test
+    public void localVariableTest() throws Exception{
+        //  #
+        //  #? flag <> 4
+        //      /J
+        //          #d varName "value"
+        //  #
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("LocalVariableDeclaration"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        
+    }
 
     @Test
     public void IndexedVariableSubstring() throws Exception {

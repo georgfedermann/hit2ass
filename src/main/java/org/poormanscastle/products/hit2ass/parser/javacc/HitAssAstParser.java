@@ -495,7 +495,11 @@ NewLine PSNL() throws ParseException {Token token;
       }
       expression = E();
       expressionList = ELPrime();
-{if ("" != null) return expressionList == null ? new LastExpressionList(expression) : new PairExpressionList(expression, expressionList);}
+if(expression == null){
+            Token token = getNextToken();
+            {if (true) throw new RuntimeException("Expression is null at " + token.beginLine + "/" + token.beginColumn);}
+        }
+        {if ("" != null) return expressionList == null ? new LastExpressionList(expression) : new PairExpressionList(expression, expressionList);}
       break;
       }
     default:
@@ -2086,23 +2090,6 @@ if(idxExp1 == null){
     finally { jj_save(5, xla); }
   }
 
-  private boolean jj_3R_10()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_scan_token(203)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(261)) return true;
-    }
-    return false;
-  }
-
-  private boolean jj_3_3()
- {
-    if (jj_3R_5()) return true;
-    return false;
-  }
-
   private boolean jj_3R_22()
  {
     Token xsp;
@@ -2149,6 +2136,12 @@ if(idxExp1 == null){
     return false;
   }
 
+  private boolean jj_3_3()
+ {
+    if (jj_3R_5()) return true;
+    return false;
+  }
+
   private boolean jj_3R_7()
  {
     Token xsp;
@@ -2162,6 +2155,29 @@ if(idxExp1 == null){
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_22()) jj_scanpos = xsp;
+    return false;
+  }
+
+  private boolean jj_3R_50()
+ {
+    if (jj_scan_token(PS_IDX_CHECK_LBRACKET)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_32()
+ {
+    if (jj_3R_38()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_25()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_32()) {
+    jj_scanpos = xsp;
+    if (jj_3R_33()) return true;
+    }
     return false;
   }
 
@@ -2194,40 +2210,11 @@ if(idxExp1 == null){
     return false;
   }
 
-  private boolean jj_3R_50()
- {
-    if (jj_scan_token(PS_IDX_CHECK_LBRACKET)) return true;
-    return false;
-  }
-
   private boolean jj_3R_52()
  {
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_53()) jj_scanpos = xsp;
-    return false;
-  }
-
-  private boolean jj_3R_32()
- {
-    if (jj_3R_38()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_25()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_32()) {
-    jj_scanpos = xsp;
-    if (jj_3R_33()) return true;
-    }
-    return false;
-  }
-
-  private boolean jj_3_1()
- {
-    if (jj_3R_3()) return true;
     return false;
   }
 
@@ -2257,17 +2244,16 @@ if(idxExp1 == null){
     return false;
   }
 
+  private boolean jj_3_1()
+ {
+    if (jj_3R_3()) return true;
+    return false;
+  }
+
   private boolean jj_3R_14()
  {
     if (jj_3R_17()) return true;
     if (jj_3R_18()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_51()
- {
-    if (jj_3R_48()) return true;
-    if (jj_3R_52()) return true;
     return false;
   }
 
@@ -2291,6 +2277,13 @@ if(idxExp1 == null){
     }
     }
     }
+    return false;
+  }
+
+  private boolean jj_3R_51()
+ {
+    if (jj_3R_48()) return true;
+    if (jj_3R_52()) return true;
     return false;
   }
 
@@ -2627,20 +2620,20 @@ if(idxExp1 == null){
     return false;
   }
 
+  private boolean jj_3R_21()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_27()) jj_scanpos = xsp;
+    return false;
+  }
+
   private boolean jj_3R_3()
  {
     if (jj_scan_token(OF)) return true;
     if (jj_scan_token(FILE_TEXT)) return true;
     if (jj_scan_token(FILE_OPEN)) return true;
     if (jj_scan_token(FILE_READ)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_21()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_27()) jj_scanpos = xsp;
     return false;
   }
 
@@ -2894,12 +2887,6 @@ if(idxExp1 == null){
     return false;
   }
 
-  private boolean jj_3_2()
- {
-    if (jj_3R_4()) return true;
-    return false;
-  }
-
   private boolean jj_3R_29()
  {
     Token xsp;
@@ -2918,6 +2905,23 @@ if(idxExp1 == null){
  {
     if (jj_scan_token(LS_LBRACE)) return true;
     if (jj_scan_token(LS_BRACES_RBRACE)) return true;
+    return false;
+  }
+
+  private boolean jj_3_2()
+ {
+    if (jj_3R_4()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_10()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(203)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(261)) return true;
+    }
     return false;
   }
 

@@ -4,6 +4,11 @@ import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.ByteArrayInputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import org.junit.Test;
 import org.poormanscastle.products.hit2ass.TestUtils;
 import org.poormanscastle.products.hit2ass.ast.domain.AstItemVisitor;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouBaustein;
@@ -16,6 +21,12 @@ public class RudimentaryParserTests {
 
     HitAssAstParser parser;
     private AstItemVisitor blanksVisitor = new EraseBlanksVisitor();
+
+    @Test
+    public void testClouBaustein() throws Exception {
+        byte[] workspaceData = Files.readAllBytes(Paths.get("/Users/georg/vms/UbuntuWork/shared/hitass/reverseEngineering/hit2assentis_reworked/B.ah005"));
+        ClouBaustein clouBaustein = new HitAssAstParser(new ByteArrayInputStream(workspaceData), "ISO8859_1").CB();
+    }
 
     // @Test
     public void testEmptyClouBaustein() throws Exception {

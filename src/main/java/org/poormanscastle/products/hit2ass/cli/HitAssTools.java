@@ -56,9 +56,10 @@ public final class HitAssTools {
                 }
             } while (counter < args.length);
         } catch (Exception exception) {
-            System.err.println(StringUtils.join("An exception occurred during processing: ",
-                    exception.toString(), " - Please see log file hit2ass.log for details."));
-            logger.error(exception, exception);
+            String errMsg = StringUtils.join("An exception occurred during processing: ",
+                    exception.toString(), " - Please see log file hit2ass.log for details.");
+            System.err.println(errMsg);
+            logger.error(errMsg, exception);
         }
     }
 

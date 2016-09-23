@@ -2,7 +2,6 @@ package org.poormanscastle.products.hit2ass.exceptions;
 
 /**
  * This exception indicates problems when resolving logical text component names
- * <p>
  * Created by georg.federmann@poormanscastle.com on 4/27/16.
  */
 public class ClouBausteinIoException extends HitAssTransformerException {

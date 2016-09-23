@@ -185,7 +185,11 @@ TOKEN : {
     "\t"
 }
 <COMMAND_MODE_DV> TOKEN : {
-    < DV_ID : [ "_", "a"-"z", "A"-"Z"]([ "_", "a"-"z", "A"-"Z", "0"-"9" ])* > : TXT_MODE
+    < DV_ID : [ "_", "a"-"z", "A"-"Z", "\u00a4", "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc", 
+                              "\u00c3", "\u00a0", "\u00bc", "\u00b6", "\u0084", "\u0096", "\u009c", "\u009f"]([ 
+                              "_",  "a"-"z", "A"-"Z", "0"-"9", "\u00a4", "\u00e4", "\u00f6", "\u00fc", "\u00df", 
+                              "\u00c3", "\u00c4", "\u00d6", "\u00dc", "\u00a0", "\u00bc", "\u00b6", "\u0084", "\u0096", "\u009c",
+                              "\u009f"])* > : TXT_MODE
 }
 <COMMAND_MODE_DV> SKIP : {
     "\n" | "\r" | "\t" | " "
@@ -236,8 +240,11 @@ TOKEN : {
     < PS_RPAREN : ")" > |
     < PS_NUM : (["0"-"9"])+ > |
     < PS_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
-    < PS_ID : [ "_", "a"-"z", "A"-"Z"](["_", "a"-"z", "A"-"Z", "0"-"9",
-            "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc", "\u00a0" ])* > : COMMAND_MODE_PS_IDX_CHECK |
+    < PS_ID : [ "_", "a"-"z", "A"-"Z", "\u00a4", "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc", 
+                              "\u00c3", "\u00a0", "\u00bc", "\u00b6", "\u0084", "\u0096", "\u009c", "\u009f"]([ 
+                              "_",  "a"-"z", "A"-"Z", "0"-"9", "\u00a4", "\u00e4", "\u00f6", "\u00fc", "\u00df", 
+                              "\u00c3", "\u00c4", "\u00d6", "\u00dc", "\u00a0", "\u00bc", "\u00b6", "\u0084", "\u0096", "\u009c",
+                              "\u009f"])* > : COMMAND_MODE_PS_IDX_CHECK |
     < PS_TEXT : "\""
         (
             "\\" ~[]
@@ -272,8 +279,11 @@ TOKEN : {
     < PS_EL_RPAREN : ")" > : TXT_MODE |
     < PS_EL_NUM : (["0"-"9"])+ > |
     < PS_EL_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
-    < PS_EL_ID : [ "_", "a"-"z", "A"-"Z"](["_", "a"-"z", "A"-"Z", "0"-"9",
-            "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc", "\u00a0" ])* > |
+    < PS_EL_ID : [ "_", "a"-"z", "A"-"Z", "\u00a4", "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc", 
+                                 "\u00c3", "\u00a0", "\u00bc", "\u00b6", "\u0084", "\u0096", "\u009c", "\u009f"]([ 
+                                 "_",  "a"-"z", "A"-"Z", "0"-"9", "\u00a4", "\u00e4", "\u00f6", "\u00fc", "\u00df", 
+                                 "\u00c3", "\u00c4", "\u00d6", "\u00dc", "\u00a0", "\u00bc", "\u00b6", "\u0084", "\u0096", "\u009c",
+                                 "\u009f"])* > |
     < PS_EL_TEXT : "\""
         (
             "\\" ~[]
@@ -324,8 +334,11 @@ TOKEN : {
     < PS_IDX_COMMA : "," > |
     < PS_IDX_NUM : (["0"-"9"])+ > |
     < PS_IDX_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
-    < PS_IDX_ID : [ "_", "a"-"z", "A"-"Z"](["_", ",", "a"-"z", "A"-"Z", "0"-"9",
-        "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc", "\u00a0" ])* > |
+    < PS_IDX_ID : [ "_", "a"-"z", "A"-"Z", "\u00a4", "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc", 
+                                  "\u00c3", "\u00a0", "\u00bc", "\u00b6", "\u0084", "\u0096", "\u009c", "\u009f"]([ 
+                                  "_",  "a"-"z", "A"-"Z", "0"-"9", "\u00a4", "\u00e4", "\u00f6", "\u00fc", "\u00df", 
+                                  "\u00c3", "\u00c4", "\u00d6", "\u00dc", "\u00a0", "\u00bc", "\u00b6", "\u0084", "\u0096", "\u009c",
+                                  "\u009f"])* > |
     < PS_IDX_TEXT : "\""
         (
             "\\" ~[]
@@ -346,11 +359,19 @@ TOKEN : {
     < SS_LBRACKET : "[" > |
     < SS_RBRACKET : "]" > |
     < SS_NUM : (["0"-"9"])+ > |
-    < SS_ID : [ "_", "a"-"z", "A"-"Z" ]([ "_", "a"-"z", "A"-"Z", "0"-"9" ])* > |
+    < SS_ID : [ "_", "a"-"z", "A"-"Z", "\u00a4", "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc", 
+                              "\u00c3", "\u00a0", "\u00bc", "\u00b6", "\u0084", "\u0096", "\u009c", "\u009f"]([ 
+                              "_",  "a"-"z", "A"-"Z", "0"-"9", "\u00a4", "\u00e4", "\u00f6", "\u00fc", "\u00df", 
+                              "\u00c3", "\u00c4", "\u00d6", "\u00dc", "\u00a0", "\u00bc", "\u00b6", "\u0084", "\u0096", "\u009c",
+                              "\u009f"])* > |
     < CA_COLON : ":" > : TXT_MODE
 }
 <COMMAND_MODE_SK> TOKEN : {
-    <SK_VAR_ID : (["$", "A"-"Z", "a"-"z", "0"-"9"])+ > : TXT_MODE
+    <SK_VAR_ID : [ "_", "a"-"z", "A"-"Z", "\u00a4", "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc", 
+                                 "\u00c3", "\u00a0", "\u00bc", "\u00b6", "\u0084", "\u0096", "\u009c", "\u009f"]([ 
+                                 "_",  "a"-"z", "A"-"Z", "0"-"9", "\u00a4", "\u00e4", "\u00f6", "\u00fc", "\u00df", 
+                                 "\u00c3", "\u00c4", "\u00d6", "\u00dc", "\u00a0", "\u00bc", "\u00b6", "\u0084", "\u0096", "\u009c",
+                                 "\u009f"])* > : TXT_MODE
 }
 <COMMAND_MODE_SK> SKIP :{
     " " | "\n" | "\t" | "\r"
@@ -380,8 +401,7 @@ TOKEN : {
     < MS_MINUS : "-" > |
     < MS_TIMES : "*" > |
     < MS_DIV : "/" > |
-    < MS_LPAREN : "(" > |
-    < MS_RPAREN : ")" > : TXT_MODE |
+    < MS_LPAREN : "(" > : MS_AL_MODE|
     < MS_LBRACKET : "[" > |
     < MS_RBRACKET : "]" > |
     < MS_COMMA : "," > |
@@ -394,6 +414,41 @@ TOKEN : {
             ~["\""]     // this covers the HIT/CLOU protected space character and also all German Umlauts.
         )*"\"" >
 
+}
+
+// this mode is to parse the argument list within a macro call statement and is initiated if a ( is found after a MS_ID
+<MS_AL_MODE> SKIP : {
+    "\t" | " "
+}
+<MS_AL_MODE> TOKEN : {
+    < MS_AL_EQ : "=" > |
+    < MS_AL_EQ_STRICT : "==" > |
+    < MS_AL_OR : "oder" > |
+    < MS_AL_AND : "und" > |
+    < MS_AL_XOR : "xor_tbd" > |
+    < MS_AL_NOT : "not_tbd" > |
+    < MS_AL_NEQ : "<>" > |
+    < MS_AL_LT : "<" > |
+    < MS_AL_LTE : "<=" > |
+    < MS_AL_GT : ">" > |
+    < MS_AL_GTE : ">=" > |
+    < MS_AL_PLUS : "+" > |
+    < MS_AL_MINUS : "-" > |
+    < MS_AL_TIMES : "*" > |
+    < MS_AL_DIV : "/" > |
+    < MS_AL_LPAREN : "(" > |
+    < MS_AL_RPAREN : ")" > : TXT_MODE |
+    < MS_AL_LBRACKET : "[" > |
+    < MS_AL_RBRACKET : "]" > |
+    < MS_AL_COMMA : "," > |
+    < MS_AL_NUM : (["0"-"9"])+ > |
+    < MS_AL_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
+    < MS_AL_TEXT : "\""
+        (
+            "\\" ~[]
+        |
+            ~["\""]     // this covers the HIT/CLOU protected space character and also all German Umlauts.
+        )*"\"" >
 }
 
 // this is before the macro id. Here, 
@@ -430,8 +485,11 @@ TOKEN : {
     < IF_LBRACKET : "[" > |
     < IF_RBRACKET : "]" > |
     < IF_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
-    < IF_ID : [ "_", "a"-"z", "A"-"Z"](["_", "a"-"z", "A"-"Z", "0"-"9",
-        "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc", "\u00a0" ])* > |
+    < IF_ID : [ "_", "a"-"z", "A"-"Z", "\u00a4", "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc", 
+                              "\u00c3", "\u00a0", "\u00bc", "\u00b6", "\u0084", "\u0096", "\u009c", "\u009f"]([ 
+                              "_",  "a"-"z", "A"-"Z", "0"-"9", "\u00a4", "\u00e4", "\u00f6", "\u00fc", "\u00df", 
+                              "\u00c3", "\u00c4", "\u00d6", "\u00dc", "\u00a0", "\u00bc", "\u00b6", "\u0084", "\u0096", "\u009c",
+                              "\u009f"])* > |
     < IF_TEXT : "\""
         (
             "\\" ~[]
@@ -466,8 +524,11 @@ TOKEN : {
     < FOR_LBRACKET : "[" > |
     < FOR_RBRACKET : "]" > |
     < FOR_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
-    < FOR_ID : [ "_", "a"-"z", "A"-"Z"](["_", "a"-"z", "A"-"Z", "0"-"9",
-        "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc", "\u00a0" ])* > |
+    < FOR_ID : [ "_", "a"-"z", "A"-"Z", "\u00a4", "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc", 
+                               "\u00c3", "\u00a0", "\u00bc", "\u00b6", "\u0084", "\u0096", "\u009c", "\u009f"]([ 
+                               "_",  "a"-"z", "A"-"Z", "0"-"9", "\u00a4", "\u00e4", "\u00f6", "\u00fc", "\u00df", 
+                               "\u00c3", "\u00c4", "\u00d6", "\u00dc", "\u00a0", "\u00bc", "\u00b6", "\u0084", "\u0096", "\u009c",
+                               "\u009f"])* > |
     < FOR_TEXT : "\""
         (
             "\\" ~[]
@@ -478,6 +539,8 @@ TOKEN : {
 <COMMAND_MODE_FOR> SKIP : {
     "\n" : TXT_MODE | "\r" : TXT_MODE | "\t" | " "
 }
+
+// Global declaration statement #D varName value
 <COMMAND_MODE_DS> TOKEN : {
     < DS_EQ : "=" > |
     < DS_EQ_STRICT : "==" > |
@@ -504,8 +567,11 @@ TOKEN : {
     < DS_RBRACKET : "]" > |
     < DS_NUM : (["0"-"9"])+ > |
     < DS_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
-    < DS_ID : [ "_", "a"-"z", "A"-"Z"](["_", "a"-"z", "A"-"Z", "0"-"9",
-        "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc", "\u00a0" ])* > |
+    < DS_ID : [ "_", "a"-"z", "A"-"Z", "\u00a4", "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc", 
+                "\u00c3", "\u00a0", "\u00bc", "\u00b6", "\u0084", "\u0096", "\u009c", "\u009f"]([ 
+                "_",  "a"-"z", "A"-"Z", "0"-"9", "\u00a4", "\u00e4", "\u00f6", "\u00fc", "\u00df", 
+                "\u00c3", "\u00c4", "\u00d6", "\u00dc", "\u00a0", "\u00bc", "\u00b6", "\u0084", "\u0096", "\u009c",
+                "\u009f"])* > |
     < DS_TEXT : "\""
         (
             "\\" ~[]
@@ -545,8 +611,11 @@ TOKEN : {
     < AS_RBRACKET : "]" > |
     < AS_NUM : (["0"-"9"])+ > |
     < AS_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
-    < AS_ID : [ "_", "a"-"z", "A"-"Z"](["_", "a"-"z", "A"-"Z", "0"-"9",
-        "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc", "\u00a0" ])* > |
+    < AS_ID : [ "_", "a"-"z", "A"-"Z", "\u00a4", "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc", 
+                              "\u00c3", "\u00a0", "\u00bc", "\u00b6", "\u0084", "\u0096", "\u009c", "\u009f"]([ 
+                              "_",  "a"-"z", "A"-"Z", "0"-"9", "\u00a4", "\u00e4", "\u00f6", "\u00fc", "\u00df", 
+                              "\u00c3", "\u00c4", "\u00d6", "\u00dc", "\u00a0", "\u00bc", "\u00b6", "\u0084", "\u0096", "\u009c",
+                              "\u009f"])* > |
     < AS_TEXT : "\""
         (
             "\\" ~[]
@@ -564,7 +633,11 @@ TOKEN : {
     < LS_LD : "d" > |
     < LS_LBRACKET : "[" > |
     < LS_RBRACKET : "]" > |
-    < LS_ID : [ "_", "a"-"z", "A"-"Z"](["_", "a"-"z", "A"-"Z", "0"-"9", "\u00a0"])* > |
+    < LS_ID : [ "_", "a"-"z", "A"-"Z", "\u00a4", "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc", 
+                              "\u00c3", "\u00a0", "\u00bc", "\u00b6", "\u0084", "\u0096", "\u009c", "\u009f"]([ 
+                              "_",  "a"-"z", "A"-"Z", "0"-"9", "\u00a4", "\u00e4", "\u00f6", "\u00fc", "\u00df", 
+                              "\u00c3", "\u00c4", "\u00d6", "\u00dc", "\u00a0", "\u00bc", "\u00b6", "\u0084", "\u0096", "\u009c",
+                              "\u009f"])* > |
     < LS_TEXT : "\""
         (
             "\\" ~[]
@@ -594,7 +667,11 @@ TOKEN : {
     < LS_BRACES_RBRACKET : "]" > |
     < LS_BRACES_NUM : (["0"-"9"])+ > |
     < LS_BRACES_DEC : (["0"-"9"])+("."(["0"-"9"])+)? | ("."(["0"-"9"])+) > |
-    < LS_BRACES_ID : [ "_", "a"-"z", "A"-"Z"](["_", "a"-"z", "A"-"Z", "0"-"9"])* > |
+    < LS_BRACES_ID : [ "_", "a"-"z", "A"-"Z", "\u00a4", "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc", 
+                                     "\u00c3", "\u00a0", "\u00bc", "\u00b6", "\u0084", "\u0096", "\u009c", "\u009f"]([ 
+                                     "_",  "a"-"z", "A"-"Z", "0"-"9", "\u00a4", "\u00e4", "\u00f6", "\u00fc", "\u00df", 
+                                     "\u00c3", "\u00c4", "\u00d6", "\u00dc", "\u00a0", "\u00bc", "\u00b6", "\u0084", "\u0096", "\u009c",
+                                     "\u009f"])* > |
     < LS_BRACES_TEXT : "\""
         (
            "\\" ~[]
@@ -610,7 +687,11 @@ TOKEN : {
     < HC_NUM : (["0"-"9"])+ > |
     < HC_LBRACKET : "[" > |
     < HC_RBRACKET : "]" > |
-    < HC_ID : [ "_", "a"-"z", "A"-"Z"](["_", "a"-"z", "A"-"Z", "0"-"9"])* > |
+    < HC_ID : [ "_", "a"-"z", "A"-"Z", "\u00a4", "\u00e4", "\u00f6", "\u00fc", "\u00df", "\u00c4", "\u00d6", "\u00dc", 
+                              "\u00c3", "\u00a0", "\u00bc", "\u00b6", "\u0084", "\u0096", "\u009c", "\u009f"]([ 
+                              "_",  "a"-"z", "A"-"Z", "0"-"9", "\u00a4", "\u00e4", "\u00f6", "\u00fc", "\u00df", 
+                              "\u00c3", "\u00c4", "\u00d6", "\u00dc", "\u00a0", "\u00bc", "\u00b6", "\u0084", "\u0096", "\u009c",
+                              "\u009f"])* > |
     < HC_NAME : "\""
         (
            "\\" ~[]
@@ -912,7 +993,7 @@ MacroCallStatement MS() :
 ExpressionList AL() :
 { ExpressionList expressionList; }
 {
-    ((<MS_LPAREN>|<IF_LPAREN>) expressionList = EL() (<MS_RPAREN>|<IF_RPAREN>)
+    ((<MS_LPAREN>|<IF_LPAREN>) expressionList = EL() (<MS_AL_RPAREN>|<IF_RPAREN>)
     {
         return expressionList;
     })? { return null; }
@@ -930,11 +1011,11 @@ ExpressionList EL() :
 ExpressionList ELPrime() :
 { Expression expression; ExpressionList expressionList; }
 {
-    ((<MS_COMMA>|<LS_BRACES_COMMA>|<DS_COMMA>|<AS_COMMA>|<SS_COMMA>|<PS_IDX_COMMA>|<PS_EL_COMMA>|<IF_COMMA>) expression = E() expressionList = ELPrime()
+    ((<MS_AL_COMMA>|<LS_BRACES_COMMA>|<DS_COMMA>|<AS_COMMA>|<SS_COMMA>|<PS_IDX_COMMA>|<PS_EL_COMMA>|<IF_COMMA>) expression = E() expressionList = ELPrime()
     {
         if(expression == null){
             Token token = getNextToken();
-            throw new RuntimeException("Expression is null at " + token.beginLine + "/" + token.beginColumn);
+            throw new ClouParserException("Expression is null at " + token.beginLine + "/" + token.beginColumn);
         }
         return expressionList == null ? new LastExpressionList(expression) : new PairExpressionList(expression, expressionList);
     })?{ return null; }
@@ -1027,6 +1108,10 @@ AssignmentStatement AS() :
 {
     <AS> idExpression = E() expression = E()
     {
+        if(idExpression == null){
+            Token token = getNextToken();
+            throw new ClouParserException("IdExpression is null at " + token.beginLine + "/" + token.beginColumn);
+        }
         logger.debug(StringUtils.join("Found AssignmentStatement: varId:", idExpression, "; Expression: ", expression));
         return new AssignmentStatement(idExpression.getCodePosition(), ((IdExpression) idExpression), expression);
     }
@@ -1341,20 +1426,20 @@ Expression F() :
         return buffer;
     }
     |
-    ( valueToken = <IF_NUM> | valueToken = <DS_NUM> | valueToken = <AS_NUM> | valueToken = <MS_NUM> |
+    ( valueToken = <IF_NUM> | valueToken = <DS_NUM> | valueToken = <AS_NUM> | valueToken = <MS_AL_NUM> |
         valueToken = <LS_BRACES_NUM> | valueToken = <SS_NUM> | valueToken = <HC_NUM> | valueToken = <FOR_NUM> |
         valueToken = <PS_IDX_NUM> | valueToken = <PS_NUM> | valueToken = <PS_EL_NUM> )
     {
         return new NumExpression(CodePosition.createFromToken(valueToken), Integer.parseInt(valueToken.image));
     }
     |
-    ( valueToken = <IF_DEC> | valueToken = <DS_DEC> | valueToken = <AS_DEC> | valueToken = <MS_DEC> |
+    ( valueToken = <IF_DEC> | valueToken = <DS_DEC> | valueToken = <AS_DEC> | valueToken = <MS_AL_DEC> |
         valueToken = <LS_BRACES_DEC> | valueToken = <FOR_DEC> | valueToken = <PS_IDX_DEC> | valueToken = <PS_DEC> | valueToken = <PS_EL_DEC> )
     {
         return new DecimalExpression(CodePosition.createFromToken(valueToken), Double.parseDouble(valueToken.image));
     }
     |
-    ( valueToken = <IF_TEXT> | valueToken = <DS_TEXT> | valueToken = <AS_TEXT> | valueToken = <MS_TEXT> |
+    ( valueToken = <IF_TEXT> | valueToken = <DS_TEXT> | valueToken = <AS_TEXT> | valueToken = <MS_AL_TEXT> |
         valueToken = <LS_BRACES_TEXT> | valueToken = <FOR_TEXT> | valueToken = <PS_TEXT> | valueToken = <PS_EL_TEXT> | valueToken = <PS_IDX_TEXT> )
     {
         return new TextExpression(CodePosition.createFromToken(valueToken), valueToken.image);
@@ -1381,10 +1466,10 @@ Expression F() :
     // numeric value -> referencing an entry in a field. a pair of expressions with an expression list inside,
     // holding exactly two values -> another way in HIT/CLOU to get a substring.
     (
-        ( <IF_LBRACKET> | <DS_LBRACKET> | <SS_LBRACKET> | <AS_LBRACKET> | <MS_LBRACKET> | <LS_LBRACKET> | <LS_BRACES_LBRACKET> |
+        ( <IF_LBRACKET> | <DS_LBRACKET> | <SS_LBRACKET> | <AS_LBRACKET> | <MS_AL_LBRACKET> | <LS_LBRACKET> | <LS_BRACES_LBRACKET> |
             <HC_LBRACKET> | <FOR_LBRACKET> | <PS_IDX_LBRACKET> )
             buffer = EL()
-        ( <IF_RBRACKET> | <DS_RBRACKET> | <SS_RBRACKET> | <AS_RBRACKET> | <MS_RBRACKET> | <LS_RBRACKET> | <LS_BRACES_RBRACKET> |
+        ( <IF_RBRACKET> | <DS_RBRACKET> | <SS_RBRACKET> | <AS_RBRACKET> | <MS_AL_RBRACKET> | <LS_RBRACKET> | <LS_BRACES_RBRACKET> |
             <HC_RBRACKET> | <FOR_RBRACKET> | <PS_IDX_RBRACKET> )
         {
             if(idxExp1 == null){

@@ -1,9 +1,9 @@
 package org.poormanscastle.products.hit2ass.exceptions;
 
 /**
- * Shall be throws to indicate exceptions while parsing CLOU text components,
+ * Shall be thrown to indicate exceptions while parsing CLOU text components,
  * i.e. typically situations where CLOU syntax is violated.
- * Created by georg on 7/20/16.
+ * Created by georg.federmann@poormanscastle.com on 7/20/16.
  */
 public class ClouParserException extends HitAssTransformerException {
 

@@ -11,14 +11,18 @@ import org.poormanscastle.products.hit2ass.ast.domain.ClouBaustein;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouBausteinElementList;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouFunctionCall;
 import org.poormanscastle.products.hit2ass.ast.domain.ConditionalStatement;
+import org.poormanscastle.products.hit2ass.ast.domain.ExpressionList;
 import org.poormanscastle.products.hit2ass.ast.domain.FixedText;
+import org.poormanscastle.products.hit2ass.ast.domain.GlobalDeclarationStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.IdExpression;
 import org.poormanscastle.products.hit2ass.ast.domain.MacroCallStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.NewLine;
+import org.poormanscastle.products.hit2ass.ast.domain.NumExpression;
 import org.poormanscastle.products.hit2ass.ast.domain.PairClouBausteinElementList;
 import org.poormanscastle.products.hit2ass.ast.domain.PrintStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.SectionStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.SwitchStatement;
+import org.poormanscastle.products.hit2ass.ast.domain.TextExpression;
 import org.poormanscastle.products.hit2ass.parser.javacc.HitAssAstParser;
 import org.poormanscastle.products.hit2ass.transformer.EraseBlanksVisitor;
 
@@ -26,9 +30,9 @@ import org.poormanscastle.products.hit2ass.transformer.EraseBlanksVisitor;
  * Created by georg on 28.08.16.
  */
 public class ClouChunkTest {
-    
-    //@Test
-    public void localVariableTest() throws Exception{
+
+    @Test
+    public void localVariableTest() throws Exception {
         //  #
         //  #? flag <> 4
         //      /J
@@ -37,7 +41,42 @@ public class ClouChunkTest {
         HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("LocalVariableDeclaration"), "ISO8859_1");
         ClouBaustein baustein = parser.CB();
         baustein.accept(new EraseBlanksVisitor());
-        
+    }
+
+    @Test
+    public void functionVarNamesWithUmlauts() throws Exception {
+        //  #
+        //  #D äüöÄÖÜß 14
+        //  #D üäöÄÖÜß 16
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("VarNamesWithUmlauts"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
+        assertTrue(true);
+        GlobalDeclarationStatement probe = (GlobalDeclarationStatement) elementList.getHead();
+        assertEquals("äüöÄÖÜß", probe.getId());
+        assertEquals(Integer.valueOf(14), ((NumExpression) probe.getExpression()).getValue());
+        probe = (GlobalDeclarationStatement) elementList.getTail().getHead();
+        assertEquals("üäöÄÖÜß", probe.getId());
+        assertEquals(Integer.valueOf(16), ((NumExpression) probe.getExpression()).getValue());
+    }
+
+    @Test
+    public void functionCallTest() throws Exception {
+        //  #
+        //  #$ steuerzeile("einfügen", "Schriftart", "Arial:20")
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("FunctionCall"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
+        MacroCallStatement macroCall = (MacroCallStatement) elementList.getHead();
+        assertEquals("steuerzeile", macroCall.getMacroId());
+        ExpressionList argList = macroCall.getArgumentList();
+        assertEquals("einfügen", ((TextExpression) argList.getHead()).getValue());
+        argList = argList.getTail();
+        assertEquals("Schriftart", ((TextExpression) argList.getHead()).getValue());
+        argList = argList.getTail();
+        assertEquals("Arial:20", ((TextExpression) argList.getHead()).getValue());
     }
 
     @Test

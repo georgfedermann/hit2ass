@@ -10,7 +10,6 @@ import org.poormanscastle.products.hit2ass.ast.domain.ClouBaustein;
 import org.poormanscastle.products.hit2ass.exceptions.HitAssTransformerException;
 import org.poormanscastle.products.hit2ass.parser.javacc.HitAssAstParser;
 import org.poormanscastle.products.hit2ass.parser.javacc.ParseException;
-import org.poormanscastle.products.hit2ass.parser.javacc.TokenMgrError;
 import org.poormanscastle.products.hit2ass.prettyprint.PrettyPrintVisitor;
 import org.poormanscastle.products.hit2ass.renderer.IRTransformer;
 import org.poormanscastle.products.hit2ass.renderer.xmlcreator.UserDataServiceBean;
@@ -57,25 +56,21 @@ public final class HitAssTools {
             } while (counter < args.length);
         } catch (Exception exception) {
             String errMsg = StringUtils.join("An exception occurred during processing: ",
-                    exception.toString(), " - Please see log file hit2ass.log for details.");
+                    exception.toString(), " - Please see log file hitass.log for details.");
             System.err.println(errMsg);
             logger.error(errMsg, exception);
         }
     }
 
-    private static String createDocDesignWorkspace() throws IOException {
-        try {
-            logger.info(StringUtils.join("Running parser with encoding hit2ass.clou.encoding=",
-                    System.getProperty("hit2ass.clou.encoding")));
-            ClouBaustein baustein = new HitAssAstParser(System.in, System.getProperty("hit2ass.clou.encoding")).CB();
-            baustein.accept(new ClouBausteinMergerVisitor());
-            baustein.accept(new EraseBlanksVisitor());
-            IRTransformer irTransformer = new IRTransformer();
-            baustein.accept(irTransformer);
-            return irTransformer.getWorkspace().getContent();
-        } catch (ParseException | TokenMgrError e) {
-            return StringUtils.join("Parser error: ", e.getMessage());
-        }
+    private static String createDocDesignWorkspace() throws ParseException {
+        logger.info(StringUtils.join("Running parser with encoding hit2ass.clou.encoding=",
+                System.getProperty("hit2ass.clou.encoding")));
+        ClouBaustein baustein = new HitAssAstParser(System.in, System.getProperty("hit2ass.clou.encoding")).CB();
+        baustein.accept(new ClouBausteinMergerVisitor());
+        baustein.accept(new EraseBlanksVisitor());
+        IRTransformer irTransformer = new IRTransformer();
+        baustein.accept(irTransformer);
+        return irTransformer.getWorkspace().getContent();
     }
 
     private static String createUserDataXml(String clouBausteinName, String aenderungsFreigabeNummer) throws IOException, ParseException {

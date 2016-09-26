@@ -26,6 +26,9 @@ import org.poormanscastle.products.hit2ass.ast.domain.GlobalListDeclarationState
 import org.poormanscastle.products.hit2ass.ast.domain.HitCommandStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.IdExpression;
 import org.poormanscastle.products.hit2ass.ast.domain.IncludeBausteinStatement;
+import org.poormanscastle.products.hit2ass.ast.domain.InsertDay;
+import org.poormanscastle.products.hit2ass.ast.domain.InsertMonth;
+import org.poormanscastle.products.hit2ass.ast.domain.InsertYear;
 import org.poormanscastle.products.hit2ass.ast.domain.JStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.LastCaseStatementList;
 import org.poormanscastle.products.hit2ass.ast.domain.LastClouBausteinElementList;
@@ -134,6 +137,38 @@ public class PrettyPrintVisitor extends AstItemVisitorAdapter {
         itemStack.pop();
     }
 
+    @Override
+    public void visitInsertDay(InsertDay insertDay) {
+        addItem("InsertDay", "");
+        addBufferLine();
+    }
+
+    @Override
+    public void leaveInsertDay(InsertDay insertDay) {
+        itemStack.pop();
+    }
+
+    @Override
+    public void visitInsertMonth(InsertMonth insertMonth) {
+        addItem("InsertMonth", "");
+        addBufferLine();
+    }
+
+    @Override
+    public void leaveInsertMonth(InsertMonth insertMonth) {
+        itemStack.pop();
+    }
+
+    @Override
+    public void visitInsertYear(InsertYear insertYear) {
+        addItem("InsertYear", "");
+        addBufferLine();
+    }
+
+    @Override
+    public void leaveInsertYear(InsertYear insertYear) {
+        itemStack.pop();
+    }
 
     @Override
     public void visitFixedText(FixedText fixedText) {

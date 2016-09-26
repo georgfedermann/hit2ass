@@ -15,6 +15,9 @@ import org.poormanscastle.products.hit2ass.ast.domain.ExpressionList;
 import org.poormanscastle.products.hit2ass.ast.domain.FixedText;
 import org.poormanscastle.products.hit2ass.ast.domain.GlobalDeclarationStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.IdExpression;
+import org.poormanscastle.products.hit2ass.ast.domain.InsertDay;
+import org.poormanscastle.products.hit2ass.ast.domain.InsertMonth;
+import org.poormanscastle.products.hit2ass.ast.domain.InsertYear;
 import org.poormanscastle.products.hit2ass.ast.domain.MacroCallStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.NewLine;
 import org.poormanscastle.products.hit2ass.ast.domain.NumExpression;
@@ -30,6 +33,27 @@ import org.poormanscastle.products.hit2ass.transformer.EraseBlanksVisitor;
  * Created by georg on 28.08.16.
  */
 public class ClouChunkTest {
+
+    @Test
+    public void insertDateTest() throws Exception {
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("InsertDate"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
+        assertEquals("Wien, am ", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        assertEquals(InsertDay.class, elementList.getHead().getClass());
+        elementList = elementList.getTail();
+        assertEquals(".", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        assertEquals(InsertMonth.class, elementList.getHead().getClass());
+        elementList = elementList.getTail();
+        assertEquals(".", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        assertEquals(InsertYear.class, elementList.getHead().getClass());
+        elementList = elementList.getTail();
+        assertEquals(SectionStatement.class, elementList.getHead().getClass());
+    }
 
     @Test
     public void localVariableTest() throws Exception {
@@ -52,7 +76,6 @@ public class ClouChunkTest {
         ClouBaustein baustein = parser.CB();
         baustein.accept(new EraseBlanksVisitor());
         ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
-        assertTrue(true);
         GlobalDeclarationStatement probe = (GlobalDeclarationStatement) elementList.getHead();
         assertEquals("äüöÄÖÜß", probe.getId());
         assertEquals(Integer.valueOf(14), ((NumExpression) probe.getExpression()).getValue());

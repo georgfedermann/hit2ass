@@ -25,6 +25,9 @@ import org.poormanscastle.products.hit2ass.ast.domain.GlobalListDeclarationState
 import org.poormanscastle.products.hit2ass.ast.domain.HitCommandStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.IdExpression;
 import org.poormanscastle.products.hit2ass.ast.domain.IncludeBausteinStatement;
+import org.poormanscastle.products.hit2ass.ast.domain.InsertDay;
+import org.poormanscastle.products.hit2ass.ast.domain.InsertMonth;
+import org.poormanscastle.products.hit2ass.ast.domain.InsertYear;
 import org.poormanscastle.products.hit2ass.ast.domain.ListConcatenationStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.LocalDeclarationStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.LocalListDeclarationStatement;
@@ -327,6 +330,21 @@ public final class IRTransformer extends AstItemVisitorAdapter {
                             "| hit2assext:incrementXmlSequence(var:read('renderSessionUuid')) "),
                     fontWeight));
         }
+    }
+
+    @Override
+    public void visitInsertDay(InsertDay insertDay) {
+        containerStack.peek().addContent(new DynamicContentReference("Insert Day", " fn:day-from-date(fn:current-date()) ", fontWeight));
+    }
+
+    @Override
+    public void visitInsertMonth(InsertMonth insertMonth) {
+        containerStack.peek().addContent(new DynamicContentReference("Insert Month", " fn:month-from-date(fn:current-date()) ", fontWeight));
+    }
+
+    @Override
+    public void visitInsertYear(InsertYear insertYear) {
+        containerStack.peek().addContent(new DynamicContentReference("Insert Year", " fn:year-from-date(fn:current-date()) ", fontWeight));
     }
 
     /**

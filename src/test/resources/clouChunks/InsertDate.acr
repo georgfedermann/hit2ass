@@ -1,0 +1,2769 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<Cockpit version="5.10.03.072744" export="07.05.2016 16:27:05">
+  <!--Assentis DocDesign workspace - do not modify this file at any time!-->
+  <Object id="20160926T135528.109.14901921655967-5409.048493360436.5412621.520486614.4812685.540881906.199.81857157488326" name="HitAssWorkspace" enabled="True" type="com.assentis.cockpit.bo.BoWorkspace">
+    <Properties>
+      <Attributes>
+        <Attribute name="Notes"><![CDATA[]]></Attribute>
+        <Attribute name="WorkspacePath">
+          <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoURI">
+            <Properties>
+              <Attributes>
+                <Attribute name="FileURL"><![CDATA[]]></Attribute>
+                <Attribute name="FileRelative"><![CDATA[False]]></Attribute>
+                <Attribute name="WebURL"><![CDATA[]]></Attribute>
+                <Attribute name="RepoElementID"><![CDATA[]]></Attribute>
+                <Attribute name="RepoElementName"><![CDATA[]]></Attribute>
+                <Attribute name="RepoElementVersion"><![CDATA[]]></Attribute>
+                <Attribute name="RepoElementLabel"><![CDATA[]]></Attribute>
+                <Attribute name="RepoElementExtension"><![CDATA[]]></Attribute>
+                <Attribute name="RepoElementDBID"><![CDATA[0]]></Attribute>
+                <Attribute name="IsRepositoryFolder"><![CDATA[False]]></Attribute>
+                <Attribute name="DBPath"><![CDATA[]]></Attribute>
+                <Attribute name="RepoAdditionalRequestParams"><![CDATA[]]></Attribute>
+                <Attribute name="URLType"><![CDATA[32]]></Attribute>
+                <Attribute name="TypeNode"><![CDATA[True]]></Attribute>
+              </Attributes>
+              <Relations/>
+            </Properties>
+          </Object>
+        </Attribute>
+        <Attribute name="WorkspaceEncoding"><![CDATA[UTF-8]]></Attribute>
+        <Attribute name="WorkspaceList">
+          <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoWorkspaceList">
+            <Properties>
+              <Attributes/>
+              <Relations>
+                <ManyRelation name="ReferenceableWorkspaces"/>
+              </Relations>
+            </Properties>
+          </Object>
+        </Attribute>
+        <Attribute name="Keyword"><![CDATA[]]></Attribute>
+        <Attribute name="PurposeList">
+          <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoPurposeList">
+            <Properties>
+              <Attributes/>
+              <Relations/>
+            </Properties>
+          </Object>
+        </Attribute>
+      </Attributes>
+      <Relations/>
+    </Properties>
+    <Object id="20160926T135528.122.27224989931553-5969.140838624489.7967539.310877498.6018924.8155065095.978.8293187301589" name="HitAssProjects" enabled="True" type="com.assentis.cockpit.bo.BoProjectGroup">
+      <Properties>
+        <Attributes/>
+        <Relations/>
+      </Properties>
+      <Object id="20160926T135528.136.62756489035567-6078.75993671441.1050861.505906356.4797132.3242467.366.5908001688056" name="HitAssProject" enabled="True" type="com.assentis.cockpit.bo.BoProject">
+        <Properties>
+          <Attributes>
+            <Attribute name="Notes"><![CDATA[]]></Attribute>
+          </Attributes>
+          <Relations/>
+        </Properties>
+        <Object id="20160926T135528.103.77885967884536-1973.453406381831.2115568.3346101744.2895102.1391841257.149.44054356022718" name="HitAssDocument" enabled="True" type="com.assentis.cockpit.bo.BoDocument">
+          <Properties>
+            <Attributes>
+              <Attribute name="Notes"><![CDATA[]]></Attribute>
+              <Attribute name="LetterSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+              <Attribute name="WordSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+              <Attribute name="LetterSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+              <Attribute name="WordSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+              <Attribute name="Font">
+                <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoFont">
+                  <Properties>
+                    <Attributes>
+                      <Attribute name="FontFamily"><![CDATA[Courier]]></Attribute>
+                      <Attribute name="FontSize"><![CDATA[10 pt]]></Attribute>
+                      <Attribute name="FontStyle"><![CDATA[inherit]]></Attribute>
+                      <Attribute name="FontVariant"><![CDATA[inherit]]></Attribute>
+                      <Attribute name="FontWeight"><![CDATA[inherit]]></Attribute>
+                      <Attribute name="FontPlacement"><![CDATA[inherit]]></Attribute>
+                      <Attribute name="FontDecoration"><![CDATA[inherit]]></Attribute>
+                      <Attribute name="FontColor">
+                        <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+                          <Properties>
+                            <Attributes>
+                              <Attribute name="inherit"><![CDATA[True]]></Attribute>
+                              <Attribute name="transparent"><![CDATA[False]]></Attribute>
+                              <Attribute name="userdefined"><![CDATA[False]]></Attribute>
+                              <Attribute name="showrgbtransparency"><![CDATA[False]]></Attribute>
+                              <Attribute name="RGB"><![CDATA[0,0,0,255]]></Attribute>
+                              <Attribute name="CMYK"><![CDATA[0,0,0,1]]></Attribute>
+                              <Attribute name="Spotcolor">
+                                <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoSpotcolor">
+                                  <Properties>
+                                    <Attributes>
+                                      <Attribute name="SpotcolorKey"><![CDATA[none]]></Attribute>
+                                      <Attribute name="Tint"><![CDATA[1]]></Attribute>
+                                    </Attributes>
+                                    <Relations/>
+                                  </Properties>
+                                </Object>
+                              </Attribute>
+                            </Attributes>
+                            <Relations/>
+                          </Properties>
+                        </Object>
+                      </Attribute>
+                    </Attributes>
+                    <Relations/>
+                  </Properties>
+                </Object>
+              </Attribute>
+              <Attribute name="AFPSupport"><![CDATA[True]]></Attribute>
+              <Attribute name="DFPSPDFSupport"><![CDATA[False]]></Attribute>
+              <Attribute name="Linearization"><![CDATA[False]]></Attribute>
+              <Attribute name="Compression"><![CDATA[True]]></Attribute>
+              <Attribute name="ViewerPreferences"><![CDATA[autodefault]]></Attribute>
+              <Attribute name="ZoomFactor">
+                <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoZoom">
+                  <Properties>
+                    <Attributes>
+                      <Attribute name="Combo"><![CDATA[autozoomdefault]]></Attribute>
+                      <Attribute name="Zoom"><![CDATA[ZoomCombo]]></Attribute>
+                      <Attribute name="Numeric"><![CDATA[1]]></Attribute>
+                      <Attribute name="Percent"><![CDATA[100]]></Attribute>
+                    </Attributes>
+                    <Relations/>
+                  </Properties>
+                </Object>
+              </Attribute>
+              <Attribute name="OwnerPW"><![CDATA[]]></Attribute>
+              <Attribute name="UserPW"><![CDATA[]]></Attribute>
+              <Attribute name="PrintPDF"><![CDATA[False]]></Attribute>
+              <Attribute name="ModifyPDF"><![CDATA[False]]></Attribute>
+              <Attribute name="CopyFromPDF"><![CDATA[False]]></Attribute>
+              <Attribute name="PCLBW"><![CDATA[False]]></Attribute>
+              <Attribute name="AnnotatePDF"><![CDATA[False]]></Attribute>
+              <Attribute name="PostscriptLevel"><![CDATA[Level3]]></Attribute>
+              <Attribute name="PDFVersion"><![CDATA[V14]]></Attribute>
+              <Attribute name="OOXMLVersion"><![CDATA[MS12]]></Attribute>
+              <Attribute name="PDFPrintType"><![CDATA[PDF]]></Attribute>
+              <Attribute name="ICCProfileDocument">
+                <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoURI">
+                  <Properties>
+                    <Attributes>
+                      <Attribute name="FileURL"><![CDATA[C:\Assentis\5.10.3\DocDesign\bin\..\data\resources\eciRGB_v2.icc]]></Attribute>
+                      <Attribute name="FileRelative"><![CDATA[False]]></Attribute>
+                      <Attribute name="WebURL"><![CDATA[]]></Attribute>
+                      <Attribute name="RepoElementID"><![CDATA[]]></Attribute>
+                      <Attribute name="RepoElementName"><![CDATA[]]></Attribute>
+                      <Attribute name="RepoElementVersion"><![CDATA[]]></Attribute>
+                      <Attribute name="RepoElementLabel"><![CDATA[]]></Attribute>
+                      <Attribute name="RepoElementExtension"><![CDATA[]]></Attribute>
+                      <Attribute name="RepoElementDBID"><![CDATA[0]]></Attribute>
+                      <Attribute name="IsRepositoryFolder"><![CDATA[False]]></Attribute>
+                      <Attribute name="DBPath"><![CDATA[]]></Attribute>
+                      <Attribute name="RepoAdditionalRequestParams"><![CDATA[]]></Attribute>
+                      <Attribute name="URLType"><![CDATA[32]]></Attribute>
+                      <Attribute name="TypeNode"><![CDATA[True]]></Attribute>
+                    </Attributes>
+                    <Relations/>
+                  </Properties>
+                </Object>
+              </Attribute>
+              <Attribute name="Bookmark"><![CDATA[False]]></Attribute>
+              <Attribute name="ExpandBookmark"><![CDATA[False]]></Attribute>
+              <Attribute name="Colormodel"><![CDATA[RGB]]></Attribute>
+              <Attribute name="UseSpotcolors"><![CDATA[False]]></Attribute>
+              <Attribute name="OnErrorAbort"><![CDATA[False]]></Attribute>
+              <Attribute name="XSLTFOEncoding"><![CDATA[UTF-8]]></Attribute>
+              <Attribute name="XSLTRTFEncoding"><![CDATA[ISO-8859-1]]></Attribute>
+              <Attribute name="CleanUp"><![CDATA[True]]></Attribute>
+              <Attribute name="Deploy4FO"><![CDATA[True]]></Attribute>
+              <Attribute name="Deploy4RTF"><![CDATA[False]]></Attribute>
+              <Attribute name="Deploy4OOXML"><![CDATA[False]]></Attribute>
+              <Attribute name="Deploy4XHTML"><![CDATA[False]]></Attribute>
+              <Attribute name="Deploy4EHTML"><![CDATA[False]]></Attribute>
+              <Attribute name="ReImportRTF"><![CDATA[False]]></Attribute>
+              <Attribute name="DeploymentArchive"><![CDATA[True]]></Attribute>
+              <Attribute name="EscapeEntities"><![CDATA[True]]></Attribute>
+              <Attribute name="DeploymentDir">
+                <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoURI">
+                  <Properties>
+                    <Attributes>
+                      <Attribute name="FileURL"><![CDATA[C:\tmp\deployment]]></Attribute>
+                      <Attribute name="FileRelative"><![CDATA[False]]></Attribute>
+                      <Attribute name="WebURL"><![CDATA[]]></Attribute>
+                      <Attribute name="RepoElementID"><![CDATA[]]></Attribute>
+                      <Attribute name="RepoElementName"><![CDATA[]]></Attribute>
+                      <Attribute name="RepoElementVersion"><![CDATA[]]></Attribute>
+                      <Attribute name="RepoElementLabel"><![CDATA[]]></Attribute>
+                      <Attribute name="RepoElementExtension"><![CDATA[]]></Attribute>
+                      <Attribute name="RepoElementDBID"><![CDATA[0]]></Attribute>
+                      <Attribute name="IsRepositoryFolder"><![CDATA[False]]></Attribute>
+                      <Attribute name="DBPath"><![CDATA[]]></Attribute>
+                      <Attribute name="RepoAdditionalRequestParams"><![CDATA[]]></Attribute>
+                      <Attribute name="URLType"><![CDATA[32]]></Attribute>
+                      <Attribute name="TypeNode"><![CDATA[True]]></Attribute>
+                    </Attributes>
+                    <Relations/>
+                  </Properties>
+                </Object>
+              </Attribute>
+              <Attribute name="RelImagesDir">
+                <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoURI">
+                  <Properties>
+                    <Attributes>
+                      <Attribute name="FileURL"><![CDATA[.]]></Attribute>
+                      <Attribute name="FileRelative"><![CDATA[False]]></Attribute>
+                      <Attribute name="WebURL"><![CDATA[]]></Attribute>
+                      <Attribute name="RepoElementID"><![CDATA[]]></Attribute>
+                      <Attribute name="RepoElementName"><![CDATA[]]></Attribute>
+                      <Attribute name="RepoElementVersion"><![CDATA[]]></Attribute>
+                      <Attribute name="RepoElementLabel"><![CDATA[]]></Attribute>
+                      <Attribute name="RepoElementExtension"><![CDATA[]]></Attribute>
+                      <Attribute name="RepoElementDBID"><![CDATA[0]]></Attribute>
+                      <Attribute name="IsRepositoryFolder"><![CDATA[False]]></Attribute>
+                      <Attribute name="DBPath"><![CDATA[]]></Attribute>
+                      <Attribute name="RepoAdditionalRequestParams"><![CDATA[]]></Attribute>
+                      <Attribute name="URLType"><![CDATA[32]]></Attribute>
+                      <Attribute name="TypeNode"><![CDATA[True]]></Attribute>
+                    </Attributes>
+                    <Relations/>
+                  </Properties>
+                </Object>
+              </Attribute>
+              <Attribute name="StyleSheetBaseURL"><![CDATA[http://localhost:11002/DocBase]]></Attribute>
+              <Attribute name="RepoServerProtocol"><![CDATA[http]]></Attribute>
+              <Attribute name="RepoServerURL"><![CDATA[localhost]]></Attribute>
+              <Attribute name="RepoServerPort"><![CDATA[12002]]></Attribute>
+              <Attribute name="StdDeploymentStage"><![CDATA[DEV]]></Attribute>
+              <Attribute name="DCRMapping">
+                <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoDCRMappingArray">
+                  <Properties>
+                    <Attributes/>
+                    <Relations/>
+                  </Properties>
+                </Object>
+              </Attribute>
+              <Attribute name="ERMapping">
+                <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoERMappingArray">
+                  <Properties>
+                    <Attributes/>
+                    <Relations/>
+                  </Properties>
+                </Object>
+              </Attribute>
+              <Attribute name="DBRMapping">
+                <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoDBRMappingArray">
+                  <Properties>
+                    <Attributes/>
+                    <Relations/>
+                  </Properties>
+                </Object>
+              </Attribute>
+              <Attribute name="LocaleList">
+                <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoLocaleList">
+                  <Properties>
+                    <Attributes>
+                      <Attribute name="DefaultLocale"><![CDATA[US_en]]></Attribute>
+                      <Attribute name="TestLocale"><![CDATA[US_en]]></Attribute>
+                    </Attributes>
+                    <Relations/>
+                  </Properties>
+                  <Object id="20160926T135528.183.9632002551686-4666.222247793889.2761806.75263917.7148884.103251239.402.03192392662856" name="US_en" enabled="True" type="com.assentis.cockpit.bo.BoLocale">
+                    <Properties>
+                      <Attributes>
+                        <Attribute name="LocaleID"><![CDATA[US_en]]></Attribute>
+                      </Attributes>
+                      <Relations/>
+                    </Properties>
+                  </Object>
+                </Object>
+              </Attribute>
+              <Attribute name="XMLNamespaces">
+                <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoNamespaceCollection">
+                  <Properties>
+                    <Attributes>
+                      <Attribute name="Notes"><![CDATA[]]></Attribute>
+                    </Attributes>
+                    <Relations/>
+                  </Properties>
+                  <Object id="20160926T135528.116.81140907444032-1576.4882545118458.6849253.661360136.3144645.4133625985.502.21076558839536" name="hit2assext:org poormanscastle products hit2assext domain RenderSessionManager" enabled="True" type="com.assentis.cockpit.bo.BoNamespaceDecl">
+                    <Properties>
+                      <Attributes>
+                        <Attribute name="Notes"><![CDATA[]]></Attribute>
+                        <Attribute name="Prefix"><![CDATA[hit2assext]]></Attribute>
+                        <Attribute name="URI"><![CDATA[org.poormanscastle.products.hit2assext.RenderSessionManager]]></Attribute>
+                      </Attributes>
+                      <Relations/>
+                    </Properties>
+                  </Object>
+                  <Object id="20160926T135528.148.5144935349604-4295.091983095936.4582883.477145283.1276696.9007801584.405.72559793302037" name="xslt functions" enabled="True" type="com.assentis.cockpit.bo.BoNamespaceDecl">
+                    <Properties>
+                      <Attributes>
+                        <Attribute name="Notes"><![CDATA[]]></Attribute>
+                        <Attribute name="Prefix"><![CDATA[fn]]></Attribute>
+                        <Attribute name="URI"><![CDATA[http://www.w3.org/2005/xpath-functions]]></Attribute>
+                      </Attributes>
+                      <Relations/>
+                    </Properties>
+                  </Object>
+                </Object>
+              </Attribute>
+              <Attribute name="BatchDeploymentProperties">
+                <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoBatchDeploymentProperties">
+                  <Properties>
+                    <Attributes>
+                      <Attribute name="LogLevel"><![CDATA[error]]></Attribute>
+                      <Attribute name="LogFile">
+                        <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoURI">
+                          <Properties>
+                            <Attributes>
+                              <Attribute name="FileURL"><![CDATA[%TEMP%\Assentis\DocDesign\tmp\log.xml]]></Attribute>
+                              <Attribute name="FileRelative"><![CDATA[False]]></Attribute>
+                              <Attribute name="WebURL"><![CDATA[]]></Attribute>
+                              <Attribute name="RepoElementID"><![CDATA[]]></Attribute>
+                              <Attribute name="RepoElementName"><![CDATA[]]></Attribute>
+                              <Attribute name="RepoElementVersion"><![CDATA[]]></Attribute>
+                              <Attribute name="RepoElementLabel"><![CDATA[]]></Attribute>
+                              <Attribute name="RepoElementExtension"><![CDATA[]]></Attribute>
+                              <Attribute name="RepoElementDBID"><![CDATA[0]]></Attribute>
+                              <Attribute name="IsRepositoryFolder"><![CDATA[False]]></Attribute>
+                              <Attribute name="DBPath"><![CDATA[]]></Attribute>
+                              <Attribute name="RepoAdditionalRequestParams"><![CDATA[]]></Attribute>
+                              <Attribute name="URLType"><![CDATA[32]]></Attribute>
+                              <Attribute name="TypeNode"><![CDATA[True]]></Attribute>
+                            </Attributes>
+                            <Relations/>
+                          </Properties>
+                        </Object>
+                      </Attribute>
+                      <Attribute name="Comments"><![CDATA[]]></Attribute>
+                      <Attribute name="BatchFileLocation">
+                        <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoURI">
+                          <Properties>
+                            <Attributes>
+                              <Attribute name="FileURL"><![CDATA[%TEMP%\Assentis\DocDesign\tmp\batch.xml]]></Attribute>
+                              <Attribute name="FileRelative"><![CDATA[False]]></Attribute>
+                              <Attribute name="WebURL"><![CDATA[]]></Attribute>
+                              <Attribute name="RepoElementID"><![CDATA[]]></Attribute>
+                              <Attribute name="RepoElementName"><![CDATA[]]></Attribute>
+                              <Attribute name="RepoElementVersion"><![CDATA[]]></Attribute>
+                              <Attribute name="RepoElementLabel"><![CDATA[]]></Attribute>
+                              <Attribute name="RepoElementExtension"><![CDATA[]]></Attribute>
+                              <Attribute name="RepoElementDBID"><![CDATA[0]]></Attribute>
+                              <Attribute name="IsRepositoryFolder"><![CDATA[False]]></Attribute>
+                              <Attribute name="DBPath"><![CDATA[]]></Attribute>
+                              <Attribute name="RepoAdditionalRequestParams"><![CDATA[]]></Attribute>
+                              <Attribute name="URLType"><![CDATA[32]]></Attribute>
+                              <Attribute name="TypeNode"><![CDATA[True]]></Attribute>
+                            </Attributes>
+                            <Relations/>
+                          </Properties>
+                        </Object>
+                      </Attribute>
+                      <Attribute name="AppendIfExists"><![CDATA[True]]></Attribute>
+                      <Attribute name="DeploymentPackageType"><![CDATA[File]]></Attribute>
+                      <Attribute name="DeploymentDir">
+                        <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoURI">
+                          <Properties>
+                            <Attributes>
+                              <Attribute name="FileURL"><![CDATA[%TEMP%\Assentis\DocDesign\tmp]]></Attribute>
+                              <Attribute name="FileRelative"><![CDATA[False]]></Attribute>
+                              <Attribute name="WebURL"><![CDATA[]]></Attribute>
+                              <Attribute name="RepoElementID"><![CDATA[]]></Attribute>
+                              <Attribute name="RepoElementName"><![CDATA[]]></Attribute>
+                              <Attribute name="RepoElementVersion"><![CDATA[]]></Attribute>
+                              <Attribute name="RepoElementLabel"><![CDATA[]]></Attribute>
+                              <Attribute name="RepoElementExtension"><![CDATA[]]></Attribute>
+                              <Attribute name="RepoElementDBID"><![CDATA[0]]></Attribute>
+                              <Attribute name="IsRepositoryFolder"><![CDATA[False]]></Attribute>
+                              <Attribute name="DBPath"><![CDATA[]]></Attribute>
+                              <Attribute name="RepoAdditionalRequestParams"><![CDATA[]]></Attribute>
+                              <Attribute name="URLType"><![CDATA[32]]></Attribute>
+                              <Attribute name="TypeNode"><![CDATA[True]]></Attribute>
+                            </Attributes>
+                            <Relations/>
+                          </Properties>
+                        </Object>
+                      </Attribute>
+                      <Attribute name="PackageName"><![CDATA[]]></Attribute>
+                      <Attribute name="PackageAlias"><![CDATA[]]></Attribute>
+                      <Attribute name="BatchMigration"><![CDATA[True]]></Attribute>
+                      <Attribute name="BatchDeployment"><![CDATA[True]]></Attribute>
+                    </Attributes>
+                    <Relations/>
+                  </Properties>
+                </Object>
+              </Attribute>
+              <Attribute name="ICCProfile">
+                <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoURI">
+                  <Properties>
+                    <Attributes>
+                      <Attribute name="FileURL"><![CDATA[]]></Attribute>
+                      <Attribute name="FileRelative"><![CDATA[False]]></Attribute>
+                      <Attribute name="WebURL"><![CDATA[]]></Attribute>
+                      <Attribute name="RepoElementID"><![CDATA[]]></Attribute>
+                      <Attribute name="RepoElementName"><![CDATA[]]></Attribute>
+                      <Attribute name="RepoElementVersion"><![CDATA[]]></Attribute>
+                      <Attribute name="RepoElementLabel"><![CDATA[]]></Attribute>
+                      <Attribute name="RepoElementExtension"><![CDATA[]]></Attribute>
+                      <Attribute name="RepoElementDBID"><![CDATA[0]]></Attribute>
+                      <Attribute name="IsRepositoryFolder"><![CDATA[False]]></Attribute>
+                      <Attribute name="DBPath"><![CDATA[]]></Attribute>
+                      <Attribute name="RepoAdditionalRequestParams"><![CDATA[]]></Attribute>
+                      <Attribute name="URLType"><![CDATA[32]]></Attribute>
+                      <Attribute name="TypeNode"><![CDATA[True]]></Attribute>
+                    </Attributes>
+                    <Relations/>
+                  </Properties>
+                </Object>
+              </Attribute>
+              <Attribute name="XSLParams">
+                <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXSLParamCollection">
+                  <Properties>
+                    <Attributes/>
+                    <Relations/>
+                  </Properties>
+                  <Object id="20160926T135528.163.42724401096325-6662.890356623472.9600480.071018456.1632209.43605807.290.4005882705758" name="" enabled="True" type="com.assentis.cockpit.bo.BoXSLParamVariable">
+                    <Properties>
+                      <Attributes>
+                        <Attribute name="Notes"><![CDATA[]]></Attribute>
+                        <Attribute name="XSLParamName"><![CDATA[SpruchSchlzl]]></Attribute>
+                        <Attribute name="InitialValue">
+                          <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXPathTextVariable">
+                            <Properties>
+                              <Attributes>
+                                <Attribute name="IsXPath"><![CDATA[True]]></Attribute>
+                                <Attribute name="XPath"><![CDATA["TEST"]]></Attribute>
+                                <Attribute name="XPathWithName"><![CDATA[./.]]></Attribute>
+                              </Attributes>
+                              <Relations>
+                                <Relation name="XPathTextVariable" refTo=""/>
+                                <ManyRelation name="QueryXPathTextVariable"/>
+                              </Relations>
+                            </Properties>
+                          </Object>
+                        </Attribute>
+                        <Attribute name="InsideRepetition"><![CDATA[True]]></Attribute>
+                      </Attributes>
+                      <Relations/>
+                    </Properties>
+                  </Object>
+                  <Object id="20160926T135528.197.3324951098881-5908.035791256892.4489555.579598604.2051348.2898173355.627.2343275373493" name="" enabled="True" type="com.assentis.cockpit.bo.BoXSLParamVariable">
+                    <Properties>
+                      <Attributes>
+                        <Attribute name="Notes"><![CDATA[]]></Attribute>
+                        <Attribute name="XSLParamName"><![CDATA[VT]]></Attribute>
+                        <Attribute name="InitialValue">
+                          <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXPathTextVariable">
+                            <Properties>
+                              <Attributes>
+                                <Attribute name="IsXPath"><![CDATA[True]]></Attribute>
+                                <Attribute name="XPath"><![CDATA["02"]]></Attribute>
+                                <Attribute name="XPathWithName"><![CDATA[./.]]></Attribute>
+                              </Attributes>
+                              <Relations>
+                                <Relation name="XPathTextVariable" refTo=""/>
+                                <ManyRelation name="QueryXPathTextVariable"/>
+                              </Relations>
+                            </Properties>
+                          </Object>
+                        </Attribute>
+                        <Attribute name="InsideRepetition"><![CDATA[True]]></Attribute>
+                      </Attributes>
+                      <Relations/>
+                    </Properties>
+                  </Object>
+                  <Object id="20160926T135528.154.12815160829427-7130.585427940476.9468722.88713086.9338566.562224489.956.961468183827" name="" enabled="True" type="com.assentis.cockpit.bo.BoXSLParamVariable">
+                    <Properties>
+                      <Attributes>
+                        <Attribute name="Notes"><![CDATA[]]></Attribute>
+                        <Attribute name="XSLParamName"><![CDATA[LD]]></Attribute>
+                        <Attribute name="InitialValue">
+                          <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXPathTextVariable">
+                            <Properties>
+                              <Attributes>
+                                <Attribute name="IsXPath"><![CDATA[True]]></Attribute>
+                                <Attribute name="XPath"><![CDATA["H"]]></Attribute>
+                                <Attribute name="XPathWithName"><![CDATA[./.]]></Attribute>
+                              </Attributes>
+                              <Relations>
+                                <Relation name="XPathTextVariable" refTo=""/>
+                                <ManyRelation name="QueryXPathTextVariable"/>
+                              </Relations>
+                            </Properties>
+                          </Object>
+                        </Attribute>
+                        <Attribute name="InsideRepetition"><![CDATA[True]]></Attribute>
+                      </Attributes>
+                      <Relations/>
+                    </Properties>
+                  </Object>
+                </Object>
+              </Attribute>
+              <Attribute name="TargetDocumentResolution"><![CDATA[trDocBaseDefault]]></Attribute>
+              <Attribute name="TargetImageResolution"><![CDATA[trDocBaseDefault]]></Attribute>
+              <Attribute name="ChartingImageIntermediateFormat"><![CDATA[svg]]></Attribute>
+              <Attribute name="ChartingImageIntermediateResolution"><![CDATA[n600]]></Attribute>
+              <Attribute name="WritingMode"><![CDATA[lr]]></Attribute>
+              <Attribute name="OptimizerParams">
+                <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoOptimizerParams">
+                  <Properties>
+                    <Attributes>
+                      <Attribute name="AlignmentBaseLine"><![CDATA[False]]></Attribute>
+                      <Attribute name="HyphenateFalse"><![CDATA[False]]></Attribute>
+                      <Attribute name="LastLineEndIndent0mm"><![CDATA[False]]></Attribute>
+                      <Attribute name="TextIndent0mm"><![CDATA[False]]></Attribute>
+                      <Attribute name="SpaceStartConditionalityRetain"><![CDATA[False]]></Attribute>
+                      <Attribute name="RemoveIDInline"><![CDATA[False]]></Attribute>
+                      <Attribute name="RemoveIDTableCell"><![CDATA[False]]></Attribute>
+                      <Attribute name="RemoveIDFOBlock"><![CDATA[False]]></Attribute>
+                      <Attribute name="RemoveFOWrapper"><![CDATA[False]]></Attribute>
+                      <Attribute name="RemoveFOInline"><![CDATA[False]]></Attribute>
+                      <Attribute name="GenerateShortID"><![CDATA[False]]></Attribute>
+                      <Attribute name="LetterWordspacing0"><![CDATA[False]]></Attribute>
+                      <Attribute name="TableBorder"><![CDATA[False]]></Attribute>
+                      <Attribute name="StartIndent0pt"><![CDATA[False]]></Attribute>
+                      <Attribute name="EndIndent0pt"><![CDATA[False]]></Attribute>
+                    </Attributes>
+                    <Relations/>
+                  </Properties>
+                </Object>
+              </Attribute>
+            </Attributes>
+            <Relations>
+              <Relation name="ArchivingInformation" refTo=""/>
+              <Relation name="VariableCollection" refTo="20160926T135528.100.09271015364097-6903.837757110228.1353121.7357108153.9381351.766923632.540.0685329008545"/>
+              <Relation name="VariableSlaveCollection" refTo=""/>
+              <Relation name="AFPPrinting" refTo=""/>
+            </Relations>
+          </Properties>
+          <Object id="20160926T135528.187.3692832549177-5042.316462994655.4696342.786038376.5367385.6746059675.342.56762197991674" name="HitAssRepeatingPage" enabled="True" type="com.assentis.cockpit.bo.BoPageRepetition">
+            <Properties>
+              <Attributes>
+                <Attribute name="Notes"><![CDATA[]]></Attribute>
+                <Attribute name="Hyphenate"><![CDATA[inherit]]></Attribute>
+                <Attribute name="FOLang"><![CDATA[Inherit]]></Attribute>
+                <Attribute name="Font">
+                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoFont">
+                    <Properties>
+                      <Attributes>
+                        <Attribute name="FontFamily"><![CDATA[inherit]]></Attribute>
+                        <Attribute name="FontSize"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                        <Attribute name="FontStyle"><![CDATA[inherit]]></Attribute>
+                        <Attribute name="FontVariant"><![CDATA[inherit]]></Attribute>
+                        <Attribute name="FontWeight"><![CDATA[inherit]]></Attribute>
+                        <Attribute name="FontPlacement"><![CDATA[inherit]]></Attribute>
+                        <Attribute name="FontDecoration"><![CDATA[inherit]]></Attribute>
+                        <Attribute name="FontColor">
+                          <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+                            <Properties>
+                              <Attributes>
+                                <Attribute name="inherit"><![CDATA[True]]></Attribute>
+                                <Attribute name="transparent"><![CDATA[False]]></Attribute>
+                                <Attribute name="userdefined"><![CDATA[False]]></Attribute>
+                                <Attribute name="showrgbtransparency"><![CDATA[False]]></Attribute>
+                                <Attribute name="RGB"><![CDATA[0,0,0,255]]></Attribute>
+                                <Attribute name="CMYK"><![CDATA[0,0,0,1]]></Attribute>
+                                <Attribute name="Spotcolor">
+                                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoSpotcolor">
+                                    <Properties>
+                                      <Attributes>
+                                        <Attribute name="SpotcolorKey"><![CDATA[none]]></Attribute>
+                                        <Attribute name="Tint"><![CDATA[1]]></Attribute>
+                                      </Attributes>
+                                      <Relations/>
+                                    </Properties>
+                                  </Object>
+                                </Attribute>
+                              </Attributes>
+                              <Relations/>
+                            </Properties>
+                          </Object>
+                        </Attribute>
+                      </Attributes>
+                      <Relations/>
+                    </Properties>
+                  </Object>
+                </Attribute>
+                <Attribute name="MaxRepeat"><![CDATA[99999]]></Attribute>
+                <Attribute name="Format"><![CDATA[n1]]></Attribute>
+                <Attribute name="ForcePageCount"><![CDATA[no-force]]></Attribute>
+                <Attribute name="StartValue"><![CDATA[-999]]></Attribute>
+                <Attribute name="XSLSetParamCollectionTopRegion">
+                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXSLSetParamCollection">
+                    <Properties>
+                      <Attributes>
+                        <Attribute name="Representing"><![CDATA[com.assentis.cockpit.bo.BoTopRegion]]></Attribute>
+                      </Attributes>
+                      <Relations/>
+                    </Properties>
+                  </Object>
+                </Attribute>
+                <Attribute name="XSLSetParamCollectionBottomRegion">
+                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXSLSetParamCollection">
+                    <Properties>
+                      <Attributes>
+                        <Attribute name="Representing"><![CDATA[com.assentis.cockpit.bo.BoBottomRegion]]></Attribute>
+                      </Attributes>
+                      <Relations/>
+                    </Properties>
+                  </Object>
+                </Attribute>
+                <Attribute name="XSLSetParamCollectionStartRegion">
+                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXSLSetParamCollection">
+                    <Properties>
+                      <Attributes>
+                        <Attribute name="Representing"><![CDATA[com.assentis.cockpit.bo.BoStartRegion]]></Attribute>
+                      </Attributes>
+                      <Relations/>
+                    </Properties>
+                  </Object>
+                </Attribute>
+                <Attribute name="XSLSetParamCollectionEndRegion">
+                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXSLSetParamCollection">
+                    <Properties>
+                      <Attributes>
+                        <Attribute name="Representing"><![CDATA[com.assentis.cockpit.bo.BoEndRegion]]></Attribute>
+                      </Attributes>
+                      <Relations/>
+                    </Properties>
+                  </Object>
+                </Attribute>
+                <Attribute name="PrintOptions">
+                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoPrintOptions">
+                    <Properties>
+                      <Attributes>
+                        <Attribute name="SetSimplexDuplex"><![CDATA[False]]></Attribute>
+                        <Attribute name="SimplexDuplexSelection"><![CDATA[Simplex]]></Attribute>
+                        <Attribute name="SetMediaType"><![CDATA[False]]></Attribute>
+                        <Attribute name="MediaTypeXPath"><![CDATA[./.]]></Attribute>
+                        <Attribute name="SetInputTray"><![CDATA[False]]></Attribute>
+                        <Attribute name="InputTrayXPath"><![CDATA[./.]]></Attribute>
+                        <Attribute name="SetStapling"><![CDATA[False]]></Attribute>
+                        <Attribute name="StaplingXPath"><![CDATA[./.]]></Attribute>
+                        <Attribute name="StapleOptionXPath"><![CDATA[./.]]></Attribute>
+                        <Attribute name="SetOutputTray"><![CDATA[False]]></Attribute>
+                        <Attribute name="OutputTrayXPath"><![CDATA[./.]]></Attribute>
+                        <Attribute name="SetAFPMediaMap"><![CDATA[False]]></Attribute>
+                        <Attribute name="AFPMediaMap"><![CDATA[./.]]></Attribute>
+                      </Attributes>
+                      <Relations/>
+                    </Properties>
+                  </Object>
+                </Attribute>
+                <Attribute name="PageFormat">
+                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoPageFormat">
+                    <Properties>
+                      <Attributes>
+                        <Attribute name="Width"><![CDATA[21 cm]]></Attribute>
+                        <Attribute name="Height"><![CDATA[29.7 cm]]></Attribute>
+                        <Attribute name="FormatName"><![CDATA[DIN-A4]]></Attribute>
+                        <Attribute name="Orientation"><![CDATA[False]]></Attribute>
+                      </Attributes>
+                      <Relations/>
+                    </Properties>
+                  </Object>
+                </Attribute>
+                <Attribute name="Box">
+                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.boBox">
+                    <Properties>
+                      <Attributes>
+                        <Attribute name="PaddingTop"><![CDATA[0 mm]]></Attribute>
+                        <Attribute name="PaddingLeft"><![CDATA[0 mm]]></Attribute>
+                        <Attribute name="PaddingRight"><![CDATA[0 mm]]></Attribute>
+                        <Attribute name="PaddingBottom"><![CDATA[0 mm]]></Attribute>
+                        <Attribute name="MarginTop"><![CDATA[0 mm]]></Attribute>
+                        <Attribute name="MarginLeft"><![CDATA[0 mm]]></Attribute>
+                        <Attribute name="MarginRight"><![CDATA[0 mm]]></Attribute>
+                        <Attribute name="MarginBottom"><![CDATA[0 mm]]></Attribute>
+                        <Attribute name="TopSpaceConditionality"><![CDATA[retain]]></Attribute>
+                        <Attribute name="BottomSpaceConditionality"><![CDATA[retain]]></Attribute>
+                      </Attributes>
+                      <Relations/>
+                    </Properties>
+                  </Object>
+                </Attribute>
+                <Attribute name="XOffset"><![CDATA[0 cm]]></Attribute>
+                <Attribute name="YOffset"><![CDATA[0 cm]]></Attribute>
+                <Attribute name="MarginTop"><![CDATA[1.5 cm]]></Attribute>
+                <Attribute name="MarginBottom"><![CDATA[1.5 cm]]></Attribute>
+                <Attribute name="MarginLeft"><![CDATA[1.5 cm]]></Attribute>
+                <Attribute name="MarginRight"><![CDATA[1.5 cm]]></Attribute>
+                <Attribute name="Squeeze"><![CDATA[False]]></Attribute>
+                <Attribute name="SqueezeRounds"><![CDATA[1]]></Attribute>
+                <Attribute name="SqueezeToPages"><![CDATA[1]]></Attribute>
+                <Attribute name="SqueezePercent"><![CDATA[0]]></Attribute>
+                <Attribute name="SqueezeIfTotalPages"><![CDATA[False]]></Attribute>
+                <Attribute name="SqueezeTotalPagesGroupOf"><![CDATA[0]]></Attribute>
+                <Attribute name="SqueezeTotalPagesOddCondition"><![CDATA[any]]></Attribute>
+                <Attribute name="Always"><![CDATA[True]]></Attribute>
+                <Attribute name="PageArea"><![CDATA[0]]></Attribute>
+                <Attribute name="EqualsNPages"><![CDATA[True]]></Attribute>
+                <Attribute name="NPages"><![CDATA[1]]></Attribute>
+                <Attribute name="PagesOddCondition"><![CDATA[any]]></Attribute>
+                <Attribute name="Fillup"><![CDATA[False]]></Attribute>
+                <Attribute name="PageAreaToFill"><![CDATA[0]]></Attribute>
+                <Attribute name="IfStartsOnPage"><![CDATA[False]]></Attribute>
+                <Attribute name="StartsOnPage"><![CDATA[1]]></Attribute>
+                <Attribute name="StartsOnOddCondition"><![CDATA[any]]></Attribute>
+                <Attribute name="IfEndsOnPage"><![CDATA[False]]></Attribute>
+                <Attribute name="EndsOnPage"><![CDATA[1]]></Attribute>
+                <Attribute name="EndsOnOddCondition"><![CDATA[any]]></Attribute>
+                <Attribute name="IfTotalPages"><![CDATA[False]]></Attribute>
+                <Attribute name="TotalPagesGroupOf"><![CDATA[0]]></Attribute>
+                <Attribute name="TotalPagesOddCondition"><![CDATA[any]]></Attribute>
+                <Attribute name="WritingMode"><![CDATA[inherit]]></Attribute>
+              </Attributes>
+              <Relations>
+                <Relation name="TopRegion" refTo=""/>
+                <Relation name="BottomRegion" refTo=""/>
+                <Relation name="StartRegion" refTo=""/>
+                <Relation name="EndRegion" refTo=""/>
+                <Relation name="FootnoteSeparation" refTo=""/>
+                <Relation name="Page" refTo="20160926T135528.177.77332435882727-9033.719551839826.7981123.425411704.6897282.401587311.710.7773207734831"/>
+              </Relations>
+            </Properties>
+          </Object>
+        </Object>
+        <Object id="20160926T135528.177.77332435882727-9033.719551839826.7981123.425411704.6897282.401587311.710.7773207734831" name="HitAssPageContent" enabled="True" type="com.assentis.cockpit.bo.BoPage">
+          <Properties>
+            <Attributes>
+              <Attribute name="Notes"><![CDATA[]]></Attribute>
+              <Attribute name="FootnoteSettings">
+                <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoFootnoteSettings">
+                  <Properties>
+                    <Attributes>
+                      <Attribute name="IndentedLayout"><![CDATA[False]]></Attribute>
+                      <Attribute name="MarkWidth"><![CDATA[0 cm]]></Attribute>
+                      <Attribute name="GapAfterMark"><![CDATA[0 cm]]></Attribute>
+                      <Attribute name="NumberOfColumns"><![CDATA[1]]></Attribute>
+                      <Attribute name="ColumnGap"><![CDATA[0 cm]]></Attribute>
+                      <Attribute name="EliminateDuplicates"><![CDATA[False]]></Attribute>
+                    </Attributes>
+                    <Relations/>
+                  </Properties>
+                </Object>
+              </Attribute>
+              <Attribute name="Font">
+                <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoFont">
+                  <Properties>
+                    <Attributes>
+                      <Attribute name="FontFamily"><![CDATA[inherit]]></Attribute>
+                      <Attribute name="FontSize"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                      <Attribute name="FontStyle"><![CDATA[inherit]]></Attribute>
+                      <Attribute name="FontVariant"><![CDATA[inherit]]></Attribute>
+                      <Attribute name="FontWeight"><![CDATA[inherit]]></Attribute>
+                      <Attribute name="FontPlacement"><![CDATA[inherit]]></Attribute>
+                      <Attribute name="FontDecoration"><![CDATA[inherit]]></Attribute>
+                      <Attribute name="FontColor">
+                        <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+                          <Properties>
+                            <Attributes>
+                              <Attribute name="inherit"><![CDATA[True]]></Attribute>
+                              <Attribute name="transparent"><![CDATA[False]]></Attribute>
+                              <Attribute name="userdefined"><![CDATA[False]]></Attribute>
+                              <Attribute name="showrgbtransparency"><![CDATA[False]]></Attribute>
+                              <Attribute name="RGB"><![CDATA[0,0,0,255]]></Attribute>
+                              <Attribute name="CMYK"><![CDATA[0,0,0,1]]></Attribute>
+                              <Attribute name="Spotcolor">
+                                <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoSpotcolor">
+                                  <Properties>
+                                    <Attributes>
+                                      <Attribute name="SpotcolorKey"><![CDATA[none]]></Attribute>
+                                      <Attribute name="Tint"><![CDATA[1]]></Attribute>
+                                    </Attributes>
+                                    <Relations/>
+                                  </Properties>
+                                </Object>
+                              </Attribute>
+                            </Attributes>
+                            <Relations/>
+                          </Properties>
+                        </Object>
+                      </Attribute>
+                    </Attributes>
+                    <Relations/>
+                  </Properties>
+                </Object>
+              </Attribute>
+              <Attribute name="Orphans"><![CDATA[2]]></Attribute>
+              <Attribute name="Widows"><![CDATA[2]]></Attribute>
+              <Attribute name="LineSpacing"><![CDATA[14 pt]]></Attribute>
+              <Attribute name="LineStackingStrategy"><![CDATA[max-height]]></Attribute>
+              <Attribute name="LetterSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+              <Attribute name="WordSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+              <Attribute name="LetterSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+              <Attribute name="WordSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+              <Attribute name="VerticalAlign"><![CDATA[before]]></Attribute>
+              <Attribute name="ColumnNumber"><![CDATA[1]]></Attribute>
+              <Attribute name="TextAlign"><![CDATA[start]]></Attribute>
+              <Attribute name="TextAlignLast"><![CDATA[start]]></Attribute>
+              <Attribute name="TextIndent"><![CDATA[0 cm]]></Attribute>
+              <Attribute name="LastlineEndIndent"><![CDATA[0 cm]]></Attribute>
+              <Attribute name="ColumnGap"><![CDATA[0 cm]]></Attribute>
+              <Attribute name="Hyphenate"><![CDATA[No]]></Attribute>
+              <Attribute name="FOLang"><![CDATA[Inherit]]></Attribute>
+              <Attribute name="XMLNamespaces">
+                <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoNamespaceCollection">
+                  <Properties>
+                    <Attributes>
+                      <Attribute name="Notes"><![CDATA[]]></Attribute>
+                    </Attributes>
+                    <Relations/>
+                  </Properties>
+                </Object>
+              </Attribute>
+              <Attribute name="WritingMode"><![CDATA[inherit]]></Attribute>
+            </Attributes>
+            <Relations>
+              <Relation name="TopRegion" refTo="20160926T135528.161.09767306461885-5339.210778573886.5884937.196354279.6456949.772614355.745.0853039122559"/>
+              <Relation name="BottomRegion" refTo="20160926T135528.158.84663657451978-1755.9562452588964.3966274.269145163.3371357.6804374815.312.04316054458104"/>
+              <Relation name="StartRegion" refTo=""/>
+              <Relation name="EndRegion" refTo=""/>
+              <Relation name="FootnoteSeparation" refTo=""/>
+            </Relations>
+          </Properties>
+          <Object id="20160926T135528.144.73782286849547-1504.291668640647.8265718.805228609.2305285.7614554456.304.7003535076648" name="renderSessionUuid" enabled="True" type="com.assentis.cockpit.bo.BoDocumentVariable">
+            <Properties>
+              <Attributes>
+                <Attribute name="DFVariableName"><![CDATA['renderSessionUuid']]></Attribute>
+                <Attribute name="DFVariableValue">
+                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXPathTextVariable">
+                    <Properties>
+                      <Attributes>
+                        <Attribute name="IsXPath"><![CDATA[True]]></Attribute>
+                        <Attribute name="XPath"><![CDATA[hit2assext:createRenderSessionContext()]]></Attribute>
+                        <Attribute name="XPathWithName"><![CDATA[]]></Attribute>
+                      </Attributes>
+                      <Relations>
+                        <Relation name="XPathTextVariable" refTo=""/>
+                        <ManyRelation name="QueryXPathTextVariable"/>
+                      </Relations>
+                    </Properties>
+                  </Object>
+                </Attribute>
+              </Attributes>
+              <Relations/>
+            </Properties>
+          </Object>
+          <Object id="20160926T135528.165.39721990745056-4584.319263995395.1185592.2856107235.1158415.8714982173.171.313809953043" name="CLOU Component Paragraph" enabled="True" type="com.assentis.cockpit.bo.BoParagraph">
+            <Properties>
+              <Attributes>
+                <Attribute name="Notes"><![CDATA[]]></Attribute>
+                <Attribute name="Orphans"><![CDATA[2]]></Attribute>
+                <Attribute name="Widows"><![CDATA[2]]></Attribute>
+                <Attribute name="LineSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                <Attribute name="LineStackingStrategy"><![CDATA[inherited]]></Attribute>
+                <Attribute name="LetterSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                <Attribute name="WordSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                <Attribute name="LetterSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                <Attribute name="WordSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                <Attribute name="Rotation"><![CDATA[n0]]></Attribute>
+                <Attribute name="Width"><![CDATA[0 cm]]></Attribute>
+                <Attribute name="Height"><![CDATA[0 cm]]></Attribute>
+                <Attribute name="TextAlign"><![CDATA[justify]]></Attribute>
+                <Attribute name="TextAlignLast"><![CDATA[start]]></Attribute>
+                <Attribute name="TextIndent"><![CDATA[0 cm]]></Attribute>
+                <Attribute name="LastlineEndIndent"><![CDATA[0 cm]]></Attribute>
+                <Attribute name="Span"><![CDATA[False]]></Attribute>
+                <Attribute name="FOLang"><![CDATA[Inherit]]></Attribute>
+                <Attribute name="Box">
+                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.boBox">
+                    <Properties>
+                      <Attributes>
+                        <Attribute name="PaddingTop"><![CDATA[0 mm]]></Attribute>
+                        <Attribute name="PaddingLeft"><![CDATA[0 mm]]></Attribute>
+                        <Attribute name="PaddingRight"><![CDATA[0 mm]]></Attribute>
+                        <Attribute name="PaddingBottom"><![CDATA[0 mm]]></Attribute>
+                        <Attribute name="MarginTop"><![CDATA[0 mm]]></Attribute>
+                        <Attribute name="MarginLeft"><![CDATA[0 mm]]></Attribute>
+                        <Attribute name="MarginRight"><![CDATA[0 mm]]></Attribute>
+                        <Attribute name="MarginBottom"><![CDATA[0 mm]]></Attribute>
+                        <Attribute name="TopSpaceConditionality"><![CDATA[retain]]></Attribute>
+                        <Attribute name="BottomSpaceConditionality"><![CDATA[retain]]></Attribute>
+                      </Attributes>
+                      <Relations/>
+                    </Properties>
+                  </Object>
+                </Attribute>
+                <Attribute name="Border">
+                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoBorder">
+                    <Properties>
+                      <Attributes>
+                        <Attribute name="Top">
+                          <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoBorderElement">
+                            <Properties>
+                              <Attributes>
+                                <Attribute name="Thickness"><![CDATA[0 pt]]></Attribute>
+                                <Attribute name="LineStyle"><![CDATA[none]]></Attribute>
+                                <Attribute name="Color">
+                                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+                                    <Properties>
+                                      <Attributes>
+                                        <Attribute name="inherit"><![CDATA[False]]></Attribute>
+                                        <Attribute name="transparent"><![CDATA[True]]></Attribute>
+                                        <Attribute name="userdefined"><![CDATA[False]]></Attribute>
+                                        <Attribute name="showrgbtransparency"><![CDATA[False]]></Attribute>
+                                        <Attribute name="RGB"><![CDATA[0,0,0,255]]></Attribute>
+                                        <Attribute name="CMYK"><![CDATA[0,0,0,1]]></Attribute>
+                                        <Attribute name="Spotcolor">
+                                          <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoSpotcolor">
+                                            <Properties>
+                                              <Attributes>
+                                                <Attribute name="SpotcolorKey"><![CDATA[none]]></Attribute>
+                                                <Attribute name="Tint"><![CDATA[1]]></Attribute>
+                                              </Attributes>
+                                              <Relations/>
+                                            </Properties>
+                                          </Object>
+                                        </Attribute>
+                                      </Attributes>
+                                      <Relations/>
+                                    </Properties>
+                                  </Object>
+                                </Attribute>
+                              </Attributes>
+                              <Relations/>
+                            </Properties>
+                          </Object>
+                        </Attribute>
+                        <Attribute name="Left">
+                          <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoBorderElement">
+                            <Properties>
+                              <Attributes>
+                                <Attribute name="Thickness"><![CDATA[0 pt]]></Attribute>
+                                <Attribute name="LineStyle"><![CDATA[none]]></Attribute>
+                                <Attribute name="Color">
+                                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+                                    <Properties>
+                                      <Attributes>
+                                        <Attribute name="inherit"><![CDATA[False]]></Attribute>
+                                        <Attribute name="transparent"><![CDATA[True]]></Attribute>
+                                        <Attribute name="userdefined"><![CDATA[False]]></Attribute>
+                                        <Attribute name="showrgbtransparency"><![CDATA[False]]></Attribute>
+                                        <Attribute name="RGB"><![CDATA[0,0,0,255]]></Attribute>
+                                        <Attribute name="CMYK"><![CDATA[0,0,0,1]]></Attribute>
+                                        <Attribute name="Spotcolor">
+                                          <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoSpotcolor">
+                                            <Properties>
+                                              <Attributes>
+                                                <Attribute name="SpotcolorKey"><![CDATA[none]]></Attribute>
+                                                <Attribute name="Tint"><![CDATA[1]]></Attribute>
+                                              </Attributes>
+                                              <Relations/>
+                                            </Properties>
+                                          </Object>
+                                        </Attribute>
+                                      </Attributes>
+                                      <Relations/>
+                                    </Properties>
+                                  </Object>
+                                </Attribute>
+                              </Attributes>
+                              <Relations/>
+                            </Properties>
+                          </Object>
+                        </Attribute>
+                        <Attribute name="Right">
+                          <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoBorderElement">
+                            <Properties>
+                              <Attributes>
+                                <Attribute name="Thickness"><![CDATA[0 pt]]></Attribute>
+                                <Attribute name="LineStyle"><![CDATA[none]]></Attribute>
+                                <Attribute name="Color">
+                                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+                                    <Properties>
+                                      <Attributes>
+                                        <Attribute name="inherit"><![CDATA[False]]></Attribute>
+                                        <Attribute name="transparent"><![CDATA[True]]></Attribute>
+                                        <Attribute name="userdefined"><![CDATA[False]]></Attribute>
+                                        <Attribute name="showrgbtransparency"><![CDATA[False]]></Attribute>
+                                        <Attribute name="RGB"><![CDATA[0,0,0,255]]></Attribute>
+                                        <Attribute name="CMYK"><![CDATA[0,0,0,1]]></Attribute>
+                                        <Attribute name="Spotcolor">
+                                          <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoSpotcolor">
+                                            <Properties>
+                                              <Attributes>
+                                                <Attribute name="SpotcolorKey"><![CDATA[none]]></Attribute>
+                                                <Attribute name="Tint"><![CDATA[1]]></Attribute>
+                                              </Attributes>
+                                              <Relations/>
+                                            </Properties>
+                                          </Object>
+                                        </Attribute>
+                                      </Attributes>
+                                      <Relations/>
+                                    </Properties>
+                                  </Object>
+                                </Attribute>
+                              </Attributes>
+                              <Relations/>
+                            </Properties>
+                          </Object>
+                        </Attribute>
+                        <Attribute name="Bottom">
+                          <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoBorderElement">
+                            <Properties>
+                              <Attributes>
+                                <Attribute name="Thickness"><![CDATA[0 pt]]></Attribute>
+                                <Attribute name="LineStyle"><![CDATA[none]]></Attribute>
+                                <Attribute name="Color">
+                                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+                                    <Properties>
+                                      <Attributes>
+                                        <Attribute name="inherit"><![CDATA[False]]></Attribute>
+                                        <Attribute name="transparent"><![CDATA[True]]></Attribute>
+                                        <Attribute name="userdefined"><![CDATA[False]]></Attribute>
+                                        <Attribute name="showrgbtransparency"><![CDATA[False]]></Attribute>
+                                        <Attribute name="RGB"><![CDATA[0,0,0,255]]></Attribute>
+                                        <Attribute name="CMYK"><![CDATA[0,0,0,1]]></Attribute>
+                                        <Attribute name="Spotcolor">
+                                          <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoSpotcolor">
+                                            <Properties>
+                                              <Attributes>
+                                                <Attribute name="SpotcolorKey"><![CDATA[none]]></Attribute>
+                                                <Attribute name="Tint"><![CDATA[1]]></Attribute>
+                                              </Attributes>
+                                              <Relations/>
+                                            </Properties>
+                                          </Object>
+                                        </Attribute>
+                                      </Attributes>
+                                      <Relations/>
+                                    </Properties>
+                                  </Object>
+                                </Attribute>
+                              </Attributes>
+                              <Relations/>
+                            </Properties>
+                          </Object>
+                        </Attribute>
+                        <Attribute name="Horizontal">
+                          <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoBorderElement">
+                            <Properties>
+                              <Attributes>
+                                <Attribute name="Thickness"><![CDATA[0 pt]]></Attribute>
+                                <Attribute name="LineStyle"><![CDATA[none]]></Attribute>
+                                <Attribute name="Color">
+                                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+                                    <Properties>
+                                      <Attributes>
+                                        <Attribute name="inherit"><![CDATA[False]]></Attribute>
+                                        <Attribute name="transparent"><![CDATA[True]]></Attribute>
+                                        <Attribute name="userdefined"><![CDATA[False]]></Attribute>
+                                        <Attribute name="showrgbtransparency"><![CDATA[False]]></Attribute>
+                                        <Attribute name="RGB"><![CDATA[0,0,0,255]]></Attribute>
+                                        <Attribute name="CMYK"><![CDATA[0,0,0,1]]></Attribute>
+                                        <Attribute name="Spotcolor">
+                                          <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoSpotcolor">
+                                            <Properties>
+                                              <Attributes>
+                                                <Attribute name="SpotcolorKey"><![CDATA[none]]></Attribute>
+                                                <Attribute name="Tint"><![CDATA[1]]></Attribute>
+                                              </Attributes>
+                                              <Relations/>
+                                            </Properties>
+                                          </Object>
+                                        </Attribute>
+                                      </Attributes>
+                                      <Relations/>
+                                    </Properties>
+                                  </Object>
+                                </Attribute>
+                              </Attributes>
+                              <Relations/>
+                            </Properties>
+                          </Object>
+                        </Attribute>
+                        <Attribute name="Vertical">
+                          <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoBorderElement">
+                            <Properties>
+                              <Attributes>
+                                <Attribute name="Thickness"><![CDATA[0 pt]]></Attribute>
+                                <Attribute name="LineStyle"><![CDATA[none]]></Attribute>
+                                <Attribute name="Color">
+                                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+                                    <Properties>
+                                      <Attributes>
+                                        <Attribute name="inherit"><![CDATA[False]]></Attribute>
+                                        <Attribute name="transparent"><![CDATA[True]]></Attribute>
+                                        <Attribute name="userdefined"><![CDATA[False]]></Attribute>
+                                        <Attribute name="showrgbtransparency"><![CDATA[False]]></Attribute>
+                                        <Attribute name="RGB"><![CDATA[0,0,0,255]]></Attribute>
+                                        <Attribute name="CMYK"><![CDATA[0,0,0,1]]></Attribute>
+                                        <Attribute name="Spotcolor">
+                                          <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoSpotcolor">
+                                            <Properties>
+                                              <Attributes>
+                                                <Attribute name="SpotcolorKey"><![CDATA[none]]></Attribute>
+                                                <Attribute name="Tint"><![CDATA[1]]></Attribute>
+                                              </Attributes>
+                                              <Relations/>
+                                            </Properties>
+                                          </Object>
+                                        </Attribute>
+                                      </Attributes>
+                                      <Relations/>
+                                    </Properties>
+                                  </Object>
+                                </Attribute>
+                              </Attributes>
+                              <Relations/>
+                            </Properties>
+                          </Object>
+                        </Attribute>
+                        <Attribute name="TopBorderConditionality"><![CDATA[discard]]></Attribute>
+                        <Attribute name="BottomBorderConditionality"><![CDATA[discard]]></Attribute>
+                        <Attribute name="PreviewWithBackground"><![CDATA[False]]></Attribute>
+                      </Attributes>
+                      <Relations/>
+                    </Properties>
+                  </Object>
+                </Attribute>
+                <Attribute name="BackgroundColor">
+                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+                    <Properties>
+                      <Attributes>
+                        <Attribute name="inherit"><![CDATA[True]]></Attribute>
+                        <Attribute name="transparent"><![CDATA[False]]></Attribute>
+                        <Attribute name="userdefined"><![CDATA[False]]></Attribute>
+                        <Attribute name="showrgbtransparency"><![CDATA[False]]></Attribute>
+                        <Attribute name="RGB"><![CDATA[0,0,0,255]]></Attribute>
+                        <Attribute name="CMYK"><![CDATA[0,0,0,1]]></Attribute>
+                        <Attribute name="Spotcolor">
+                          <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoSpotcolor">
+                            <Properties>
+                              <Attributes>
+                                <Attribute name="SpotcolorKey"><![CDATA[none]]></Attribute>
+                                <Attribute name="Tint"><![CDATA[1]]></Attribute>
+                              </Attributes>
+                              <Relations/>
+                            </Properties>
+                          </Object>
+                        </Attribute>
+                      </Attributes>
+                      <Relations/>
+                    </Properties>
+                  </Object>
+                </Attribute>
+                <Attribute name="Font">
+                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoFont">
+                    <Properties>
+                      <Attributes>
+                        <Attribute name="FontFamily"><![CDATA[inherit]]></Attribute>
+                        <Attribute name="FontSize"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                        <Attribute name="FontStyle"><![CDATA[inherit]]></Attribute>
+                        <Attribute name="FontVariant"><![CDATA[inherit]]></Attribute>
+                        <Attribute name="FontWeight"><![CDATA[inherit]]></Attribute>
+                        <Attribute name="FontPlacement"><![CDATA[inherit]]></Attribute>
+                        <Attribute name="FontDecoration"><![CDATA[inherit]]></Attribute>
+                        <Attribute name="FontColor">
+                          <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+                            <Properties>
+                              <Attributes>
+                                <Attribute name="inherit"><![CDATA[True]]></Attribute>
+                                <Attribute name="transparent"><![CDATA[False]]></Attribute>
+                                <Attribute name="userdefined"><![CDATA[False]]></Attribute>
+                                <Attribute name="showrgbtransparency"><![CDATA[False]]></Attribute>
+                                <Attribute name="RGB"><![CDATA[0,0,0,255]]></Attribute>
+                                <Attribute name="CMYK"><![CDATA[0,0,0,1]]></Attribute>
+                                <Attribute name="Spotcolor">
+                                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoSpotcolor">
+                                    <Properties>
+                                      <Attributes>
+                                        <Attribute name="SpotcolorKey"><![CDATA[none]]></Attribute>
+                                        <Attribute name="Tint"><![CDATA[1]]></Attribute>
+                                      </Attributes>
+                                      <Relations/>
+                                    </Properties>
+                                  </Object>
+                                </Attribute>
+                              </Attributes>
+                              <Relations/>
+                            </Properties>
+                          </Object>
+                        </Attribute>
+                      </Attributes>
+                      <Relations/>
+                    </Properties>
+                  </Object>
+                </Attribute>
+                <Attribute name="Hyphenate"><![CDATA[inherit]]></Attribute>
+                <Attribute name="LeadingSpace"><![CDATA[False]]></Attribute>
+                <Attribute name="BreakBefore"><![CDATA[auto]]></Attribute>
+                <Attribute name="BreakAfter"><![CDATA[auto]]></Attribute>
+                <Attribute name="KeepWithPrevious"><![CDATA[none]]></Attribute>
+                <Attribute name="KeepWithNext"><![CDATA[none]]></Attribute>
+                <Attribute name="KeepTogether"><![CDATA[none]]></Attribute>
+                <Attribute name="Editable"><![CDATA[False]]></Attribute>
+                <Attribute name="EditWidth"><![CDATA[0 cm]]></Attribute>
+                <Attribute name="WritingMode"><![CDATA[inherit]]></Attribute>
+              </Attributes>
+              <Relations>
+                <Relation name="TabulatorsRel" refTo=""/>
+                <Relation name="EditorConfigFreetext" refTo=""/>
+                <Relation name="EditorConfigTextComponents" refTo=""/>
+              </Relations>
+            </Properties>
+            <Object id="20160926T135528.131.77358221178284-9075.87652176123.6517071.0264641065.8297678.261353297.411.81538783192775" name="text" enabled="True" type="com.assentis.cockpit.bo.BoText">
+              <Properties>
+                <Attributes>
+                  <Attribute name="Notes"><![CDATA[]]></Attribute>
+                  <Attribute name="BackgroundColor">
+                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+                      <Properties>
+                        <Attributes>
+                          <Attribute name="inherit"><![CDATA[True]]></Attribute>
+                          <Attribute name="transparent"><![CDATA[False]]></Attribute>
+                          <Attribute name="userdefined"><![CDATA[False]]></Attribute>
+                          <Attribute name="showrgbtransparency"><![CDATA[False]]></Attribute>
+                          <Attribute name="RGB"><![CDATA[0,0,0,255]]></Attribute>
+                          <Attribute name="CMYK"><![CDATA[0,0,0,1]]></Attribute>
+                          <Attribute name="Spotcolor">
+                            <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoSpotcolor">
+                              <Properties>
+                                <Attributes>
+                                  <Attribute name="SpotcolorKey"><![CDATA[none]]></Attribute>
+                                  <Attribute name="Tint"><![CDATA[1]]></Attribute>
+                                </Attributes>
+                                <Relations/>
+                              </Properties>
+                            </Object>
+                          </Attribute>
+                        </Attributes>
+                        <Relations/>
+                      </Properties>
+                    </Object>
+                  </Attribute>
+                  <Attribute name="Font">
+                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoFont">
+                      <Properties>
+                        <Attributes>
+                          <Attribute name="FontFamily"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontSize"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                          <Attribute name="FontStyle"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontVariant"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontWeight"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontPlacement"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontDecoration"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontColor">
+                            <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+                              <Properties>
+                                <Attributes>
+                                  <Attribute name="inherit"><![CDATA[True]]></Attribute>
+                                  <Attribute name="transparent"><![CDATA[False]]></Attribute>
+                                  <Attribute name="userdefined"><![CDATA[False]]></Attribute>
+                                  <Attribute name="showrgbtransparency"><![CDATA[False]]></Attribute>
+                                  <Attribute name="RGB"><![CDATA[0,0,0,255]]></Attribute>
+                                  <Attribute name="CMYK"><![CDATA[0,0,0,1]]></Attribute>
+                                  <Attribute name="Spotcolor">
+                                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoSpotcolor">
+                                      <Properties>
+                                        <Attributes>
+                                          <Attribute name="SpotcolorKey"><![CDATA[none]]></Attribute>
+                                          <Attribute name="Tint"><![CDATA[1]]></Attribute>
+                                        </Attributes>
+                                        <Relations/>
+                                      </Properties>
+                                    </Object>
+                                  </Attribute>
+                                </Attributes>
+                                <Relations/>
+                              </Properties>
+                            </Object>
+                          </Attribute>
+                        </Attributes>
+                        <Relations/>
+                      </Properties>
+                    </Object>
+                  </Attribute>
+                  <Attribute name="LetterSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                  <Attribute name="LetterSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                  <Attribute name="WordSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                  <Attribute name="WordSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                  <Attribute name="KeepWithPreviousLine"><![CDATA[none]]></Attribute>
+                  <Attribute name="KeepWithNextLine"><![CDATA[none]]></Attribute>
+                  <Attribute name="KeepTogetherLine"><![CDATA[none]]></Attribute>
+                  <Attribute name="Content"><![CDATA[Wien, am ]]></Attribute>
+                  <Attribute name="FOLang"><![CDATA[Inherit]]></Attribute>
+                </Attributes>
+                <Relations/>
+              </Properties>
+            </Object>
+            <Object id="20160926T135528.123.88597427220643-2726.308137671336.6438848.714578312.1465993.5607079556.746.3770957755276" name="Insert Day" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
+              <Properties>
+                <Attributes>
+                  <Attribute name="Notes"><![CDATA[]]></Attribute>
+                  <Attribute name="Editable"><![CDATA[False]]></Attribute>
+                  <Attribute name="XPathTextVariable">
+                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXPathTextVariable">
+                      <Properties>
+                        <Attributes>
+                          <Attribute name="IsXPath"><![CDATA[True]]></Attribute>
+                          <Attribute name="XPath"><![CDATA[ fn:day-from-date(fn:current-date()) ]]></Attribute>
+                          <Attribute name="XPathWithName"><![CDATA[]]></Attribute>
+                        </Attributes>
+                        <Relations>
+                          <Relation name="XPathTextVariable" refTo=""/>
+                          <ManyRelation name="QueryXPathTextVariable"/>
+                        </Relations>
+                      </Properties>
+                    </Object>
+                  </Attribute>
+                  <Attribute name="Formatting">
+                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoFormatting">
+                      <Properties>
+                        <Attributes>
+                          <Attribute name="FormattingType"><![CDATA[1000]]></Attribute>
+                          <Attribute name="StringFormatter">
+                            <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoStringPattern">
+                              <Properties>
+                                <Attributes>
+                                  <Attribute name="PatternType"><![CDATA[1]]></Attribute>
+                                  <Attribute name="SourcePattern"><![CDATA[]]></Attribute>
+                                  <Attribute name="TargetPattern"><![CDATA[]]></Attribute>
+                                </Attributes>
+                                <Relations/>
+                              </Properties>
+                            </Object>
+                          </Attribute>
+                          <Attribute name="DateFormatter">
+                            <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoDatePatterns">
+                              <Properties>
+                                <Attributes>
+                                  <Attribute name="PatternType"><![CDATA[0]]></Attribute>
+                                  <Attribute name="Source">
+                                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoDatePattern">
+                                      <Properties>
+                                        <Attributes>
+                                          <Attribute name="PatternType"><![CDATA[16]]></Attribute>
+                                          <Attribute name="RoleType"><![CDATA[1024]]></Attribute>
+                                          <Attribute name="User"><![CDATA[dd.MM.yyyy]]></Attribute>
+                                          <Attribute name="Final"><![CDATA[DA-0011]]></Attribute>
+                                          <Attribute name="Localized"><![CDATA[]]></Attribute>
+                                          <Attribute name="Locale"><![CDATA[US_en]]></Attribute>
+                                          <Attribute name="TestValue"><![CDATA[]]></Attribute>
+                                          <Attribute name="TestNow"><![CDATA[True]]></Attribute>
+                                          <Attribute name="TestLocale"><![CDATA[AT_de]]></Attribute>
+                                        </Attributes>
+                                        <Relations/>
+                                      </Properties>
+                                    </Object>
+                                  </Attribute>
+                                  <Attribute name="Target">
+                                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoDatePattern">
+                                      <Properties>
+                                        <Attributes>
+                                          <Attribute name="PatternType"><![CDATA[32]]></Attribute>
+                                          <Attribute name="RoleType"><![CDATA[2048]]></Attribute>
+                                          <Attribute name="User"><![CDATA[dd.MM.yyyy]]></Attribute>
+                                          <Attribute name="Final"><![CDATA[]]></Attribute>
+                                          <Attribute name="Localized"><![CDATA[DateLongText]]></Attribute>
+                                          <Attribute name="Locale"><![CDATA[AT_de]]></Attribute>
+                                          <Attribute name="TestValue"><![CDATA[]]></Attribute>
+                                          <Attribute name="TestNow"><![CDATA[True]]></Attribute>
+                                          <Attribute name="TestLocale"><![CDATA[AT_de]]></Attribute>
+                                        </Attributes>
+                                        <Relations/>
+                                      </Properties>
+                                    </Object>
+                                  </Attribute>
+                                </Attributes>
+                                <Relations/>
+                              </Properties>
+                            </Object>
+                          </Attribute>
+                          <Attribute name="NumberFormatter">
+                            <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoNumberPatterns">
+                              <Properties>
+                                <Attributes>
+                                  <Attribute name="PatternType"><![CDATA[0]]></Attribute>
+                                  <Attribute name="Source">
+                                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoNumberPattern">
+                                      <Properties>
+                                        <Attributes>
+                                          <Attribute name="PatternType"><![CDATA[16]]></Attribute>
+                                          <Attribute name="UserPos"><![CDATA[#.##]]></Attribute>
+                                          <Attribute name="UserNeg"><![CDATA[#.##]]></Attribute>
+                                          <Attribute name="Final"><![CDATA[NU-0006]]></Attribute>
+                                          <Attribute name="Localized"><![CDATA[Decimal1]]></Attribute>
+                                          <Attribute name="Locale"><![CDATA[US_en]]></Attribute>
+                                          <Attribute name="ISOCurrency"><![CDATA[EUR]]></Attribute>
+                                          <Attribute name="TestValue"><![CDATA[]]></Attribute>
+                                          <Attribute name="TestLocale"><![CDATA[AT_de]]></Attribute>
+                                          <Attribute name="TestISOCurrency"><![CDATA[EUR]]></Attribute>
+                                        </Attributes>
+                                        <Relations/>
+                                      </Properties>
+                                    </Object>
+                                  </Attribute>
+                                  <Attribute name="Target">
+                                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoNumberPattern">
+                                      <Properties>
+                                        <Attributes>
+                                          <Attribute name="PatternType"><![CDATA[32]]></Attribute>
+                                          <Attribute name="UserPos"><![CDATA[#.##]]></Attribute>
+                                          <Attribute name="UserNeg"><![CDATA[#.##]]></Attribute>
+                                          <Attribute name="Final"><![CDATA[NU-0006]]></Attribute>
+                                          <Attribute name="Localized"><![CDATA[CurrencyWithSymbolAndSeparator]]></Attribute>
+                                          <Attribute name="Locale"><![CDATA[AT_de]]></Attribute>
+                                          <Attribute name="ISOCurrency"><![CDATA[EUR]]></Attribute>
+                                          <Attribute name="TestValue"><![CDATA[]]></Attribute>
+                                          <Attribute name="TestLocale"><![CDATA[AT_de]]></Attribute>
+                                          <Attribute name="TestISOCurrency"><![CDATA[EUR]]></Attribute>
+                                        </Attributes>
+                                        <Relations/>
+                                      </Properties>
+                                    </Object>
+                                  </Attribute>
+                                </Attributes>
+                                <Relations/>
+                              </Properties>
+                            </Object>
+                          </Attribute>
+                        </Attributes>
+                        <Relations/>
+                      </Properties>
+                    </Object>
+                  </Attribute>
+                  <Attribute name="XMLNamespaces">
+                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoNamespaceCollection">
+                      <Properties>
+                        <Attributes>
+                          <Attribute name="Notes"><![CDATA[]]></Attribute>
+                        </Attributes>
+                        <Relations/>
+                      </Properties>
+                    </Object>
+                  </Attribute>
+                  <Attribute name="BackgroundColor">
+                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+                      <Properties>
+                        <Attributes>
+                          <Attribute name="inherit"><![CDATA[True]]></Attribute>
+                          <Attribute name="transparent"><![CDATA[False]]></Attribute>
+                          <Attribute name="userdefined"><![CDATA[False]]></Attribute>
+                          <Attribute name="showrgbtransparency"><![CDATA[False]]></Attribute>
+                          <Attribute name="RGB"><![CDATA[0,0,0,255]]></Attribute>
+                          <Attribute name="CMYK"><![CDATA[0,0,0,1]]></Attribute>
+                          <Attribute name="Spotcolor">
+                            <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoSpotcolor">
+                              <Properties>
+                                <Attributes>
+                                  <Attribute name="SpotcolorKey"><![CDATA[none]]></Attribute>
+                                  <Attribute name="Tint"><![CDATA[1]]></Attribute>
+                                </Attributes>
+                                <Relations/>
+                              </Properties>
+                            </Object>
+                          </Attribute>
+                        </Attributes>
+                        <Relations/>
+                      </Properties>
+                    </Object>
+                  </Attribute>
+                  <Attribute name="Font">
+                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoFont">
+                      <Properties>
+                        <Attributes>
+                          <Attribute name="FontFamily"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontSize"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                          <Attribute name="FontStyle"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontVariant"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontWeight"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontPlacement"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontDecoration"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontColor">
+                            <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+                              <Properties>
+                                <Attributes>
+                                  <Attribute name="inherit"><![CDATA[True]]></Attribute>
+                                  <Attribute name="transparent"><![CDATA[False]]></Attribute>
+                                  <Attribute name="userdefined"><![CDATA[False]]></Attribute>
+                                  <Attribute name="showrgbtransparency"><![CDATA[False]]></Attribute>
+                                  <Attribute name="RGB"><![CDATA[0,0,0,255]]></Attribute>
+                                  <Attribute name="CMYK"><![CDATA[0,0,0,1]]></Attribute>
+                                  <Attribute name="Spotcolor">
+                                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoSpotcolor">
+                                      <Properties>
+                                        <Attributes>
+                                          <Attribute name="SpotcolorKey"><![CDATA[none]]></Attribute>
+                                          <Attribute name="Tint"><![CDATA[1]]></Attribute>
+                                        </Attributes>
+                                        <Relations/>
+                                      </Properties>
+                                    </Object>
+                                  </Attribute>
+                                </Attributes>
+                                <Relations/>
+                              </Properties>
+                            </Object>
+                          </Attribute>
+                        </Attributes>
+                        <Relations/>
+                      </Properties>
+                    </Object>
+                  </Attribute>
+                  <Attribute name="LetterSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                  <Attribute name="LetterSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                  <Attribute name="WordSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                  <Attribute name="WordSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                  <Attribute name="KeepWithPreviousLine"><![CDATA[none]]></Attribute>
+                  <Attribute name="KeepWithNextLine"><![CDATA[none]]></Attribute>
+                  <Attribute name="KeepTogetherLine"><![CDATA[none]]></Attribute>
+                  <Attribute name="FOLang"><![CDATA[Inherit]]></Attribute>
+                </Attributes>
+                <Relations/>
+              </Properties>
+            </Object>
+            <Object id="20160926T135528.116.4860192802133-2651.391268230852.6053130.383189966.5213571.171040779.802.2526982332117" name="text" enabled="True" type="com.assentis.cockpit.bo.BoText">
+              <Properties>
+                <Attributes>
+                  <Attribute name="Notes"><![CDATA[]]></Attribute>
+                  <Attribute name="BackgroundColor">
+                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+                      <Properties>
+                        <Attributes>
+                          <Attribute name="inherit"><![CDATA[True]]></Attribute>
+                          <Attribute name="transparent"><![CDATA[False]]></Attribute>
+                          <Attribute name="userdefined"><![CDATA[False]]></Attribute>
+                          <Attribute name="showrgbtransparency"><![CDATA[False]]></Attribute>
+                          <Attribute name="RGB"><![CDATA[0,0,0,255]]></Attribute>
+                          <Attribute name="CMYK"><![CDATA[0,0,0,1]]></Attribute>
+                          <Attribute name="Spotcolor">
+                            <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoSpotcolor">
+                              <Properties>
+                                <Attributes>
+                                  <Attribute name="SpotcolorKey"><![CDATA[none]]></Attribute>
+                                  <Attribute name="Tint"><![CDATA[1]]></Attribute>
+                                </Attributes>
+                                <Relations/>
+                              </Properties>
+                            </Object>
+                          </Attribute>
+                        </Attributes>
+                        <Relations/>
+                      </Properties>
+                    </Object>
+                  </Attribute>
+                  <Attribute name="Font">
+                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoFont">
+                      <Properties>
+                        <Attributes>
+                          <Attribute name="FontFamily"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontSize"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                          <Attribute name="FontStyle"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontVariant"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontWeight"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontPlacement"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontDecoration"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontColor">
+                            <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+                              <Properties>
+                                <Attributes>
+                                  <Attribute name="inherit"><![CDATA[True]]></Attribute>
+                                  <Attribute name="transparent"><![CDATA[False]]></Attribute>
+                                  <Attribute name="userdefined"><![CDATA[False]]></Attribute>
+                                  <Attribute name="showrgbtransparency"><![CDATA[False]]></Attribute>
+                                  <Attribute name="RGB"><![CDATA[0,0,0,255]]></Attribute>
+                                  <Attribute name="CMYK"><![CDATA[0,0,0,1]]></Attribute>
+                                  <Attribute name="Spotcolor">
+                                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoSpotcolor">
+                                      <Properties>
+                                        <Attributes>
+                                          <Attribute name="SpotcolorKey"><![CDATA[none]]></Attribute>
+                                          <Attribute name="Tint"><![CDATA[1]]></Attribute>
+                                        </Attributes>
+                                        <Relations/>
+                                      </Properties>
+                                    </Object>
+                                  </Attribute>
+                                </Attributes>
+                                <Relations/>
+                              </Properties>
+                            </Object>
+                          </Attribute>
+                        </Attributes>
+                        <Relations/>
+                      </Properties>
+                    </Object>
+                  </Attribute>
+                  <Attribute name="LetterSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                  <Attribute name="LetterSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                  <Attribute name="WordSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                  <Attribute name="WordSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                  <Attribute name="KeepWithPreviousLine"><![CDATA[none]]></Attribute>
+                  <Attribute name="KeepWithNextLine"><![CDATA[none]]></Attribute>
+                  <Attribute name="KeepTogetherLine"><![CDATA[none]]></Attribute>
+                  <Attribute name="Content"><![CDATA[.]]></Attribute>
+                  <Attribute name="FOLang"><![CDATA[Inherit]]></Attribute>
+                </Attributes>
+                <Relations/>
+              </Properties>
+            </Object>
+            <Object id="20160926T135528.191.77450012591436-4453.522276394293.7563373.149810058.5639724.728503132.795.8315602024365" name="Insert Month" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
+              <Properties>
+                <Attributes>
+                  <Attribute name="Notes"><![CDATA[]]></Attribute>
+                  <Attribute name="Editable"><![CDATA[False]]></Attribute>
+                  <Attribute name="XPathTextVariable">
+                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXPathTextVariable">
+                      <Properties>
+                        <Attributes>
+                          <Attribute name="IsXPath"><![CDATA[True]]></Attribute>
+                          <Attribute name="XPath"><![CDATA[ fn:month-from-date(fn:current-date()) ]]></Attribute>
+                          <Attribute name="XPathWithName"><![CDATA[]]></Attribute>
+                        </Attributes>
+                        <Relations>
+                          <Relation name="XPathTextVariable" refTo=""/>
+                          <ManyRelation name="QueryXPathTextVariable"/>
+                        </Relations>
+                      </Properties>
+                    </Object>
+                  </Attribute>
+                  <Attribute name="Formatting">
+                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoFormatting">
+                      <Properties>
+                        <Attributes>
+                          <Attribute name="FormattingType"><![CDATA[1000]]></Attribute>
+                          <Attribute name="StringFormatter">
+                            <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoStringPattern">
+                              <Properties>
+                                <Attributes>
+                                  <Attribute name="PatternType"><![CDATA[1]]></Attribute>
+                                  <Attribute name="SourcePattern"><![CDATA[]]></Attribute>
+                                  <Attribute name="TargetPattern"><![CDATA[]]></Attribute>
+                                </Attributes>
+                                <Relations/>
+                              </Properties>
+                            </Object>
+                          </Attribute>
+                          <Attribute name="DateFormatter">
+                            <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoDatePatterns">
+                              <Properties>
+                                <Attributes>
+                                  <Attribute name="PatternType"><![CDATA[0]]></Attribute>
+                                  <Attribute name="Source">
+                                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoDatePattern">
+                                      <Properties>
+                                        <Attributes>
+                                          <Attribute name="PatternType"><![CDATA[16]]></Attribute>
+                                          <Attribute name="RoleType"><![CDATA[1024]]></Attribute>
+                                          <Attribute name="User"><![CDATA[dd.MM.yyyy]]></Attribute>
+                                          <Attribute name="Final"><![CDATA[DA-0011]]></Attribute>
+                                          <Attribute name="Localized"><![CDATA[]]></Attribute>
+                                          <Attribute name="Locale"><![CDATA[US_en]]></Attribute>
+                                          <Attribute name="TestValue"><![CDATA[]]></Attribute>
+                                          <Attribute name="TestNow"><![CDATA[True]]></Attribute>
+                                          <Attribute name="TestLocale"><![CDATA[AT_de]]></Attribute>
+                                        </Attributes>
+                                        <Relations/>
+                                      </Properties>
+                                    </Object>
+                                  </Attribute>
+                                  <Attribute name="Target">
+                                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoDatePattern">
+                                      <Properties>
+                                        <Attributes>
+                                          <Attribute name="PatternType"><![CDATA[32]]></Attribute>
+                                          <Attribute name="RoleType"><![CDATA[2048]]></Attribute>
+                                          <Attribute name="User"><![CDATA[dd.MM.yyyy]]></Attribute>
+                                          <Attribute name="Final"><![CDATA[]]></Attribute>
+                                          <Attribute name="Localized"><![CDATA[DateLongText]]></Attribute>
+                                          <Attribute name="Locale"><![CDATA[AT_de]]></Attribute>
+                                          <Attribute name="TestValue"><![CDATA[]]></Attribute>
+                                          <Attribute name="TestNow"><![CDATA[True]]></Attribute>
+                                          <Attribute name="TestLocale"><![CDATA[AT_de]]></Attribute>
+                                        </Attributes>
+                                        <Relations/>
+                                      </Properties>
+                                    </Object>
+                                  </Attribute>
+                                </Attributes>
+                                <Relations/>
+                              </Properties>
+                            </Object>
+                          </Attribute>
+                          <Attribute name="NumberFormatter">
+                            <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoNumberPatterns">
+                              <Properties>
+                                <Attributes>
+                                  <Attribute name="PatternType"><![CDATA[0]]></Attribute>
+                                  <Attribute name="Source">
+                                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoNumberPattern">
+                                      <Properties>
+                                        <Attributes>
+                                          <Attribute name="PatternType"><![CDATA[16]]></Attribute>
+                                          <Attribute name="UserPos"><![CDATA[#.##]]></Attribute>
+                                          <Attribute name="UserNeg"><![CDATA[#.##]]></Attribute>
+                                          <Attribute name="Final"><![CDATA[NU-0006]]></Attribute>
+                                          <Attribute name="Localized"><![CDATA[Decimal1]]></Attribute>
+                                          <Attribute name="Locale"><![CDATA[US_en]]></Attribute>
+                                          <Attribute name="ISOCurrency"><![CDATA[EUR]]></Attribute>
+                                          <Attribute name="TestValue"><![CDATA[]]></Attribute>
+                                          <Attribute name="TestLocale"><![CDATA[AT_de]]></Attribute>
+                                          <Attribute name="TestISOCurrency"><![CDATA[EUR]]></Attribute>
+                                        </Attributes>
+                                        <Relations/>
+                                      </Properties>
+                                    </Object>
+                                  </Attribute>
+                                  <Attribute name="Target">
+                                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoNumberPattern">
+                                      <Properties>
+                                        <Attributes>
+                                          <Attribute name="PatternType"><![CDATA[32]]></Attribute>
+                                          <Attribute name="UserPos"><![CDATA[#.##]]></Attribute>
+                                          <Attribute name="UserNeg"><![CDATA[#.##]]></Attribute>
+                                          <Attribute name="Final"><![CDATA[NU-0006]]></Attribute>
+                                          <Attribute name="Localized"><![CDATA[CurrencyWithSymbolAndSeparator]]></Attribute>
+                                          <Attribute name="Locale"><![CDATA[AT_de]]></Attribute>
+                                          <Attribute name="ISOCurrency"><![CDATA[EUR]]></Attribute>
+                                          <Attribute name="TestValue"><![CDATA[]]></Attribute>
+                                          <Attribute name="TestLocale"><![CDATA[AT_de]]></Attribute>
+                                          <Attribute name="TestISOCurrency"><![CDATA[EUR]]></Attribute>
+                                        </Attributes>
+                                        <Relations/>
+                                      </Properties>
+                                    </Object>
+                                  </Attribute>
+                                </Attributes>
+                                <Relations/>
+                              </Properties>
+                            </Object>
+                          </Attribute>
+                        </Attributes>
+                        <Relations/>
+                      </Properties>
+                    </Object>
+                  </Attribute>
+                  <Attribute name="XMLNamespaces">
+                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoNamespaceCollection">
+                      <Properties>
+                        <Attributes>
+                          <Attribute name="Notes"><![CDATA[]]></Attribute>
+                        </Attributes>
+                        <Relations/>
+                      </Properties>
+                    </Object>
+                  </Attribute>
+                  <Attribute name="BackgroundColor">
+                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+                      <Properties>
+                        <Attributes>
+                          <Attribute name="inherit"><![CDATA[True]]></Attribute>
+                          <Attribute name="transparent"><![CDATA[False]]></Attribute>
+                          <Attribute name="userdefined"><![CDATA[False]]></Attribute>
+                          <Attribute name="showrgbtransparency"><![CDATA[False]]></Attribute>
+                          <Attribute name="RGB"><![CDATA[0,0,0,255]]></Attribute>
+                          <Attribute name="CMYK"><![CDATA[0,0,0,1]]></Attribute>
+                          <Attribute name="Spotcolor">
+                            <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoSpotcolor">
+                              <Properties>
+                                <Attributes>
+                                  <Attribute name="SpotcolorKey"><![CDATA[none]]></Attribute>
+                                  <Attribute name="Tint"><![CDATA[1]]></Attribute>
+                                </Attributes>
+                                <Relations/>
+                              </Properties>
+                            </Object>
+                          </Attribute>
+                        </Attributes>
+                        <Relations/>
+                      </Properties>
+                    </Object>
+                  </Attribute>
+                  <Attribute name="Font">
+                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoFont">
+                      <Properties>
+                        <Attributes>
+                          <Attribute name="FontFamily"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontSize"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                          <Attribute name="FontStyle"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontVariant"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontWeight"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontPlacement"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontDecoration"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontColor">
+                            <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+                              <Properties>
+                                <Attributes>
+                                  <Attribute name="inherit"><![CDATA[True]]></Attribute>
+                                  <Attribute name="transparent"><![CDATA[False]]></Attribute>
+                                  <Attribute name="userdefined"><![CDATA[False]]></Attribute>
+                                  <Attribute name="showrgbtransparency"><![CDATA[False]]></Attribute>
+                                  <Attribute name="RGB"><![CDATA[0,0,0,255]]></Attribute>
+                                  <Attribute name="CMYK"><![CDATA[0,0,0,1]]></Attribute>
+                                  <Attribute name="Spotcolor">
+                                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoSpotcolor">
+                                      <Properties>
+                                        <Attributes>
+                                          <Attribute name="SpotcolorKey"><![CDATA[none]]></Attribute>
+                                          <Attribute name="Tint"><![CDATA[1]]></Attribute>
+                                        </Attributes>
+                                        <Relations/>
+                                      </Properties>
+                                    </Object>
+                                  </Attribute>
+                                </Attributes>
+                                <Relations/>
+                              </Properties>
+                            </Object>
+                          </Attribute>
+                        </Attributes>
+                        <Relations/>
+                      </Properties>
+                    </Object>
+                  </Attribute>
+                  <Attribute name="LetterSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                  <Attribute name="LetterSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                  <Attribute name="WordSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                  <Attribute name="WordSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                  <Attribute name="KeepWithPreviousLine"><![CDATA[none]]></Attribute>
+                  <Attribute name="KeepWithNextLine"><![CDATA[none]]></Attribute>
+                  <Attribute name="KeepTogetherLine"><![CDATA[none]]></Attribute>
+                  <Attribute name="FOLang"><![CDATA[Inherit]]></Attribute>
+                </Attributes>
+                <Relations/>
+              </Properties>
+            </Object>
+            <Object id="20160926T135528.155.38790334008547-6391.982428399964.1539439.512261963.8209945.882169654.450.54355351452443" name="text" enabled="True" type="com.assentis.cockpit.bo.BoText">
+              <Properties>
+                <Attributes>
+                  <Attribute name="Notes"><![CDATA[]]></Attribute>
+                  <Attribute name="BackgroundColor">
+                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+                      <Properties>
+                        <Attributes>
+                          <Attribute name="inherit"><![CDATA[True]]></Attribute>
+                          <Attribute name="transparent"><![CDATA[False]]></Attribute>
+                          <Attribute name="userdefined"><![CDATA[False]]></Attribute>
+                          <Attribute name="showrgbtransparency"><![CDATA[False]]></Attribute>
+                          <Attribute name="RGB"><![CDATA[0,0,0,255]]></Attribute>
+                          <Attribute name="CMYK"><![CDATA[0,0,0,1]]></Attribute>
+                          <Attribute name="Spotcolor">
+                            <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoSpotcolor">
+                              <Properties>
+                                <Attributes>
+                                  <Attribute name="SpotcolorKey"><![CDATA[none]]></Attribute>
+                                  <Attribute name="Tint"><![CDATA[1]]></Attribute>
+                                </Attributes>
+                                <Relations/>
+                              </Properties>
+                            </Object>
+                          </Attribute>
+                        </Attributes>
+                        <Relations/>
+                      </Properties>
+                    </Object>
+                  </Attribute>
+                  <Attribute name="Font">
+                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoFont">
+                      <Properties>
+                        <Attributes>
+                          <Attribute name="FontFamily"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontSize"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                          <Attribute name="FontStyle"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontVariant"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontWeight"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontPlacement"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontDecoration"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontColor">
+                            <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+                              <Properties>
+                                <Attributes>
+                                  <Attribute name="inherit"><![CDATA[True]]></Attribute>
+                                  <Attribute name="transparent"><![CDATA[False]]></Attribute>
+                                  <Attribute name="userdefined"><![CDATA[False]]></Attribute>
+                                  <Attribute name="showrgbtransparency"><![CDATA[False]]></Attribute>
+                                  <Attribute name="RGB"><![CDATA[0,0,0,255]]></Attribute>
+                                  <Attribute name="CMYK"><![CDATA[0,0,0,1]]></Attribute>
+                                  <Attribute name="Spotcolor">
+                                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoSpotcolor">
+                                      <Properties>
+                                        <Attributes>
+                                          <Attribute name="SpotcolorKey"><![CDATA[none]]></Attribute>
+                                          <Attribute name="Tint"><![CDATA[1]]></Attribute>
+                                        </Attributes>
+                                        <Relations/>
+                                      </Properties>
+                                    </Object>
+                                  </Attribute>
+                                </Attributes>
+                                <Relations/>
+                              </Properties>
+                            </Object>
+                          </Attribute>
+                        </Attributes>
+                        <Relations/>
+                      </Properties>
+                    </Object>
+                  </Attribute>
+                  <Attribute name="LetterSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                  <Attribute name="LetterSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                  <Attribute name="WordSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                  <Attribute name="WordSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                  <Attribute name="KeepWithPreviousLine"><![CDATA[none]]></Attribute>
+                  <Attribute name="KeepWithNextLine"><![CDATA[none]]></Attribute>
+                  <Attribute name="KeepTogetherLine"><![CDATA[none]]></Attribute>
+                  <Attribute name="Content"><![CDATA[.]]></Attribute>
+                  <Attribute name="FOLang"><![CDATA[Inherit]]></Attribute>
+                </Attributes>
+                <Relations/>
+              </Properties>
+            </Object>
+            <Object id="20160926T135528.152.22718224813278-9213.863426593965.5167341.692726031.2017511.865038406.639.6950073046178" name="Insert Year" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
+              <Properties>
+                <Attributes>
+                  <Attribute name="Notes"><![CDATA[]]></Attribute>
+                  <Attribute name="Editable"><![CDATA[False]]></Attribute>
+                  <Attribute name="XPathTextVariable">
+                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXPathTextVariable">
+                      <Properties>
+                        <Attributes>
+                          <Attribute name="IsXPath"><![CDATA[True]]></Attribute>
+                          <Attribute name="XPath"><![CDATA[ fn:year-from-date(fn:current-date()) ]]></Attribute>
+                          <Attribute name="XPathWithName"><![CDATA[]]></Attribute>
+                        </Attributes>
+                        <Relations>
+                          <Relation name="XPathTextVariable" refTo=""/>
+                          <ManyRelation name="QueryXPathTextVariable"/>
+                        </Relations>
+                      </Properties>
+                    </Object>
+                  </Attribute>
+                  <Attribute name="Formatting">
+                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoFormatting">
+                      <Properties>
+                        <Attributes>
+                          <Attribute name="FormattingType"><![CDATA[1000]]></Attribute>
+                          <Attribute name="StringFormatter">
+                            <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoStringPattern">
+                              <Properties>
+                                <Attributes>
+                                  <Attribute name="PatternType"><![CDATA[1]]></Attribute>
+                                  <Attribute name="SourcePattern"><![CDATA[]]></Attribute>
+                                  <Attribute name="TargetPattern"><![CDATA[]]></Attribute>
+                                </Attributes>
+                                <Relations/>
+                              </Properties>
+                            </Object>
+                          </Attribute>
+                          <Attribute name="DateFormatter">
+                            <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoDatePatterns">
+                              <Properties>
+                                <Attributes>
+                                  <Attribute name="PatternType"><![CDATA[0]]></Attribute>
+                                  <Attribute name="Source">
+                                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoDatePattern">
+                                      <Properties>
+                                        <Attributes>
+                                          <Attribute name="PatternType"><![CDATA[16]]></Attribute>
+                                          <Attribute name="RoleType"><![CDATA[1024]]></Attribute>
+                                          <Attribute name="User"><![CDATA[dd.MM.yyyy]]></Attribute>
+                                          <Attribute name="Final"><![CDATA[DA-0011]]></Attribute>
+                                          <Attribute name="Localized"><![CDATA[]]></Attribute>
+                                          <Attribute name="Locale"><![CDATA[US_en]]></Attribute>
+                                          <Attribute name="TestValue"><![CDATA[]]></Attribute>
+                                          <Attribute name="TestNow"><![CDATA[True]]></Attribute>
+                                          <Attribute name="TestLocale"><![CDATA[AT_de]]></Attribute>
+                                        </Attributes>
+                                        <Relations/>
+                                      </Properties>
+                                    </Object>
+                                  </Attribute>
+                                  <Attribute name="Target">
+                                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoDatePattern">
+                                      <Properties>
+                                        <Attributes>
+                                          <Attribute name="PatternType"><![CDATA[32]]></Attribute>
+                                          <Attribute name="RoleType"><![CDATA[2048]]></Attribute>
+                                          <Attribute name="User"><![CDATA[dd.MM.yyyy]]></Attribute>
+                                          <Attribute name="Final"><![CDATA[]]></Attribute>
+                                          <Attribute name="Localized"><![CDATA[DateLongText]]></Attribute>
+                                          <Attribute name="Locale"><![CDATA[AT_de]]></Attribute>
+                                          <Attribute name="TestValue"><![CDATA[]]></Attribute>
+                                          <Attribute name="TestNow"><![CDATA[True]]></Attribute>
+                                          <Attribute name="TestLocale"><![CDATA[AT_de]]></Attribute>
+                                        </Attributes>
+                                        <Relations/>
+                                      </Properties>
+                                    </Object>
+                                  </Attribute>
+                                </Attributes>
+                                <Relations/>
+                              </Properties>
+                            </Object>
+                          </Attribute>
+                          <Attribute name="NumberFormatter">
+                            <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoNumberPatterns">
+                              <Properties>
+                                <Attributes>
+                                  <Attribute name="PatternType"><![CDATA[0]]></Attribute>
+                                  <Attribute name="Source">
+                                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoNumberPattern">
+                                      <Properties>
+                                        <Attributes>
+                                          <Attribute name="PatternType"><![CDATA[16]]></Attribute>
+                                          <Attribute name="UserPos"><![CDATA[#.##]]></Attribute>
+                                          <Attribute name="UserNeg"><![CDATA[#.##]]></Attribute>
+                                          <Attribute name="Final"><![CDATA[NU-0006]]></Attribute>
+                                          <Attribute name="Localized"><![CDATA[Decimal1]]></Attribute>
+                                          <Attribute name="Locale"><![CDATA[US_en]]></Attribute>
+                                          <Attribute name="ISOCurrency"><![CDATA[EUR]]></Attribute>
+                                          <Attribute name="TestValue"><![CDATA[]]></Attribute>
+                                          <Attribute name="TestLocale"><![CDATA[AT_de]]></Attribute>
+                                          <Attribute name="TestISOCurrency"><![CDATA[EUR]]></Attribute>
+                                        </Attributes>
+                                        <Relations/>
+                                      </Properties>
+                                    </Object>
+                                  </Attribute>
+                                  <Attribute name="Target">
+                                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoNumberPattern">
+                                      <Properties>
+                                        <Attributes>
+                                          <Attribute name="PatternType"><![CDATA[32]]></Attribute>
+                                          <Attribute name="UserPos"><![CDATA[#.##]]></Attribute>
+                                          <Attribute name="UserNeg"><![CDATA[#.##]]></Attribute>
+                                          <Attribute name="Final"><![CDATA[NU-0006]]></Attribute>
+                                          <Attribute name="Localized"><![CDATA[CurrencyWithSymbolAndSeparator]]></Attribute>
+                                          <Attribute name="Locale"><![CDATA[AT_de]]></Attribute>
+                                          <Attribute name="ISOCurrency"><![CDATA[EUR]]></Attribute>
+                                          <Attribute name="TestValue"><![CDATA[]]></Attribute>
+                                          <Attribute name="TestLocale"><![CDATA[AT_de]]></Attribute>
+                                          <Attribute name="TestISOCurrency"><![CDATA[EUR]]></Attribute>
+                                        </Attributes>
+                                        <Relations/>
+                                      </Properties>
+                                    </Object>
+                                  </Attribute>
+                                </Attributes>
+                                <Relations/>
+                              </Properties>
+                            </Object>
+                          </Attribute>
+                        </Attributes>
+                        <Relations/>
+                      </Properties>
+                    </Object>
+                  </Attribute>
+                  <Attribute name="XMLNamespaces">
+                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoNamespaceCollection">
+                      <Properties>
+                        <Attributes>
+                          <Attribute name="Notes"><![CDATA[]]></Attribute>
+                        </Attributes>
+                        <Relations/>
+                      </Properties>
+                    </Object>
+                  </Attribute>
+                  <Attribute name="BackgroundColor">
+                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+                      <Properties>
+                        <Attributes>
+                          <Attribute name="inherit"><![CDATA[True]]></Attribute>
+                          <Attribute name="transparent"><![CDATA[False]]></Attribute>
+                          <Attribute name="userdefined"><![CDATA[False]]></Attribute>
+                          <Attribute name="showrgbtransparency"><![CDATA[False]]></Attribute>
+                          <Attribute name="RGB"><![CDATA[0,0,0,255]]></Attribute>
+                          <Attribute name="CMYK"><![CDATA[0,0,0,1]]></Attribute>
+                          <Attribute name="Spotcolor">
+                            <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoSpotcolor">
+                              <Properties>
+                                <Attributes>
+                                  <Attribute name="SpotcolorKey"><![CDATA[none]]></Attribute>
+                                  <Attribute name="Tint"><![CDATA[1]]></Attribute>
+                                </Attributes>
+                                <Relations/>
+                              </Properties>
+                            </Object>
+                          </Attribute>
+                        </Attributes>
+                        <Relations/>
+                      </Properties>
+                    </Object>
+                  </Attribute>
+                  <Attribute name="Font">
+                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoFont">
+                      <Properties>
+                        <Attributes>
+                          <Attribute name="FontFamily"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontSize"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                          <Attribute name="FontStyle"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontVariant"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontWeight"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontPlacement"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontDecoration"><![CDATA[inherit]]></Attribute>
+                          <Attribute name="FontColor">
+                            <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+                              <Properties>
+                                <Attributes>
+                                  <Attribute name="inherit"><![CDATA[True]]></Attribute>
+                                  <Attribute name="transparent"><![CDATA[False]]></Attribute>
+                                  <Attribute name="userdefined"><![CDATA[False]]></Attribute>
+                                  <Attribute name="showrgbtransparency"><![CDATA[False]]></Attribute>
+                                  <Attribute name="RGB"><![CDATA[0,0,0,255]]></Attribute>
+                                  <Attribute name="CMYK"><![CDATA[0,0,0,1]]></Attribute>
+                                  <Attribute name="Spotcolor">
+                                    <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoSpotcolor">
+                                      <Properties>
+                                        <Attributes>
+                                          <Attribute name="SpotcolorKey"><![CDATA[none]]></Attribute>
+                                          <Attribute name="Tint"><![CDATA[1]]></Attribute>
+                                        </Attributes>
+                                        <Relations/>
+                                      </Properties>
+                                    </Object>
+                                  </Attribute>
+                                </Attributes>
+                                <Relations/>
+                              </Properties>
+                            </Object>
+                          </Attribute>
+                        </Attributes>
+                        <Relations/>
+                      </Properties>
+                    </Object>
+                  </Attribute>
+                  <Attribute name="LetterSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                  <Attribute name="LetterSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                  <Attribute name="WordSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                  <Attribute name="WordSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                  <Attribute name="KeepWithPreviousLine"><![CDATA[none]]></Attribute>
+                  <Attribute name="KeepWithNextLine"><![CDATA[none]]></Attribute>
+                  <Attribute name="KeepTogetherLine"><![CDATA[none]]></Attribute>
+                  <Attribute name="FOLang"><![CDATA[Inherit]]></Attribute>
+                </Attributes>
+                <Relations/>
+              </Properties>
+            </Object>
+            <Object id="20160926T135528.145.87487756597366-5868.029364474693.8633097.081567716.3155867.556480369.403.15072218831205" name="NL" enabled="True" type="com.assentis.cockpit.bo.BoAggregationParagraph">
+              <Properties>
+                <Attributes/>
+                <Relations>
+                  <Relation name="TabulatorsRel" refTo=""/>
+                  <Relation name="EditorConfigFreetext" refTo=""/>
+                  <Relation name="EditorConfigTextComponents" refTo=""/>
+                </Relations>
+              </Properties>
+              <Object id="20160629T141129.154.01458292877118-7787.031682878402.9030760.990812108.8423689.99377769.899.5392398738767" name="NL" enabled="True" type="com.assentis.cockpit.bo.BoCReturn">
+                <Properties>
+                  <Attributes>
+                    <Attribute name="Notes"><![CDATA[]]></Attribute>
+                    <Attribute name="BackgroundColor">
+                      <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+                        <Properties>
+                          <Attributes>
+                            <Attribute name="inherit"><![CDATA[True]]></Attribute>
+                            <Attribute name="transparent"><![CDATA[False]]></Attribute>
+                            <Attribute name="userdefined"><![CDATA[False]]></Attribute>
+                            <Attribute name="showrgbtransparency"><![CDATA[False]]></Attribute>
+                            <Attribute name="RGB"><![CDATA[0,0,0,255]]></Attribute>
+                            <Attribute name="CMYK"><![CDATA[0,0,0,1]]></Attribute>
+                            <Attribute name="Spotcolor">
+                              <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoSpotcolor">
+                                <Properties>
+                                  <Attributes>
+                                    <Attribute name="SpotcolorKey"><![CDATA[none]]></Attribute>
+                                    <Attribute name="Tint"><![CDATA[1]]></Attribute>
+                                  </Attributes>
+                                  <Relations/>
+                                </Properties>
+                              </Object>
+                            </Attribute>
+                          </Attributes>
+                          <Relations/>
+                        </Properties>
+                      </Object>
+                    </Attribute>
+                    <Attribute name="Font">
+                      <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoFont">
+                        <Properties>
+                          <Attributes>
+                            <Attribute name="FontFamily"><![CDATA[inherit]]></Attribute>
+                            <Attribute name="FontSize"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                            <Attribute name="FontStyle"><![CDATA[inherit]]></Attribute>
+                            <Attribute name="FontVariant"><![CDATA[inherit]]></Attribute>
+                            <Attribute name="FontWeight"><![CDATA[inherit]]></Attribute>
+                            <Attribute name="FontPlacement"><![CDATA[inherit]]></Attribute>
+                            <Attribute name="FontDecoration"><![CDATA[inherit]]></Attribute>
+                            <Attribute name="FontColor">
+                              <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+                                <Properties>
+                                  <Attributes>
+                                    <Attribute name="inherit"><![CDATA[True]]></Attribute>
+                                    <Attribute name="transparent"><![CDATA[False]]></Attribute>
+                                    <Attribute name="userdefined"><![CDATA[False]]></Attribute>
+                                    <Attribute name="showrgbtransparency"><![CDATA[False]]></Attribute>
+                                    <Attribute name="RGB"><![CDATA[0,0,0,255]]></Attribute>
+                                    <Attribute name="CMYK"><![CDATA[0,0,0,1]]></Attribute>
+                                    <Attribute name="Spotcolor">
+                                      <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoSpotcolor">
+                                        <Properties>
+                                          <Attributes>
+                                            <Attribute name="SpotcolorKey"><![CDATA[none]]></Attribute>
+                                            <Attribute name="Tint"><![CDATA[1]]></Attribute>
+                                          </Attributes>
+                                          <Relations/>
+                                        </Properties>
+                                      </Object>
+                                    </Attribute>
+                                  </Attributes>
+                                  <Relations/>
+                                </Properties>
+                              </Object>
+                            </Attribute>
+                          </Attributes>
+                          <Relations/>
+                        </Properties>
+                      </Object>
+                    </Attribute>
+                    <Attribute name="LetterSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                    <Attribute name="LetterSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                    <Attribute name="WordSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                    <Attribute name="WordSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                    <Attribute name="KeepWithPreviousLine"><![CDATA[none]]></Attribute>
+                    <Attribute name="KeepWithNextLine"><![CDATA[none]]></Attribute>
+                    <Attribute name="KeepTogetherLine"><![CDATA[none]]></Attribute>
+                  </Attributes>
+                  <Relations/>
+                </Properties>
+              </Object>
+              <Object id="20160629T142056.959-2768.631236.9331315.679" name="Repetition" enabled="True" type="com.assentis.cockpit.bo.BoElementRepetition">
+                <Properties>
+                  <Attributes>
+                    <Attribute name="Notes"><![CDATA[]]></Attribute>
+                    <Attribute name="XPathTextVariable">
+                      <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXPathTextVariable">
+                        <Properties>
+                          <Attributes>
+                            <Attribute name="IsXPath"><![CDATA[True]]></Attribute>
+                            <Attribute name="XPath"><![CDATA[for $n in 1 to 1 return .]]></Attribute>
+                            <Attribute name="XPathWithName"><![CDATA[]]></Attribute>
+                          </Attributes>
+                          <Relations>
+                            <Relation name="XPathTextVariable" refTo=""/>
+                            <ManyRelation name="QueryXPathTextVariable"/>
+                          </Relations>
+                        </Properties>
+                      </Object>
+                    </Attribute>
+                    <Attribute name="DoSort"><![CDATA[False]]></Attribute>
+                    <Attribute name="SortExpression"><![CDATA[./.]]></Attribute>
+                    <Attribute name="Order"><![CDATA[ascending]]></Attribute>
+                    <Attribute name="CaseOrder"><![CDATA[upper-first]]></Attribute>
+                    <Attribute name="TextOrNumber"><![CDATA[text]]></Attribute>
+                  </Attributes>
+                  <Relations/>
+                </Properties>
+              </Object>
+            </Object>
+          </Object>
+          <Object id="20160926T135528.194.6766302831986-4853.551298032762.5056874.306218539.9105338.180376735.576.7564642066475" name="Cleanup RenderSession" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
+            <Properties>
+              <Attributes>
+                <Attribute name="Notes"><![CDATA[]]></Attribute>
+                <Attribute name="Editable"><![CDATA[False]]></Attribute>
+                <Attribute name="XPathTextVariable">
+                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXPathTextVariable">
+                    <Properties>
+                      <Attributes>
+                        <Attribute name="IsXPath"><![CDATA[True]]></Attribute>
+                        <Attribute name="XPath"><![CDATA[hit2assext:cleanUpRenderSessionContext(var:read('renderSessionUuid'))]]></Attribute>
+                        <Attribute name="XPathWithName"><![CDATA[]]></Attribute>
+                      </Attributes>
+                      <Relations>
+                        <Relation name="XPathTextVariable" refTo=""/>
+                        <ManyRelation name="QueryXPathTextVariable"/>
+                      </Relations>
+                    </Properties>
+                  </Object>
+                </Attribute>
+                <Attribute name="Formatting">
+                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoFormatting">
+                    <Properties>
+                      <Attributes>
+                        <Attribute name="FormattingType"><![CDATA[1000]]></Attribute>
+                        <Attribute name="StringFormatter">
+                          <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoStringPattern">
+                            <Properties>
+                              <Attributes>
+                                <Attribute name="PatternType"><![CDATA[1]]></Attribute>
+                                <Attribute name="SourcePattern"><![CDATA[]]></Attribute>
+                                <Attribute name="TargetPattern"><![CDATA[]]></Attribute>
+                              </Attributes>
+                              <Relations/>
+                            </Properties>
+                          </Object>
+                        </Attribute>
+                        <Attribute name="DateFormatter">
+                          <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoDatePatterns">
+                            <Properties>
+                              <Attributes>
+                                <Attribute name="PatternType"><![CDATA[0]]></Attribute>
+                                <Attribute name="Source">
+                                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoDatePattern">
+                                    <Properties>
+                                      <Attributes>
+                                        <Attribute name="PatternType"><![CDATA[16]]></Attribute>
+                                        <Attribute name="RoleType"><![CDATA[1024]]></Attribute>
+                                        <Attribute name="User"><![CDATA[dd.MM.yyyy]]></Attribute>
+                                        <Attribute name="Final"><![CDATA[DA-0011]]></Attribute>
+                                        <Attribute name="Localized"><![CDATA[]]></Attribute>
+                                        <Attribute name="Locale"><![CDATA[US_en]]></Attribute>
+                                        <Attribute name="TestValue"><![CDATA[]]></Attribute>
+                                        <Attribute name="TestNow"><![CDATA[True]]></Attribute>
+                                        <Attribute name="TestLocale"><![CDATA[AT_de]]></Attribute>
+                                      </Attributes>
+                                      <Relations/>
+                                    </Properties>
+                                  </Object>
+                                </Attribute>
+                                <Attribute name="Target">
+                                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoDatePattern">
+                                    <Properties>
+                                      <Attributes>
+                                        <Attribute name="PatternType"><![CDATA[32]]></Attribute>
+                                        <Attribute name="RoleType"><![CDATA[2048]]></Attribute>
+                                        <Attribute name="User"><![CDATA[dd.MM.yyyy]]></Attribute>
+                                        <Attribute name="Final"><![CDATA[]]></Attribute>
+                                        <Attribute name="Localized"><![CDATA[DateLongText]]></Attribute>
+                                        <Attribute name="Locale"><![CDATA[AT_de]]></Attribute>
+                                        <Attribute name="TestValue"><![CDATA[]]></Attribute>
+                                        <Attribute name="TestNow"><![CDATA[True]]></Attribute>
+                                        <Attribute name="TestLocale"><![CDATA[AT_de]]></Attribute>
+                                      </Attributes>
+                                      <Relations/>
+                                    </Properties>
+                                  </Object>
+                                </Attribute>
+                              </Attributes>
+                              <Relations/>
+                            </Properties>
+                          </Object>
+                        </Attribute>
+                        <Attribute name="NumberFormatter">
+                          <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoNumberPatterns">
+                            <Properties>
+                              <Attributes>
+                                <Attribute name="PatternType"><![CDATA[0]]></Attribute>
+                                <Attribute name="Source">
+                                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoNumberPattern">
+                                    <Properties>
+                                      <Attributes>
+                                        <Attribute name="PatternType"><![CDATA[16]]></Attribute>
+                                        <Attribute name="UserPos"><![CDATA[#.##]]></Attribute>
+                                        <Attribute name="UserNeg"><![CDATA[#.##]]></Attribute>
+                                        <Attribute name="Final"><![CDATA[NU-0006]]></Attribute>
+                                        <Attribute name="Localized"><![CDATA[Decimal1]]></Attribute>
+                                        <Attribute name="Locale"><![CDATA[US_en]]></Attribute>
+                                        <Attribute name="ISOCurrency"><![CDATA[DKK]]></Attribute>
+                                        <Attribute name="TestValue"><![CDATA[]]></Attribute>
+                                        <Attribute name="TestLocale"><![CDATA[AT_de]]></Attribute>
+                                        <Attribute name="TestISOCurrency"><![CDATA[DKK]]></Attribute>
+                                      </Attributes>
+                                      <Relations/>
+                                    </Properties>
+                                  </Object>
+                                </Attribute>
+                                <Attribute name="Target">
+                                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoNumberPattern">
+                                    <Properties>
+                                      <Attributes>
+                                        <Attribute name="PatternType"><![CDATA[32]]></Attribute>
+                                        <Attribute name="UserPos"><![CDATA[#.##]]></Attribute>
+                                        <Attribute name="UserNeg"><![CDATA[#.##]]></Attribute>
+                                        <Attribute name="Final"><![CDATA[NU-0006]]></Attribute>
+                                        <Attribute name="Localized"><![CDATA[CurrencyWithSymbolAndSeparator]]></Attribute>
+                                        <Attribute name="Locale"><![CDATA[AT_de]]></Attribute>
+                                        <Attribute name="ISOCurrency"><![CDATA[DKK]]></Attribute>
+                                        <Attribute name="TestValue"><![CDATA[]]></Attribute>
+                                        <Attribute name="TestLocale"><![CDATA[AT_de]]></Attribute>
+                                        <Attribute name="TestISOCurrency"><![CDATA[DKK]]></Attribute>
+                                      </Attributes>
+                                      <Relations/>
+                                    </Properties>
+                                  </Object>
+                                </Attribute>
+                              </Attributes>
+                              <Relations/>
+                            </Properties>
+                          </Object>
+                        </Attribute>
+                      </Attributes>
+                      <Relations/>
+                    </Properties>
+                  </Object>
+                </Attribute>
+                <Attribute name="XMLNamespaces">
+                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoNamespaceCollection">
+                    <Properties>
+                      <Attributes>
+                        <Attribute name="Notes"><![CDATA[]]></Attribute>
+                      </Attributes>
+                      <Relations/>
+                    </Properties>
+                  </Object>
+                </Attribute>
+                <Attribute name="BackgroundColor">
+                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+                    <Properties>
+                      <Attributes>
+                        <Attribute name="inherit"><![CDATA[True]]></Attribute>
+                        <Attribute name="transparent"><![CDATA[False]]></Attribute>
+                        <Attribute name="userdefined"><![CDATA[False]]></Attribute>
+                        <Attribute name="showrgbtransparency"><![CDATA[False]]></Attribute>
+                        <Attribute name="RGB"><![CDATA[0,0,0,255]]></Attribute>
+                        <Attribute name="CMYK"><![CDATA[0,0,0,1]]></Attribute>
+                        <Attribute name="Spotcolor">
+                          <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoSpotcolor">
+                            <Properties>
+                              <Attributes>
+                                <Attribute name="SpotcolorKey"><![CDATA[none]]></Attribute>
+                                <Attribute name="Tint"><![CDATA[1]]></Attribute>
+                              </Attributes>
+                              <Relations/>
+                            </Properties>
+                          </Object>
+                        </Attribute>
+                      </Attributes>
+                      <Relations/>
+                    </Properties>
+                  </Object>
+                </Attribute>
+                <Attribute name="Font">
+                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoFont">
+                    <Properties>
+                      <Attributes>
+                        <Attribute name="FontFamily"><![CDATA[inherit]]></Attribute>
+                        <Attribute name="FontSize"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                        <Attribute name="FontStyle"><![CDATA[inherit]]></Attribute>
+                        <Attribute name="FontVariant"><![CDATA[inherit]]></Attribute>
+                        <Attribute name="FontWeight"><![CDATA[inherit]]></Attribute>
+                        <Attribute name="FontPlacement"><![CDATA[inherit]]></Attribute>
+                        <Attribute name="FontDecoration"><![CDATA[inherit]]></Attribute>
+                        <Attribute name="FontColor">
+                          <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoColor">
+                            <Properties>
+                              <Attributes>
+                                <Attribute name="inherit"><![CDATA[True]]></Attribute>
+                                <Attribute name="transparent"><![CDATA[False]]></Attribute>
+                                <Attribute name="userdefined"><![CDATA[False]]></Attribute>
+                                <Attribute name="showrgbtransparency"><![CDATA[False]]></Attribute>
+                                <Attribute name="RGB"><![CDATA[0,0,0,255]]></Attribute>
+                                <Attribute name="CMYK"><![CDATA[0,0,0,1]]></Attribute>
+                                <Attribute name="Spotcolor">
+                                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoSpotcolor">
+                                    <Properties>
+                                      <Attributes>
+                                        <Attribute name="SpotcolorKey"><![CDATA[none]]></Attribute>
+                                        <Attribute name="Tint"><![CDATA[1]]></Attribute>
+                                      </Attributes>
+                                      <Relations/>
+                                    </Properties>
+                                  </Object>
+                                </Attribute>
+                              </Attributes>
+                              <Relations/>
+                            </Properties>
+                          </Object>
+                        </Attribute>
+                      </Attributes>
+                      <Relations/>
+                    </Properties>
+                  </Object>
+                </Attribute>
+                <Attribute name="LetterSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                <Attribute name="LetterSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                <Attribute name="WordSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                <Attribute name="WordSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+                <Attribute name="KeepWithPreviousLine"><![CDATA[none]]></Attribute>
+                <Attribute name="KeepWithNextLine"><![CDATA[none]]></Attribute>
+                <Attribute name="KeepTogetherLine"><![CDATA[none]]></Attribute>
+                <Attribute name="FOLang"><![CDATA[Inherit]]></Attribute>
+              </Attributes>
+              <Relations/>
+            </Properties>
+          </Object>
+        </Object>
+      </Object>
+    </Object>
+    <Object id="20160926T135528.169.98493183376814-1108.5905646126896.6257281.639572097.8690064.352718785.352.02563127342626" name="Regions" enabled="True" type="com.assentis.cockpit.bo.BoRegionGroup">
+      <Properties>
+        <Attributes/>
+        <Relations/>
+      </Properties>
+      <Object id="20160926T135528.161.09767306461885-5339.210778573886.5884937.196354279.6456949.772614355.745.0853039122559" name="Header" enabled="True" type="com.assentis.cockpit.bo.BoTopRegion">
+        <Properties>
+          <Attributes>
+            <Attribute name="Notes"><![CDATA[]]></Attribute>
+            <Attribute name="Hyphenate"><![CDATA[inherit]]></Attribute>
+            <Attribute name="FOLang"><![CDATA[Inherit]]></Attribute>
+            <Attribute name="RegionHeight"><![CDATA[51 mm]]></Attribute>
+            <Attribute name="VerticalAlign"><![CDATA[before]]></Attribute>
+            <Attribute name="LineSpacing"><![CDATA[10 pt]]></Attribute>
+            <Attribute name="LineStackingStrategy"><![CDATA[inherited]]></Attribute>
+            <Attribute name="LetterSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+            <Attribute name="WordSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+            <Attribute name="LetterSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+            <Attribute name="WordSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+            <Attribute name="XMLNamespaces">
+              <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoNamespaceCollection">
+                <Properties>
+                  <Attributes>
+                    <Attribute name="Notes"><![CDATA[]]></Attribute>
+                  </Attributes>
+                  <Relations/>
+                </Properties>
+              </Object>
+            </Attribute>
+            <Attribute name="XSLParams">
+              <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXSLParamCollection">
+                <Properties>
+                  <Attributes/>
+                  <Relations/>
+                </Properties>
+              </Object>
+            </Attribute>
+            <Attribute name="WritingMode"><![CDATA[inherit]]></Attribute>
+          </Attributes>
+          <Relations/>
+        </Properties>
+        <Object id="20160926T135528.104.27517432239927-7431.100642627233.8876603.499816677.4801468.390533129.657.2020386170663" name="Kopf_PVA" enabled="True" type="com.assentis.cockpit.bo.BoDeployedModuleDock">
+          <Properties>
+            <Attributes>
+              <Attribute name="Notes"><![CDATA[]]></Attribute>
+              <Attribute name="XSLSetParamCollection">
+                <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXSLSetParamCollection">
+                  <Properties>
+                    <Attributes>
+                      <Attribute name="Representing"><![CDATA[com.assentis.cockpit.bo.BoDeployedModuleComposition]]></Attribute>
+                    </Attributes>
+                    <Relations/>
+                  </Properties>
+                </Object>
+              </Attribute>
+              <Attribute name="CallModule"><![CDATA[Kopf_PVA]]></Attribute>
+              <Attribute name="CallModuleName"><![CDATA[Mod20080326T133544.908-593.72691300.7482131.463]]></Attribute>
+            </Attributes>
+            <Relations>
+              <Relation name="DeployedModuleComposition" refTo="20160926T135528.103.46936127038944-5406.806963421251.6036700.0649924055.9473447.619318357.275.4640765015554"/>
+            </Relations>
+          </Properties>
+        </Object>
+        <Object id="20160926T135528.172.646487082229-8590.997116234485.6619365.669250148.1008277.7518418867.963.0088093705358" name="Aktenzeichen Seite 1" enabled="True" type="com.assentis.cockpit.bo.BoDeployedModuleDock">
+          <Properties>
+            <Attributes>
+              <Attribute name="Notes"><![CDATA[]]></Attribute>
+              <Attribute name="XSLSetParamCollection">
+                <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXSLSetParamCollection">
+                  <Properties>
+                    <Attributes>
+                      <Attribute name="Representing"><![CDATA[com.assentis.cockpit.bo.BoDeployedModuleComposition]]></Attribute>
+                    </Attributes>
+                    <Relations/>
+                  </Properties>
+                </Object>
+              </Attribute>
+              <Attribute name="CallModule"><![CDATA[Aktenzeichen Seite 1]]></Attribute>
+              <Attribute name="CallModuleName"><![CDATA[Mod20080326T133610.985-884.6243770.38641022.274]]></Attribute>
+            </Attributes>
+            <Relations>
+              <Relation name="DeployedModuleComposition" refTo="20160926T135528.103.46936127038944-5406.806963421251.6036700.0649924055.9473447.619318357.275.4640765015554"/>
+            </Relations>
+          </Properties>
+        </Object>
+      </Object>
+      <Object id="20160926T135528.158.84663657451978-1755.9562452588964.3966274.269145163.3371357.6804374815.312.04316054458104" name="Footer" enabled="True" type="com.assentis.cockpit.bo.BoBottomRegion">
+        <Properties>
+          <Attributes>
+            <Attribute name="Notes"><![CDATA[]]></Attribute>
+            <Attribute name="Hyphenate"><![CDATA[inherit]]></Attribute>
+            <Attribute name="FOLang"><![CDATA[Inherit]]></Attribute>
+            <Attribute name="RegionHeight"><![CDATA[12.5 mm]]></Attribute>
+            <Attribute name="VerticalAlign"><![CDATA[before]]></Attribute>
+            <Attribute name="LineSpacing"><![CDATA[10 pt]]></Attribute>
+            <Attribute name="LineStackingStrategy"><![CDATA[inherited]]></Attribute>
+            <Attribute name="LetterSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+            <Attribute name="WordSpacing"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+            <Attribute name="LetterSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+            <Attribute name="WordSpacingOpt"><![CDATA[-79228162514264337593543950335 pt]]></Attribute>
+            <Attribute name="XMLNamespaces">
+              <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoNamespaceCollection">
+                <Properties>
+                  <Attributes>
+                    <Attribute name="Notes"><![CDATA[]]></Attribute>
+                  </Attributes>
+                  <Relations/>
+                </Properties>
+              </Object>
+            </Attribute>
+            <Attribute name="XSLParams">
+              <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXSLParamCollection">
+                <Properties>
+                  <Attributes/>
+                  <Relations/>
+                </Properties>
+              </Object>
+            </Attribute>
+            <Attribute name="WritingMode"><![CDATA[inherit]]></Attribute>
+          </Attributes>
+          <Relations/>
+        </Properties>
+        <Object id="20160926T135528.163.73139497423642-5398.085611661962.3983897.0646569273.9360106.909563709.637.3174664927075" name="FUSS_PVA" enabled="True" type="com.assentis.cockpit.bo.BoDeployedModuleDock">
+          <Properties>
+            <Attributes>
+              <Attribute name="Notes"><![CDATA[]]></Attribute>
+              <Attribute name="XSLSetParamCollection">
+                <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXSLSetParamCollection">
+                  <Properties>
+                    <Attributes>
+                      <Attribute name="Representing"><![CDATA[com.assentis.cockpit.bo.BoDeployedModuleComposition]]></Attribute>
+                    </Attributes>
+                    <Relations/>
+                  </Properties>
+                  <Object id="20160912T144818.519-206.55421730.256223.599" name="" enabled="True" type="com.assentis.cockpit.bo.BoXSLParamVariable">
+                    <Properties>
+                      <Attributes>
+                        <Attribute name="Notes"><![CDATA[]]></Attribute>
+                        <Attribute name="XSLParamName"><![CDATA[FUSSNAME]]></Attribute>
+                        <Attribute name="InitialValue">
+                          <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXPathTextVariable">
+                            <Properties>
+                              <Attributes>
+                                <Attribute name="IsXPath"><![CDATA[True]]></Attribute>
+                                <Attribute name="XPath"><![CDATA[concat(/Briefdaten/MD/Schreiben/Dokument,' - ',/Briefdaten/MD/Schreiben/SpruchSchlzl)]]></Attribute>
+                                <Attribute name="XPathWithName"><![CDATA[]]></Attribute>
+                              </Attributes>
+                              <Relations>
+                                <Relation name="XPathTextVariable" refTo=""/>
+                                <ManyRelation name="QueryXPathTextVariable"/>
+                              </Relations>
+                            </Properties>
+                          </Object>
+                        </Attribute>
+                        <Attribute name="InsideRepetition"><![CDATA[False]]></Attribute>
+                      </Attributes>
+                      <Relations/>
+                    </Properties>
+                  </Object>
+                </Object>
+              </Attribute>
+              <Attribute name="CallModule"><![CDATA[FUSS_PVA]]></Attribute>
+              <Attribute name="CallModuleName"><![CDATA[Mod20080326T133751.308-2609.9852065.9711088.546]]></Attribute>
+            </Attributes>
+            <Relations>
+              <Relation name="DeployedModuleComposition" refTo="20160926T135528.103.46936127038944-5406.806963421251.6036700.0649924055.9473447.619318357.275.4640765015554"/>
+            </Relations>
+          </Properties>
+        </Object>
+      </Object>
+    </Object>
+    <Object id="20160926T135528.113.58569396572142-3709.967460411654.1418708.3372727823.1599502.38218236.229.12744620627873" name="Modules" enabled="True" type="com.assentis.cockpit.bo.BoModuleGroup">
+      <Properties>
+        <Attributes/>
+        <Relations/>
+      </Properties>
+      <Object id="20160926T135528.103.46936127038944-5406.806963421251.6036700.0649924055.9473447.619318357.275.4640765015554" name="Deployed Modules" enabled="True" type="com.assentis.cockpit.bo.BoDeployedModuleComposition">
+        <Properties>
+          <Attributes>
+            <Attribute name="Notes"><![CDATA[]]></Attribute>
+            <Attribute name="Keyword"><![CDATA[]]></Attribute>
+            <Attribute name="PurposeList">
+              <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoPurposeList">
+                <Properties>
+                  <Attributes/>
+                  <Relations/>
+                </Properties>
+              </Object>
+            </Attribute>
+            <Attribute name="URI">
+              <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoURI">
+                <Properties>
+                  <Attributes>
+                    <Attribute name="FileURL"><![CDATA[]]></Attribute>
+                    <Attribute name="FileRelative"><![CDATA[False]]></Attribute>
+                    <Attribute name="WebURL"><![CDATA[]]></Attribute>
+                    <Attribute name="RepoElementID"><![CDATA[20080326T133345.883-2163.1961461.611900.0318.dp]]></Attribute>
+                    <Attribute name="RepoElementName"><![CDATA[DPLibKopfFuss]]></Attribute>
+                    <Attribute name="RepoElementVersion"><![CDATA[]]></Attribute>
+                    <Attribute name="RepoElementLabel"><![CDATA[]]></Attribute>
+                    <Attribute name="RepoElementExtension"><![CDATA[dpmodlib]]></Attribute>
+                    <Attribute name="RepoElementDBID"><![CDATA[5636]]></Attribute>
+                    <Attribute name="IsRepositoryFolder"><![CDATA[False]]></Attribute>
+                    <Attribute name="DBPath"><![CDATA[]]></Attribute>
+                    <Attribute name="RepoAdditionalRequestParams"><![CDATA[&XSLTDOCTYPE=FO]]></Attribute>
+                    <Attribute name="URLType"><![CDATA[128]]></Attribute>
+                    <Attribute name="TypeNode"><![CDATA[True]]></Attribute>
+                  </Attributes>
+                  <Relations/>
+                </Properties>
+              </Object>
+            </Attribute>
+          </Attributes>
+          <Relations/>
+        </Properties>
+      </Object>
+    </Object>
+    <Object id="20160926T135528.181.4540035191348-4929.560575969327.4396359.5368613675.8027606.605325545.613.6475543971535" name="Editor Configuration Group" enabled="True" type="com.assentis.cockpit.bo.BoEditorConfigurationGroup">
+      <Properties>
+        <Attributes>
+          <Attribute name="Notes"><![CDATA[]]></Attribute>
+        </Attributes>
+        <Relations/>
+      </Properties>
+    </Object>
+    <Object id="20160926T135528.177.9612229001537-5060.151469585781.3329590.4241000577.7564168.513574517.988.174614275128" name="Variable Groups" enabled="True" type="com.assentis.cockpit.bo.BoVariableGroup">
+      <Properties>
+        <Attributes/>
+        <Relations/>
+      </Properties>
+      <Object id="20160926T135528.100.09271015364097-6903.837757110228.1353121.7357108153.9381351.766923632.540.0685329008545" name="HitAssVariableGroup" enabled="True" type="com.assentis.cockpit.bo.BoVariableCollection">
+        <Properties>
+          <Attributes>
+            <Attribute name="Notes"><![CDATA[]]></Attribute>
+          </Attributes>
+          <Relations/>
+        </Properties>
+        <Object id="20160926T135528.155.02011058923446-8385.30443449131.5671182.271304442.1771530.3229011921.960.1200392740827" name="HitAssDatasources" enabled="True" type="com.assentis.cockpit.bo.BoDataSourceFolder">
+          <Properties>
+            <Attributes>
+              <Attribute name="Notes"><![CDATA[]]></Attribute>
+            </Attributes>
+            <Relations/>
+          </Properties>
+          <Object id="20160926T135528.176.1540020245699-7505.466256024962.9148244.261191715.5651276.899750769.897.8222366138166" name="HitAss XML File" enabled="True" type="com.assentis.cockpit.bo.BoXMLDocumentFile">
+            <Properties>
+              <Attributes>
+                <Attribute name="Notes"><![CDATA[]]></Attribute>
+                <Attribute name="URI">
+                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoURI">
+                    <Properties>
+                      <Attributes>
+                        <Attribute name="FileURL"><![CDATA[]]></Attribute>
+                        <Attribute name="FileRelative"><![CDATA[False]]></Attribute>
+                        <Attribute name="WebURL"><![CDATA[]]></Attribute>
+                        <Attribute name="RepoElementID"><![CDATA[]]></Attribute>
+                        <Attribute name="RepoElementName"><![CDATA[]]></Attribute>
+                        <Attribute name="RepoElementVersion"><![CDATA[]]></Attribute>
+                        <Attribute name="RepoElementLabel"><![CDATA[]]></Attribute>
+                        <Attribute name="RepoElementExtension"><![CDATA[]]></Attribute>
+                        <Attribute name="RepoElementDBID"><![CDATA[0]]></Attribute>
+                        <Attribute name="IsRepositoryFolder"><![CDATA[False]]></Attribute>
+                        <Attribute name="DBPath"><![CDATA[]]></Attribute>
+                        <Attribute name="RepoAdditionalRequestParams"><![CDATA[]]></Attribute>
+                        <Attribute name="URLType"><![CDATA[128]]></Attribute>
+                        <Attribute name="TypeNode"><![CDATA[True]]></Attribute>
+                      </Attributes>
+                      <Relations/>
+                    </Properties>
+                  </Object>
+                </Attribute>
+                <Attribute name="DefaultNSPrefix"><![CDATA[default]]></Attribute>
+              </Attributes>
+              <Relations/>
+            </Properties>
+          </Object>
+        </Object>
+      </Object>
+    </Object>
+  </Object>
+</Cockpit>

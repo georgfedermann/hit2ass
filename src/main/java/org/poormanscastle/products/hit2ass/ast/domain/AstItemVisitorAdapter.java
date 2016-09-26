@@ -700,4 +700,49 @@ public abstract class AstItemVisitorAdapter implements AstItemVisitor {
     public void leaveSectionStatement(SectionStatement sectionStatement) {
 
     }
+
+    @Override
+    public boolean proceedWithInsertDay(InsertDay insertDay) {
+        return this.defaultVisitNodes;
+    }
+
+    @Override
+    public void visitInsertDay(InsertDay insertDay) {
+
+    }
+
+    @Override
+    public void leaveInsertDay(InsertDay insertDay) {
+
+    }
+
+    @Override
+    public void leaveInsertMonth(InsertMonth insertMonth) {
+
+    }
+
+    @Override
+    public void visitInsertMonth(InsertMonth insertMonth) {
+
+    }
+
+    @Override
+    public boolean proceedWithInsertMonth(InsertMonth insertMonth) {
+        return this.defaultVisitNodes;
+    }
+
+    @Override
+    public boolean proceedWithInsertYear(InsertYear insertYear) {
+        return this.defaultVisitNodes;
+    }
+
+    @Override
+    public void visitInsertYear(InsertYear insertYear) {
+
+    }
+
+    @Override
+    public void leaveInsertYear(InsertYear insertYear) {
+
+    }
 }

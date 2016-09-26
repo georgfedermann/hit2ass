@@ -114,13 +114,13 @@ TOKEN : {
 }
 
 /*
-
+    
 */
 
 // CLOU comments; single line, multi-line and empty comments
 <TXT_MODE> MORE : {
     < COMMENT_1 : "#*" > : COMMENT_MODE |
-    < COMMENT_2 : ["^"]  > : COMMENT_MODE_2
+    < COMMENT_2 : ["^"](["0"-"9"])+  > : COMMENT_MODE_2
 }
 <COMMAND_MODE_DS> MORE : {
     "#*" : COMMENT_MODE
@@ -149,6 +149,9 @@ TOKEN : {
 
 /*  TEXT_MODE switching to COMMAND_MODE.    */
 <TXT_MODE> TOKEN : {
+    < INSERT_DAY : "^T" > |
+    < INSERT_MONTH : "^M" > |
+    < INSERT_YEAR : "^JJ" > |
     < IF : "#?" > : COMMAND_MODE_IF |
     < NEW_LINE : (["\n", "\r"]) > |
     < THEN : ([" ", "\t"])*"/J" > : TXT_MODE |
@@ -864,25 +867,49 @@ ClouBausteinElement CBES() :
     {
         return element;
     }
-    /*
     |
-    element = PSB()
+    element = ID()
     {
         return element;
     }
-    */
-}
-
-/*
-FixedText PSB() :
-{ Token token; }
-{
-    token = <PS_IDX_CHECK_BLANK>
+    |
+    element = IM()
     {
-        return FixedText.create(CodePosition.createFromToken(token), " ");
+        return element;
+    }
+    |
+    element = IY()
+    {
+        return element;
     }
 }
-*/
+
+InsertDay ID() :
+{ Token token; }
+{
+    token = <INSERT_DAY>
+    {
+        return InsertDate.insertDay(CodePosition.createFromToken(token));
+    }
+}
+
+InsertMonth IM() :
+{ Token token;  }
+{
+    token = <INSERT_MONTH>
+    {
+        return InsertDate.insertMonth(CodePosition.createFromToken(token));
+    }
+}
+
+InsertYear IY() :
+{ Token token; }
+{
+    token = <INSERT_YEAR>
+    {
+        return InsertDate.insertYear(CodePosition.createFromToken(token));
+    }
+}
 
 NewLine PSNL() :
 { Token token; }

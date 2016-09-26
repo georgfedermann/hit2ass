@@ -284,4 +284,22 @@ public interface AstItemVisitor {
 
     void leaveNewLine(NewLine newLine);
 
+    boolean proceedWithInsertDay(InsertDay insertDay);
+
+    void visitInsertDay(InsertDay insertDay);
+
+    void leaveInsertDay(InsertDay insertDay);
+
+    void leaveInsertMonth(InsertMonth insertMonth);
+
+    void visitInsertMonth(InsertMonth insertMonth);
+
+    boolean proceedWithInsertMonth(InsertMonth insertMonth);
+
+    boolean proceedWithInsertYear(InsertYear insertYear);
+
+    void visitInsertYear(InsertYear insertYear);
+
+    void leaveInsertYear(InsertYear insertYear);
+    
 }

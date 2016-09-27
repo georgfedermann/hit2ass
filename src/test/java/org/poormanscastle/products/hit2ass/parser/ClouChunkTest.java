@@ -6,6 +6,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.poormanscastle.products.hit2ass.TestUtils;
+import org.poormanscastle.products.hit2ass.ast.domain.BinaryOperator;
+import org.poormanscastle.products.hit2ass.ast.domain.BinaryOperatorExpression;
 import org.poormanscastle.products.hit2ass.ast.domain.CaseStatementList;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouBaustein;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouBausteinElementList;
@@ -18,6 +20,7 @@ import org.poormanscastle.products.hit2ass.ast.domain.IdExpression;
 import org.poormanscastle.products.hit2ass.ast.domain.InsertDay;
 import org.poormanscastle.products.hit2ass.ast.domain.InsertMonth;
 import org.poormanscastle.products.hit2ass.ast.domain.InsertYear;
+import org.poormanscastle.products.hit2ass.ast.domain.LastExpressionList;
 import org.poormanscastle.products.hit2ass.ast.domain.MacroCallStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.NewLine;
 import org.poormanscastle.products.hit2ass.ast.domain.NumExpression;
@@ -33,6 +36,27 @@ import org.poormanscastle.products.hit2ass.transformer.EraseBlanksVisitor;
  * Created by georg on 28.08.16.
  */
 public class ClouChunkTest {
+
+    @Test
+    public void blanksInIndexExpressionTest() throws Exception {
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("BlanksInIndexExpression"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
+        assertTrue(true);
+        assertEquals("In den Kalenderjahren ", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        PrintStatement printStatement = (PrintStatement) elementList.getHead();
+        IdExpression idExpression = (IdExpression) printStatement.getExpression();
+        assertEquals("listendlos2", idExpression.getId());
+        elementList = elementList.getTail();
+        assertEquals(" bis ", ((FixedText) elementList.getHead()).getText());
+        elementList = elementList.getTail();
+        printStatement = (PrintStatement) elementList.getHead();
+        idExpression = (IdExpression) printStatement.getExpression();
+        assertEquals("listendlos2", idExpression.getId());
+        assertEquals(BinaryOperator.MINUS, ((BinaryOperatorExpression) ((LastExpressionList) idExpression.getIdxExp1()).getHead()).getOperator());
+    }
 
     @Test
     public void insertDateTest() throws Exception {

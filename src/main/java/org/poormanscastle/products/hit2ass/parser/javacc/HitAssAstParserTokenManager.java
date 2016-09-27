@@ -428,14 +428,6 @@ private final int jjStartNfa_14(int pos, long active0, long active1, long active
 private int jjMoveStringLiteralDfa0_14(){
    switch(curChar)
    {
-      case 9:
-         return jjStopAtPos(0, 125);
-      case 10:
-         return jjStopAtPos(0, 124);
-      case 13:
-         return jjStopAtPos(0, 126);
-      case 32:
-         return jjStopAtPos(0, 127);
       case 34:
          return jjStartNfaWithStates_14(0, 145, 14);
       case 40:
@@ -5986,6 +5978,11 @@ public Token getNextToken()
          curPos = jjMoveStringLiteralDfa0_13();
          break;
        case 14:
+         try { input_stream.backup(0);
+            while (curChar <= 32 && (0x100002600L & (1L << curChar)) != 0L)
+               curChar = input_stream.BeginToken();
+         }
+         catch (java.io.IOException e1) { continue EOFLoop; }
          jjmatchedKind = 0x7fffffff;
          jjmatchedPos = 0;
          curPos = jjMoveStringLiteralDfa0_14();
@@ -6265,8 +6262,8 @@ public static final int[] jjnewLexState = {
    17, 23, 2, 2, 2, 2, 2, 20, 21, 4, 10, 9, 8, 11, 15, -1, -1, 1, -1, -1, -1, -1, -1, 1, 1, 
    -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 
    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 13, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, -1, -1, -1, 
-   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, 1, 14, 12, 1, 1, 17, 1, 1, 1, 
-   1, 1, 1, -1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 
+   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, 1, 14, 12, 1, 1, 17, 1, 1, -1, 
+   -1, -1, -1, -1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 
    -1, -1, -1, 1, 1, -1, -1, -1, 1, -1, -1, -1, -1, -1, -1, 1, 1, -1, -1, -1, -1, 1, 1, 1, 1, 
    11, 17, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 16, -1, -1, -1, -1, -1, -1, -1, 
    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, -1, -1, -1, 

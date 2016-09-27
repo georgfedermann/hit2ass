@@ -311,7 +311,7 @@ TOKEN : {
      < PS_IDX_PSEUDO_COMMENT : "#*#" > : TXT_MODE
 }
 <COMMAND_MODE_PS_IDX> SKIP : {
-    "\n" : TXT_MODE | "\t" : TXT_MODE | "\r" : TXT_MODE | " " : TXT_MODE
+    "\n" | "\t"  | "\r" | " " 
 }
 <COMMAND_MODE_PS_IDX> TOKEN : {
     < PS_IDX_LBRACKET : "[" > |

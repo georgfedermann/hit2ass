@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.poormanscastle.products.hit2ass.TestUtils;
 import org.poormanscastle.products.hit2ass.ast.domain.BinaryOperator;
 import org.poormanscastle.products.hit2ass.ast.domain.BinaryOperatorExpression;
+import org.poormanscastle.products.hit2ass.ast.domain.CaseStatementImpl;
 import org.poormanscastle.products.hit2ass.ast.domain.CaseStatementList;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouBaustein;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouBausteinElementList;
@@ -38,12 +39,22 @@ import org.poormanscastle.products.hit2ass.transformer.EraseBlanksVisitor;
 public class ClouChunkTest {
 
     @Test
+    public void dotsInCaseStatementLabelTest() throws Exception {
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("DotsInCaseStatementLabel"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((ClouBausteinElementList) baustein.getClouBausteinElement());
+        SwitchStatement switchStatement = (SwitchStatement) elementList.getHead();
+        assertEquals("someName", ((IdExpression)switchStatement.getExpression()).getId());
+        assertEquals("Some.Label", ((CaseStatementList)switchStatement.getCaseStatement()).getHead().getMatch());
+    }
+
+    @Test
     public void blanksInIndexExpressionTest() throws Exception {
         HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("BlanksInIndexExpression"), "ISO8859_1");
         ClouBaustein baustein = parser.CB();
         baustein.accept(new EraseBlanksVisitor());
-        ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
-        assertTrue(true);
+        ClouBausteinElementList elementList = ((ClouBausteinElementList) baustein.getClouBausteinElement());
         assertEquals("In den Kalenderjahren ", ((FixedText) elementList.getHead()).getText());
         elementList = elementList.getTail();
         PrintStatement printStatement = (PrintStatement) elementList.getHead();

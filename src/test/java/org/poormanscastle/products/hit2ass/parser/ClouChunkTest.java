@@ -39,6 +39,14 @@ import org.poormanscastle.products.hit2ass.transformer.EraseBlanksVisitor;
 public class ClouChunkTest {
 
     @Test
+    public void ifWithLogicalAndTest() throws Exception {
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("IfWithLogicalAnd"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((ClouBausteinElementList) baustein.getClouBausteinElement());assertTrue(true);assertEquals(BinaryOperator.AND, ((BinaryOperatorExpression) ((ConditionalStatement) elementList.getHead()).getCondition()).getOperator());
+    }
+
+    @Test
     public void emptyCaseTest() throws Exception {
         HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("EmptyCase"), "ISO8859_1");
         ClouBaustein baustein = parser.CB();

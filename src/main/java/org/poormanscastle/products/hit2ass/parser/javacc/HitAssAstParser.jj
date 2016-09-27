@@ -225,7 +225,7 @@ TOKEN : {
     < PS_EQ : "=" > |
     < PS_EQ_STRICT : "==" > |
     < PS_OR : "oder" > |
-    < PS_AND : "und" > |
+    < PS_AND : (["a","u"])"nd" > |
     < PS_XOR : "xor_tbd" > |
     < PS_NOT : "not_tbd" > |
     < PS_NEQ : "<>" > |
@@ -264,7 +264,7 @@ TOKEN : {
     < PS_EL_EQ : "=" > |
     < PS_EL_EQ_STRICT : "==" > |
     < PS_EL_OR : "oder" > |
-    < PS_EL_AND : "und" > |
+    < PS_EL_AND : (["a","u"])"nd" > |
     < PS_EL_XOR : "xor_tbd" > |
     < PS_EL_NOT : "not_tbd" > |
     < PS_EL_NEQ : "<>" > |
@@ -322,7 +322,7 @@ TOKEN : {
     < PS_IDX_EQ : "=" > |
     < PS_IDX_EQ_STRICT : "==" > |
     < PS_IDX_OR : "oder" > |
-    < PS_IDX_AND : "und" > |
+    < PS_IDX_AND : (["a","u"])"nd" > |
     < PS_IDX_XOR : "xor_tbd" > |
     < PS_IDX_NOT : "not_tbd" > |
     < PS_IDX_NEQ : "<>" > |
@@ -395,7 +395,7 @@ TOKEN : {
     < MS_EQ : "=" > |
     < MS_EQ_STRICT : "==" > |
     < MS_OR : "oder" > |
-    < MS_AND : "und" > |
+    < MS_AND : (["a","u"])"nd" > |
     < MS_XOR : "xor_tbd" > |
     < MS_NOT : "not_tbd" > |
     < MS_NEQ : "<>" > |
@@ -430,7 +430,7 @@ TOKEN : {
     < MS_AL_EQ : "=" > |
     < MS_AL_EQ_STRICT : "==" > |
     < MS_AL_OR : "oder" > |
-    < MS_AL_AND : "und" > |
+    < MS_AL_AND : (["a","u"])"nd" > |
     < MS_AL_XOR : "xor_tbd" > |
     < MS_AL_NOT : "not_tbd" > |
     < MS_AL_NEQ : "<>" > |
@@ -471,7 +471,7 @@ TOKEN : {
     < IF_EQ : "=" > |
     < IF_EQ_STRICT : "==" > |
     < IF_OR : "oder" > |
-    < IF_AND : "und" > |
+    < IF_AND : (["a","u"])"nd" > |
     < IF_XOR : "xor_tbd" > |
     < IF_NOT : "not_tbd" > |
     < IF_NEQ : "<>" > |
@@ -510,7 +510,7 @@ TOKEN : {
     < FOR_EQ : "=" > |
     < FOR_EQ_STRICT : "==" > |
     < FOR_OR : "oder" > |
-    < FOR_AND : "und" > |
+    < FOR_AND : (["a","u"])"nd" > |
     < FOR_XOR : "xor_tbd" > |
     < FOR_NOT : "not_tbd" > |
     < FOR_NEQ : "<>" > |
@@ -551,7 +551,7 @@ TOKEN : {
     < DS_EQ : "=" > |
     < DS_EQ_STRICT : "==" > |
     < DS_OR : "oder" > |
-    < DS_AND : "und" > |
+    < DS_AND : (["a","u"])"nd" > |
     < DS_XOR : "xor_tbd" > |
     < DS_NOT : "not_tbd" > |
     < DS_NEQ : "<>" > |
@@ -593,7 +593,7 @@ TOKEN : {
     < AS_EQ : "=" > |
     < AS_EQ_STRICT : "==" > |
     < AS_OR : "oder" > |
-    < AS_AND : "und" > |
+    < AS_AND : (["a","u"])"nd" > |
     < AS_XOR : "xor_tbd" > |
     < AS_NOT : "not_tbd" > |
     < AS_NEQ : "<>" > |

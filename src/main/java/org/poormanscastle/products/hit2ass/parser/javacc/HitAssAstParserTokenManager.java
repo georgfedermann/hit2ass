@@ -3918,6 +3918,9 @@ private int jjMoveStringLiteralDfa1_3(long active0){
    }
    return jjStartNfa_3(0, active0, 0L, 0L);
 }
+static final long[] jjbitVec2 = {
+   0x0L, 0x0L, 0x1040009190400010L, 0x1040001090400018L
+};
 private int jjMoveNfa_3(int startState, int curPos)
 {
    int startsAt = 0;
@@ -3983,8 +3986,14 @@ private int jjMoveNfa_3(int startState, int curPos)
             switch(jjstateSet[--i])
             {
                case 1:
-               case 2:
                   if ((jjbitVec0[i2] & l2) == 0L)
+                     break;
+                  if (kind > 165)
+                     kind = 165;
+                  { jjCheckNAdd(2); }
+                  break;
+               case 2:
+                  if ((jjbitVec2[i2] & l2) == 0L)
                      break;
                   if (kind > 165)
                      kind = 165;
@@ -5026,6 +5035,9 @@ private int jjStartNfaWithStates_1(int pos, int kind, int state)
    catch(java.io.IOException e) { return pos + 1; }
    return jjMoveNfa_1(state, pos + 1);
 }
+static final long[] jjbitVec3 = {
+   0x0L, 0x0L, 0x8000000000L, 0x0L
+};
 private int jjMoveNfa_1(int startState, int curPos)
 {
    int startsAt = 0;
@@ -5235,6 +5247,10 @@ private int jjMoveNfa_1(int startState, int curPos)
                   if (kind > 40)
                      kind = 40;
                   { jjCheckNAdd(14); }
+                  break;
+               case 8:
+                  if ((jjbitVec3[i2] & l2) != 0L)
+                     { jjAddStates(31, 32); }
                   break;
                default : break;
             }

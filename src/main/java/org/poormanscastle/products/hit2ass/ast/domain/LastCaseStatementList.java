@@ -25,6 +25,11 @@ public class LastCaseStatementList extends AbstractAstItem implements CaseStatem
     }
 
     @Override
+    public ClouBausteinElement getClouBausteinElement() {
+        return head != null ? head.getClouBausteinElement() : null;
+    }
+
+    @Override
     public CaseStatement getHead() {
         return head;
     }

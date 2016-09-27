@@ -303,12 +303,15 @@ TOKEN : {
     < PS_IDX_CHECK_LPAREN : "(" > : COMMAND_MODE_PS_EL |
     < PS_IDX_CHECK_FIXED_TEXT : ( ~[ "\n", "\r", "\t", "#", "@", "[", "(" ] )+ > : TXT_MODE |
     < PS_IDX_SB : "@" > : TXT_MODE |
-    < PS_IDX_CHECK_MS : "#$" > : COMMAND_MODE_MS_BEFORE_ID
+    < PS_IDX_CHECK_MS : "#$" > : COMMAND_MODE_MS_BEFORE_ID 
 }
 // this mode parses index expressions, if a [ was found after as PS_ID
 <COMMAND_MODE_PS_IDX_CHECK> SKIP : {
      < PS_IDX_CHECK_SKIP : [ "\r", "\n" ] > : TXT_MODE |
      < PS_IDX_PSEUDO_COMMENT : "#*#" > : TXT_MODE
+}
+<COMMAND_MODE_PS_IDX_CHECK> MORE : {
+     < PS_IDX_WEIRD_COMMENT : "#* " > : COMMENT_MODE
 }
 <COMMAND_MODE_PS_IDX> SKIP : {
     "\n" | "\t"  | "\r" | " " 

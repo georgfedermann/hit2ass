@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.poormanscastle.products.hit2ass.TestUtils;
 import org.poormanscastle.products.hit2ass.ast.domain.BinaryOperator;
 import org.poormanscastle.products.hit2ass.ast.domain.BinaryOperatorExpression;
-import org.poormanscastle.products.hit2ass.ast.domain.CaseStatementImpl;
+import org.poormanscastle.products.hit2ass.ast.domain.CaseStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.CaseStatementList;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouBaustein;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouBausteinElementList;
@@ -39,14 +39,42 @@ import org.poormanscastle.products.hit2ass.transformer.EraseBlanksVisitor;
 public class ClouChunkTest {
 
     @Test
+    public void emptyCaseTest() throws Exception {
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("EmptyCase"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((ClouBausteinElementList) baustein.getClouBausteinElement());
+        SwitchStatement switchStatement = (SwitchStatement) elementList.getHead();
+        assertEquals("someVar", ((IdExpression) switchStatement.getExpression()).getId());
+        CaseStatement caseStatement = ((CaseStatementList) switchStatement.getCaseStatement()).getHead();
+        assertEquals("label1", caseStatement.getMatch());
+        assertNull(caseStatement.getClouBausteinElement());
+        caseStatement = ((CaseStatementList) switchStatement.getCaseStatement()).getTail().getHead();
+        assertEquals("label2", caseStatement.getMatch());
+        assertEquals(" Live and let live.", ((FixedText) ((PairClouBausteinElementList) caseStatement.getClouBausteinElement()).getTail().getHead()).getText());
+    }
+
+    @Test
+    public void commentWithSingleBlankTest() throws Exception {
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("CommentWithSingleBlank"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((ClouBausteinElementList) baustein.getClouBausteinElement());
+        PrintStatement printStatement = (PrintStatement) elementList.getHead();
+        assertEquals("someVar", ((IdExpression) printStatement.getExpression()).getId());
+        elementList = elementList.getTail();
+        assertEquals(", some text", ((FixedText) elementList.getHead()).getText());
+    }
+
+    @Test
     public void dotsInCaseStatementLabelTest() throws Exception {
         HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("DotsInCaseStatementLabel"), "ISO8859_1");
         ClouBaustein baustein = parser.CB();
         baustein.accept(new EraseBlanksVisitor());
         ClouBausteinElementList elementList = ((ClouBausteinElementList) baustein.getClouBausteinElement());
         SwitchStatement switchStatement = (SwitchStatement) elementList.getHead();
-        assertEquals("someName", ((IdExpression)switchStatement.getExpression()).getId());
-        assertEquals("Some.Label", ((CaseStatementList)switchStatement.getCaseStatement()).getHead().getMatch());
+        assertEquals("someName", ((IdExpression) switchStatement.getExpression()).getId());
+        assertEquals("Some.Label", ((CaseStatementList) switchStatement.getCaseStatement()).getHead().getMatch());
     }
 
     @Test

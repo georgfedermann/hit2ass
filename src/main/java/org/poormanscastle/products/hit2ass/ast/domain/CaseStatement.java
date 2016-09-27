@@ -7,4 +7,6 @@ public interface CaseStatement extends Statement {
 
     String getMatch();
 
+    ClouBausteinElement getClouBausteinElement();
+
 }

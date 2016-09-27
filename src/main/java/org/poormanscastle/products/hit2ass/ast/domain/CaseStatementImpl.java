@@ -37,6 +37,11 @@ public class CaseStatementImpl extends AbstractAstItem implements CaseStatement 
     }
 
     @Override
+    public ClouBausteinElement getClouBausteinElement() {
+        return clouBausteinElement;
+    }
+
+    @Override
     public boolean handleProceedWith(AstItemVisitor visitor) {
         return visitor.proceedWithCaseStatementImpl(this);
     }
@@ -44,7 +49,10 @@ public class CaseStatementImpl extends AbstractAstItem implements CaseStatement 
     @Override
     public void accept(AstItemVisitor visitor) {
         visitor.visitCaseStatementImpl(this);
-        if (clouBausteinElement.handleProceedWith(visitor)) {
+        // clouBausteinElement may be null if the CaseStatement was empty, for what reason ever.
+        // Does not seem to make much sense to implement CASEs with an empty body in HIT/CLOU, because
+        // branches are not accumulating up to the next break. But such legacy code can be found.
+        if (clouBausteinElement != null && clouBausteinElement.handleProceedWith(visitor)) {
             clouBausteinElement.accept(visitor);
         }
         visitor.leaveCaseStatementImpl(this);

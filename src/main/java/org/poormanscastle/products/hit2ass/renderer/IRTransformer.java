@@ -132,9 +132,9 @@ public final class IRTransformer extends AstItemVisitorAdapter {
                 forStatement.getRepetitionCount());
         containerStack.peek().addContent(forLoop);
 
-        IRTransformer transformer = spinOff();
-        transformer.containerStack.push(forLoop);
-        forStatement.getForBody().accept(transformer);
+        IRTransformer spinOffTransformer = spinOff();
+        spinOffTransformer.containerStack.push(forLoop);
+        forStatement.getForBody().accept(spinOffTransformer);
         // the visit logic gets handled in the proceedWith method, so it returns "false" so that
         // the visit method won't get called.
         return false;
@@ -165,9 +165,9 @@ public final class IRTransformer extends AstItemVisitorAdapter {
                     whileStatement.getCondition());
             containerStack.peek().addContent(whileLoop);
 
-            IRTransformer transformer = spinOff();
-            transformer.containerStack.push(whileLoop);
-            whileStatement.getWhileBody().accept(transformer);
+            IRTransformer spinOffTransformer = spinOff();
+            spinOffTransformer.containerStack.push(whileLoop);
+            whileStatement.getWhileBody().accept(spinOffTransformer);
             // the visitor logic gets handled in the proceedWith method.
             // Thus it returns "false" here so that the visit methods won't get called.
             insideWhileLoop = false;
@@ -188,9 +188,9 @@ public final class IRTransformer extends AstItemVisitorAdapter {
                     forLoopCondition);
 
             containerStack.peek().addContent(forLoop);
-            IRTransformer transformer = spinOff();
-            transformer.containerStack.push(forLoop);
-            whileStatement.getWhileBody().accept(transformer);
+            IRTransformer spinOffTransformer = spinOff();
+            spinOffTransformer.containerStack.push(forLoop);
+            whileStatement.getWhileBody().accept(spinOffTransformer);
         }
 
         return false;
@@ -202,18 +202,18 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         containerStack.peek().addContent(ifParagraph);
 
         if (conditionalStatement.getThenElement() != null) {
-            IRTransformer transformer = spinOff();
-            transformer.containerStack.push(new IfThenParagraph("THEN"));
-            conditionalStatement.getThenElement().accept(transformer);
-            ifParagraph.addContent(transformer.containerStack.pop());
+            IRTransformer spinOffTransformer = spinOff();
+            spinOffTransformer.containerStack.push(new IfThenParagraph("THEN"));
+            conditionalStatement.getThenElement().accept(spinOffTransformer);
+            ifParagraph.addContent(spinOffTransformer.containerStack.pop());
         } else {
             ifParagraph.addContent(new IfThenParagraph("THEN EMPTY"));
         }
         if (conditionalStatement.getElseElement() != null) {
-            IRTransformer transformer = spinOff();
-            transformer.containerStack.push(new IfElseParagraph("ELSE"));
-            conditionalStatement.getElseElement().accept(transformer);
-            ifParagraph.addContent(transformer.containerStack.pop());
+            IRTransformer spinOffTransformer = spinOff();
+            spinOffTransformer.containerStack.push(new IfElseParagraph("ELSE"));
+            conditionalStatement.getElseElement().accept(spinOffTransformer);
+            ifParagraph.addContent(spinOffTransformer.containerStack.pop());
         }
         // the visit logic gets handled in the proceedWith method, so it returns "false" so that
         // the visit method won't get called.
@@ -234,9 +234,9 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         } else if (macroCallStatement.getMacroId().equals("TABU")) {
             containerStack.peek().addContent(new Text("TABU", "       ", fontWeight));
         } else if (macroCallStatement.getMacroId().equals("ZLTZ12")) {
-            containerStack.push(new Paragraph("TextAlignment Center", TextAlignment.CENTER));
+            containerStack.peek().addContent(new Paragraph("TextAlignment Center", TextAlignment.CENTER));
         } else if (macroCallStatement.getMacroId().equals("ZLTB12")) {
-            containerStack.push(new Paragraph("TextAlignment Justified", TextAlignment.JUSTIFIED));
+            containerStack.peek().addContent(new Paragraph("TextAlignment Justified", TextAlignment.JUSTIFIED));
         }
     }
 

@@ -1,8 +1,8 @@
 package org.poormanscastle.products.hit2ass.renderer.domain;
 
-import org.apache.velocity.VelocityContext;
-
 import static com.google.common.base.Preconditions.checkNotNull;
+
+import org.apache.velocity.VelocityContext;
 
 /**
  * Represents the type com.assentis.cockpit.bo.BoParagraph
@@ -35,4 +35,5 @@ public final class Paragraph extends AbstractContainer {
     public void setupContext(VelocityContext context) {
         context.put("textAlignment", textAlignment.getValue());
     }
+    
 }

@@ -1,0 +1,24 @@
+package org.poormanscastle.products.hit2ass.renderer;
+
+/**
+ * represents the DocFamily ModuleDeploymentLibrary to support modularization and re-use when mapping
+ * HIT/CLOU (sub) Bausteins to DocFamily Workspaces.
+ * Created by georg.federmann@poormanscastle.com on 29.09.16.
+ */
+public interface DeployedModuleLibrary {
+
+    static DeployedModuleLibrary createNewHitAssDeploymentPackageLibrary() {
+        return new DeployedModuleLibraryImpl();
+    }
+
+    boolean addDeployedModule(DeployedModule deployedModule);
+
+    boolean containsDeployedModule(DeployedModule deployedModule);
+
+    DeployedModule getDeployedModuleByName(String name);
+
+    String getName();
+
+    String getElementId();
+
+}

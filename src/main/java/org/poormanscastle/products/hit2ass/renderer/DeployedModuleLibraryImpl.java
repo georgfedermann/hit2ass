@@ -1,5 +1,6 @@
 package org.poormanscastle.products.hit2ass.renderer;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -9,13 +10,12 @@ class DeployedModuleLibraryImpl implements DeployedModuleLibrary {
 
     private String name;
     private String elementId;
+    private Map<String, DeployedModule> moduleMap = new HashMap<>();
 
     DeployedModuleLibraryImpl(String name) {
         this.name = name;
         elementId = DocFamUtils.createCockpitElementId();
     }
-
-    private Map<String, DeployedModule> moduleMap;
 
     @Override
     public String getName() {
@@ -28,13 +28,13 @@ class DeployedModuleLibraryImpl implements DeployedModuleLibrary {
     }
 
     @Override
-    public boolean addDeployedModule(DeployedModule deployedModule) {
-        return false;
+    public DeployedModule addDeployedModule(DeployedModule deployedModule) {
+        return moduleMap.put(deployedModule.getName(), deployedModule);
     }
 
     @Override
     public boolean containsDeployedModule(DeployedModule deployedModule) {
-        return false;
+        return moduleMap.containsKey(deployedModule.getName());
     }
 
     @Override

@@ -72,6 +72,14 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     private boolean insideWhileLoop = false;
 
     /**
+     * the IRTransformer relies on the behavior of the AST Parser that during parsing a deployed module
+     * library workspace is created for commonly used modules and that this module library is available
+     * at a defined location, e.g. in the file system. The IRTransformer will try to resolve dependencies
+     * there and will throw an exception if a module name cannot be resolved in the module library.ø
+     */
+    private DeployedModuleLibrary deployedModuleLibrary;
+
+    /**
      * While iterating over the HIT/CLOU AST, the renderer will keep a reference
      * to the latest encountered container here, until it is left again.
      */

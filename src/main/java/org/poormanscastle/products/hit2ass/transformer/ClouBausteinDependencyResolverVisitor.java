@@ -9,24 +9,26 @@ import org.poormanscastle.products.hit2ass.ast.domain.ClouBaustein;
 import org.poormanscastle.products.hit2ass.ast.domain.IncludeBausteinStatement;
 import org.poormanscastle.products.hit2ass.exceptions.BausteinMergerException;
 import org.poormanscastle.products.hit2ass.parser.javacc.HitAssAstParser;
+import org.poormanscastle.products.hit2ass.renderer.DeployedModuleLibrary;
 import org.poormanscastle.products.hit2ass.tools.HitAssTools;
 
 /**
  * Scans a CLOU AST for #B Baustein imports. When found one the
- * ClouBausteinMergerVisitor will use a instance of HitAssAstParser to
+ * ClouBausteinDependencyResolverVisitor will use a instance of HitAssAstParser to
  * parse the referenced CLOU Baustein and then import the content
  * of the given Baustein into the place where the import element
  * was before.
  * <p>
  * Created by georg.federmann@poormanscastle.com on 4/27/16.
  */
-public class ClouBausteinMergerVisitor extends AstItemVisitorAdapter {
+public class ClouBausteinDependencyResolverVisitor extends AstItemVisitorAdapter {
 
-    private final static Logger logger = Logger.getLogger(ClouBausteinMergerVisitor.class);
+    private final static Logger logger = Logger.getLogger(ClouBausteinDependencyResolverVisitor.class);
 
     @Override
     public void visitIncludeBausteinStatement(IncludeBausteinStatement includeBausteinStatement) {
         try {
+            DeployedModuleLibrary dpLib = DeployedModuleLibrary.loadHitAssDeploymentPackageLibrary();
             if (logger.isInfoEnabled()) {
                 logger.info(StringUtils.join("Found CLOU Baustein ", includeBausteinStatement.getPathToBaustein()));
             }
@@ -43,11 +45,12 @@ public class ClouBausteinMergerVisitor extends AstItemVisitorAdapter {
 
             String encoding = System.getProperty("hit2ass.clou.encoding");
             checkState(!StringUtils.isBlank(encoding), "baustein encoding not defined. Please set system property hit2ass.clou.encoding!");
-            ClouBaustein baustein = new HitAssAstParser(
+            ClouBaustein moduleBaustein = new HitAssAstParser(
                     HitAssTools.getClouBausteinAsInputStream(bausteinName), encoding).CB();
-            includeBausteinStatement.setContent(baustein.getClouBausteinElement());
+            includeBausteinStatement.setContent(moduleBaustein.getClouBausteinElement());
         } catch (Throwable e) {
-            throw new BausteinMergerException(StringUtils.join("Could not parse child Baustein ", includeBausteinStatement.getPathToBaustein(), " because: ", e.getMessage()), e);
+            throw new BausteinMergerException(StringUtils.join("Could not parse child Baustein ",
+                    includeBausteinStatement.getPathToBaustein(), " because: ", e.getMessage()), e);
         }
     }
 

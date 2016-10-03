@@ -1,22 +1,31 @@
 package org.poormanscastle.products.hit2ass.renderer;
 
-import org.apache.velocity.VelocityContext;
-import org.poormanscastle.products.hit2ass.renderer.domain.AbstractContainer;
-
 /**
- * Created by georg on 29.09.16.
+ * Created by georg.federmann@poormanscastle.com on 29.09.16.
  */
-class DeployedModuleImpl extends AbstractContainer implements DeployedModule {
+class DeployedModuleImpl implements DeployedModule {
 
     private final String elementId;
+    private final String name;
+    private final String content;
 
-    DeployedModuleImpl(String name) {
-        super(name, "/velocity/dplib/TemplateDeployedModule.vlt");
-        this.elementId = DocFamUtils.createCockpitElementId();
+    DeployedModuleImpl(String name, String content, String elementId) {
+        this.name = name;
+        this.content = content;
+        this.elementId = elementId;
     }
 
     @Override
-    public void setupContext(VelocityContext context) {
-        context.put("elementId", elementId);
+    public String getName() {
+        return name;
     }
+
+    @Override
+    public String toString() {
+        return "DeployedModuleImpl{" +
+                "elementId='" + elementId + '\'' +
+                ", name='" + name + '\'' +
+                ", content size=" + content.length() + "}'";
+    }
+    
 }

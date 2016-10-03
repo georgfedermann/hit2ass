@@ -15,6 +15,8 @@ class DeployedModuleLibraryImpl implements DeployedModuleLibrary {
         elementId = DocFamUtils.createCockpitElementId();
     }
 
+    private Map<String, DeployedModule> moduleMap;
+
     @Override
     public String getName() {
         return name;
@@ -24,8 +26,6 @@ class DeployedModuleLibraryImpl implements DeployedModuleLibrary {
     public String getElementId() {
         return elementId;
     }
-
-    private Map<String, DeployedModule> moduleMap;
 
     @Override
     public boolean addDeployedModule(DeployedModule deployedModule) {

@@ -1,17 +1,17 @@
 package org.poormanscastle.products.hit2ass.renderer.domain;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.velocity.Template;
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.Velocity;
-import org.poormanscastle.products.hit2ass.renderer.VelocityHelper;
+import static com.google.common.base.Preconditions.checkArgument;
 
 import java.io.StringWriter;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.google.common.base.Preconditions.checkArgument;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.Velocity;
+import org.poormanscastle.products.hit2ass.renderer.VelocityHelper;
 
 /**
  * Created by georg.federmann@poormanscastle.com on 5/9/16.
@@ -38,6 +38,10 @@ public abstract class AbstractContainer implements Container {
         checkArgument(!StringUtils.isBlank(templateName));
         this.name = name.replaceAll("!", " NOT ");
         this.templateName = templateName;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override

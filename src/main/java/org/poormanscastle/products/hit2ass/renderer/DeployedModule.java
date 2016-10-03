@@ -13,4 +13,6 @@ public interface DeployedModule extends Container {
         return new DeployedModuleImpl(name);
     }
 
+    String getName();
+
 }

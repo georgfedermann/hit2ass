@@ -7,8 +7,10 @@ package org.poormanscastle.products.hit2ass.renderer;
  */
 public interface DeployedModuleLibrary {
 
+    static String HIT2ASS_DEPLOYED_MODULE_LIBRARY_NAME = "HitAssDeploymentPackageLibrary";
+
     static DeployedModuleLibrary createNewHitAssDeploymentPackageLibrary() {
-        return new DeployedModuleLibraryImpl();
+        return new DeployedModuleLibraryImpl(DeployedModuleLibrary.HIT2ASS_DEPLOYED_MODULE_LIBRARY_NAME);
     }
 
     boolean addDeployedModule(DeployedModule deployedModule);

@@ -5,7 +5,7 @@
   - elementId           :   some DocFamily-like uuid that will be referenced from various places
 **
 
-        <Object id="${docFamUtils.CockpitElementId}" name="${name}" enabled="True" type="com.assentis.cockpit.bo.BoModuleComposition">
+        <Object id="${elementId}" name="${name}" enabled="True" type="com.assentis.cockpit.bo.BoModuleComposition">
           <Properties>
             <Attributes>
               <Attribute name="Notes"><![CDATA[]]></Attribute>

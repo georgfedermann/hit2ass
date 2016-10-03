@@ -9,7 +9,10 @@ import org.poormanscastle.products.hit2ass.ast.domain.ClouBaustein;
 import org.poormanscastle.products.hit2ass.ast.domain.IncludeBausteinStatement;
 import org.poormanscastle.products.hit2ass.exceptions.BausteinMergerException;
 import org.poormanscastle.products.hit2ass.parser.javacc.HitAssAstParser;
+import org.poormanscastle.products.hit2ass.renderer.DeployedModule;
 import org.poormanscastle.products.hit2ass.renderer.DeployedModuleLibrary;
+import org.poormanscastle.products.hit2ass.renderer.DocFamUtils;
+import org.poormanscastle.products.hit2ass.renderer.IRTransformer;
 import org.poormanscastle.products.hit2ass.tools.HitAssTools;
 
 /**
@@ -28,7 +31,6 @@ public class ClouBausteinDependencyResolverVisitor extends AstItemVisitorAdapter
     @Override
     public void visitIncludeBausteinStatement(IncludeBausteinStatement includeBausteinStatement) {
         try {
-            DeployedModuleLibrary dpLib = DeployedModuleLibrary.loadHitAssDeploymentPackageLibrary();
             if (logger.isInfoEnabled()) {
                 logger.info(StringUtils.join("Found CLOU Baustein ", includeBausteinStatement.getPathToBaustein()));
             }
@@ -43,10 +45,21 @@ public class ClouBausteinDependencyResolverVisitor extends AstItemVisitorAdapter
                 return;
             }
 
-            String encoding = System.getProperty("hit2ass.clou.encoding");
-            checkState(!StringUtils.isBlank(encoding), "baustein encoding not defined. Please set system property hit2ass.clou.encoding!");
-            ClouBaustein moduleBaustein = new HitAssAstParser(
-                    HitAssTools.getClouBausteinAsInputStream(bausteinName), encoding).CB();
+            // get the reference to the one DeploymentPackageLibrary within the system
+            DeployedModuleLibrary dpLib = DeployedModuleLibrary.loadHitAssDeployedModuleLibrary();
+            if (!dpLib.containsDeployedModule(bausteinName)) {
+                String encoding = System.getProperty("hit2ass.clou.encoding");
+                checkState(!StringUtils.isBlank(encoding), "baustein encoding not defined. Please set system property hit2ass.clou.encoding!");
+                ClouBaustein moduleBaustein = new HitAssAstParser(
+                        HitAssTools.getClouBausteinAsInputStream(bausteinName), encoding).CB();
+                moduleBaustein.accept(new ClouBausteinDependencyResolverVisitor());
+                moduleBaustein.accept(new EraseBlanksVisitor());
+                IRTransformer irTransformer = new IRTransformer();
+                moduleBaustein.accept(irTransformer);
+                DeployedModule deployedModule = DeployedModule.createNew(bausteinName, DocFamUtils.createCockpitElementId(),
+                        irTransformer.getWorkspace().getPageContent());
+                dpLib.addDeployedModule(deployedModule);
+            }
             includeBausteinStatement.setContent(moduleBaustein.getClouBausteinElement());
         } catch (Throwable e) {
             throw new BausteinMergerException(StringUtils.join("Could not parse child Baustein ",

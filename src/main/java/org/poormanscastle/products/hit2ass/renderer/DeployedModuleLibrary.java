@@ -29,18 +29,36 @@ public interface DeployedModuleLibrary {
 
     static String HIT2ASS_DEPLOYED_MODULE_LIBRARY_NAME = "HitAssDeploymentPackageLibrary";
 
-    static DeployedModuleLibrary library = null;
+    static DeployedModuleLibraryWrapper libraryWrapper = new DeployedModuleLibraryWrapper();
 
     static DeployedModuleLibrary createNewHitAssDeploymentPackageLibrary() {
-        return new DeployedModuleLibraryImpl(DeployedModuleLibrary.HIT2ASS_DEPLOYED_MODULE_LIBRARY_NAME);
+        if (libraryWrapper.library != null) {
+            logger.warn("Overwriting existing deployed module library. I do hope you know what you're doing.");
+        }
+        return libraryWrapper.library = new DeployedModuleLibraryImpl(DeployedModuleLibrary.HIT2ASS_DEPLOYED_MODULE_LIBRARY_NAME);
     }
 
-    static DeployedModuleLibrary loadHitAssDeploymentPackageLibrary() {
+    static void storeHitAssDeployedModuleLibrary() {
         synchronized (DeployedModuleLibrary.class) {
-            if (library == null)
+            try {
+                String path = System.getProperty("hit2ass.clou.pathToDeployedModuleLibrary");
+                checkState(!StringUtils.isBlank(path), "Path to deployed module library is not defined. Please set the system property hit2ass.clou.pathToDeployedModuleLibrary accordingly.");
+                Files.write(Paths.get(path), libraryWrapper.library.renderToDocFamilyWorkspace());
+            } catch (IOException e) {
+                String errMsg = StringUtils.join("Could not store deployed module library because: ",
+                        e.getClass().getName(), " - ", e.getMessage());
+                logger.error(errMsg, e);
+                throw new BausteinMergerException(errMsg, e);
+            }
+        }
+    }
+
+    static DeployedModuleLibrary loadHitAssDeployedModuleLibrary() {
+        synchronized (DeployedModuleLibrary.class) {
+            if (libraryWrapper.library == null)
                 try {
                     String path = System.getProperty("hit2ass.clou.pathToDeployedModuleLibrary");
-                    checkState(!StringUtils.isBlank(path), "Path to deployed module library not given. Please set system property hit2ass.clou.pathToDeployedModuleLibrary.");
+                    checkState(!StringUtils.isBlank(path), "Path to deployed module library not defined. Please set system property hit2ass.clou.pathToDeployedModuleLibrary.");
                     byte[] dpLibData = Files.readAllBytes(Paths.get(path));
 
                     OMElement dpLibDocument = OMXMLBuilderFactory.createOMBuilder(
@@ -51,6 +69,7 @@ public interface DeployedModuleLibrary {
                                     "Object[@type='com.assentis.cockpit.bo.BoModuleDeploymentLibrary']/" +
                                     "Object[@type='com.assentis.cockpit.bo.BoModuleComposition']");
                     List<OMElement> elementList = xPath.selectNodes(dpLibDocument);
+                    // by calling createNewHitAssDeploymentPackageLibrary, dpLib is a reference to the real thing.
                     DeployedModuleLibrary dpLib = DeployedModuleLibrary.createNewHitAssDeploymentPackageLibrary();
                     for (OMElement element : elementList) {
                         DeployedModule module = DeployedModule.createNew(
@@ -67,17 +86,25 @@ public interface DeployedModuleLibrary {
                 }
         }
 
-        return library;
+        return libraryWrapper.library;
     }
 
     DeployedModule addDeployedModule(DeployedModule deployedModule);
 
     boolean containsDeployedModule(DeployedModule deployedModule);
 
+    boolean containsDeployedModule(String deployedModuleName);
+
     DeployedModule getDeployedModuleByName(String name);
 
     String getName();
 
     String getElementId();
+
+    byte[] renderToDocFamilyWorkspace();
+
+    class DeployedModuleLibraryWrapper {
+        DeployedModuleLibrary library;
+    }
 
 }

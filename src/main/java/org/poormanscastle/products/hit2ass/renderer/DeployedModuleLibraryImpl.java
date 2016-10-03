@@ -3,6 +3,8 @@ package org.poormanscastle.products.hit2ass.renderer;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.velocity.VelocityContext;
+
 /**
  * Created by georg on 29.09.16.
  */
@@ -38,8 +40,18 @@ class DeployedModuleLibraryImpl implements DeployedModuleLibrary {
     }
 
     @Override
+    public boolean containsDeployedModule(String deployedModuleName) {
+        return moduleMap.containsKey(deployedModuleName);
+    }
+
+    @Override
     public DeployedModule getDeployedModuleByName(String name) {
         return null;
     }
 
+    @Override
+    public byte[] renderToDocFamilyWorkspace() {
+        VelocityContext context = VelocityHelper.getVelocityContext();
+        
+    }
 }

@@ -8,7 +8,7 @@ import org.junit.Test;
 public class DeployedModuleLibraryTest {
     @Test
     public void getHitAssDeploymentPackageLibrary() throws Exception {
-        DeployedModuleLibrary library = DeployedModuleLibrary.loadHitAssDeploymentPackageLibrary();
+        DeployedModuleLibrary library = DeployedModuleLibrary.loadHitAssDeployedModuleLibrary();
     }
 
 }

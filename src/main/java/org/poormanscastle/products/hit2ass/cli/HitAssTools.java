@@ -11,6 +11,7 @@ import org.poormanscastle.products.hit2ass.exceptions.HitAssTransformerException
 import org.poormanscastle.products.hit2ass.parser.javacc.HitAssAstParser;
 import org.poormanscastle.products.hit2ass.parser.javacc.ParseException;
 import org.poormanscastle.products.hit2ass.prettyprint.PrettyPrintVisitor;
+import org.poormanscastle.products.hit2ass.renderer.DeployedModuleLibrary;
 import org.poormanscastle.products.hit2ass.renderer.IRTransformer;
 import org.poormanscastle.products.hit2ass.renderer.xmlcreator.UserDataServiceBean;
 import org.poormanscastle.products.hit2ass.transformer.ClouBausteinDependencyResolverVisitor;
@@ -65,11 +66,17 @@ public final class HitAssTools {
     private static String createDocDesignWorkspace() throws ParseException {
         logger.info(StringUtils.join("Running parser with encoding hit2ass.clou.encoding=",
                 System.getProperty("hit2ass.clou.encoding")));
+        // check if deployed module library exists. if not, create a new one
+        DeployedModuleLibrary library = DeployedModuleLibrary.createNewHitAssDeploymentPackageLibrary();
+        
         ClouBaustein baustein = new HitAssAstParser(System.in, System.getProperty("hit2ass.clou.encoding")).CB();
         baustein.accept(new ClouBausteinDependencyResolverVisitor());
         baustein.accept(new EraseBlanksVisitor());
         IRTransformer irTransformer = new IRTransformer();
         baustein.accept(irTransformer);
+        // during processing the DeployedModuleLibrary was loaded and maybe extended.
+        // store the current version of the DeployedModuleLibrary
+        DeployedModuleLibrary.storeHitAssDeployedModuleLibrary();
         return irTransformer.getWorkspace().getContent();
     }
 

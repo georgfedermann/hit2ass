@@ -48,7 +48,7 @@ public class ClouChunkTest {
 
     @Test
     public void emptyCaseTest() throws Exception {
-        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("EmptyCase"), "ISO8859_1");
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("WorkspaceTest"), "ISO8859_1");
         ClouBaustein baustein = parser.CB();
         baustein.accept(new EraseBlanksVisitor());
         ClouBausteinElementList elementList = ((ClouBausteinElementList) baustein.getClouBausteinElement());

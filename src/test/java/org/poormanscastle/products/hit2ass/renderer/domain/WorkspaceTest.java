@@ -16,8 +16,9 @@ import org.poormanscastle.products.hit2ass.transformer.EraseBlanksVisitor;
  * Created by georg on 09.10.16.
  */
 public class WorkspaceTest {
+    
     @Test
-    public void getPageContent() throws Exception {
+    public void getPageContentTest() throws Exception {
         HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("EmptyCase"), "ISO8859_1");
         ClouBaustein baustein = parser.CB();
         baustein.accept(new EraseBlanksVisitor());

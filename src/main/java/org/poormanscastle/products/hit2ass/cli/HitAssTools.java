@@ -67,7 +67,7 @@ public final class HitAssTools {
         logger.info(StringUtils.join("Running parser with encoding hit2ass.clou.encoding=",
                 System.getProperty("hit2ass.clou.encoding")));
         // check if deployed module library exists. if not, create a new one
-        DeployedModuleLibrary library = DeployedModuleLibrary.createNewHitAssDeploymentPackageLibrary();
+        DeployedModuleLibrary library = DeployedModuleLibrary.loadHitAssDeployedModuleLibrary();
         
         ClouBaustein baustein = new HitAssAstParser(System.in, System.getProperty("hit2ass.clou.encoding")).CB();
         baustein.accept(new ClouBausteinDependencyResolverVisitor());

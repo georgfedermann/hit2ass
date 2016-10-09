@@ -28,7 +28,7 @@ public class DeployedModuleDockImpl implements DeployedModuleDock {
         context.put("name", name);
         context.put("calledModuleName", callModule);
         context.put("calledModuleElementId", moduleName);
-        Template template = Velocity.getTemplate("/velocity/TemplateDeployedModuleDock.vlt");
+        Template template = Velocity.getTemplate("/velocity/dplib/TemplateDeployedModuleDock.vlt");
         StringWriter stringWriter = new StringWriter();
         template.merge(context, stringWriter);
         return stringWriter.toString();

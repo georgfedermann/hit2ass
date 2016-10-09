@@ -22,6 +22,11 @@ class DeployedModuleImpl implements DeployedModule {
     }
 
     @Override
+    public String getElementId() {
+        return elementId;
+    }
+
+    @Override
     public String getName() {
         return name;
     }

@@ -1,8 +1,8 @@
 package org.poormanscastle.products.hit2ass.ast.domain;
 
-import org.apache.commons.lang3.StringUtils;
-
 import static com.google.common.base.Preconditions.checkArgument;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Represents the statement to import another sub CLOU text component
@@ -19,6 +19,27 @@ public class IncludeBausteinStatement extends AbstractAstItem implements Stateme
      * that actually can be resolved in the file system. In particular pathToBaustein cannot be empty or null.
      */
     private final String pathToBaustein;
+
+    /**
+     * to be set by the ClouBausteinDependencyResolverVisitor when the information
+     * becomes available. This information is parked here for later retrieval
+     * by the IRTransformer.
+     */
+    private String moduleDockName;
+
+    /**
+     * to be set by the ClouBausteinDependencyResolverVisitor when the information
+     * becomes available. This information is parked here for later retrieval
+     * by the IRTransformer.
+     */
+    private String calledModuleName;
+
+    /**
+     * to be set by the ClouBausteinDependencyResolverVisitor when the information
+     * becomes available. This information is parked here for later retrieval
+     * by the IRTransformer.
+     */
+    private String calledModuleElementId;
 
     /**
      * The content will be added com the time when the containing Baustein was parsed
@@ -66,5 +87,29 @@ public class IncludeBausteinStatement extends AbstractAstItem implements Stateme
                 ", pathToBaustein='" + pathToBaustein + '\'' +
                 ", content='" + content + "'" +
                 '}';
+    }
+
+    public String getModuleDockName() {
+        return moduleDockName;
+    }
+
+    public void setModuleDockName(String moduleDockName) {
+        this.moduleDockName = moduleDockName;
+    }
+
+    public String getCalledModuleName() {
+        return calledModuleName;
+    }
+
+    public void setCalledModuleName(String calledModuleName) {
+        this.calledModuleName = calledModuleName;
+    }
+
+    public String getCalledModuleElementId() {
+        return calledModuleElementId;
+    }
+
+    public void setCalledModuleElementId(String calledModuleElementId) {
+        this.calledModuleElementId = calledModuleElementId;
     }
 }

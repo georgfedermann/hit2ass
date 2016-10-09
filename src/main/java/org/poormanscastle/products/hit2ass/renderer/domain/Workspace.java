@@ -4,8 +4,11 @@ import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
 import java.util.List;
 
+import javax.xml.namespace.QName;
+
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.OMXMLBuilderFactory;
+import org.apache.axiom.om.impl.llom.CharacterDataImpl;
 import org.apache.axiom.om.xpath.AXIOMXPath;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -72,21 +75,33 @@ public final class Workspace {
      *
      * @return a String holding a String representation of the page contents.
      */
-    public String getPageContent() {
+    public String getPageContentForDeployedModules() {
         try {
             OMElement workspaceElement = OMXMLBuilderFactory.createOMBuilder(
                     new ByteArrayInputStream(getContent().getBytes())).getDocumentElement();
             AXIOMXPath xPath = new AXIOMXPath(
-                    "/Cockpit/Object[@type='com.assentis.cockpit.bo.BoWorkspace']/" +
-                            "Object[@type='com.assentis.cockpit.bo.BoProjectGroup']/" +
-                            "Object[@type='com.assentis.cockpit.bo.BoProject']/" +
-                            "Object[@type='com.assentis.cockpit.bo.BoDocument']/" +
-                            "Object[@type='com.assentis.cockpit.bo.BoPageRepetition'/" +
-                            "Object[@type='com.assentis.cockpit.bo.BoPage/element()");
+                    "/Cockpit/Object[@type='com.assentis.cockpit.bo.BoWorkspace']/Object[@type='com.assentis.cockpit.bo.BoProjectGroup']/Object[@type='com.assentis.cockpit.bo.BoProject']/Object[@type='com.assentis.cockpit.bo.BoPage']/child::node()");
             StringBuilder result = new StringBuilder();
-            List<OMElement> pageElements = ((List<OMElement>) xPath.selectNodes(workspaceElement));
-            for (int counter = 1; counter < pageElements.size() - 2; counter++) {
-                result.append(pageElements.get(counter).toString());
+            List<?> pageElements = ((List<?>) xPath.selectNodes(workspaceElement));
+            for (int counter = 0; counter < pageElements.size() - 1; counter++) {
+                Object element = pageElements.get(counter);
+                if (element instanceof CharacterDataImpl) {
+                    // ignore Whitespace stuff
+                    continue;
+                }
+                OMElement omElement = (OMElement) element;
+                if ("Properties".equals(omElement.getLocalName())) {
+                    // ignore Properties section of source BoPage element
+                    continue;
+                }
+                String nameAttribute = omElement.getAttributeValue(new QName("name"));
+                if ("renderSessionUuid".equals(nameAttribute) || "Cleanup RenderSession".equals(nameAttribute)) {
+                    // Hit2AssExtension render session is taken care of by main document.
+                    // not needed in deployed modules.
+                    continue;
+                }
+                // toString() method of OMElement returns an XML String view of the corresponding element.
+                result.append(omElement.toString());
             }
             return result.toString();
         } catch (JaxenException e) {

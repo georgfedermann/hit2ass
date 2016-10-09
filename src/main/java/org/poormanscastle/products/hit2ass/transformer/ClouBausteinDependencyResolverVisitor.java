@@ -47,7 +47,8 @@ public class ClouBausteinDependencyResolverVisitor extends AstItemVisitorAdapter
 
             // get the reference to the one DeploymentPackageLibrary within the system
             DeployedModuleLibrary dpLib = DeployedModuleLibrary.loadHitAssDeployedModuleLibrary();
-            if (!dpLib.containsDeployedModule(bausteinName)) {
+            DeployedModule deployedModule = dpLib.getDeployedModuleByName(bausteinName);
+            if (deployedModule == null) {
                 String encoding = System.getProperty("hit2ass.clou.encoding");
                 checkState(!StringUtils.isBlank(encoding), "baustein encoding not defined. Please set system property hit2ass.clou.encoding!");
                 ClouBaustein moduleBaustein = new HitAssAstParser(
@@ -56,15 +57,16 @@ public class ClouBausteinDependencyResolverVisitor extends AstItemVisitorAdapter
                 moduleBaustein.accept(new EraseBlanksVisitor());
                 IRTransformer irTransformer = new IRTransformer();
                 moduleBaustein.accept(irTransformer);
-                DeployedModule deployedModule = DeployedModule.createNew(bausteinName, DocFamUtils.createCockpitElementId(),
-                        irTransformer.getWorkspace().getPageContent());
+                deployedModule = DeployedModule.createNew(bausteinName, DocFamUtils.createCockpitElementId(),
+                        irTransformer.getWorkspace().getPageContentForDeployedModules());
                 dpLib.addDeployedModule(deployedModule);
             }
-            includeBausteinStatement.setContent(moduleBaustein.getClouBausteinElement());
+            includeBausteinStatement.setModuleDockName(StringUtils.join("Call ", deployedModule.getName()));
+            includeBausteinStatement.setCalledModuleName(deployedModule.getName());
+            includeBausteinStatement.setCalledModuleElementId(deployedModule.getElementId());
         } catch (Throwable e) {
             throw new BausteinMergerException(StringUtils.join("Could not parse child Baustein ",
                     includeBausteinStatement.getPathToBaustein(), " because: ", e.getMessage()), e);
         }
     }
-
 }

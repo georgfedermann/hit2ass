@@ -40,6 +40,7 @@ import org.poormanscastle.products.hit2ass.ast.domain.WhileStatement;
 import org.poormanscastle.products.hit2ass.renderer.domain.CarriageReturn;
 import org.poormanscastle.products.hit2ass.renderer.domain.Container;
 import org.poormanscastle.products.hit2ass.renderer.domain.Content;
+import org.poormanscastle.products.hit2ass.renderer.domain.DeployedModuleDock;
 import org.poormanscastle.products.hit2ass.renderer.domain.DynamicContentReference;
 import org.poormanscastle.products.hit2ass.renderer.domain.FontWeight;
 import org.poormanscastle.products.hit2ass.renderer.domain.ForLoop;
@@ -443,10 +444,23 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     }
 
     @Override
-    public void visitIncludeBausteinStatement(IncludeBausteinStatement includeBausteinStatement) {
+    public boolean proceedWithIncludeBausteinStatement(IncludeBausteinStatement includeBausteinStatement) {
+        // the renderer will create the DeployedModule reference from data contained within
+        // the IncludeBausteinStatement and does not want to continue with the content of
+        // the IncludeBausteinStatement thingie.
         if (logger.isInfoEnabled()) {
             logger.info(StringUtils.join("Found IncludeBausteinStatement ", includeBausteinStatement.getPathToBaustein()));
         }
+
+        // Fetch the deployed module library
+        // then look up the deployed module corresponding to the given path to baustein
+        // create a DeployedModuleReference and insert it into the container stack
+        containerStack.peek().addContent(DeployedModuleDock.createDeployedModuleDock(
+                StringUtils.join("Call ", includeBausteinStatement.getCalledModuleName()),
+                includeBausteinStatement.getCalledModuleName(),
+                includeBausteinStatement.getCalledModuleElementId()));
+
+        return false;
     }
 
 }

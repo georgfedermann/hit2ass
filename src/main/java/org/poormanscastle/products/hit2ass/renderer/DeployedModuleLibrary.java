@@ -5,6 +5,7 @@ import static com.google.common.base.Preconditions.checkState;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -27,15 +28,13 @@ public interface DeployedModuleLibrary {
 
     final static Logger logger = Logger.getLogger(DeployedModuleLibrary.class);
 
-    static String HIT2ASS_DEPLOYED_MODULE_LIBRARY_NAME = "HitAssDeploymentPackageLibrary";
-
     static DeployedModuleLibraryWrapper libraryWrapper = new DeployedModuleLibraryWrapper();
 
     static DeployedModuleLibrary createNewHitAssDeploymentPackageLibrary() {
         if (libraryWrapper.library != null) {
             logger.warn("Overwriting existing deployed module library. I do hope you know what you're doing.");
         }
-        return libraryWrapper.library = new DeployedModuleLibraryImpl(DeployedModuleLibrary.HIT2ASS_DEPLOYED_MODULE_LIBRARY_NAME);
+        return libraryWrapper.library = new DeployedModuleLibraryImpl();
     }
 
     static void storeHitAssDeployedModuleLibrary() {
@@ -55,28 +54,35 @@ public interface DeployedModuleLibrary {
 
     static DeployedModuleLibrary loadHitAssDeployedModuleLibrary() {
         synchronized (DeployedModuleLibrary.class) {
-            if (libraryWrapper.library == null)
+            if (libraryWrapper.library == null) {
+                // by calling createNewHitAssDeploymentPackageLibrary, dpLib is a reference to the real thing.
+                DeployedModuleLibrary dpLib = DeployedModuleLibrary.createNewHitAssDeploymentPackageLibrary();
                 try {
-                    String path = System.getProperty("hit2ass.clou.pathToDeployedModuleLibrary");
-                    checkState(!StringUtils.isBlank(path), "Path to deployed module library not defined. Please set system property hit2ass.clou.pathToDeployedModuleLibrary.");
-                    byte[] dpLibData = Files.readAllBytes(Paths.get(path));
+                    checkState(!StringUtils.isBlank(System.getProperty("hit2ass.clou.pathToDeployedModuleLibrary")),
+                            "Path to deployed module library not defined. Please set system property hit2ass.clou.pathToDeployedModuleLibrary.");
+                    Path path = Paths.get(System.getProperty("hit2ass.clou.pathToDeployedModuleLibrary"));
 
-                    OMElement dpLibDocument = OMXMLBuilderFactory.createOMBuilder(
-                            new ByteArrayInputStream(dpLibData)).getDocumentElement();
-                    AXIOMXPath xPath = new AXIOMXPath(
-                            "/Cockpit/Object[@type='com.assentis.cockpit.bo.BoWorkspace']/" +
-                                    "Object[@type='com.assentis.cockpit.bo.BoModuleGroup']/" +
-                                    "Object[@type='com.assentis.cockpit.bo.BoModuleDeploymentLibrary']/" +
-                                    "Object[@type='com.assentis.cockpit.bo.BoModuleComposition']");
-                    List<OMElement> elementList = xPath.selectNodes(dpLibDocument);
-                    // by calling createNewHitAssDeploymentPackageLibrary, dpLib is a reference to the real thing.
-                    DeployedModuleLibrary dpLib = DeployedModuleLibrary.createNewHitAssDeploymentPackageLibrary();
-                    for (OMElement element : elementList) {
-                        DeployedModule module = DeployedModule.createNew(
-                                element.getAttributeValue(new QName("name")),
-                                element.toString(), element.getAttributeValue(new QName("id")));
-                        dpLib.addDeployedModule(module);
-                        logger.info(StringUtils.join("Found module ", module));
+                    if (!Files.exists(path)) {
+                        logger.warn(StringUtils.join("No deployed module library found. Creating new one."));
+                    } else {
+                        byte[] dpLibData = Files.readAllBytes(path);
+
+                        OMElement dpLibDocument = OMXMLBuilderFactory.createOMBuilder(
+                                new ByteArrayInputStream(dpLibData)).getDocumentElement();
+                        AXIOMXPath xPath = new AXIOMXPath(
+                                "/Cockpit/Object[@type='com.assentis.cockpit.bo.BoWorkspace']/" +
+                                        "Object[@type='com.assentis.cockpit.bo.BoModuleGroup']/" +
+                                        "Object[@type='com.assentis.cockpit.bo.BoModuleDeploymentLibrary']/" +
+                                        "Object[@type='com.assentis.cockpit.bo.BoModuleComposition']");
+                        List<OMElement> elementList = xPath.selectNodes(dpLibDocument);
+
+                        for (OMElement element : elementList) {
+                            DeployedModule module = DeployedModule.createNew(
+                                    element.getAttributeValue(new QName("name")),
+                                    element.toString(), element.getAttributeValue(new QName("id")));
+                            dpLib.addDeployedModule(module);
+                            logger.info(StringUtils.join("Found module ", module));
+                        }
                     }
                 } catch (IOException | JaxenException e) {
                     String errMsg = StringUtils.join("Could not load deployed module library, because: ",
@@ -84,8 +90,8 @@ public interface DeployedModuleLibrary {
                     logger.error(errMsg, e);
                     throw new BausteinMergerException(errMsg, e);
                 }
+            }
         }
-
         return libraryWrapper.library;
     }
 
@@ -96,8 +102,6 @@ public interface DeployedModuleLibrary {
     boolean containsDeployedModule(String deployedModuleName);
 
     DeployedModule getDeployedModuleByName(String name);
-
-    String getName();
 
     String getElementId();
 

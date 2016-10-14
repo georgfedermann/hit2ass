@@ -34,7 +34,7 @@ class DeployedModuleImpl implements DeployedModule {
     @Override
     public String getContent() {
         VelocityContext context = VelocityHelper.getVelocityContext();
-        context.put("name", name);
+        context.put("name", name.replaceAll("\\.", "_"));
         context.put("elementId", elementId);
         context.put("content", content);
         Template template = Velocity.getTemplate("/velocity/dplib/TemplateDeployedModule.vlt");

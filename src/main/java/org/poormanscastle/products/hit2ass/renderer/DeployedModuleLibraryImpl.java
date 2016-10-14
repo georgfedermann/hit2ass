@@ -42,22 +42,22 @@ class DeployedModuleLibraryImpl implements DeployedModuleLibrary {
 
     @Override
     public DeployedModule addDeployedModule(DeployedModule deployedModule) {
-        return moduleMap.put(deployedModule.getName(), deployedModule);
+        return moduleMap.put(deployedModule.getName().replaceAll("\\.", "_"), deployedModule);
     }
 
     @Override
     public boolean containsDeployedModule(DeployedModule deployedModule) {
-        return moduleMap.containsKey(deployedModule.getName());
+        return moduleMap.containsKey(deployedModule.getName().replaceAll("\\.", "_"));
     }
 
     @Override
     public boolean containsDeployedModule(String deployedModuleName) {
-        return moduleMap.containsKey(deployedModuleName);
+        return moduleMap.containsKey(deployedModuleName.replaceAll("\\.", "_"));
     }
 
     @Override
     public DeployedModule getDeployedModuleByName(String name) {
-        return null;
+        return moduleMap.get(name.replaceAll("\\.", "_"));
     }
 
     @Override

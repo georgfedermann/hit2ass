@@ -452,6 +452,13 @@ public final class IRTransformer extends AstItemVisitorAdapter {
             logger.info(StringUtils.join("Found IncludeBausteinStatement ", includeBausteinStatement.getPathToBaustein()));
         }
 
+        // analogous to ClouBausteinDependencyResolverVisitor:
+        // ignore Baustein a.ende here
+        // TODO implement some interceptor or other hook point, maybe make names of ignorable bausteins configurable
+        if (includeBausteinStatement.getPathToBaustein().contains("a.ende")) {
+            return false;
+        }
+
         // Fetch the deployed module library
         // then look up the deployed module corresponding to the given path to baustein
         // create a DeployedModuleReference and insert it into the container stack

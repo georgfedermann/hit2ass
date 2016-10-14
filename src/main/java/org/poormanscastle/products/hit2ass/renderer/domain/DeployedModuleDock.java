@@ -30,8 +30,8 @@ public interface DeployedModuleDock extends Content {
     String getModuleName();
 
     static DeployedModuleDock createDeployedModuleDock(String elementName, String calledModuleName,
-                                                       String calledModuleElementId, String compositionId) {
-        return new DeployedModuleDockImpl(elementName, calledModuleName, calledModuleElementId, compositionId);
+                                                       String calledModuleElementId) {
+        return new DeployedModuleDockImpl(elementName, calledModuleName, calledModuleElementId);
     }
 
 }

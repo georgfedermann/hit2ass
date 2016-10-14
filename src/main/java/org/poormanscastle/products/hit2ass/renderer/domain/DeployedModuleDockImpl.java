@@ -1,7 +1,10 @@
 package org.poormanscastle.products.hit2ass.renderer.domain;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 import java.io.StringWriter;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
@@ -10,27 +13,27 @@ import org.poormanscastle.products.hit2ass.renderer.VelocityHelper;
 /**
  * Created by georg.federmann@poormanscastle.com on 07.10.16.
  */
-public class DeployedModuleDockImpl implements DeployedModuleDock {
+class DeployedModuleDockImpl implements DeployedModuleDock {
 
     private final String name;
     private final String callModule;
     private final String moduleName;
-    private final String deployedModuleCompositionId;
 
-    DeployedModuleDockImpl(String name, String callModule, String moduleName, String compositionId) {
+    DeployedModuleDockImpl(String name, String callModule, String moduleName) {
+        checkArgument(!StringUtils.isBlank(name));
+        checkArgument(!StringUtils.isBlank(callModule));
+        checkArgument(!StringUtils.isBlank(moduleName));
         this.name = name;
         this.callModule = callModule;
         this.moduleName = moduleName;
-        this.deployedModuleCompositionId = compositionId;
     }
 
     @Override
     public String getContent() {
         VelocityContext context = VelocityHelper.getVelocityContext();
-        context.put("name", name);
-        context.put("calledModuleName", callModule);
+        context.put("name", name.replaceAll("\\.", "_"));
+        context.put("calledModuleName", callModule.replaceAll("\\.", "_"));
         context.put("calledModuleElementId", moduleName);
-        context.put("deployedModuleCompositionElementId", deployedModuleCompositionId);
         Template template = Velocity.getTemplate("/velocity/dplib/TemplateDeployedModuleDock.vlt");
         StringWriter stringWriter = new StringWriter();
         template.merge(context, stringWriter);

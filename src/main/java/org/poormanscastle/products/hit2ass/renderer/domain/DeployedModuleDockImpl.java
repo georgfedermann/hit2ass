@@ -18,14 +18,16 @@ class DeployedModuleDockImpl implements DeployedModuleDock {
     private final String name;
     private final String callModule;
     private final String moduleName;
+    private final boolean withinModuleLibrary;
 
-    DeployedModuleDockImpl(String name, String callModule, String moduleName) {
+    DeployedModuleDockImpl(String name, String callModule, String moduleName, boolean withinModuleLibrary) {
         checkArgument(!StringUtils.isBlank(name));
         checkArgument(!StringUtils.isBlank(callModule));
         checkArgument(!StringUtils.isBlank(moduleName));
         this.name = name;
         this.callModule = callModule;
         this.moduleName = moduleName;
+        this.withinModuleLibrary = withinModuleLibrary;
     }
 
     @Override
@@ -34,7 +36,9 @@ class DeployedModuleDockImpl implements DeployedModuleDock {
         context.put("name", name.replaceAll("\\.", "_"));
         context.put("calledModuleName", callModule.replaceAll("\\.", "_"));
         context.put("calledModuleElementId", moduleName);
-        Template template = Velocity.getTemplate("/velocity/dplib/TemplateDeployedModuleDock.vlt");
+        Template template = withinModuleLibrary ?
+                Velocity.getTemplate("/velocity/dplib/TemplateModuleDock.vlt") :
+                Velocity.getTemplate("/velocity/dplib/TemplateDeployedModuleDock.vlt");
         StringWriter stringWriter = new StringWriter();
         template.merge(context, stringWriter);
         return stringWriter.toString();

@@ -28,6 +28,21 @@ public class ClouBausteinDependencyResolverVisitor extends AstItemVisitorAdapter
 
     private final static Logger logger = Logger.getLogger(ClouBausteinDependencyResolverVisitor.class);
 
+    /**
+     * flag to set whether references to modules are references to deployed modules
+     * are normal modules (i.e. from moduled within the hit2ass deployed module library to
+     * other modules within the same library.
+     */
+    private final boolean withinModuleLibrary;
+
+    public ClouBausteinDependencyResolverVisitor() {
+        this(false);
+    }
+
+    public ClouBausteinDependencyResolverVisitor(boolean withinModuleLibrary) {
+        this.withinModuleLibrary = withinModuleLibrary;
+    }
+
     @Override
     public void visitIncludeBausteinStatement(IncludeBausteinStatement includeBausteinStatement) {
         try {
@@ -58,7 +73,7 @@ public class ClouBausteinDependencyResolverVisitor extends AstItemVisitorAdapter
                 checkState(!StringUtils.isBlank(encoding), "baustein encoding not defined. Please set system property hit2ass.clou.encoding!");
                 ClouBaustein moduleBaustein = new HitAssAstParser(
                         HitAssTools.getClouBausteinAsInputStream(bausteinName), encoding).CB();
-                moduleBaustein.accept(new ClouBausteinDependencyResolverVisitor());
+                moduleBaustein.accept(new ClouBausteinDependencyResolverVisitor(true));
                 moduleBaustein.accept(new EraseBlanksVisitor());
                 IRTransformer irTransformer = new IRTransformer();
                 moduleBaustein.accept(irTransformer);
@@ -69,6 +84,7 @@ public class ClouBausteinDependencyResolverVisitor extends AstItemVisitorAdapter
             includeBausteinStatement.setModuleDockName(StringUtils.join("Call ", deployedModule.getName()));
             includeBausteinStatement.setCalledModuleName(deployedModule.getName());
             includeBausteinStatement.setCalledModuleElementId(deployedModule.getElementId());
+            includeBausteinStatement.setLocalModuleReferences(withinModuleLibrary);
         } catch (Throwable e) {
             throw new BausteinMergerException(StringUtils.join("Could not parse child Baustein ",
                     includeBausteinStatement.getPathToBaustein(), " because: ", e.getMessage()), e);

@@ -465,7 +465,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         containerStack.peek().addContent(DeployedModuleDock.createDeployedModuleDock(
                 StringUtils.join("Call ", includeBausteinStatement.getCalledModuleName()),
                 includeBausteinStatement.getCalledModuleName(),
-                includeBausteinStatement.getCalledModuleElementId()));
+                includeBausteinStatement.getCalledModuleElementId(), includeBausteinStatement.isLocalModuleReferences()));
 
         return false;
     }

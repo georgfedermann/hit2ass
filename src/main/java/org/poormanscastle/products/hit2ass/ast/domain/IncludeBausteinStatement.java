@@ -48,10 +48,20 @@ public class IncludeBausteinStatement extends AbstractAstItem implements Stateme
      */
     private ClouBausteinElement content;
 
+    private boolean localModuleReferences;
+
     public IncludeBausteinStatement(CodePosition codePosition, String pathToBaustein) {
         super(codePosition);
         checkArgument(!StringUtils.isBlank(pathToBaustein));
         this.pathToBaustein = pathToBaustein;
+    }
+
+    public void setLocalModuleReferences(boolean localModuleReferences) {
+        this.localModuleReferences = localModuleReferences;
+    }
+
+    public boolean isLocalModuleReferences() {
+        return localModuleReferences;
     }
 
     public String getPathToBaustein() {
@@ -83,9 +93,12 @@ public class IncludeBausteinStatement extends AbstractAstItem implements Stateme
     @Override
     public String toString() {
         return "IncludeBausteinStatement{" +
-                "codePosition=" + getCodePosition().toString() +
-                ", pathToBaustein='" + pathToBaustein + '\'' +
-                ", content='" + content + "'" +
+                "pathToBaustein='" + pathToBaustein + '\'' +
+                ", moduleDockName='" + moduleDockName + '\'' +
+                ", calledModuleName='" + calledModuleName + '\'' +
+                ", calledModuleElementId='" + calledModuleElementId + '\'' +
+                ", content=" + content +
+                ", localModuleReferences=" + localModuleReferences +
                 '}';
     }
 

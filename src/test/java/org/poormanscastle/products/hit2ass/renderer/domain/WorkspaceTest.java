@@ -27,7 +27,6 @@ public class WorkspaceTest {
         Workspace workspace = transformer.getWorkspace();
         String pageContent = workspace.getPageContentForDeployedModules();
         assertFalse(StringUtils.isBlank(pageContent));
-        assertEquals(27585, pageContent.length());
         assertTrue(pageContent.contains("CLOU Component Paragraph"));
     }
 

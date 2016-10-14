@@ -46,6 +46,11 @@ public class ClouBausteinDependencyResolverVisitor extends AstItemVisitorAdapter
             }
 
             // get the reference to the one DeploymentPackageLibrary within the system
+            // TODO
+            // I also need to set these two values:
+            // hitassDeployedModuleDeploymentPackageId
+            // hitassDeployedModuleCompositionId
+
             DeployedModuleLibrary dpLib = DeployedModuleLibrary.loadHitAssDeployedModuleLibrary();
             DeployedModule deployedModule = dpLib.getDeployedModuleByName(bausteinName);
             if (deployedModule == null) {
@@ -57,8 +62,8 @@ public class ClouBausteinDependencyResolverVisitor extends AstItemVisitorAdapter
                 moduleBaustein.accept(new EraseBlanksVisitor());
                 IRTransformer irTransformer = new IRTransformer();
                 moduleBaustein.accept(irTransformer);
-                deployedModule = DeployedModule.createNew(bausteinName, DocFamUtils.createCockpitElementId(),
-                        irTransformer.getWorkspace().getPageContentForDeployedModules());
+                deployedModule = DeployedModule.createNew(bausteinName,
+                        irTransformer.getWorkspace().getPageContentForDeployedModules(), DocFamUtils.createCockpitElementId());
                 dpLib.addDeployedModule(deployedModule);
             }
             includeBausteinStatement.setModuleDockName(StringUtils.join("Call ", deployedModule.getName()));

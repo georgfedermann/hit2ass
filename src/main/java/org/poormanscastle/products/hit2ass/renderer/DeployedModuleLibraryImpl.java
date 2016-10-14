@@ -13,7 +13,22 @@ import org.apache.velocity.app.Velocity;
  */
 class DeployedModuleLibraryImpl implements DeployedModuleLibrary {
 
-    private String elementId;
+    /**
+     * The unique elementId for this Library. When a deployement package gets created
+     * for this library it will have this elementId with a ".dp" appended to it.
+     */
+    private String elementId = "20160326T133147.780-1673.9391843.274898.6732";
+    /**
+     * when this library is referenced from within another workspace, the
+     * corresponding BoDeployedModuleComposition element will have to specify
+     * the elementId of this library. This composition element also will be
+     * referenced by all module docks within the containing workspace that
+     * reference modules contained within this library. So this elementId
+     * needs to be distributed to all moduleDocks inferred from module contained
+     * in this library. So, this library appears to be a good place to hold and
+     * distribute this elementId.
+     */
+    private String referencingCompositionElementId = "20160326T133147.780-1673.9391843.214898.6732";
     private Map<String, DeployedModule> moduleMap = new HashMap<>();
 
     DeployedModuleLibraryImpl() {

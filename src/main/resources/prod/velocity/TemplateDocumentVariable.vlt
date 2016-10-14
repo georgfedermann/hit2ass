@@ -1,4 +1,4 @@
-<Object id="${docFamUtils.CockpitElementId}" name="${name}" enabled="True" type="com.assentis.cockpit.bo.BoDocumentVariable">
+<Object id="${docFamUtils.createCockpitElementId()}" name="${name}" enabled="True" type="com.assentis.cockpit.bo.BoDocumentVariable">
     <Properties>
         <Attributes>
             <!-- Name is an XPath expression. Thus, a string value has to be quoted, like in 'name'. -->

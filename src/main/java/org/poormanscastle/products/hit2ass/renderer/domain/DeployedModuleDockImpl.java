@@ -15,11 +15,13 @@ public class DeployedModuleDockImpl implements DeployedModuleDock {
     private final String name;
     private final String callModule;
     private final String moduleName;
+    private final String deployedModuleCompositionId;
 
-    DeployedModuleDockImpl(String name, String callModule, String moduleName) {
+    DeployedModuleDockImpl(String name, String callModule, String moduleName, String compositionId) {
         this.name = name;
         this.callModule = callModule;
         this.moduleName = moduleName;
+        this.deployedModuleCompositionId = compositionId;
     }
 
     @Override
@@ -28,6 +30,7 @@ public class DeployedModuleDockImpl implements DeployedModuleDock {
         context.put("name", name);
         context.put("calledModuleName", callModule);
         context.put("calledModuleElementId", moduleName);
+        context.put("deployedModuleCompositionElementId", deployedModuleCompositionId);
         Template template = Velocity.getTemplate("/velocity/dplib/TemplateDeployedModuleDock.vlt");
         StringWriter stringWriter = new StringWriter();
         template.merge(context, stringWriter);

@@ -50,24 +50,24 @@
       </Attributes>
       <Relations/>
     </Properties>
-    <Object id="${docFamUtils.CockpitElementId}" name="Projects" enabled="True" type="com.assentis.cockpit.bo.BoProjectGroup">
+    <Object id="${docFamUtils.createCockpitElementId()}" name="Projects" enabled="True" type="com.assentis.cockpit.bo.BoProjectGroup">
       <Properties>
         <Attributes/>
         <Relations/>
       </Properties>
     </Object>
-    <Object id="${docFamUtils.CockpitElementId}" name="Regions" enabled="True" type="com.assentis.cockpit.bo.BoRegionGroup">
+    <Object id="${docFamUtils.createCockpitElementId()}" name="Regions" enabled="True" type="com.assentis.cockpit.bo.BoRegionGroup">
       <Properties>
         <Attributes/>
         <Relations/>
       </Properties>
     </Object>
-    <Object id="${docFamUtils.CockpitElementId}" name="Modules" enabled="True" type="com.assentis.cockpit.bo.BoModuleGroup">
+    <Object id="${docFamUtils.createCockpitElementId()}" name="Modules" enabled="True" type="com.assentis.cockpit.bo.BoModuleGroup">
       <Properties>
         <Attributes/>
         <Relations/>
       </Properties>
-      <Object id="${docFamUtils.CockpitElementId}" name="HitAssDeploymentPackageLibrary" enabled="True" type="com.assentis.cockpit.bo.BoModuleDeploymentLibrary">
+      <Object id="${docFamUtils.createCockpitElementId()}" name="HitAssDeploymentPackageLibrary" enabled="True" type="com.assentis.cockpit.bo.BoModuleDeploymentLibrary">
         <Properties>
           <Attributes>
             <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -203,7 +203,7 @@
                   </Attributes>
                   <Relations/>
                 </Properties>
-                <Object id="${docFamUtils.CockpitElementId}" name="AT_de" enabled="True" type="com.assentis.cockpit.bo.BoLocale">
+                <Object id="${docFamUtils.createCockpitElementId()}" name="AT_de" enabled="True" type="com.assentis.cockpit.bo.BoLocale">
                   <Properties>
                     <Attributes>
                       <Attribute name="LocaleID"><![CDATA[AT_de]]></Attribute>
@@ -361,7 +361,7 @@
             <Relation name="VariableSlaveCollection" refTo=""/>
           </Relations>
         </Properties>
-        <Object id="<Object id="${docFamUtils.CockpitElementId}" name="CLOU Component Paragraph" enabled="True" type="com.assentis.cockpit.bo.BoParagraph">
+        <Object id="<Object id="${docFamUtils.createCockpitElementId()}" name="CLOU Component Paragraph" enabled="True" type="com.assentis.cockpit.bo.BoParagraph">
             <Properties>
               <Attributes>
                 <Attribute name="Notes"></Attribute>
@@ -720,7 +720,7 @@
                 <Relation name="EditorConfigTextComponents" refTo=""/>
               </Relations>
             </Properties>
-			            <Object id="${docFamUtils.CockpitElementId}" name="text" enabled="True" type="com.assentis.cockpit.bo.BoText">
+			            <Object id="${docFamUtils.createCockpitElementId()}" name="text" enabled="True" type="com.assentis.cockpit.bo.BoText">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"></Attribute>
@@ -805,7 +805,7 @@
                 <Relations/>
               </Properties>
             </Object>
-<Object id="${docFamUtils.CockpitElementId}" name="Print: conditionVar" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
+<Object id="${docFamUtils.createCockpitElementId()}" name="Print: conditionVar" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
   <Properties>
     <Attributes>
       <Attribute name="Notes"></Attribute>
@@ -1031,7 +1031,7 @@
     <Relations/>
   </Properties>
 </Object>
-<Object id="${docFamUtils.CockpitElementId}" name="NL" enabled="True" type="com.assentis.cockpit.bo.BoAggregationParagraph">
+<Object id="${docFamUtils.createCockpitElementId()}" name="NL" enabled="True" type="com.assentis.cockpit.bo.BoAggregationParagraph">
     <Properties>
         <Attributes/>
         <Relations>
@@ -1270,13 +1270,13 @@
 
       </Object>
     </Object>
-    <Object id="${docFamUtils.CockpitElementId}" name="Form Rules" enabled="True" type="com.assentis.cockpit.bo.BoXFFormRuleGroup">
+    <Object id="${docFamUtils.createCockpitElementId()}" name="Form Rules" enabled="True" type="com.assentis.cockpit.bo.BoXFFormRuleGroup">
       <Properties>
         <Attributes/>
         <Relations/>
       </Properties>
     </Object>
-    <Object id="${docFamUtils.CockpitElementId}" name="Variable Groups" enabled="True" type="com.assentis.cockpit.bo.BoVariableGroup">
+    <Object id="${docFamUtils.createCockpitElementId()}" name="Variable Groups" enabled="True" type="com.assentis.cockpit.bo.BoVariableGroup">
       <Properties>
         <Attributes/>
         <Relations/>

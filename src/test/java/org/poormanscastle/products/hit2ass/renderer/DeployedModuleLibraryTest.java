@@ -53,6 +53,7 @@ public class DeployedModuleLibraryTest {
             // Try to create workspace and save it to DocRepo
             try {
                 ClouBaustein baustein = new HitAssAstParser(new ByteArrayInputStream(Files.readAllBytes(bausteinFile.toPath())), encoding).CB();
+                baustein.setClouBausteinName(bausteinFile.getName());
                 baustein.accept(new ClouBausteinDependencyResolverVisitor());
             } catch (Error | Exception e) {
                 // javacc parser throws Errors ...

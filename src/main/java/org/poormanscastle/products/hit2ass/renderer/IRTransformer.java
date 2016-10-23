@@ -122,7 +122,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
 
     @Override
     public void visitClouBaustein(ClouBausteinImpl clouBaustein) {
-        workspace = new Workspace();
+        workspace = new Workspace(clouBaustein.getClouBausteinName());
         containerStack.push(new Paragraph("CLOU Component Paragraph"));
     }
 

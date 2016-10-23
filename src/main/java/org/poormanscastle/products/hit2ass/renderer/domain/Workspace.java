@@ -39,7 +39,7 @@ public final class Workspace {
 
     public Workspace(String workspaceName, String projectsName, String projectName,
                      String documentName, String repeatingPageName, String pageContentName) {
-        this.workspaceName = workspaceName;
+        this(workspaceName);
         this.projectsName = projectsName;
         this.projectName = projectName;
         this.documentName = documentName;
@@ -47,7 +47,8 @@ public final class Workspace {
         this.pageContentName = pageContentName;
     }
 
-    public Workspace() {
+    public Workspace(String workspaceName) {
+        this.workspaceName = workspaceName;
     }
 
     /**

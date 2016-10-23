@@ -2,6 +2,7 @@ package org.poormanscastle.products.hit2ass.renderer.domain;
 
 import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.xml.namespace.QName;
@@ -76,9 +77,11 @@ public final class Workspace {
      * @return a String holding a String representation of the page contents.
      */
     public String getPageContentForDeployedModules() {
+        // TODO or else implement an REGEX expression the groups the value of the encoding in the XML prolog
+        String declaredEncoding = getContent().contains("ISO-8859-1") ? "ISO-8859-1" : "UTF-8";
         try {
             OMElement workspaceElement = OMXMLBuilderFactory.createOMBuilder(
-                    new ByteArrayInputStream(getContent().getBytes())).getDocumentElement();
+                    new ByteArrayInputStream(getContent().getBytes(declaredEncoding))).getDocumentElement();
             AXIOMXPath xPath = new AXIOMXPath(
                     "/Cockpit/Object[@type='com.assentis.cockpit.bo.BoWorkspace']/Object[@type='com.assentis.cockpit.bo.BoProjectGroup']/Object[@type='com.assentis.cockpit.bo.BoProject']/Object[@type='com.assentis.cockpit.bo.BoPage']/child::node()");
             StringBuilder result = new StringBuilder();
@@ -104,7 +107,7 @@ public final class Workspace {
                 result.append(omElement.toString());
             }
             return result.toString();
-        } catch (JaxenException e) {
+        } catch (JaxenException | UnsupportedEncodingException e) {
             String errMsg = StringUtils.join("Could not create module from sub Baustein because: ",
                     e.getClass().getName(), " - ", e.getMessage());
             logger.error(errMsg);

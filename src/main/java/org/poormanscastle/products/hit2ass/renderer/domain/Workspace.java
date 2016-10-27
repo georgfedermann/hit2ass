@@ -37,18 +37,8 @@ public final class Workspace {
 
     private Container contentContainer;
 
-    public Workspace(String workspaceName, String projectsName, String projectName,
-                     String documentName, String repeatingPageName, String pageContentName) {
-        this(workspaceName);
-        this.projectsName = projectsName;
-        this.projectName = projectName;
-        this.documentName = documentName;
-        this.repeatingPageName = repeatingPageName;
-        this.pageContentName = pageContentName;
-    }
-
     public Workspace(String workspaceName) {
-        this.workspaceName = workspaceName;
+        this.workspaceName = (workspaceName == null ? "" : workspaceName.replaceAll("\\.", "_"));
     }
 
     /**

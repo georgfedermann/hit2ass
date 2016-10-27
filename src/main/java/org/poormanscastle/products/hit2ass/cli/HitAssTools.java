@@ -114,7 +114,7 @@ public final class HitAssTools {
     }
 
     private static void printVersion() {
-        System.out.println("HitAssTools v0.1 of 2016-04-06, brought to you by Poor Man's Castle.");
+        System.out.println("HitAssTools v0.3 of 2016-10-23, brought to you by Poor Man's Castle.");
     }
 
 }

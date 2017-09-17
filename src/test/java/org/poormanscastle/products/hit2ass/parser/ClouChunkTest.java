@@ -500,6 +500,18 @@ public class ClouChunkTest {
     }
 
     @Test
+    public void testPrintStatementSequence() throws Exception {
+        // #
+        // You are #> firstname #> lastname, right?
+        // and so it ends.
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("PrintStatementSequence"), "ISO8859-1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
+        assertEquals(" ",((FixedText)((PairClouBausteinElementList) baustein.getClouBausteinElement()).getTail().getTail().getHead()).getText());
+    }
+
+    @Test
     public void testPrintStatementNewLineFixedTextSequence() throws Exception {
         // #
         // Your name is #> firstname

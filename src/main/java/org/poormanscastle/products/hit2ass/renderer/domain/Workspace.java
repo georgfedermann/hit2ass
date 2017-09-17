@@ -6,9 +6,12 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.xml.namespace.QName;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 
 import org.apache.axiom.om.OMElement;
-import org.apache.axiom.om.OMXMLBuilderFactory;
+import org.apache.axiom.om.impl.builder.StAXOMBuilder;
 import org.apache.axiom.om.impl.llom.CharacterDataImpl;
 import org.apache.axiom.om.xpath.AXIOMXPath;
 import org.apache.commons.lang3.StringUtils;
@@ -71,8 +74,14 @@ public final class Workspace {
         // TODO or else implement an REGEX expression the groups the value of the encoding in the XML prolog
         String declaredEncoding = getContent().contains("ISO-8859-1") ? "ISO-8859-1" : "UTF-8";
         try {
-            OMElement workspaceElement = OMXMLBuilderFactory.createOMBuilder(
-                    new ByteArrayInputStream(getContent().getBytes(declaredEncoding))).getDocumentElement();
+            XMLInputFactory xmlInFac = XMLInputFactory.newInstance();
+            xmlInFac.setProperty(XMLInputFactory.IS_COALESCING, Boolean.FALSE);
+            XMLStreamReader parser = xmlInFac.createXMLStreamReader(new ByteArrayInputStream(getContent().getBytes(declaredEncoding)));
+            StAXOMBuilder builder = new StAXOMBuilder(parser);
+            OMElement workspaceElement = builder.getDocumentElement();
+
+//            OMElement workspaceElement = OMXMLBuilderFactory.createOMBuilder(
+//                    new ByteArrayInputStream(getContent().getBytes(declaredEncoding))).getDocumentElement();
             AXIOMXPath xPath = new AXIOMXPath(
                     "/Cockpit/Object[@type='com.assentis.cockpit.bo.BoWorkspace']/Object[@type='com.assentis.cockpit.bo.BoProjectGroup']/Object[@type='com.assentis.cockpit.bo.BoProject']/Object[@type='com.assentis.cockpit.bo.BoPage']/child::node()");
             StringBuilder result = new StringBuilder();
@@ -95,10 +104,10 @@ public final class Workspace {
                     continue;
                 }
                 // toString() method of OMElement returns an XML String view of the corresponding element.
-                result.append(omElement.toString());
+                result.append(omElement.toStringWithConsume());
             }
             return result.toString();
-        } catch (JaxenException | UnsupportedEncodingException e) {
+        } catch (JaxenException | UnsupportedEncodingException | XMLStreamException e) {
             String errMsg = StringUtils.join("Could not create module from sub Baustein because: ",
                     e.getClass().getName(), " - ", e.getMessage());
             logger.error(errMsg);

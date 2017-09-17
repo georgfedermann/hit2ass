@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Test;
 import org.poormanscastle.products.hit2ass.TestUtils;
 import org.poormanscastle.products.hit2ass.ast.domain.AstItemVisitor;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouBaustein;
@@ -23,6 +24,18 @@ public class IRTransformerTest {
     private HitAssAstParser parser;
     private AstItemVisitor blanksVisitor = new EraseBlanksVisitor();
     private IRTransformer irTransformer = new IRTransformer();
+
+    @Test
+    public void testPrintStatementSequence() throws Exception {
+        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("PrintStatementSequence"), "ISO8859-1");
+        baustein = parser.CB();
+        baustein.accept(blanksVisitor);
+        baustein.accept(irTransformer);
+        Workspace workspace = irTransformer.getWorkspace();
+        assertNotNull(workspace);
+        String acr = workspace.getContent();
+        assertFalse(StringUtils.isBlank(acr));
+    }
 
     // @Test
     public void testHitCommandReturn() throws Exception {

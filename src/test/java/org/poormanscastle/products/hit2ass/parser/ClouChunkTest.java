@@ -2,6 +2,7 @@ package org.poormanscastle.products.hit2ass.parser;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -32,8 +33,10 @@ import org.poormanscastle.products.hit2ass.ast.domain.SectionStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.SwitchStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.TextExpression;
 import org.poormanscastle.products.hit2ass.parser.javacc.HitAssAstParser;
+import org.poormanscastle.products.hit2ass.prettyprint.PrettyPrintVisitor;
 import org.poormanscastle.products.hit2ass.renderer.IRTransformer;
 import org.poormanscastle.products.hit2ass.renderer.domain.Workspace;
+import org.poormanscastle.products.hit2ass.transformer.ClouBausteinDependencyResolverVisitor;
 import org.poormanscastle.products.hit2ass.transformer.EraseBlanksVisitor;
 
 /**
@@ -88,6 +91,19 @@ public class ClouChunkTest {
         baustein.accept(transformer);
         Workspace workspace = transformer.getWorkspace();
         assertTrue(workspace.getContent().contains("hit2assext:convert_TMJJJJ_DateToIso8601Format(hit2assext:getScalarVariableValue(var:read('renderSessionUuid'), 'listelem1')"));
+    }
+    
+    @Test
+    public void fDateIDateMoreTestsTest() throws Exception {
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("FDateIDateMoreTests"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new ClouBausteinDependencyResolverVisitor());
+        baustein.accept(new EraseBlanksVisitor());
+        assertNotNull(baustein);
+        PrettyPrintVisitor prettyPrinter = new PrettyPrintVisitor();
+        baustein.accept(prettyPrinter);
+        IRTransformer transformer = new IRTransformer();
+        baustein.accept(transformer);
     }
 
     @Test

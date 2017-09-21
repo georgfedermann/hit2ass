@@ -79,7 +79,12 @@ public class ClouFunctionCall extends AbstractExpression<Object> {
             return "http://www.w3.org/2005/xpath-functions";
         } else if ("idate".equals(functionName)) {
             // assuming dateformat T.M.JJJJ, if more date formats arise, think of a more generic approach.
-            return " hit2assext:convert_TMJJJJ_DateToIso8601Format(hit2assext:getScalarVariableValue(var:read('renderSessionUuid'), 'listelem1')) ";
+            String varName = "listelem1";
+            // Assuming that a variable is referred to via an ID expression, try to extract the variable name from args:
+            if(args.getHead() instanceof IdExpression){
+                varName = ((IdExpression) args.getHead()).getId();
+            }
+            return " hit2assext:convert_TMJJJJ_DateToIso8601Format(hit2assext:getScalarVariableValue(var:read('renderSessionUuid'), '" + varName + "')) ";
         } else {
             logger.warn(StringUtils.join(
                     "Returning dummy value for not yet implemented FunctionCall feature for this function:\n",

@@ -69,6 +69,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     private final static Logger logger = Logger.getLogger(IRTransformer.class);
 
     private FontWeight fontWeight = FontWeight.INHERIT;
+    private TextAlignment textAlignment = TextAlignment.JUSTIFIED;
 
     private boolean insideWhileLoop = false;
 
@@ -76,7 +77,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
      * the IRTransformer relies on the behavior of the AST Parser that during parsing a deployed module
      * library workspace is created for commonly used modules and that this module library is available
      * at a defined location, e.g. in the file system. The IRTransformer will try to resolve dependencies
-     * there and will throw an exception if a module name cannot be resolved in the module library.ø
+     * there and will throw an exception if a module name cannot be resolved in the module library.
      */
     private DeployedModuleLibrary deployedModuleLibrary;
 
@@ -243,9 +244,23 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         } else if (macroCallStatement.getMacroId().equals("TABU")) {
             containerStack.peek().addContent(new Text("TABU", "       ", fontWeight));
         } else if (macroCallStatement.getMacroId().equals("ZLTZ12")) {
-            containerStack.peek().addContent(new Paragraph("TextAlignment Center", TextAlignment.CENTER));
+            logger.info("ZLTZ12 was called. Create new centered container for following elements until ZLTB12 will be called.");
+            // this macro call activates vertical alignment CENTER. This alignment is kept until ZLTB12 gets
+            // called and the alignment is reset to BLOCK.
+            textAlignment = TextAlignment.CENTER;
+            Paragraph centeredParagraph = new Paragraph("TextAlignment Center", textAlignment);
+            // containerStack.peek().addContent(centeredParagraph);
+            containerStack.push(centeredParagraph);
         } else if (macroCallStatement.getMacroId().equals("ZLTB12")) {
-            containerStack.peek().addContent(new Paragraph("TextAlignment Justified", TextAlignment.JUSTIFIED));
+            // It is expected that ZLTZ12 was called before ZLTB12 is called.
+            logger.info("ZLTB12 was called. Creating new justified container.");
+            if (textAlignment != TextAlignment.CENTER) {
+                logger.info(StringUtils.join("ZLTB12 was called while IRTransformer is in state ", textAlignment.getValue()));
+            } else {
+                textAlignment = TextAlignment.JUSTIFIED;
+                Paragraph justifiedParagraph = new Paragraph("TextAlignment Justified", textAlignment);
+                containerStack.push(justifiedParagraph);
+            }
         }
     }
 

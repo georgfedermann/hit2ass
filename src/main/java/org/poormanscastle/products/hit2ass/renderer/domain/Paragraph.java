@@ -35,5 +35,9 @@ public final class Paragraph extends AbstractContainer {
     public void setupContext(VelocityContext context) {
         context.put("textAlignment", textAlignment.getValue());
     }
-    
+
+    public TextAlignment getTextAlignment() {
+        return textAlignment;
+    }
+
 }

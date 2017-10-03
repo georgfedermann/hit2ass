@@ -92,7 +92,7 @@ public class ClouChunkTest {
         Workspace workspace = transformer.getWorkspace();
         assertTrue(workspace.getContent().contains("hit2assext:convert_TMJJJJ_DateToIso8601Format(hit2assext:getScalarVariableValue(var:read('renderSessionUuid'), 'listelem1')"));
     }
-    
+
     @Test
     public void fDateIDateMoreTestsTest() throws Exception {
         HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("FDateIDateMoreTests"), "ISO8859_1");
@@ -298,6 +298,21 @@ public class ClouChunkTest {
         assertTrue(elementList.getHead() instanceof NewLine);
         elementList = elementList.getTail();
         assertEquals("More text", ((FixedText) elementList.getHead()).getText());
+    }
+
+    @Test
+    public void testMacroStatementFett() throws Exception {
+        // #
+        // Hier ist nur ein #$ FEEIN fettes #$FEAUS Wort.
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("MacroStatementFett"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
+        assertNotNull(elementList);
+        IRTransformer transformer = new IRTransformer();
+        baustein.accept(transformer);
+        Workspace workspace = transformer.getWorkspace();
+        assertNotNull(workspace);
     }
 
     @Test
@@ -524,7 +539,7 @@ public class ClouChunkTest {
         ClouBaustein baustein = parser.CB();
         baustein.accept(new EraseBlanksVisitor());
         ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
-        assertEquals(" ",((FixedText)((PairClouBausteinElementList) baustein.getClouBausteinElement()).getTail().getTail().getHead()).getText());
+        assertEquals(" ", ((FixedText) ((PairClouBausteinElementList) baustein.getClouBausteinElement()).getTail().getTail().getHead()).getText());
     }
 
     @Test

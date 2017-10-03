@@ -37,6 +37,18 @@ public class IRTransformerTest {
         assertFalse(StringUtils.isBlank(acr));
     }
 
+    @Test
+    public void testListElementBelegung() throws Exception {
+        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("ListElementBelegung"), "ISO8859-1");
+        baustein = parser.CB();
+        baustein.accept(blanksVisitor);
+        baustein.accept(irTransformer);
+        Workspace workspace = irTransformer.getWorkspace();
+        assertNotNull(workspace);
+        String acr = workspace.getContent();
+        assertFalse(StringUtils.isBlank(acr));
+    }
+
     // @Test
     public void testHitCommandReturn() throws Exception {
         parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("HitCommandReturn"), "UTF-8");

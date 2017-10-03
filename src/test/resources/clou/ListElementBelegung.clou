@@ -1,0 +1,15 @@
+#
+
+#d zähler 1
+#d element ""
+#d listind 1
+#d element ""
+#L liste D {1, 2, 3, 4, 5, 6}
+#d anzahlDatenfelder 2
+
+#W anzahlDatenfelder
+   #= listind listind + 1
+   #= element "#= listelem" & zähler & " " & liste & "[listind]"
+   #$ element
+   #= zähler zähler + 1
+#

@@ -28,6 +28,10 @@ public interface DeployedModuleLibrary {
 
     final static Logger logger = Logger.getLogger(DeployedModuleLibrary.class);
 
+    /**
+     * the DeployedModuleLibraryWrapper type appears to exist so to provide a overwritable DeployedModuleLibrary
+     * within the interface.
+     */
     static DeployedModuleLibraryWrapper libraryWrapper = new DeployedModuleLibraryWrapper();
 
     static DeployedModuleLibrary createNewHitAssDeploymentPackageLibrary() {
@@ -35,6 +39,18 @@ public interface DeployedModuleLibrary {
             logger.warn("Overwriting existing deployed module library. I do hope you know what you're doing.");
         }
         return libraryWrapper.library = new DeployedModuleLibraryImpl();
+    }
+
+    /**
+     * delivers the byte[] data of the workspace XML which represents the DeployedModuleLibrary that's been
+     * created by the Hit2Ass transformer.
+     *
+     * @return
+     */
+    static byte[] peekHitAssDeployedModuleLibrary() {
+        synchronized (DeployedModuleLibrary.class) {
+            return libraryWrapper.library.renderToDocFamilyWorkspace();
+        }
     }
 
     static void storeHitAssDeployedModuleLibrary() {

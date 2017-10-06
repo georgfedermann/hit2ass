@@ -12,6 +12,7 @@ import org.poormanscastle.products.hit2ass.ast.domain.AssignmentStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.AstItemVisitorAdapter;
 import org.poormanscastle.products.hit2ass.ast.domain.BinaryOperator;
 import org.poormanscastle.products.hit2ass.ast.domain.BinaryOperatorExpression;
+import org.poormanscastle.products.hit2ass.ast.domain.CaseStatementImpl;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouBausteinImpl;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouFunctionCall;
 import org.poormanscastle.products.hit2ass.ast.domain.CodePosition;
@@ -148,6 +149,11 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         // the visit logic gets handled in the proceedWith method, so it returns "false" so that
         // the visit method won't get called.
         return false;
+    }
+
+    @Override
+    public boolean proceedWithCaseStatementImpl(CaseStatementImpl caseStatement) {
+        return super.proceedWithCaseStatementImpl(caseStatement);
     }
 
     @Override

@@ -12,7 +12,9 @@ import org.poormanscastle.products.hit2ass.ast.domain.AssignmentStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.AstItemVisitorAdapter;
 import org.poormanscastle.products.hit2ass.ast.domain.BinaryOperator;
 import org.poormanscastle.products.hit2ass.ast.domain.BinaryOperatorExpression;
+import org.poormanscastle.products.hit2ass.ast.domain.CaseStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.CaseStatementImpl;
+import org.poormanscastle.products.hit2ass.ast.domain.CaseStatementList;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouBausteinImpl;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouFunctionCall;
 import org.poormanscastle.products.hit2ass.ast.domain.CodePosition;
@@ -34,8 +36,10 @@ import org.poormanscastle.products.hit2ass.ast.domain.LocalDeclarationStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.LocalListDeclarationStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.MacroCallStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.NumExpression;
+import org.poormanscastle.products.hit2ass.ast.domain.PairCaseStatementList;
 import org.poormanscastle.products.hit2ass.ast.domain.PrintStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.SectionStatement;
+import org.poormanscastle.products.hit2ass.ast.domain.SwitchStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.TextExpression;
 import org.poormanscastle.products.hit2ass.ast.domain.WhileStatement;
 import org.poormanscastle.products.hit2ass.renderer.domain.CarriageReturn;
@@ -152,7 +156,50 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     }
 
     @Override
+    public boolean proceedWithSwitchStatement(SwitchStatement switchStatement) {
+        // this will transform the switch statement into a hierarchy of nested if/then/else statements where each
+        // CASE is nested into its predecessors ELSE block.
+        // First, get a hold of the switch expressions which will be compared to each CASE string match.
+        IdExpression switchExpression = (IdExpression) switchStatement.getExpression();
+        // iterate over the SWITCH statement's CASE branches
+        CaseStatementList caseStatementList = (CaseStatementList) switchStatement.getCaseStatement();
+        containerStack.peek().addContent(convertAndAppendCaseStatementToIfThenElseParagraph(caseStatementList, switchExpression));
+        return false;
+    }
+
+    IfThenElseParagraph convertAndAppendCaseStatementToIfThenElseParagraph(CaseStatementList patient, Expression switchExpression) {
+        // this method shall create a hierarchy of nested if/then/else structures to represent the sequence
+        // of CASE branches within the SWITCH statement.
+        // for each CASE branch, the if text is created from the original SWITCH expression, combined with the 
+        // respective string MATCH.
+        CaseStatement caseStatement = patient.getHead();
+        Expression expression = "".equals(patient.getHead().getMatch()) ?
+                new BinaryOperatorExpression(new NumExpression(CodePosition.createZeroPosition(), 0), BinaryOperator.EQ,
+                        new NumExpression(CodePosition.createZeroPosition(), 0))
+                :
+                new BinaryOperatorExpression(CodePosition.createZeroPosition(), switchExpression, BinaryOperator.EQ,
+                        new TextExpression(CodePosition.createZeroPosition(), patient.getHead().getMatch()));
+        IfThenElseParagraph ifParagraph = new IfThenElseParagraph("IF_CASE", expression);
+        // now create the THEN branch and fill it with the content contained in the respective CASE branch
+        IRTransformer spinOffTransformer = spinOff();
+        spinOffTransformer.containerStack.push(new IfThenParagraph("THEN"));
+        caseStatement.accept(spinOffTransformer);
+        ifParagraph.addContent(spinOffTransformer.containerStack.pop());
+
+        if (patient instanceof PairCaseStatementList) {
+            IfElseParagraph ifElseParagraph = new IfElseParagraph("ELSE");
+            ifElseParagraph.addContent(convertAndAppendCaseStatementToIfThenElseParagraph(patient.getTail(), switchExpression));
+            ifParagraph.addContent(ifElseParagraph);
+        }
+
+        return ifParagraph;
+    }
+
+
+    @Override
     public boolean proceedWithCaseStatementImpl(CaseStatementImpl caseStatement) {
+        String match = caseStatement.getMatch();
+
         return super.proceedWithCaseStatementImpl(caseStatement);
     }
 

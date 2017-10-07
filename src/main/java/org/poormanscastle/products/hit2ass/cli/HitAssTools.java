@@ -68,8 +68,9 @@ public final class HitAssTools {
                 System.getProperty("hit2ass.clou.encoding")));
         // check if deployed module library exists. if not, create a new one
         DeployedModuleLibrary library = DeployedModuleLibrary.loadHitAssDeployedModuleLibrary();
-        
+
         ClouBaustein baustein = new HitAssAstParser(System.in, System.getProperty("hit2ass.clou.encoding")).CB();
+        baustein.setClouBausteinName("Test Baustein");
         baustein.accept(new ClouBausteinDependencyResolverVisitor());
         baustein.accept(new EraseBlanksVisitor());
         IRTransformer irTransformer = new IRTransformer();

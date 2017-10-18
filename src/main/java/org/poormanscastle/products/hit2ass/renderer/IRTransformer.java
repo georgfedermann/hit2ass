@@ -290,13 +290,14 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         // This also impacts how you can use functions textattribut, absatzattribut
         // and sonderzeichenzeile, since they are only indirectly implemented by
         // the algorithms implemented or quoted in this method.
-        if (macroCallStatement.getMacroId().equals("FEEIN")) {
+        // TODO invert the IF tests. E.g, "FEEIN".equals(macroCallStatement.getMacroId()) instead of the *@ given below
+        if ("FEEIN".equals(macroCallStatement.getMacroId())) {
             fontWeight = FontWeight.BOLD;
-        } else if (macroCallStatement.getMacroId().equals("FEAUS")) {
+        } else if ("FEAUS".equals(macroCallStatement.getMacroId())) {
             fontWeight = FontWeight.INHERIT;
-        } else if (macroCallStatement.getMacroId().equals("TABU")) {
+        } else if ("TABU".equals(macroCallStatement.getMacroId())) {
             containerStack.peek().addContent(new Text("TABU", "       ", fontWeight));
-        } else if (macroCallStatement.getMacroId().equals("ZLTZ12")) {
+        } else if ("ZLTZ12".equals(macroCallStatement.getMacroId())) {
             logger.info("ZLTZ12 was called. Create new centered container for following elements until ZLTB12 will be called.");
             // this macro call activates vertical alignment CENTER. This alignment is kept until ZLTB12 gets
             // called and the alignment is reset to BLOCK.
@@ -304,7 +305,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
             Paragraph centeredParagraph = new Paragraph("TextAlignment Center", textAlignment);
             // containerStack.peek().addContent(centeredParagraph);
             containerStack.push(centeredParagraph);
-        } else if (macroCallStatement.getMacroId().equals("ZLTB12")) {
+        } else if ("ZLTB12".equals(macroCallStatement.getMacroId())) {
             // It is expected that ZLTZ12 was called before ZLTB12 is called.
             logger.info("ZLTB12 was called. Creating new justified container.");
             if (textAlignment != TextAlignment.CENTER) {
@@ -314,6 +315,12 @@ public final class IRTransformer extends AstItemVisitorAdapter {
                 Paragraph justifiedParagraph = new Paragraph("TextAlignment Justified", textAlignment);
                 containerStack.push(justifiedParagraph);
             }
+        } else if ("element".equals(macroCallStatement.getMacroId())) {
+            containerStack.peek().addContent(new DynamicContentReference("MACRO call listelembel", 
+                    " hit2assext:convertListElementsToVars(var:read('renderSessionUuid')) ",
+                    fontWeight));
+        } else {
+            logger.warn(StringUtils.join("Found unknown macro id ", macroCallStatement.getMacroId()));
         }
     }
 

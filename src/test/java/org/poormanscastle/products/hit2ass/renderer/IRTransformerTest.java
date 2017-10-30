@@ -38,6 +38,17 @@ public class IRTransformerTest {
     }
 
     @Test
+    public void testIfThenMacro() throws Exception {
+        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("IfThenZltz12"), "ISO8859-1");
+        baustein = parser.CB();
+        baustein.accept(blanksVisitor);
+        baustein.accept(irTransformer);
+        Workspace workspace = irTransformer.getWorkspace();
+        String acr = workspace.getContent();
+        assertNotNull(acr);
+    }
+
+    @Test
     public void testListElementBelegung() throws Exception {
         parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("ListElementBelegung"), "ISO8859-1");
         baustein = parser.CB();
@@ -315,7 +326,7 @@ public class IRTransformerTest {
         // check that InsertBlanksVisitor inserts blanks between PrintStatements
         assertTrue(acr.contains("<![CDATA[ ]]"));
     }
-    
+
     @Test
     public void testSwitchStatement() throws Exception {
         parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("SwitchStatement"), "ISO8859-1");

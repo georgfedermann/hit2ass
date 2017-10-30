@@ -1,0 +1,17 @@
+#
+#* testing an IF THEN structure with embedded MACRO call to ZLTZ12 and ZLTB12 #
+
+#D name "Greatjon"
+#D age 23
+
+#? name = "Greatjon":
+  /J
+    #? age = 23:
+      /J
+        #$ ZLTZ12
+        You are Greatjon, the juvenile.
+        #$ ZLTB1
+    #
+#
+
+And so it ends.

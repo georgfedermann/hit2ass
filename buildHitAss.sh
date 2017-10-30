@@ -6,6 +6,8 @@ JAVACC_PATH=./src/main/java/org/poormanscastle/products/hit2ass/parser/javacc/
 TARGET_FOLDER=target/
 
 HIT_CLOU_LIBRARY_PATH=./src/test/resources/clou
+HIT_CLOU_DEPLOYED_MODULE_LIBRARY=/Users/georg/vms/UbuntuWork/shared/hitass/deployedModuleLibrary/TestLibrary.acr
+HIT_CLOU_ENCODING=UTF-8
 
 print_help() {
     echo "build-tool v0.1 brought to you by poor man's castle."
@@ -23,7 +25,7 @@ case $1 in
     pushd $JAVACC_PATH
     ./createHitAssAstParser.sh
     popd
-    mvn -Pprod -DargLine="-Dhit2ass.clou.path=$HIT_CLOU_LIBRARY_PATH" clean package assembly:single && cp ${TARGET_FOLDER}${TOOLS_JAR_NAME} ${TOOLS_TARGET_PATH}
+    mvn -Pprod -Dhit2ass.clou.pathToDeployedModuleLibrary=$HIT_CLOU_DEPLOYED_MODULE_LIBRARY -Dhit2ass.clou.encoding=$HIT_CLOU_ENCODING -DargLine="-Dhit2ass.clou.path=$HIT_CLOU_LIBRARY_PATH" clean package assembly:single install && cp ${TARGET_FOLDER}${TOOLS_JAR_NAME} ${TOOLS_TARGET_PATH}
     ;;
   d)
     echo "Building hit/ass tools package and deploying to NEXUS snapshot repository"

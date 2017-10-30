@@ -1,6 +1,8 @@
 package org.poormanscastle.products.hit2ass.parser;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -31,6 +33,10 @@ import org.poormanscastle.products.hit2ass.ast.domain.SectionStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.SwitchStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.TextExpression;
 import org.poormanscastle.products.hit2ass.parser.javacc.HitAssAstParser;
+import org.poormanscastle.products.hit2ass.prettyprint.PrettyPrintVisitor;
+import org.poormanscastle.products.hit2ass.renderer.IRTransformer;
+import org.poormanscastle.products.hit2ass.renderer.domain.Workspace;
+import org.poormanscastle.products.hit2ass.transformer.ClouBausteinDependencyResolverVisitor;
 import org.poormanscastle.products.hit2ass.transformer.EraseBlanksVisitor;
 
 /**
@@ -43,12 +49,66 @@ public class ClouChunkTest {
         HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("IfWithLogicalAnd"), "ISO8859_1");
         ClouBaustein baustein = parser.CB();
         baustein.accept(new EraseBlanksVisitor());
-        ClouBausteinElementList elementList = ((ClouBausteinElementList) baustein.getClouBausteinElement());assertTrue(true);assertEquals(BinaryOperator.AND, ((BinaryOperatorExpression) ((ConditionalStatement) elementList.getHead()).getCondition()).getOperator());
+        ClouBausteinElementList elementList = ((ClouBausteinElementList) baustein.getClouBausteinElement());
+        assertTrue(true);
+        assertEquals(BinaryOperator.AND, ((BinaryOperatorExpression) ((ConditionalStatement) elementList.getHead()).getCondition()).getOperator());
+    }
+
+    @Test
+    public void fDateTest() throws Exception {
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("FDateTest"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((ClouBausteinElementList) baustein.getClouBausteinElement());
+        assertFalse(elementList == null);
+        IRTransformer transformer = new IRTransformer();
+        baustein.accept(transformer);
+        Workspace workspace = transformer.getWorkspace();
+        assertTrue(workspace.getContent().contains("fn:substring(string(100 + fn:month-from-date(fn:current-date())), 2)"));
+    }
+
+    @Test
+    public void fDatePlus100DaysTest() throws Exception {
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("FDatePlus100Days"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((ClouBausteinElementList) baustein.getClouBausteinElement());
+        assertFalse(elementList == null);
+        IRTransformer transformer = new IRTransformer();
+        baustein.accept(transformer);
+        Workspace workspace = transformer.getWorkspace();
+        assertTrue(workspace.getContent().contains("fn:substring(fn:year-from-date(fn:current-date() + xs:dayTimeDuration('P100D')), 3, 2)"));
+    }
+
+    @Test
+    public void fDateIDateTest() throws Exception {
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("FDateIDate"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((ClouBausteinElementList) baustein.getClouBausteinElement());
+        assertFalse(elementList == null);
+        IRTransformer transformer = new IRTransformer();
+        baustein.accept(transformer);
+        Workspace workspace = transformer.getWorkspace();
+        assertTrue(workspace.getContent().contains("hit2assext:convert_TMJJJJ_DateToIso8601Format(hit2assext:getScalarVariableValue(var:read('renderSessionUuid'), 'listelem1')"));
+    }
+
+    @Test
+    public void fDateIDateMoreTestsTest() throws Exception {
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("FDateIDateMoreTests"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new ClouBausteinDependencyResolverVisitor());
+        baustein.accept(new EraseBlanksVisitor());
+        assertNotNull(baustein);
+        PrettyPrintVisitor prettyPrinter = new PrettyPrintVisitor();
+        baustein.accept(prettyPrinter);
+        IRTransformer transformer = new IRTransformer();
+        baustein.accept(transformer);
     }
 
     @Test
     public void emptyCaseTest() throws Exception {
-        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("EmptyCase"), "ISO8859_1");
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("WorkspaceTest"), "ISO8859_1");
         ClouBaustein baustein = parser.CB();
         baustein.accept(new EraseBlanksVisitor());
         ClouBausteinElementList elementList = ((ClouBausteinElementList) baustein.getClouBausteinElement());
@@ -238,6 +298,21 @@ public class ClouChunkTest {
         assertTrue(elementList.getHead() instanceof NewLine);
         elementList = elementList.getTail();
         assertEquals("More text", ((FixedText) elementList.getHead()).getText());
+    }
+
+    @Test
+    public void testMacroStatementFett() throws Exception {
+        // #
+        // Hier ist nur ein #$ FEEIN fettes #$FEAUS Wort.
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("MacroStatementFett"), "ISO8859_1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
+        assertNotNull(elementList);
+        IRTransformer transformer = new IRTransformer();
+        baustein.accept(transformer);
+        Workspace workspace = transformer.getWorkspace();
+        assertNotNull(workspace);
     }
 
     @Test
@@ -453,6 +528,18 @@ public class ClouChunkTest {
         baustein.accept(new EraseBlanksVisitor());
         ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
         assertEquals("äöüÄÖÜß()\"\"_-.,ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", ((FixedText) elementList.getHead()).getText());
+    }
+
+    @Test
+    public void testPrintStatementSequence() throws Exception {
+        // #
+        // You are #> firstname #> lastname, right?
+        // and so it ends.
+        HitAssAstParser parser = new HitAssAstParser(TestUtils.getClouChunkAsInputStream("PrintStatementSequence"), "ISO8859-1");
+        ClouBaustein baustein = parser.CB();
+        baustein.accept(new EraseBlanksVisitor());
+        ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
+        assertEquals(" ", ((FixedText) ((PairClouBausteinElementList) baustein.getClouBausteinElement()).getTail().getTail().getHead()).getText());
     }
 
     @Test

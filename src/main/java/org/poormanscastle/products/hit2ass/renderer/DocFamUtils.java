@@ -21,14 +21,13 @@ public class DocFamUtils {
      *
      * @return creates a cockpit element id which tries to be similar to IDs created by DocFamily DocRepo.
      */
-    public static String getCockpitElementId() {
+    public static String createCockpitElementId() {
         return StringUtils.join(dateFormatObjectId.format(new Date()), ".",
-                String.valueOf(100 + Math.random() * 100), "-",
-                String.valueOf(1000 + Math.random() * 9000), ".",
-                String.valueOf(1000000 + Math.random() * 9000000), ".",
-                String.valueOf(1000000 + Math.random() * 9000000), ".",
-                String.valueOf(100 + Math.random() * 900)
-        );
+                String.valueOf(100 + ((int) (Math.random() * 100))), "-",
+                String.valueOf(1000 + ((int) (Math.random() * 9000))), ".",
+                String.valueOf(1000000 + ((int) (Math.random() * 9000000))), ".",
+                String.valueOf(1000000 + ((int) (Math.random() * 9000000))), ".",
+                String.valueOf(100 + ((int) (Math.random() * 900))));
     }
 
     public static String getCockpitExportDate() {

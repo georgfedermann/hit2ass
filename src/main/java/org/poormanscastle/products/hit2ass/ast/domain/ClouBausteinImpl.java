@@ -7,8 +7,10 @@ public class ClouBausteinImpl extends AbstractAstItem implements ClouBaustein {
 
     private final ClouBausteinElement clouBausteinElement;
 
+    private String clouBausteinName;
+
     /**
-     * @param codePosition colum/row position
+     * @param codePosition        colum/row position
      * @param clouBausteinElement may be {@code null} if the ClouBaustein is empty.
      */
     public ClouBausteinImpl(CodePosition codePosition, ClouBausteinElement clouBausteinElement) {
@@ -18,6 +20,16 @@ public class ClouBausteinImpl extends AbstractAstItem implements ClouBaustein {
 
     public ClouBausteinImpl(ClouBausteinElement clouBausteinElement) {
         this(clouBausteinElement.getCodePosition(), clouBausteinElement);
+    }
+
+    @Override
+    public void setClouBausteinName(String name) {
+        this.clouBausteinName = name;
+    }
+
+    @Override
+    public String getClouBausteinName() {
+        return clouBausteinName;
     }
 
     @Override

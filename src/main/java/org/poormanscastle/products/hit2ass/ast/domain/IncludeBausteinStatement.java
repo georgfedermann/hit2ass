@@ -1,8 +1,8 @@
 package org.poormanscastle.products.hit2ass.ast.domain;
 
-import org.apache.commons.lang3.StringUtils;
-
 import static com.google.common.base.Preconditions.checkArgument;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Represents the statement to import another sub CLOU text component
@@ -21,16 +21,47 @@ public class IncludeBausteinStatement extends AbstractAstItem implements Stateme
     private final String pathToBaustein;
 
     /**
+     * to be set by the ClouBausteinDependencyResolverVisitor when the information
+     * becomes available. This information is parked here for later retrieval
+     * by the IRTransformer.
+     */
+    private String moduleDockName;
+
+    /**
+     * to be set by the ClouBausteinDependencyResolverVisitor when the information
+     * becomes available. This information is parked here for later retrieval
+     * by the IRTransformer.
+     */
+    private String calledModuleName;
+
+    /**
+     * to be set by the ClouBausteinDependencyResolverVisitor when the information
+     * becomes available. This information is parked here for later retrieval
+     * by the IRTransformer.
+     */
+    private String calledModuleElementId;
+
+    /**
      * The content will be added com the time when the containing Baustein was parsed
      * into an AST and is being processed in the after-parsing processing before rendering
      * to a DocDesign Workspace takes place.
      */
     private ClouBausteinElement content;
 
+    private boolean localModuleReferences;
+
     public IncludeBausteinStatement(CodePosition codePosition, String pathToBaustein) {
         super(codePosition);
         checkArgument(!StringUtils.isBlank(pathToBaustein));
         this.pathToBaustein = pathToBaustein;
+    }
+
+    public void setLocalModuleReferences(boolean localModuleReferences) {
+        this.localModuleReferences = localModuleReferences;
+    }
+
+    public boolean isLocalModuleReferences() {
+        return localModuleReferences;
     }
 
     public String getPathToBaustein() {
@@ -62,9 +93,36 @@ public class IncludeBausteinStatement extends AbstractAstItem implements Stateme
     @Override
     public String toString() {
         return "IncludeBausteinStatement{" +
-                "codePosition=" + getCodePosition().toString() +
-                ", pathToBaustein='" + pathToBaustein + '\'' +
-                ", content='" + content + "'" +
+                "pathToBaustein='" + pathToBaustein + '\'' +
+                ", moduleDockName='" + moduleDockName + '\'' +
+                ", calledModuleName='" + calledModuleName + '\'' +
+                ", calledModuleElementId='" + calledModuleElementId + '\'' +
+                ", content=" + content +
+                ", localModuleReferences=" + localModuleReferences +
                 '}';
+    }
+
+    public String getModuleDockName() {
+        return moduleDockName;
+    }
+
+    public void setModuleDockName(String moduleDockName) {
+        this.moduleDockName = moduleDockName;
+    }
+
+    public String getCalledModuleName() {
+        return calledModuleName;
+    }
+
+    public void setCalledModuleName(String calledModuleName) {
+        this.calledModuleName = calledModuleName;
+    }
+
+    public String getCalledModuleElementId() {
+        return calledModuleElementId;
+    }
+
+    public void setCalledModuleElementId(String calledModuleElementId) {
+        this.calledModuleElementId = calledModuleElementId;
     }
 }

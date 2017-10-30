@@ -2,11 +2,11 @@
 #*  This sample HIT/CLOU text component tests the switch structure. #
 
 Here is some fixed text for you.
+#^2"RETURN"
 #D conditionVar "bruno"
 #C conditionVar
     /"peter":
-        Your name appears to be "Peter".
-        #B "/home/assentis/Greeting.clou"
+        Your name appears to be "Peter". #^1"RETURN"
         Adieu, Peter!
     /"bruno":
     Your name appears to be "Bruno".
@@ -19,4 +19,5 @@ Here is some fixed text for you.
     /:
     For all the rest of you: "Hello, World!"
 #
+#^2"RETURN"
 And so it ends.

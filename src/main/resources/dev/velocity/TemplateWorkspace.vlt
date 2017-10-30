@@ -1,9 +1,9 @@
-#set($pageId=${docFamUtils.CockpitElementId})
-#set($variableCollectionId=${docFamUtils.CockpitElementId})
+#set($pageId=${docFamUtils.createCockpitElementId()})
+#set($variableCollectionId=${docFamUtils.createCockpitElementId()})
 <?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
 <Cockpit version="5.10.03.072744" export="07.05.2016 16:27:05">
   <!--Assentis DocDesign workspace - do not modify this file com any time!-->
-  <Object id="${docFamUtils.CockpitElementId}" name="${workspaceName}" enabled="True" type="com.assentis.cockpit.bo.BoWorkspace">
+  <Object id="${docFamUtils.createCockpitElementId()}" name="${workspaceName}" enabled="True" type="com.assentis.cockpit.bo.BoWorkspace">
     <Properties>
       <Attributes>
         <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -53,19 +53,19 @@
       </Attributes>
       <Relations/>
     </Properties>
-    <Object id="${docFamUtils.CockpitElementId}" name="${projectsName}" enabled="True" type="com.assentis.cockpit.bo.BoProjectGroup">
+    <Object id="${docFamUtils.createCockpitElementId()}" name="${projectsName}" enabled="True" type="com.assentis.cockpit.bo.BoProjectGroup">
       <Properties>
         <Attributes/>
         <Relations/>
       </Properties>
-      <Object id="${docFamUtils.CockpitElementId}" name="${projectName}" enabled="True" type="com.assentis.cockpit.bo.BoProject">
+      <Object id="${docFamUtils.createCockpitElementId()}" name="${projectName}" enabled="True" type="com.assentis.cockpit.bo.BoProject">
         <Properties>
           <Attributes>
             <Attribute name="Notes"><![CDATA[]]></Attribute>
           </Attributes>
           <Relations/>
         </Properties>
-        <Object id="${docFamUtils.CockpitElementId}" name="${documentName}" enabled="True" type="com.assentis.cockpit.bo.BoDocument">
+        <Object id="${docFamUtils.createCockpitElementId()}" name="${documentName}" enabled="True" type="com.assentis.cockpit.bo.BoDocument">
           <Properties>
             <Attributes>
               <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -267,7 +267,7 @@
                     </Attributes>
                     <Relations/>
                   </Properties>
-                  <Object id="${docFamUtils.CockpitElementId}" name="US_en" enabled="True" type="com.assentis.cockpit.bo.BoLocale">
+                  <Object id="${docFamUtils.createCockpitElementId()}" name="US_en" enabled="True" type="com.assentis.cockpit.bo.BoLocale">
                     <Properties>
                       <Attributes>
                         <Attribute name="LocaleID"><![CDATA[US_en]]></Attribute>
@@ -441,7 +441,7 @@
               <Relation name="AFPPrinting" refTo=""/>
             </Relations>
           </Properties>
-          <Object id="${docFamUtils.CockpitElementId}" name="${repeatingPageName}" enabled="True" type="com.assentis.cockpit.bo.BoPageRepetition">
+          <Object id="${docFamUtils.createCockpitElementId()}" name="${repeatingPageName}" enabled="True" type="com.assentis.cockpit.bo.BoPageRepetition">
             <Properties>
               <Attributes>
                 <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -727,7 +727,7 @@
               <Relation name="FootnoteSeparation" refTo=""/>
             </Relations>
           </Properties>
-          <Object id="${docFamUtils.CockpitElementId}" name="hit2ass_xml_sequence" enabled="True" type="com.assentis.cockpit.bo.BoDocumentVariable">
+          <Object id="${docFamUtils.createCockpitElementId()}" name="hit2ass_xml_sequence" enabled="True" type="com.assentis.cockpit.bo.BoDocumentVariable">
               <Properties>
                   <Attributes>
                       <!-- Name is an XPath expression. Thus, a string value has to be quoted, like in 'name'. -->
@@ -765,19 +765,19 @@ ${content}
         </Object>
       </Object>
     </Object>
-    <Object id="${docFamUtils.CockpitElementId}" name="Regions" enabled="True" type="com.assentis.cockpit.bo.BoRegionGroup">
+    <Object id="${docFamUtils.createCockpitElementId()}" name="Regions" enabled="True" type="com.assentis.cockpit.bo.BoRegionGroup">
       <Properties>
         <Attributes/>
         <Relations/>
       </Properties>
     </Object>
-    <Object id="${docFamUtils.CockpitElementId}" name="Modules" enabled="True" type="com.assentis.cockpit.bo.BoModuleGroup">
+    <Object id="${docFamUtils.createCockpitElementId()}" name="Modules" enabled="True" type="com.assentis.cockpit.bo.BoModuleGroup">
       <Properties>
         <Attributes/>
         <Relations/>
       </Properties>
     </Object>
-    <Object id="${docFamUtils.CockpitElementId}" name="Editor Configuration Group" enabled="True" type="com.assentis.cockpit.bo.BoEditorConfigurationGroup">
+    <Object id="${docFamUtils.createCockpitElementId()}" name="Editor Configuration Group" enabled="True" type="com.assentis.cockpit.bo.BoEditorConfigurationGroup">
       <Properties>
         <Attributes>
           <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -785,7 +785,7 @@ ${content}
         <Relations/>
       </Properties>
     </Object>
-    <Object id="${docFamUtils.CockpitElementId}" name="Variable Groups" enabled="True" type="com.assentis.cockpit.bo.BoVariableGroup">
+    <Object id="${docFamUtils.createCockpitElementId()}" name="Variable Groups" enabled="True" type="com.assentis.cockpit.bo.BoVariableGroup">
       <Properties>
         <Attributes/>
         <Relations/>
@@ -797,14 +797,14 @@ ${content}
             </Attributes>
             <Relations/>
           </Properties>
-          <Object id="${docFamUtils.CockpitElementId}" name="HitAssDatasources" enabled="True" type="com.assentis.cockpit.bo.BoDataSourceFolder">
+          <Object id="${docFamUtils.createCockpitElementId()}" name="HitAssDatasources" enabled="True" type="com.assentis.cockpit.bo.BoDataSourceFolder">
             <Properties>
               <Attributes>
                 <Attribute name="Notes"><![CDATA[]]></Attribute>
               </Attributes>
               <Relations/>
             </Properties>
-            <Object id="${docFamUtils.CockpitElementId}" name="HitAss XML File" enabled="True" type="com.assentis.cockpit.bo.BoXMLDocumentFile">
+            <Object id="${docFamUtils.createCockpitElementId()}" name="HitAss XML File" enabled="True" type="com.assentis.cockpit.bo.BoXMLDocumentFile">
               <Properties>
                 <Attributes>
                   <Attribute name="Notes"><![CDATA[]]></Attribute>

@@ -1,18 +1,35 @@
 package org.poormanscastle.products.hit2ass.renderer.domain;
 
-import org.poormanscastle.products.hit2ass.renderer.VelocityHelper;
+import java.io.ByteArrayInputStream;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+
+import javax.xml.namespace.QName;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
+
+import org.apache.axiom.om.OMElement;
+import org.apache.axiom.om.impl.builder.StAXOMBuilder;
+import org.apache.axiom.om.impl.llom.CharacterDataImpl;
+import org.apache.axiom.om.xpath.AXIOMXPath;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
-
-import java.io.StringWriter;
+import org.jaxen.JaxenException;
+import org.poormanscastle.products.hit2ass.exceptions.BausteinMergerException;
+import org.poormanscastle.products.hit2ass.renderer.VelocityHelper;
 
 /**
  * Represents the type com.assentis.cockpit.bo.BoWorkspace.
- * <p>
  * Created by georg.federmann@poormanscastle.com on 5/9/16.
  */
 public final class Workspace {
+
+    private final static Logger logger = Logger.getLogger(Workspace.class);
 
     private String workspaceName = "HitAssWorkspace";
     private String projectsName = "HitAssProjects";
@@ -23,19 +40,15 @@ public final class Workspace {
 
     private Container contentContainer;
 
-    public Workspace(String workspaceName, String projectsName, String projectName,
-                     String documentName, String repeatingPageName, String pageContentName) {
-        this.workspaceName = workspaceName;
-        this.projectsName = projectsName;
-        this.projectName = projectName;
-        this.documentName = documentName;
-        this.repeatingPageName = repeatingPageName;
-        this.pageContentName = pageContentName;
+    public Workspace(String workspaceName) {
+        this.workspaceName = (workspaceName == null ? "" : workspaceName.replaceAll("\\.", "_"));
     }
 
-    public Workspace() {
-    }
-
+    /**
+     * delivers the complete Workspace in its XML based ACR form.
+     *
+     * @return a String holding an XML version of the complete workspace.
+     */
     public String getContent() {
         VelocityContext context = VelocityHelper.getVelocityContext();
         context.put("workspaceName", workspaceName);
@@ -49,6 +62,57 @@ public final class Workspace {
         StringWriter stringWriter = new StringWriter();
         template.merge(context, stringWriter);
         return stringWriter.toString();
+    }
+
+    /**
+     * delivers the actual contents of the workspace on a page content level.
+     * This method is helpful if you're creating modules from the page contents.
+     *
+     * @return a String holding a String representation of the page contents.
+     */
+    public String getPageContentForDeployedModules() {
+        // TODO or else implement an REGEX expression the groups the value of the encoding in the XML prolog
+        String declaredEncoding = getContent().contains("ISO-8859-1") ? "ISO-8859-1" : "UTF-8";
+        try {
+            XMLInputFactory xmlInFac = XMLInputFactory.newInstance();
+            xmlInFac.setProperty(XMLInputFactory.IS_COALESCING, Boolean.FALSE);
+            XMLStreamReader parser = xmlInFac.createXMLStreamReader(new ByteArrayInputStream(getContent().getBytes(declaredEncoding)));
+            StAXOMBuilder builder = new StAXOMBuilder(parser);
+            OMElement workspaceElement = builder.getDocumentElement();
+
+//            OMElement workspaceElement = OMXMLBuilderFactory.createOMBuilder(
+//                    new ByteArrayInputStream(getContent().getBytes(declaredEncoding))).getDocumentElement();
+            AXIOMXPath xPath = new AXIOMXPath(
+                    "/Cockpit/Object[@type='com.assentis.cockpit.bo.BoWorkspace']/Object[@type='com.assentis.cockpit.bo.BoProjectGroup']/Object[@type='com.assentis.cockpit.bo.BoProject']/Object[@type='com.assentis.cockpit.bo.BoPage']/child::node()");
+            StringBuilder result = new StringBuilder();
+            List<?> pageElements = ((List<?>) xPath.selectNodes(workspaceElement));
+            for (int counter = 0; counter < pageElements.size() - 1; counter++) {
+                Object element = pageElements.get(counter);
+                if (element instanceof CharacterDataImpl) {
+                    // ignore Whitespace stuff
+                    continue;
+                }
+                OMElement omElement = (OMElement) element;
+                if ("Properties".equals(omElement.getLocalName())) {
+                    // ignore Properties section of source BoPage element
+                    continue;
+                }
+                String nameAttribute = omElement.getAttributeValue(new QName("name"));
+                if ("renderSessionUuid".equals(nameAttribute) || "Cleanup RenderSession".equals(nameAttribute)) {
+                    // Hit2AssExtension render session is taken care of by main document.
+                    // not needed in deployed modules.
+                    continue;
+                }
+                // toString() method of OMElement returns an XML String view of the corresponding element.
+                result.append(omElement.toStringWithConsume());
+            }
+            return result.toString();
+        } catch (JaxenException | UnsupportedEncodingException | XMLStreamException e) {
+            String errMsg = StringUtils.join("Could not create module from sub Baustein because: ",
+                    e.getClass().getName(), " - ", e.getMessage());
+            logger.error(errMsg);
+            throw new BausteinMergerException(errMsg, e);
+        }
     }
 
     public String getWorkspaceName() {

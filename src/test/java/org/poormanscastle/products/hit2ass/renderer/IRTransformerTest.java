@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Test;
 import org.poormanscastle.products.hit2ass.TestUtils;
 import org.poormanscastle.products.hit2ass.ast.domain.AstItemVisitor;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouBaustein;
@@ -23,6 +24,41 @@ public class IRTransformerTest {
     private HitAssAstParser parser;
     private AstItemVisitor blanksVisitor = new EraseBlanksVisitor();
     private IRTransformer irTransformer = new IRTransformer();
+
+    @Test
+    public void testPrintStatementSequence() throws Exception {
+        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("PrintStatementSequence"), "ISO8859-1");
+        baustein = parser.CB();
+        baustein.accept(blanksVisitor);
+        baustein.accept(irTransformer);
+        Workspace workspace = irTransformer.getWorkspace();
+        assertNotNull(workspace);
+        String acr = workspace.getContent();
+        assertFalse(StringUtils.isBlank(acr));
+    }
+
+    @Test
+    public void testIfThenMacro() throws Exception {
+        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("IfThenZltz12"), "ISO8859-1");
+        baustein = parser.CB();
+        baustein.accept(blanksVisitor);
+        baustein.accept(irTransformer);
+        Workspace workspace = irTransformer.getWorkspace();
+        String acr = workspace.getContent();
+        assertNotNull(acr);
+    }
+
+    @Test
+    public void testListElementBelegung() throws Exception {
+        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("ListElementBelegung"), "ISO8859-1");
+        baustein = parser.CB();
+        baustein.accept(blanksVisitor);
+        baustein.accept(irTransformer);
+        Workspace workspace = irTransformer.getWorkspace();
+        assertNotNull(workspace);
+        String acr = workspace.getContent();
+        assertFalse(StringUtils.isBlank(acr));
+    }
 
     // @Test
     public void testHitCommandReturn() throws Exception {
@@ -272,7 +308,7 @@ public class IRTransformerTest {
         assertEquals("Workspace{workspaceName='HitAssWorkspace', projectsName='HitAssProjects', projectName='HitAssProject', documentName='HitAssDocument', repeatingPageName='HitAssRepeatingPage', pageContentName='HitAssPageContent', contentContainer=WorkspaceContainer{contentElements=[Paragraph{contentElements=[Text{name='text', text='Here is some fixed text to get started.'}, CarriageReturn{name='NL', repetitionExpression.toXPathString()='1'}, DynamicContentReference{name='Global Variable: firstName', xpath=' hit2assext:createScalarVariable(var:read('renderSessionUuid'), 'firstName',  'Johnny' ) '}, DynamicContentReference{name='Global Variable: TABU', xpath=' hit2assext:createScalarVariable(var:read('renderSessionUuid'), 'TABU',  '       ' ) '}, Text{name='text', text='Your name is'}, Text{name='TABU', text='       '}, DynamicContentReference{name='Print: firstName', xpath=' hit2assext:getScalarVariableValue(var:read('renderSessionUuid'), 'firstName')  '}, Text{name='text', text=', right?'}, CarriageReturn{name='NL', repetitionExpression.toXPathString()='1'}, Text{name='text', text='And so it ends.'}, Text{name='text', text=''}], textAlignment=JUSTIFIED}]}}", probe);
     }
 
-    //  @Test
+    @Test
     public void testSimpleIfLetter() throws Exception {
         parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("/sampleDocuments/SimpleIfLetter/", "SimpleIfLetter", "clou"), "ISO8859-1");
         baustein = parser.CB();
@@ -289,6 +325,16 @@ public class IRTransformerTest {
         assertTrue(acr.contains("den Versand von einem ]]"));
         // check that InsertBlanksVisitor inserts blanks between PrintStatements
         assertTrue(acr.contains("<![CDATA[ ]]"));
+    }
+
+    @Test
+    public void testSwitchStatement() throws Exception {
+        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("SwitchStatement"), "ISO8859-1");
+        baustein = parser.CB();
+        baustein.accept(blanksVisitor);
+        baustein.accept(irTransformer);
+        Workspace workspace = irTransformer.getWorkspace();
+        assertNotNull(workspace);
     }
 
 }

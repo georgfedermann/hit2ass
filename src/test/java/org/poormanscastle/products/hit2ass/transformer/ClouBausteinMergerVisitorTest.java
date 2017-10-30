@@ -14,7 +14,7 @@ import org.poormanscastle.products.hit2ass.parser.javacc.HitAssAstParser;
 public class ClouBausteinMergerVisitorTest {
 
     private HitAssAstParser parser;
-    private ClouBausteinMergerVisitor bausteinMerger = new ClouBausteinMergerVisitor();
+    private ClouBausteinDependencyResolverVisitor bausteinMerger = new ClouBausteinDependencyResolverVisitor();
     private ClouBaustein baustein;
 
     // @Test

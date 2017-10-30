@@ -7,7 +7,7 @@ package org.poormanscastle.products.hit2ass.ast.domain;
 public interface Expression<T> extends AstItem {
 
     /**
-     * It's intented to call this method com the 'root' of an expression sub tree
+     * It's intended to call this method from the 'root' of an expression sub tree
      * within the HIT/CLOU Baustein AST. Recursively, all sub trees within the
      * expression tree will be evaluated by calling their respective node toXPathString()
      * methods down to the leaves and bubbling the results back up to the expression

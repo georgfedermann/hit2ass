@@ -1,5 +1,5 @@
 #set($H='#')
-<Object id="${docFamUtils.CockpitElementId}" name="${dynamicContentName}" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
+<Object id="${docFamUtils.createCockpitElementId()}" name="${dynamicContentName}" enabled="True" type="com.assentis.cockpit.bo.BoDynamicContentReference">
   <Properties>
     <Attributes>
       <Attribute name="Notes"><![CDATA[]]></Attribute>

@@ -12,6 +12,9 @@ import org.poormanscastle.products.hit2ass.ast.domain.AssignmentStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.AstItemVisitorAdapter;
 import org.poormanscastle.products.hit2ass.ast.domain.BinaryOperator;
 import org.poormanscastle.products.hit2ass.ast.domain.BinaryOperatorExpression;
+import org.poormanscastle.products.hit2ass.ast.domain.CaseStatement;
+import org.poormanscastle.products.hit2ass.ast.domain.CaseStatementImpl;
+import org.poormanscastle.products.hit2ass.ast.domain.CaseStatementList;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouBausteinImpl;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouFunctionCall;
 import org.poormanscastle.products.hit2ass.ast.domain.CodePosition;
@@ -33,13 +36,16 @@ import org.poormanscastle.products.hit2ass.ast.domain.LocalDeclarationStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.LocalListDeclarationStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.MacroCallStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.NumExpression;
+import org.poormanscastle.products.hit2ass.ast.domain.PairCaseStatementList;
 import org.poormanscastle.products.hit2ass.ast.domain.PrintStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.SectionStatement;
+import org.poormanscastle.products.hit2ass.ast.domain.SwitchStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.TextExpression;
 import org.poormanscastle.products.hit2ass.ast.domain.WhileStatement;
 import org.poormanscastle.products.hit2ass.renderer.domain.CarriageReturn;
 import org.poormanscastle.products.hit2ass.renderer.domain.Container;
 import org.poormanscastle.products.hit2ass.renderer.domain.Content;
+import org.poormanscastle.products.hit2ass.renderer.domain.DeployedModuleDock;
 import org.poormanscastle.products.hit2ass.renderer.domain.DynamicContentReference;
 import org.poormanscastle.products.hit2ass.renderer.domain.FontWeight;
 import org.poormanscastle.products.hit2ass.renderer.domain.ForLoop;
@@ -68,8 +74,17 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     private final static Logger logger = Logger.getLogger(IRTransformer.class);
 
     private FontWeight fontWeight = FontWeight.INHERIT;
+    private TextAlignment textAlignment = TextAlignment.JUSTIFIED;
 
     private boolean insideWhileLoop = false;
+
+    /**
+     * the IRTransformer relies on the behavior of the AST Parser that during parsing a deployed module
+     * library workspace is created for commonly used modules and that this module library is available
+     * at a defined location, e.g. in the file system. The IRTransformer will try to resolve dependencies
+     * there and will throw an exception if a module name cannot be resolved in the module library.
+     */
+    private DeployedModuleLibrary deployedModuleLibrary;
 
     /**
      * While iterating over the HIT/CLOU AST, the renderer will keep a reference
@@ -113,7 +128,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
 
     @Override
     public void visitClouBaustein(ClouBausteinImpl clouBaustein) {
-        workspace = new Workspace();
+        workspace = new Workspace(clouBaustein.getClouBausteinName());
         containerStack.push(new Paragraph("CLOU Component Paragraph"));
     }
 
@@ -138,6 +153,54 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         // the visit logic gets handled in the proceedWith method, so it returns "false" so that
         // the visit method won't get called.
         return false;
+    }
+
+    @Override
+    public boolean proceedWithSwitchStatement(SwitchStatement switchStatement) {
+        // this will transform the switch statement into a hierarchy of nested if/then/else statements where each
+        // CASE is nested into its predecessors ELSE block.
+        // First, get a hold of the switch expressions which will be compared to each CASE string match.
+        IdExpression switchExpression = (IdExpression) switchStatement.getExpression();
+        // iterate over the SWITCH statement's CASE branches
+        CaseStatementList caseStatementList = (CaseStatementList) switchStatement.getCaseStatement();
+        containerStack.peek().addContent(convertAndAppendCaseStatementToIfThenElseParagraph(caseStatementList, switchExpression));
+        return false;
+    }
+
+    IfThenElseParagraph convertAndAppendCaseStatementToIfThenElseParagraph(CaseStatementList patient, Expression switchExpression) {
+        // this method shall create a hierarchy of nested if/then/else structures to represent the sequence
+        // of CASE branches within the SWITCH statement.
+        // for each CASE branch, the if text is created from the original SWITCH expression, combined with the 
+        // respective string MATCH.
+        CaseStatement caseStatement = patient.getHead();
+        Expression expression = "".equals(patient.getHead().getMatch()) ?
+                new BinaryOperatorExpression(new NumExpression(CodePosition.createZeroPosition(), 0), BinaryOperator.EQ,
+                        new NumExpression(CodePosition.createZeroPosition(), 0))
+                :
+                new BinaryOperatorExpression(CodePosition.createZeroPosition(), switchExpression, BinaryOperator.EQ,
+                        new TextExpression(CodePosition.createZeroPosition(), patient.getHead().getMatch()));
+        IfThenElseParagraph ifParagraph = new IfThenElseParagraph("IF_CASE", expression);
+        // now create the THEN branch and fill it with the content contained in the respective CASE branch
+        IRTransformer spinOffTransformer = spinOff();
+        spinOffTransformer.containerStack.push(new IfThenParagraph("THEN"));
+        caseStatement.accept(spinOffTransformer);
+        ifParagraph.addContent(spinOffTransformer.containerStack.pop());
+
+        if (patient instanceof PairCaseStatementList) {
+            IfElseParagraph ifElseParagraph = new IfElseParagraph("ELSE");
+            ifElseParagraph.addContent(convertAndAppendCaseStatementToIfThenElseParagraph(patient.getTail(), switchExpression));
+            ifParagraph.addContent(ifElseParagraph);
+        }
+
+        return ifParagraph;
+    }
+
+
+    @Override
+    public boolean proceedWithCaseStatementImpl(CaseStatementImpl caseStatement) {
+        String match = caseStatement.getMatch();
+
+        return super.proceedWithCaseStatementImpl(caseStatement);
     }
 
     @Override
@@ -227,16 +290,52 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         // This also impacts how you can use functions textattribut, absatzattribut
         // and sonderzeichenzeile, since they are only indirectly implemented by
         // the algorithms implemented or quoted in this method.
-        if (macroCallStatement.getMacroId().equals("FEEIN")) {
+        // TODO invert the IF tests. E.g, "FEEIN".equals(macroCallStatement.getMacroId()) instead of the *@ given below
+        if ("FEEIN".equals(macroCallStatement.getMacroId())) {
             fontWeight = FontWeight.BOLD;
-        } else if (macroCallStatement.getMacroId().equals("FEAUS")) {
+        } else if ("FEAUS".equals(macroCallStatement.getMacroId())) {
             fontWeight = FontWeight.INHERIT;
-        } else if (macroCallStatement.getMacroId().equals("TABU")) {
+        } else if ("TABU".equals(macroCallStatement.getMacroId())) {
             containerStack.peek().addContent(new Text("TABU", "       ", fontWeight));
-        } else if (macroCallStatement.getMacroId().equals("ZLTZ12")) {
-            containerStack.peek().addContent(new Paragraph("TextAlignment Center", TextAlignment.CENTER));
-        } else if (macroCallStatement.getMacroId().equals("ZLTB12")) {
-            containerStack.peek().addContent(new Paragraph("TextAlignment Justified", TextAlignment.JUSTIFIED));
+        } else if ("ZLTZ12".equals(macroCallStatement.getMacroId())) {
+            // this is the MACRO to switch to justified text alignment.
+            // Check if the current parent element on the container stack is a paragraph.
+            // if so: we can't shift the text alignment within one paragraph. Create a new paragraph,
+            // set its alignment to justify and push it onto the container stack.
+            // if the current parent is something else - like a IfThenParagraph -  again, create a new
+            // paragraph with the sensible text alignment settings, but now add it as a child to the current
+            // parent element.
+            logger.info("ZLTZ12 was called. Create new centered container for following elements until ZLTB12 will be called.");
+            // this macro call activates vertical alignment CENTER. This alignment is kept until ZLTB12 gets
+            // called and the alignment is reset to BLOCK.
+            textAlignment = TextAlignment.CENTER;
+            Paragraph centeredParagraph = new Paragraph("TextAlignment Center", textAlignment);
+            // containerStack.peek().addContent(centeredParagraph);
+            if (!(containerStack.peek() instanceof Paragraph)) {
+                containerStack.peek().addContent(centeredParagraph);
+            } else {
+                containerStack.push(centeredParagraph);
+            }
+        } else if ("ZLTB12".equals(macroCallStatement.getMacroId())) {
+            // It is expected that ZLTZ12 was called before ZLTB12 is called.
+            // see comment for MACRO ZLTZ12
+            logger.info("ZLTB12 was called. Creating new justified container.");
+            if (textAlignment != TextAlignment.CENTER) {
+                logger.info(StringUtils.join("ZLTB12 was called while IRTransformer is in state ", textAlignment.getValue()));
+            }
+            textAlignment = TextAlignment.JUSTIFIED;
+            Paragraph justifiedParagraph = new Paragraph("TextAlignment Justified", textAlignment);
+            if (!(containerStack.peek() instanceof Paragraph)) {
+                containerStack.peek().addContent(justifiedParagraph);
+            } else {
+                containerStack.push(justifiedParagraph);
+            }
+        } else if ("element".equals(macroCallStatement.getMacroId())) {
+            containerStack.peek().addContent(new DynamicContentReference("MACRO call listelembel",
+                    " hit2assext:convertListElementsToVars(var:read('renderSessionUuid')) ",
+                    fontWeight));
+        } else {
+            logger.warn(StringUtils.join("Found unknown macro id ", macroCallStatement.getMacroId()));
         }
     }
 
@@ -435,10 +534,30 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     }
 
     @Override
-    public void visitIncludeBausteinStatement(IncludeBausteinStatement includeBausteinStatement) {
+    public boolean proceedWithIncludeBausteinStatement(IncludeBausteinStatement includeBausteinStatement) {
+        // the renderer will create the DeployedModule reference from data contained within
+        // the IncludeBausteinStatement and does not want to continue with the content of
+        // the IncludeBausteinStatement thingie.
         if (logger.isInfoEnabled()) {
             logger.info(StringUtils.join("Found IncludeBausteinStatement ", includeBausteinStatement.getPathToBaustein()));
         }
+
+        // analogous to ClouBausteinDependencyResolverVisitor:
+        // ignore Baustein a.ende here
+        // TODO implement some interceptor or other hook point, maybe make names of ignorable bausteins configurable
+        if (includeBausteinStatement.getPathToBaustein().contains("a.ende")) {
+            return false;
+        }
+
+        // Fetch the deployed module library
+        // then look up the deployed module corresponding to the given path to baustein
+        // create a DeployedModuleReference and insert it into the container stack
+        containerStack.peek().addContent(DeployedModuleDock.createDeployedModuleDock(
+                StringUtils.join("Call ", includeBausteinStatement.getCalledModuleName()),
+                includeBausteinStatement.getCalledModuleName(),
+                includeBausteinStatement.getCalledModuleElementId(), includeBausteinStatement.isLocalModuleReferences()));
+
+        return false;
     }
 
 }

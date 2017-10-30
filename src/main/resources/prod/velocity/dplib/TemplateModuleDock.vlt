@@ -1,0 +1,20 @@
+          <Object id="" name="${name}" enabled="True" type="com.assentis.cockpit.bo.BoModuleDock">
+            <Properties>
+              <Attributes>
+                <Attribute name="Notes"><![CDATA[]]></Attribute>
+                <Attribute name="XSLSetParamCollection">
+                  <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXSLSetParamCollection">
+                    <Properties>
+                      <Attributes>
+                        <Attribute name="Representing"><![CDATA[com.assentis.cockpit.bo.BoModuleComposition]]></Attribute>
+                      </Attributes>
+                      <Relations/>
+                    </Properties>
+                  </Object>
+                </Attribute>
+              </Attributes>
+              <Relations>
+                <Relation name="ModuleComposition" refTo="${calledModuleElementId}"/>
+              </Relations>
+            </Properties>
+          </Object>

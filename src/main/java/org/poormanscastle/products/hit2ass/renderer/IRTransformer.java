@@ -529,7 +529,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     @Override
     public void visitFixedText(FixedText fixedText) {
         if (!StringUtils.isBlank(fixedText.getText()) || " ".equals(fixedText.getText())) {
-            containerStack.peek().addContent(new Text("text", fixedText.getText(), fontWeight));
+            containerStack.peek().addContent(new Text(fixedText.getText(), fixedText.getText(), fontWeight));
         }
     }
 

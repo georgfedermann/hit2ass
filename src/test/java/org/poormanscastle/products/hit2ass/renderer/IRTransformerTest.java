@@ -73,7 +73,7 @@ public class IRTransformerTest {
         assertFalse(StringUtils.isBlank(acr));
     }
 
-    // @Test
+    @Test
     public void testIfElse() throws Exception {
         parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("SimpleIfLetter"), "UTF-8");
         baustein = parser.CB();

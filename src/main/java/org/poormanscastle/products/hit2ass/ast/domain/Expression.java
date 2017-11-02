@@ -4,7 +4,7 @@ package org.poormanscastle.products.hit2ass.ast.domain;
  * An expression can be evaluated to a value of various types defined by the given grammar.
  * Created by georg.federmann@poormanscastle.com on 05.04.2016.
  */
-public interface Expression<T> extends AstItem {
+public interface  Expression<T> extends AstItem {
 
     /**
      * It's intended to call this method from the 'root' of an expression sub tree

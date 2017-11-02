@@ -22,6 +22,11 @@ public class BooleanExpression extends AbstractExpression<Boolean> {
     }
 
     @Override
+    public String toDebugString() {
+        return String.valueOf(value);
+    }
+
+    @Override
     public Type getValueType() {
         return Type.BOOLEAN;
     }

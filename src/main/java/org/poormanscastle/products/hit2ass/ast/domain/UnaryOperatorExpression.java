@@ -32,6 +32,11 @@ public final class UnaryOperatorExpression extends AbstractExpression<Object> {
     }
 
     @Override
+    public String toDebugString() {
+        return operator.toDebugString(expression);
+    }
+
+    @Override
     public Object getValue() {
         return value;
     }

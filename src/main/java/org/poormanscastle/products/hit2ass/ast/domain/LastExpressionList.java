@@ -30,6 +30,11 @@ public class LastExpressionList extends AbstractAstItem implements ExpressionLis
         return head.toXPathString();
     }
 
+    @Override
+    public String toDebugString() {
+        return head.toDebugString();
+    }
+
     public LastExpressionList(Expression head) {
         this(head.getCodePosition(), head);
     }

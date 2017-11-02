@@ -32,6 +32,11 @@ public class ClouFunctionCall extends AbstractExpression<Object> {
     }
 
     @Override
+    public String toDebugString() {
+        return StringUtils.join(functionName, "(", args.toDebugString(), ")");
+    }
+
+    @Override
     public String toXPathString() {
         // TODO short-cut: implement a set of specific HIT/CLOU functions as needed
         if ("listlen".equals(functionName)) {
@@ -81,7 +86,7 @@ public class ClouFunctionCall extends AbstractExpression<Object> {
             // assuming dateformat T.M.JJJJ, if more date formats arise, think of a more generic approach.
             String varName = "listelem1";
             // Assuming that a variable is referred to via an ID expression, try to extract the variable name from args:
-            if(args.getHead() instanceof IdExpression){
+            if (args.getHead() instanceof IdExpression) {
                 varName = ((IdExpression) args.getHead()).getId();
             }
             return " hit2assext:convert_TMJJJJ_DateToIso8601Format(hit2assext:getScalarVariableValue(var:read('renderSessionUuid'), '" + varName + "')) ";

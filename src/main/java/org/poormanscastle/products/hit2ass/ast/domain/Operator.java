@@ -25,6 +25,8 @@ public interface Operator {
      * @param operands to which this operator is applied
      */
     public String toXPathString(Expression... operands);
+    
+    public String toDebugString(Expression... operands);
 
     /**
      * this method delivers the value type of the expression using this operator.

@@ -1,11 +1,12 @@
 package org.poormanscastle.products.hit2ass.ast.domain;
 
-import com.google.common.base.Preconditions;
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.poormanscastle.products.hit2ass.exceptions.HitAssTransformerException;
 
-import java.util.Arrays;
-import java.util.List;
+import com.google.common.base.Preconditions;
 
 /**
  * Created by georg.federmann@poormanscastle.com on 17.02.2016.
@@ -51,8 +52,19 @@ public enum BinaryOperator implements Operator {
         return StringUtils.join(operands[0].toXPathString(), " ", getLabel(), " ", operands[1].toXPathString());
     }
 
+    @Override
+    public String toDebugString(Expression... operands) {
+        Preconditions.checkArgument(operands.length == 2);
+        return StringUtils.join(operands[0].toDebugString(), getDebugLabel(), operands[1].toXPathString());
+    }
+
+
     public String getLabel() {
         return label;
+    }
+
+    String getDebugLabel() {
+        return label.replace("<", "lt").replace(">", "gt");
     }
 
     public boolean supportsType(Type type) {

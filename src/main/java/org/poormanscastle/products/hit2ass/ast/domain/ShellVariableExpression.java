@@ -27,6 +27,11 @@ public final class ShellVariableExpression extends AbstractExpression<String> {
         return "not implemented!";
     }
 
+    @Override
+    public String toDebugString() {
+        return "not implemented!";
+    }
+
     public String getShellVariableId() {
         return shellVariableId;
     }

@@ -29,6 +29,11 @@ public final class ListEnumerationExpression extends AbstractExpression<List> {
     }
 
     @Override
+    public String toDebugString() {
+        throw new UnsupportedOperationException("yet to be implemented.");
+    }
+
+    @Override
     public Type getValueType() {
         return null;
     }

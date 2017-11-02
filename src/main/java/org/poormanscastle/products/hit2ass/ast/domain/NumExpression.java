@@ -23,6 +23,11 @@ public final class NumExpression extends AbstractExpression<Integer> {
     }
 
     @Override
+    public String toDebugString() {
+        return String.valueOf(value);
+    }
+
+    @Override
     public Type getValueType() {
         return Type.INT;
     }

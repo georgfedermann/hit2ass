@@ -1,8 +1,8 @@
 package org.poormanscastle.products.hit2ass.ast.domain;
 
-import org.apache.commons.lang3.StringUtils;
-
 import static com.google.common.base.Preconditions.checkArgument;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * evaluates to a string value.
@@ -23,6 +23,11 @@ public final class TextExpression extends AbstractExpression<String> {
 
     @Override
     public String toXPathString() {
+        return StringUtils.join(" '", value, "' ");
+    }
+
+    @Override
+    public String toDebugString() {
         return StringUtils.join(" '", value, "' ");
     }
 

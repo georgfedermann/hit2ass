@@ -78,6 +78,18 @@ public final class IdExpression extends AbstractExpression<Object> {
         }
     }
 
+    @Override
+    public String toDebugString() {
+        StringBuilder stringBuilder = new StringBuilder(id);
+        if (idxExp1 != null) {
+            stringBuilder.append(StringUtils.join("[", idxExp1.toDebugString(), "]"));
+        }
+        if (idxExp2 != null) {
+            stringBuilder.append(StringUtils.join("[", idxExp2.toDebugString(), "]"));
+        }
+        return stringBuilder.toString();
+    }
+
     public IdExpression(CodePosition codePosition, String id, Expression idxExp1, Expression idxExp2) {
         super(codePosition);
         checkArgument(!StringUtils.isBlank(id));

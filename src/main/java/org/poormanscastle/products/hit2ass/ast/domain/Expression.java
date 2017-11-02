@@ -19,6 +19,17 @@ public interface  Expression<T> extends AstItem {
     String toXPathString();
 
     /**
+     * It's intended to call this method from the 'root' of an expression sub tree
+     * within the HIT/ClOU Baustein AST. Recursively, the resulting value is concatenated
+     * from all the information gathered from the expression's subexpressions.
+     * The resulting String is intended to get a quick look at the expression for 
+     * debugging purposes and also to create a text label for the IF/THEN/ELSE
+     * DocFamily workspace elements.
+     * @return
+     */
+    String toDebugString();
+
+    /**
      * Can be used to query the state of the given expression.
      * This state is determined during semantic analysis.
      *

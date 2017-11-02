@@ -35,6 +35,11 @@ public final class BinaryOperatorExpression extends AbstractExpression<Object> {
     }
 
     @Override
+    public String toDebugString() {
+        return StringUtils.join("(", operator.toDebugString(lhs, rhs), ")");
+    }
+
+    @Override
     public Object getValue() throws UnsupportedOperationException {
         return value;
     }

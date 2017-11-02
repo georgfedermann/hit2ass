@@ -38,12 +38,17 @@ public class SubListExpression extends AbstractExpression<List> {
         throw new UnsupportedOperationException("yet to be implemented.");
     }
 
+    @Override
+    public String toDebugString() {
+        throw new UnsupportedOperationException("yet to be implemented.");
+    }
+
     /**
      * Convenience constructor for single element sub lists, where startIndex
      * equals endIndex.
      *
      * @param codePosition the position within the source code
-     * @param startIndex the starting index of the sublist
+     * @param startIndex   the starting index of the sublist
      */
     public SubListExpression(CodePosition codePosition, Expression startIndex) {
         this(codePosition, startIndex, startIndex);

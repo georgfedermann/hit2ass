@@ -261,7 +261,9 @@ public final class IRTransformer extends AstItemVisitorAdapter {
 
     @Override
     public boolean proceedWithConditionalStatement(ConditionalStatement conditionalStatement) {
-        IfThenElseParagraph ifParagraph = new IfThenElseParagraph("IF", conditionalStatement.getCondition());
+        IfThenElseParagraph ifParagraph = new IfThenElseParagraph(
+                StringUtils.join("IF ", conditionalStatement.getCondition().toDebugString()),
+                conditionalStatement.getCondition());
         containerStack.peek().addContent(ifParagraph);
 
         if (conditionalStatement.getThenElement() != null) {

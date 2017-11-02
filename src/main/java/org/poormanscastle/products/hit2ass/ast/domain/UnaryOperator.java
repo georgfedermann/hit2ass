@@ -1,11 +1,12 @@
 package org.poormanscastle.products.hit2ass.ast.domain;
 
-import org.poormanscastle.products.hit2ass.exceptions.HitAssTransformerException;
-import com.google.common.base.Preconditions;
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.Arrays;
 import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.poormanscastle.products.hit2ass.exceptions.HitAssTransformerException;
+
+import com.google.common.base.Preconditions;
 
 /**
  * Created by georg.federmann@poormanscastle.com on 17.02.2016.
@@ -17,6 +18,12 @@ public enum UnaryOperator implements Operator {
         public String toXPathString(Expression... operands) {
             Preconditions.checkArgument(operands.length == 1);
             return StringUtils.join(getLabel(), "(", operands[0].toXPathString(), ")");
+        }
+
+        @Override
+        public String toDebugString(Expression... operands) {
+            Preconditions.checkArgument(operands.length == 1);
+            return StringUtils.join(getLabel(), "(", operands[0].toDebugString(), ")");
         }
     };
 

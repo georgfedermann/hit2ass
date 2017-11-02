@@ -24,6 +24,11 @@ public class PairExpressionList extends AbstractAstItem implements ExpressionLis
         return head.toXPathString();
     }
 
+    @Override
+    public String toDebugString() {
+        return head.toDebugString();
+    }
+
     public PairExpressionList(Expression head, ExpressionList tail) {
         this(head.getCodePosition(), head, tail);
     }

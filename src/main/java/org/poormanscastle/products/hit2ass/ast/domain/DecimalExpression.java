@@ -23,6 +23,11 @@ public final class DecimalExpression extends AbstractExpression<Double> {
     }
 
     @Override
+    public String toDebugString() {
+        return String.valueOf(value);
+    }
+
+    @Override
     public Type getValueType() {
         return Type.DOUBLE;
     }

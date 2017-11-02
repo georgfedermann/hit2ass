@@ -19,7 +19,7 @@ public final class Text implements Content {
     private final FontWeight fontWeight;
 
     public Text(String name, String text, FontWeight fontWeight) {
-        this.name = name.replaceAll("[^\\w\\s]", "");
+        this.name = name.replaceAll("[^\\w\\söÖäÄüÜß]", "");
         this.text = text;
         this.fontWeight = fontWeight;
     }

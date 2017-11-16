@@ -65,7 +65,9 @@ public class ClouFunctionCall extends AbstractExpression<Object> {
                 }
             } else if (expression1 instanceof BinaryOperatorExpression && expression2 instanceof TextExpression) {
                 // suspect this is the term where 100 days get added to the current date
-                return " fn:substring(fn:year-from-date(fn:current-date() + xs:dayTimeDuration('P100D')), 3, 2) ";
+                // 2017-11-09 00:01 HIT/CLOU formats years as 4 digits, even though the format string is "JJ"!
+                // return " fn:substring(fn:year-from-date(fn:current-date() + xs:dayTimeDuration('P100D')), 3, 2) "; 
+                return " fn:substring(fn:year-from-date(fn:current-date() + xs:dayTimeDuration('P100D')), 1, 4) ";
             } else if (expression1 instanceof ClouFunctionCall && "idate".equals(((ClouFunctionCall) expression1).getFunctionName())) {
                 // suspect this is where the value of element1 shall get interpreted as date by calling idate(element1, "T.M.JJJJ")
                 // in e.wvsvzeitpfl2

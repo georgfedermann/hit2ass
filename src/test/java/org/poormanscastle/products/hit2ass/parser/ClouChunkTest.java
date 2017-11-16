@@ -77,7 +77,7 @@ public class ClouChunkTest {
         IRTransformer transformer = new IRTransformer();
         baustein.accept(transformer);
         Workspace workspace = transformer.getWorkspace();
-        assertTrue(workspace.getContent().contains("fn:substring(fn:year-from-date(fn:current-date() + xs:dayTimeDuration('P100D')), 3, 2)"));
+        assertTrue(workspace.getContent().contains("fn:substring(fn:year-from-date(fn:current-date() + xs:dayTimeDuration('P100D')), 1, 4)"));
     }
 
     @Test

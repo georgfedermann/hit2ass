@@ -10,6 +10,7 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
+import org.apache.axiom.om.DeferredParsingException;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.impl.builder.StAXOMBuilder;
 import org.apache.axiom.om.impl.llom.CharacterDataImpl;
@@ -21,6 +22,7 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.jaxen.JaxenException;
 import org.poormanscastle.products.hit2ass.exceptions.BausteinMergerException;
+import org.poormanscastle.products.hit2ass.exceptions.HitAssTransformerException;
 import org.poormanscastle.products.hit2ass.renderer.VelocityHelper;
 
 /**
@@ -85,28 +87,34 @@ public final class Workspace {
             AXIOMXPath xPath = new AXIOMXPath(
                     "/Cockpit/Object[@type='com.assentis.cockpit.bo.BoWorkspace']/Object[@type='com.assentis.cockpit.bo.BoProjectGroup']/Object[@type='com.assentis.cockpit.bo.BoProject']/Object[@type='com.assentis.cockpit.bo.BoPage']/child::node()");
             StringBuilder result = new StringBuilder();
-            List<?> pageElements = ((List<?>) xPath.selectNodes(workspaceElement));
-            for (int counter = 0; counter < pageElements.size() - 1; counter++) {
-                Object element = pageElements.get(counter);
-                if (element instanceof CharacterDataImpl) {
-                    // ignore Whitespace stuff
-                    continue;
+            try {
+                List<?> pageElements = ((List<?>) xPath.selectNodes(workspaceElement));
+                for (int counter = 0; counter < pageElements.size() - 1; counter++) {
+                    Object element = pageElements.get(counter);
+                    if (element instanceof CharacterDataImpl) {
+                        // ignore Whitespace stuff
+                        continue;
+                    }
+                    OMElement omElement = (OMElement) element;
+                    if ("Properties".equals(omElement.getLocalName())) {
+                        // ignore Properties section of source BoPage element
+                        continue;
+                    }
+                    String nameAttribute = omElement.getAttributeValue(new QName("name"));
+                    if ("renderSessionUuid".equals(nameAttribute) || "Cleanup RenderSession".equals(nameAttribute)) {
+                        // Hit2AssExtension render session is taken care of by main document.
+                        // not needed in deployed modules.
+                        continue;
+                    }
+                    // toString() method of OMElement returns an XML String view of the corresponding element.
+                    result.append(omElement.toStringWithConsume());
                 }
-                OMElement omElement = (OMElement) element;
-                if ("Properties".equals(omElement.getLocalName())) {
-                    // ignore Properties section of source BoPage element
-                    continue;
-                }
-                String nameAttribute = omElement.getAttributeValue(new QName("name"));
-                if ("renderSessionUuid".equals(nameAttribute) || "Cleanup RenderSession".equals(nameAttribute)) {
-                    // Hit2AssExtension render session is taken care of by main document.
-                    // not needed in deployed modules.
-                    continue;
-                }
-                // toString() method of OMElement returns an XML String view of the corresponding element.
-                result.append(omElement.toStringWithConsume());
+                return result.toString();
+            } catch (DeferredParsingException exception) {
+                String errMsg = StringUtils.join("Cannot parse workspace because of: ", exception.getClass().getSimpleName(), ": ",
+                        exception.getMessage(), " - respective workspace content is:\n", getContent(), "\n");
+                throw new HitAssTransformerException(errMsg, exception);
             }
-            return result.toString();
         } catch (JaxenException | UnsupportedEncodingException | XMLStreamException e) {
             String errMsg = StringUtils.join("Could not create module from sub Baustein because: ",
                     e.getClass().getName(), " - ", e.getMessage());

@@ -1280,6 +1280,34 @@ ${content}
                   </Attributes>
                   <Relations/>
                 </Properties>
+#if(${workspaceName} == "B_al001" || ${workspaceName} == "B_al006" || ${workspaceName} == "B_al010" || ${workspaceName} == "B_be023" || ${workspaceName} == "B_ek002" || ${workspaceName} == "B_ek007" ) 
+        <!-- add Dienstzettel headers for these bausteins -->
+        <Object id="" name="Kopf_Dienstzettel" enabled="True" type="com.assentis.cockpit.bo.BoDeployedModuleDock">
+          <Properties>
+            <Attributes>
+              <Attribute name="Notes"><![CDATA[]]></Attribute>
+              <Attribute name="XSLSetParamCollection">
+                <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoXSLSetParamCollection">
+                  <Properties>
+                    <Attributes>
+                      <Attribute name="Representing"><![CDATA[com.assentis.cockpit.bo.BoDeployedModuleComposition]]></Attribute>
+                    </Attributes>
+                    <Relations/>
+                  </Properties>
+                </Object>
+              </Attribute>
+              <Attribute name="CallModule"><![CDATA[Kopf_Dienstzettel]]></Attribute>
+              <Attribute name="CallModuleName"><![CDATA[Mod20171020T214711.901-1409.221328.6621578.982]]></Attribute>
+            </Attributes>
+            <Relations>
+              <Relation name="DeployedModuleComposition" refTo="20171117T103537.971-2414.1591871.1612943.892"/>
+            </Relations>
+          </Properties>
+        </Object>
+#elseif(${workspaceName} == "B_sv120" || ${workspaceName} == "B_sv118" || ${workspaceName} == "B_sv119" || ${workspaceName} == "B_er002")
+        <!-- no header is required for these text bausteins -->
+#else
+        <
                 <Object id="${docFamUtils.createCockpitElementId()}" name="Kopf_PVA" enabled="True" type="com.assentis.cockpit.bo.BoDeployedModuleDock">
                   <Properties>
                     <Attributes>
@@ -1302,6 +1330,7 @@ ${content}
                     </Relations>
                   </Properties>
                 </Object>
+#end
                 <Object id="${docFamUtils.createCockpitElementId()}" name="Aktenzeichen Seite 1" enabled="True" type="com.assentis.cockpit.bo.BoDeployedModuleDock">
                   <Properties>
                     <Attributes>
@@ -1416,6 +1445,48 @@ ${content}
         <Relations/>
       </Properties>
 
+#if(${workspaceName} == "B_al001" || ${workspaceName} == "B_al006" || ${workspaceName} == "B_al010" || ${workspaceName} == "B_be023" || ${workspaceName} == "B_ek002" || ${workspaceName} == "B_ek007" ) 
+      <Object id="20171117T103537.971-2414.1591871.1612943.892" name="DPLibDienstzettel" enabled="True" type="com.assentis.cockpit.bo.BoDeployedModuleComposition">
+        <Properties>
+          <Attributes>
+            <Attribute name="Notes"><![CDATA[]]></Attribute>
+            <Attribute name="Keyword"><![CDATA[]]></Attribute>
+            <Attribute name="PurposeList">
+              <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoPurposeList">
+                <Properties>
+                  <Attributes/>
+                  <Relations/>
+                </Properties>
+              </Object>
+            </Attribute>
+            <Attribute name="URI">
+              <Object id="" name="" enabled="True" type="com.assentis.cockpit.bo.BoURI">
+                <Properties>
+                  <Attributes>
+                    <Attribute name="FileURL"><![CDATA[]]></Attribute>
+                    <Attribute name="FileRelative"><![CDATA[False]]></Attribute>
+                    <Attribute name="WebURL"><![CDATA[]]></Attribute>
+                    <Attribute name="RepoElementID"><![CDATA[20171020T214655.880-1691.532091.132436.3275.dp]]></Attribute>
+                    <Attribute name="RepoElementName"><![CDATA[DPLibDienstzettel]]></Attribute>
+                    <Attribute name="RepoElementVersion"><![CDATA[]]></Attribute>
+                    <Attribute name="RepoElementLabel"><![CDATA[]]></Attribute>
+                    <Attribute name="RepoElementExtension"><![CDATA[dpmodlib]]></Attribute>
+                    <Attribute name="RepoElementDBID"><![CDATA[154124]]></Attribute>
+                    <Attribute name="IsRepositoryFolder"><![CDATA[False]]></Attribute>
+                    <Attribute name="DBPath"><![CDATA[]]></Attribute>
+                    <Attribute name="RepoAdditionalRequestParams"><![CDATA[&XSLTDOCTYPE=FO]]></Attribute>
+                    <Attribute name="URLType"><![CDATA[128]]></Attribute>
+                    <Attribute name="TypeNode"><![CDATA[True]]></Attribute>
+                  </Attributes>
+                  <Relations/>
+                </Properties>
+              </Object>
+            </Attribute>
+          </Attributes>
+          <Relations/>
+        </Properties>
+      </Object>
+#end
       <Object id="${pvaDeployedModuleCompositionId}" name="PVA Deployed Modules" enabled="True" type="com.assentis.cockpit.bo.BoDeployedModuleComposition">
         <Properties>
           <Attributes>

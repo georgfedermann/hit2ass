@@ -1307,7 +1307,7 @@ ${content}
 #elseif(${workspaceName} == "B_sv120" || ${workspaceName} == "B_sv118" || ${workspaceName} == "B_sv119" || ${workspaceName} == "B_er002")
         <!-- no header is required for these text bausteins -->
 #else
-        <
+        <!-- add normal PVA header -->
                 <Object id="${docFamUtils.createCockpitElementId()}" name="Kopf_PVA" enabled="True" type="com.assentis.cockpit.bo.BoDeployedModuleDock">
                   <Properties>
                     <Attributes>

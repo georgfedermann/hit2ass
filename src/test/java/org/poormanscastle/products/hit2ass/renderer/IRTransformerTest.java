@@ -59,6 +59,16 @@ public class IRTransformerTest {
         String acr = workspace.getContent();
         assertFalse(StringUtils.isBlank(acr));
     }
+    
+   @Test
+   public void testFDate() throws Exception{
+       parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("fdateTest"), "ISO8859-1");
+       baustein = parser.CB();
+       baustein.accept(blanksVisitor);
+       baustein.accept(irTransformer);
+       Workspace workspace = irTransformer.getWorkspace();
+       assertNotNull(workspace);
+   }
 
     // @Test
     public void testHitCommandReturn() throws Exception {

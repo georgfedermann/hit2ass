@@ -129,7 +129,13 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     @Override
     public void visitClouBaustein(ClouBausteinImpl clouBaustein) {
         workspace = new Workspace(clouBaustein.getClouBausteinName());
+        // 2017-11-17 14:39 end users wish that components don't get organized in paragraphs
+        // but directly on the workspace level. Which arguably brings advantages in further
+        // maintenance of the bausteins.
+        // 2017-11-19 13:00 This will not work because diverse constructs like loops
+        // require Aggregation and Repetition elements which can only be applied within paragraphs.
         containerStack.push(new Paragraph("CLOU Component Paragraph"));
+        // containerStack.push(new WorkspaceContainer("CLOU Component Paragraph"));
     }
 
     @Override

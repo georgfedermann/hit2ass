@@ -17,7 +17,15 @@ import org.apache.velocity.VelocityContext;
 public class WorkspaceContainer extends AbstractContainer {
 
     public WorkspaceContainer() {
-        super("no name", "/velocity/TemplateWorkspaceContainer.vlt");
+        this("no name");
+    }
+
+    /**
+     * @param name the name will mostly get ignored. It might be of some use
+     *             in some debugging scenarios.
+     */
+    public WorkspaceContainer(String name) {
+        super(name, "/velocity/TemplateWorkspaceContainer.vlt");
     }
 
     @Override

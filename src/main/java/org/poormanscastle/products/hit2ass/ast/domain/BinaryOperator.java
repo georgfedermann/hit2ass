@@ -55,7 +55,7 @@ public enum BinaryOperator implements Operator {
     @Override
     public String toDebugString(Expression... operands) {
         Preconditions.checkArgument(operands.length == 2);
-        return StringUtils.join(operands[0].toDebugString(), getDebugLabel(), operands[1].toXPathString());
+        return StringUtils.join(operands[0].toDebugString(), " ", getDebugLabel(), " ", operands[1].toDebugString()).replaceAll("'", "");
     }
 
 
@@ -64,7 +64,7 @@ public enum BinaryOperator implements Operator {
     }
 
     String getDebugLabel() {
-        return label.replace("<", "lt").replace(">", "gt");
+        return label.replace("<", "lt").replace(">", "gt").replace("!", "NOT");
     }
 
     public boolean supportsType(Type type) {

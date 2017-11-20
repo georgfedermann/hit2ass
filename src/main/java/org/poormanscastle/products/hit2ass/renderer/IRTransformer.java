@@ -123,6 +123,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         IRTransformer transformer = new IRTransformer();
         transformer.fontWeight = fontWeight;
         transformer.insideWhileLoop = insideWhileLoop;
+        transformer.workspace = workspace;
         return transformer;
     }
 
@@ -270,6 +271,8 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         IfThenElseParagraph ifParagraph = new IfThenElseParagraph(
                 StringUtils.join("IF ", StringEscapeUtils.escapeXml10(conditionalStatement.getCondition().toDebugString())),
                 conditionalStatement.getCondition());
+        logger.info(StringUtils.join("Creating IF statement for workspace ", getWorkspace().getWorkspaceName(), " with condition ",
+                StringEscapeUtils.escapeXml10(conditionalStatement.getCondition().toDebugString())));
         containerStack.peek().addContent(ifParagraph);
 
         if (conditionalStatement.getThenElement() != null) {

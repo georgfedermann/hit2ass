@@ -1,8 +1,8 @@
 package org.poormanscastle.products.hit2ass.renderer;
 
 import java.io.StringWriter;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -14,7 +14,7 @@ import org.apache.velocity.app.Velocity;
 class DeployedModuleLibraryImpl implements DeployedModuleLibrary {
 
     /**
-     * The unique elementId for this Library. When a deployement package gets created
+     * The unique elementId for this Library. When a deployment package gets created
      * for this library it will have this elementId with a ".dp" appended to it.
      */
     private String elementId = "20160326T133147.780-1673.9391843.274898.6732";
@@ -29,7 +29,7 @@ class DeployedModuleLibraryImpl implements DeployedModuleLibrary {
      * distribute this elementId.
      */
     private String referencingCompositionElementId = "20160326T133147.780-1673.9391843.214898.6732";
-    private Map<String, DeployedModule> moduleMap = new HashMap<>();
+    private Map<String, DeployedModule> moduleMap = new TreeMap<>();
 
     DeployedModuleLibraryImpl() {
         elementId = DocFamUtils.createCockpitElementId();
@@ -80,5 +80,5 @@ class DeployedModuleLibraryImpl implements DeployedModuleLibrary {
         }
         return result.toString();
     }
-    
+
 }

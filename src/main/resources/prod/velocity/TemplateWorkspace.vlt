@@ -1304,7 +1304,14 @@ ${content}
             </Relations>
           </Properties>
         </Object>
-#elseif(${workspaceName} == "B_sv120" || ${workspaceName} == "B_sv118" || ${workspaceName} == "B_sv119" || ${workspaceName} == "B_er002")
+#elseif(${workspaceName} == "B_sv120" || ${workspaceName} == "B_sv118" || ${workspaceName} == "B_sv119" || ${workspaceName} == "B_er002" ||
+        ${workspaceName} == "B_be019" || ${workspaceName} == "B_be024" || ${workspaceName} == "B_be025" || ${workspaceName} == "B_be026" || 
+        ${workspaceName} == "B_er002" || ${workspaceName} == "B_sv001" || ${workspaceName} == "B_sv002" || ${workspaceName} == "B_sv003" || 
+        ${workspaceName} == "B_sv011" || ${workspaceName} == "B_sv014" || ${workspaceName} == "B_sv015" || ${workspaceName} == "B_sv118" || 
+        ${workspaceName} == "B_sv119" || ${workspaceName} == "B_sv120" || ${workspaceName} == "B_ue102" || ${workspaceName} == "B_uw024" || 
+        ${workspaceName} == "B_wv001" || ${workspaceName} == "B_wv002" || ${workspaceName} == "B_wv005" || ${workspaceName} == "B_wv008" || 
+        ${workspaceName} == "B_wv016" || ${workspaceName} == "B_wv019" || ${workspaceName} == "B_wv020" || ${workspaceName} == "B_wv022" || 
+        ${workspaceName} == "B_wv705" || ${workspaceName} == "B_wv707" )
         <!-- no header is required for these text bausteins -->
 #else
         <!-- add normal PVA header -->
@@ -1331,6 +1338,16 @@ ${content}
                   </Properties>
                 </Object>
 #end
+
+#if(${workspaceName} == "B_be019" || ${workspaceName} == "B_be024" || ${workspaceName} == "B_be025" || ${workspaceName} == "B_be026" ||
+    ${workspaceName} == "B_er002" || ${workspaceName} == "B_sv001" || ${workspaceName} == "B_sv002" || ${workspaceName} == "B_sv003" || 
+    ${workspaceName} == "B_sv011" || ${workspaceName} == "B_sv014" || ${workspaceName} == "B_sv015" || ${workspaceName} == "B_sv118" || 
+    ${workspaceName} == "B_sv119" || ${workspaceName} == "B_sv120" || ${workspaceName} == "B_ue102" || ${workspaceName} == "B_uw024" || 
+    ${workspaceName} == "B_wv001" || ${workspaceName} == "B_wv002" || ${workspaceName} == "B_wv005" || ${workspaceName} == "B_wv008" || 
+    ${workspaceName} == "B_wv016" || ${workspaceName} == "B_wv019" || ${workspaceName} == "B_wv020" || ${workspaceName} == "B_wv022" || 
+    ${workspaceName} == "B_wv705" || ${workspaceName} == "B_wv707")
+    <!-- no Aktenzeichen Seite 1 is needed in this context -->
+#else
                 <Object id="${docFamUtils.createCockpitElementId()}" name="Aktenzeichen Seite 1" enabled="True" type="com.assentis.cockpit.bo.BoDeployedModuleDock">
                   <Properties>
                     <Attributes>
@@ -1353,6 +1370,7 @@ ${content}
                     </Relations>
                   </Properties>
                 </Object>
+#end
               </Object>
               <Object id="${footerId}" name="Footer" enabled="True" type="com.assentis.cockpit.bo.BoBottomRegion">
                 <Properties>

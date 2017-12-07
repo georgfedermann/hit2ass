@@ -61,7 +61,7 @@ public class ClouFunctionCall extends AbstractExpression<Object> {
                 } else if ("0M0T".equals(pattern)) {
                     return " fn:concat(fn:substring(string(100 + fn:month-from-date(fn:current-date())), 2),fn:substring(string(100 + fn:day-from-date(fn:current-date())), 2)) ";
                 } else if ("JJ0M0T".equals(pattern)) {
-                    return " fn:concat( fn:substring(  fn:year-from-date(fn:current-date()), 3, 2), fn:concat(fn:substring(string(100 + fn:month-from-date(fn:current-date())), 2),fn:substring(string(100 + fn:day-from-date(fn:current-date())), 2))) ";
+                    return " fn:concat( fn:year-from-date(fn:current-date()), fn:concat(fn:substring(string(100 + fn:month-from-date(fn:current-date())), 2),fn:substring(string(100 + fn:day-from-date(fn:current-date())), 2))) ";
                 } else if ("JJJJ0M0T".equals(pattern)) {
                     return " fn:concat( fn:year-from-date(fn:current-date()), fn:concat(fn:substring(string(100 + fn:month-from-date(fn:current-date())), 2),fn:substring(string(100 + fn:day-from-date(fn:current-date())), 2))) ";
                 } else if ("JJ".equals(pattern)) {

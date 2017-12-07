@@ -5,7 +5,13 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+import java.net.URL;
+
 import org.apache.commons.lang3.StringUtils;
+import org.apache.velocity.app.Velocity;
+import org.apache.velocity.runtime.RuntimeConstants;
+import org.joda.time.DateTime;
 import org.junit.Test;
 import org.poormanscastle.products.hit2ass.TestUtils;
 import org.poormanscastle.products.hit2ass.ast.domain.AstItemVisitor;
@@ -24,6 +30,18 @@ public class IRTransformerTest {
     private HitAssAstParser parser;
     private AstItemVisitor blanksVisitor = new EraseBlanksVisitor();
     private IRTransformer irTransformer = new IRTransformer();
+
+    // @BeforeClass
+    public static void initVelocity() throws Exception {
+        // configure to load templates from classpath
+        URL url = IRTransformerTest.class.getResource("/prod/");
+        File file = new File(url.getFile());
+
+        Velocity.setProperty(RuntimeConstants.RESOURCE_LOADER, "file");
+        Velocity.setProperty(RuntimeConstants.FILE_RESOURCE_LOADER_PATH, file.getAbsolutePath());
+        Velocity.setProperty(RuntimeConstants.FILE_RESOURCE_LOADER_CACHE, "true");
+        Velocity.init();
+    }
 
     @Test
     public void testPrintStatementSequence() throws Exception {
@@ -49,6 +67,17 @@ public class IRTransformerTest {
     }
 
     @Test
+    public void testFDateTest1() throws Exception {
+        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("fdateTest1"), "ISO8859-1");
+        baustein = parser.CB();
+        baustein.accept(blanksVisitor);
+        baustein.accept(irTransformer);
+        Workspace workspace = irTransformer.getWorkspace();
+        String acr = workspace.getContent();
+        assertNotNull(acr);
+    }
+
+    @Test
     public void testListElementBelegung() throws Exception {
         parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("ListElementBelegung"), "ISO8859-1");
         baustein = parser.CB();
@@ -59,16 +88,20 @@ public class IRTransformerTest {
         String acr = workspace.getContent();
         assertFalse(StringUtils.isBlank(acr));
     }
-    
-   @Test
-   public void testFDate() throws Exception{
-       parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("fdateTest"), "ISO8859-1");
-       baustein = parser.CB();
-       baustein.accept(blanksVisitor);
-       baustein.accept(irTransformer);
-       Workspace workspace = irTransformer.getWorkspace();
-       assertNotNull(workspace);
-   }
+
+    @Test
+    public void testFDate() throws Exception {
+        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("fdateTest"), "ISO8859-1");
+        baustein = parser.CB();
+        baustein.accept(blanksVisitor);
+        baustein.accept(irTransformer);
+        Workspace workspace = irTransformer.getWorkspace();
+        assertNotNull(workspace);
+        String acr = workspace.getContent();
+        DateTime today = new DateTime();
+        String thisYear = String.valueOf(today.getYear());
+        assertTrue(acr.contains("fn:year-from-date(fn:current-date())"));
+    }
 
     // @Test
     public void testHitCommandReturn() throws Exception {

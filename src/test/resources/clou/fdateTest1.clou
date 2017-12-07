@@ -1,0 +1,18 @@
+#
+      #* nachfolgender Satz wird nur gedruckt, wenn Frist >= Tagesdatum      #
+      #D hdat1 fdate(today,"JJ0M0T")
+      #D hdat2 frist[7,10] & frist[4,5] & frist[1,2]
+      #? hdat2 < hdat1:
+               /N
+                 Diese Herabsetzung gilt bis längstens #> frist ,
+                 sofern nicht vor Ablauf dieses Termins eine entsprechende Änderung
+                 des zu berücksichtigenden Einkommens eintritt.@
+      
+                 #^"RETURN"
+      
+                 Die Herabsetzung des Beitrages über die angeführte Frist hinaus
+                 ist nur möglich, wenn noch vor Ablauf dieses Termins ein neuerlicher
+                 Antrag auf Herabsetzung der Beitragsgrundlage gestellt wird.@
+      
+                 #^"RETURN"
+            #

@@ -186,7 +186,12 @@ public final class IRTransformer extends AstItemVisitorAdapter {
                 :
                 new BinaryOperatorExpression(CodePosition.createZeroPosition(), switchExpression, BinaryOperator.EQ,
                         new TextExpression(CodePosition.createZeroPosition(), patient.getHead().getMatch()));
-        IfThenElseParagraph ifParagraph = new IfThenElseParagraph("IF_CASE", expression);
+
+        String ifParagraphTitle = StringEscapeUtils.escapeXml10(expression.toDebugString()).replaceAll("\\.", "_");
+        logger.info(StringUtils.join("Creating CASE statement for workspace ", getWorkspace().getWorkspaceName(),
+                " with condition ", ifParagraphTitle));
+
+        IfThenElseParagraph ifParagraph = new IfThenElseParagraph(StringUtils.join("IF_CASE ", ifParagraphTitle), expression);
         // now create the THEN branch and fill it with the content contained in the respective CASE branch
         IRTransformer spinOffTransformer = spinOff();
         spinOffTransformer.containerStack.push(new IfThenParagraph("THEN"));
@@ -268,11 +273,13 @@ public final class IRTransformer extends AstItemVisitorAdapter {
 
     @Override
     public boolean proceedWithConditionalStatement(ConditionalStatement conditionalStatement) {
+        // 2017-12-03 20:44 Fix issue, that DocFamily element titles must not contain dot characters (".")
+        String ifParagraphTitle = StringEscapeUtils.escapeXml10(conditionalStatement.getCondition().toDebugString()).replaceAll("\\.", "_");
         IfThenElseParagraph ifParagraph = new IfThenElseParagraph(
-                StringUtils.join("IF ", StringEscapeUtils.escapeXml10(conditionalStatement.getCondition().toDebugString())),
+                StringUtils.join("IF ", ifParagraphTitle),
                 conditionalStatement.getCondition());
         logger.info(StringUtils.join("Creating IF statement for workspace ", getWorkspace().getWorkspaceName(), " with condition ",
-                StringEscapeUtils.escapeXml10(conditionalStatement.getCondition().toDebugString())));
+                ifParagraphTitle));
         containerStack.peek().addContent(ifParagraph);
 
         if (conditionalStatement.getThenElement() != null) {

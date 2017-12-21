@@ -4,10 +4,13 @@ import static com.google.common.base.Preconditions.checkState;
 
 import org.apache.commons.lang3.StringUtils;
 import org.poormanscastle.products.hit2ass.ast.domain.AstItemVisitorAdapter;
+import org.poormanscastle.products.hit2ass.ast.domain.ClouBausteinElement;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouBausteinElementList;
 import org.poormanscastle.products.hit2ass.ast.domain.ConditionalStatement;
+import org.poormanscastle.products.hit2ass.ast.domain.DynamicValue;
 import org.poormanscastle.products.hit2ass.ast.domain.FixedText;
 import org.poormanscastle.products.hit2ass.ast.domain.LastClouBausteinElementList;
+import org.poormanscastle.products.hit2ass.ast.domain.MacroCallStatement;
 import org.poormanscastle.products.hit2ass.ast.domain.NewLine;
 import org.poormanscastle.products.hit2ass.ast.domain.PairClouBausteinElementList;
 import org.poormanscastle.products.hit2ass.ast.domain.PrintStatement;
@@ -75,14 +78,27 @@ public class EraseBlanksVisitor extends AstItemVisitorAdapter {
             conserveOneLeadingBlank |= isPrecedingElementConditional(clouBausteinElementList.getParent());
             // Rule 8
             if (!strippedText.endsWith("\"") && !strippedText.endsWith(" ") &&
-                    clouBausteinElementList.getTail() != null && (clouBausteinElementList.getTail().getHead() instanceof NewLine) &&
-                    clouBausteinElementList.getTail().getTail() != null && isPrintStatementFollowing(clouBausteinElementList.getTail())) {
+                    clouBausteinElementList.getTail() != null && (
+                    clouBausteinElementList.getTail().getHead() instanceof NewLine ||
+                            clouBausteinElementList.getTail().getHead() instanceof MacroCallStatement
+            ) && isPrintStatementFollowing(clouBausteinElementList.getTail())) {
                 strippedText = StringUtils.join(strippedText, " ");
             }
+            
             strippedText = StringUtils.stripStart(strippedText, null);
             fixedText.reset();
             fixedText.appendText(strippedText, conserveOneLeadingBlank);
         }
+    }
+
+    ClouBausteinElement findNextTextElement(ClouBausteinElementList clouBausteinElementList) {
+        if (clouBausteinElementList instanceof LastClouBausteinElementList) {
+            return null;
+        }
+        ClouBausteinElementList nextElementList = clouBausteinElementList.getTail();
+        if (nextElementList.getHead() instanceof FixedText || nextElementList.getHead() instanceof DynamicValue) {
+            return nextElementList.getHead();
+        } else return findNextTextElement(nextElementList);
     }
 
     /**
@@ -96,10 +112,12 @@ public class EraseBlanksVisitor extends AstItemVisitorAdapter {
     private boolean isPrintStatementFollowing(ClouBausteinElementList elementList) {
         if (elementList == null) {
             return false;
-        } else if (elementList.getHead() instanceof PrintStatement) {
+        } else if (elementList.getHead() instanceof PrintStatement || elementList.getHead() instanceof DynamicValue
+                || elementList.getHead() instanceof FixedText) {
             return true;
         } else if ((elementList.getHead() instanceof NewLine) ||
-                (elementList.getHead() instanceof FixedText) && StringUtils.isBlank(((FixedText) elementList.getHead()).getText())) {
+                (elementList.getHead() instanceof FixedText) && StringUtils.isBlank(((FixedText) elementList.getHead()).getText()) ||
+                elementList.getHead() instanceof MacroCallStatement) {
             return isPrintStatementFollowing(elementList.getTail());
         } else if (elementList.getHead() instanceof ConditionalStatement) {
             ConditionalStatement ifStatement = (ConditionalStatement) elementList.getHead();

@@ -1,0 +1,6 @@
+#
+#* Training the HitAss system to handle 0M date format patterns with fdate #
+
+#D date1 fdate(today+365*24*60*60,"JJ") 
+#D date2 fdate(today-365*24*60*60,"JJ") 
+#D date3 fdate(today+100*24*60*60,"JJ")

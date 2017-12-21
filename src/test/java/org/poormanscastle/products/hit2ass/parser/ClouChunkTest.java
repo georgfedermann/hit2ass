@@ -77,7 +77,7 @@ public class ClouChunkTest {
         IRTransformer transformer = new IRTransformer();
         baustein.accept(transformer);
         Workspace workspace = transformer.getWorkspace();
-        assertTrue(workspace.getContent().contains("fn:substring(fn:year-from-date(fn:current-date() + xs:dayTimeDuration('P100D')), 1, 4)"));
+        assertTrue(workspace.getContent().contains("fn:year-from-date( fn:current-date() + xs:dayTimeDuration('PT8640000S') )"));
     }
 
     @Test
@@ -291,7 +291,7 @@ public class ClouChunkTest {
         ClouBaustein baustein = parser.CB();
         baustein.accept(new EraseBlanksVisitor());
         ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
-        assertEquals("Some fixed text", ((FixedText) elementList.getHead()).getText());
+        assertEquals("Some fixed text ", ((FixedText) elementList.getHead()).getText());
         elementList = elementList.getTail();
         assertTrue(elementList.getHead() instanceof NewLine);
         elementList = elementList.getTail();
@@ -486,7 +486,7 @@ public class ClouChunkTest {
         ClouBaustein baustein = parser.CB();
         baustein.accept(new EraseBlanksVisitor());
         ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
-        assertEquals("Please note that we", ((FixedText) elementList.getHead()).getText());
+        assertEquals("Please note that we ", ((FixedText) elementList.getHead()).getText());
         elementList = elementList.getTail();
         assertTrue(elementList.getHead() instanceof NewLine);
         elementList = elementList.getTail();
@@ -658,7 +658,7 @@ public class ClouChunkTest {
         baustein.accept(new EraseBlanksVisitor());
         ClouBausteinElementList elementList = ((PairClouBausteinElementList) baustein.getClouBausteinElement());
         // check that no blanks are inserted between FixedText and directly following macro call
-        assertEquals("Your name is", ((FixedText) elementList.getHead()).getText());
+        assertEquals("Your name is ", ((FixedText) elementList.getHead()).getText());
         elementList = elementList.getTail();
         // check that the macro call is recognized and the command is correctly scanned.
         MacroCallStatement macroCall = (MacroCallStatement) elementList.getHead();

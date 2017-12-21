@@ -1,5 +1,11 @@
 package org.poormanscastle.products.hit2ass.renderer;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.poormanscastle.products.hit2ass.ast.domain.BinaryOperator;
@@ -13,12 +19,7 @@ import org.poormanscastle.products.hit2ass.renderer.domain.Content;
 import org.poormanscastle.products.hit2ass.renderer.domain.DynamicContentReference;
 import org.poormanscastle.products.hit2ass.renderer.domain.FontWeight;
 import org.poormanscastle.products.hit2ass.renderer.domain.ListAddItem;
-
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-
-import static com.google.common.base.Preconditions.checkArgument;
+import org.poormanscastle.products.hit2ass.renderer.domain.TextDecoration;
 
 /**
  * Transforms a list expression into a sequence of DynamicContentReference instances.
@@ -45,7 +46,7 @@ public class ListExpressionTransformer {
         return Collections.unmodifiableList(contentList);
     }
 
-    public void transformExpression(Expression expression, String targetListName, FontWeight fontWeight) {
+    public void transformExpression(Expression expression, String targetListName, FontWeight fontWeight, TextDecoration textDecoration) {
         if (expression == null) {
             // Nothing to do here.
         } else if (expression instanceof ExpressionList) {
@@ -68,14 +69,14 @@ public class ListExpressionTransformer {
             contentList.add(new DynamicContentReference(StringUtils.join(
                     "Append List ", sourceListExpression.getId(), " to ", targetListName),
                     StringUtils.join(" hit2assext:appendList(var:read('renderSessionUuid'), '", sourceListExpression.getId(),
-                            "', '", targetListName, "') "), fontWeight));
+                            "', '", targetListName, "') "), fontWeight, textDecoration));
         } else if (expression instanceof BinaryOperatorExpression) {
             // handling this case: #L newList D oldList1 & oldList2 & { 1, 2, 3, 4, 5 }, recusively of course.
             BinaryOperatorExpression addExpression = (BinaryOperatorExpression) expression;
             checkArgument(addExpression.getOperator() == BinaryOperator.AND, "Only list concatenation operator & is allowed here, not this such: ",
                     addExpression.getOperator().getLabel(), ".");
-            transformExpression(addExpression.getLhs(), targetListName, fontWeight);
-            transformExpression(addExpression.getRhs(), targetListName, fontWeight);
+            transformExpression(addExpression.getLhs(), targetListName, fontWeight, textDecoration);
+            transformExpression(addExpression.getRhs(), targetListName, fontWeight, textDecoration);
         }
     }
 

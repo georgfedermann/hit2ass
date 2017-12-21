@@ -56,6 +56,7 @@ import org.poormanscastle.products.hit2ass.renderer.domain.ListDeclaration;
 import org.poormanscastle.products.hit2ass.renderer.domain.Paragraph;
 import org.poormanscastle.products.hit2ass.renderer.domain.Text;
 import org.poormanscastle.products.hit2ass.renderer.domain.TextAlignment;
+import org.poormanscastle.products.hit2ass.renderer.domain.TextDecoration;
 import org.poormanscastle.products.hit2ass.renderer.domain.WhileLoopFlagValueFlavor;
 import org.poormanscastle.products.hit2ass.renderer.domain.Workspace;
 import org.poormanscastle.products.hit2ass.renderer.domain.WorkspaceContainer;
@@ -73,8 +74,13 @@ public final class IRTransformer extends AstItemVisitorAdapter {
 
     private final static Logger logger = Logger.getLogger(IRTransformer.class);
 
+    // track state of font weight. shall next text container be bold or normal.
     private FontWeight fontWeight = FontWeight.INHERIT;
+    // track state of text alignment. shall next paragraph be left or right aligned, or centered, or justified.
     private TextAlignment textAlignment = TextAlignment.JUSTIFIED;
+    // track state of text decoration. shall next text container be underlined or not.
+    // <Attribute name="FontDecoration"><![CDATA[inherit]]></Attribute>
+    private TextDecoration textDecoration = TextDecoration.INHERIT;
 
     private boolean insideWhileLoop = false;
 
@@ -313,8 +319,12 @@ public final class IRTransformer extends AstItemVisitorAdapter {
             fontWeight = FontWeight.BOLD;
         } else if ("FEAUS".equals(macroCallStatement.getMacroId())) {
             fontWeight = FontWeight.INHERIT;
+        } else if ("USEIN".equals(macroCallStatement.getMacroId())) {
+            textDecoration = TextDecoration.UNDERLINED;
+        } else if ("USAUS".equals(macroCallStatement.getMacroId())) {
+            textDecoration = TextDecoration.INHERIT;
         } else if ("TABU".equals(macroCallStatement.getMacroId())) {
-            containerStack.peek().addContent(new Text("TABU", "       ", fontWeight));
+            containerStack.peek().addContent(new Text("TABU", "       ", fontWeight, textDecoration));
         } else if ("ZLTZ12".equals(macroCallStatement.getMacroId())) {
             // this is the MACRO to switch to justified text alignment.
             // Check if the current parent element on the container stack is a paragraph.
@@ -351,7 +361,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         } else if ("element".equals(macroCallStatement.getMacroId())) {
             containerStack.peek().addContent(new DynamicContentReference("MACRO call listelembel",
                     " hit2assext:convertListElementsToVars(var:read('renderSessionUuid')) ",
-                    fontWeight));
+                    fontWeight, textDecoration));
         } else {
             logger.warn(StringUtils.join("Found unknown macro id ", macroCallStatement.getMacroId()));
         }
@@ -378,7 +388,8 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         }
 
         ListExpressionTransformer transformer = new ListExpressionTransformer();
-        transformer.transformExpression(listConcatenationStatement.getListExpression(), listConcatenationStatement.getListId(), fontWeight);
+        transformer.transformExpression(listConcatenationStatement.getListExpression(), listConcatenationStatement.getListId(),
+                fontWeight, textDecoration);
         for (Content content : transformer.getContentList()) {
             containerStack.peek().addContent(content);
         }
@@ -392,7 +403,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
 
         ListExpressionTransformer transformer = new ListExpressionTransformer();
         transformer.transformExpression(globalListDeclarationStatement.getListExpression(),
-                globalListDeclarationStatement.getListId(), fontWeight);
+                globalListDeclarationStatement.getListId(), fontWeight, textDecoration);
         for (Content content : transformer.getContentList()) {
             containerStack.peek().addContent(content);
         }
@@ -406,7 +417,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
 
         ListExpressionTransformer transformer = new ListExpressionTransformer();
         transformer.transformExpression(localListDeclarationStatement.getListExpression(),
-                localListDeclarationStatement.getListId(), fontWeight);
+                localListDeclarationStatement.getListId(), fontWeight, textDecoration);
         for (Content content : transformer.getContentList()) {
             containerStack.peek().addContent(content);
         }
@@ -438,30 +449,30 @@ public final class IRTransformer extends AstItemVisitorAdapter {
                     StringUtils.join("Assign from Userdata XML (iWL): ", dynamicValue.getName()),
                     StringUtils.join(" hit2assext:setScalarVariableValue(var:read('renderSessionUuid'), '", dynamicValue.getName(),
                             "', ./. ) | hit2assext:incrementXmlSequence(var:read('renderSessionUuid')) "),
-                    fontWeight));
+                    fontWeight, textDecoration));
         } else {
             containerStack.peek().addContent(new DynamicContentReference(
                     StringUtils.join("Assign from Userdata XML (oWL): ", dynamicValue.getName()),
                     StringUtils.join(" hit2assext:setScalarVariableValue(var:read('renderSessionUuid'), '", dynamicValue.getName(),
                             "', /Briefdaten/payload/line[@lineNr = hit2assext:getXmlSequence(var:read('renderSessionUuid'))]) ",
                             "| hit2assext:incrementXmlSequence(var:read('renderSessionUuid')) "),
-                    fontWeight));
+                    fontWeight, textDecoration));
         }
     }
 
     @Override
     public void visitInsertDay(InsertDay insertDay) {
-        containerStack.peek().addContent(new DynamicContentReference("Insert Day", " fn:day-from-date(fn:current-date()) ", fontWeight));
+        containerStack.peek().addContent(new DynamicContentReference("Insert Day", " fn:day-from-date(fn:current-date()) ", fontWeight, textDecoration));
     }
 
     @Override
     public void visitInsertMonth(InsertMonth insertMonth) {
-        containerStack.peek().addContent(new DynamicContentReference("Insert Month", " fn:month-from-date(fn:current-date()) ", fontWeight));
+        containerStack.peek().addContent(new DynamicContentReference("Insert Month", " fn:month-from-date(fn:current-date()) ", fontWeight, textDecoration));
     }
 
     @Override
     public void visitInsertYear(InsertYear insertYear) {
-        containerStack.peek().addContent(new DynamicContentReference("Insert Year", " fn:year-from-date(fn:current-date()) ", fontWeight));
+        containerStack.peek().addContent(new DynamicContentReference("Insert Year", " fn:year-from-date(fn:current-date()) ", fontWeight, textDecoration));
     }
 
     /**
@@ -478,7 +489,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         containerStack.peek().addContent(new DynamicContentReference(StringUtils.join("Global Variable: ", globalDeclarationStatement.getId()),
                 StringUtils.join(" hit2assext:createScalarVariable(var:read('renderSessionUuid'), '", globalDeclarationStatement.getId(), "', ",
                         globalDeclarationStatement.getExpression().toXPathString(), ") "
-                ), fontWeight));
+                ), fontWeight, textDecoration));
     }
 
     /**
@@ -494,7 +505,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         }
         containerStack.peek().addContent(new DynamicContentReference(StringUtils.join("Local Variable: ", localDeclarationStatement.getId()),
                 StringUtils.join(" hit2assext:createScalarVariable(var:read('renderSessionUuid'), '", localDeclarationStatement.getId(), "', ",
-                        localDeclarationStatement.getExpression().toXPathString(), ") "), fontWeight));
+                        localDeclarationStatement.getExpression().toXPathString(), ") "), fontWeight, textDecoration));
     }
 
     @Override
@@ -514,7 +525,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
                     StringUtils.join("Scalar Assignment: ", assignmentStatement.getIdExpression().getId()),
                     StringUtils.join("hit2assext:setScalarVariableValue(var:read('renderSessionUuid'), '", assignmentStatement.getIdExpression().getId(),
                             "', ", assignmentStatement.getExpression().toXPathString(), " )"),
-                    fontWeight
+                    fontWeight, textDecoration
             ));
         } else {
             // currently, the only other possibility is: assign a vlaue to a slot of a list variable
@@ -525,7 +536,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
                     StringUtils.join("hit2assext:setListValueAt(var:read('renderSessionUuid'), '",
                             assignmentStatement.getIdExpression().getId(), "', ",
                             assignmentStatement.getIdExpression().getIdxExp1().toXPathString(),
-                            ", ", assignmentStatement.getExpression().toXPathString(), ")"), fontWeight
+                            ", ", assignmentStatement.getExpression().toXPathString(), ")"), fontWeight, textDecoration
             ));
         }
 
@@ -541,13 +552,13 @@ public final class IRTransformer extends AstItemVisitorAdapter {
                 StringUtils.join("Print: ",
                         printStatement.getExpression() instanceof IdExpression ?
                                 ((IdExpression) printStatement.getExpression()).getId() : "()"),
-                printStatement.getExpression().toXPathString(), fontWeight));
+                printStatement.getExpression().toXPathString(), fontWeight, textDecoration));
     }
 
     @Override
     public void visitFixedText(FixedText fixedText) {
         if (!StringUtils.isBlank(fixedText.getText()) || " ".equals(fixedText.getText())) {
-            containerStack.peek().addContent(new Text(fixedText.getText(), fixedText.getText(), fontWeight));
+            containerStack.peek().addContent(new Text(fixedText.getText(), fixedText.getText(), fontWeight, textDecoration));
         }
     }
 

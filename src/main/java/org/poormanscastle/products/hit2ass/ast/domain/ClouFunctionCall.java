@@ -1,15 +1,15 @@
 package org.poormanscastle.products.hit2ass.ast.domain;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.poormanscastle.products.hit2ass.exceptions.HitAssTransformerException;
 import org.poormanscastle.products.hit2ass.tools.HitAssTools;
+
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Represents calls to CLOU specific functions like in listlen("listName").
@@ -104,7 +104,7 @@ public class ClouFunctionCall extends AbstractExpression<Object> {
             return " hit2assext:convert_TMJJJJ_DateToIso8601Format(hit2assext:getScalarVariableValue(var:read('renderSessionUuid'), '" + varName + "')) ";
         } else {
             logger.warn(StringUtils.join(
-                    "Returning dummy value for not yet implemented FunctionCall feature for this function:\n",
+                    "Returning dummy value for not yet implemented FunctionCall feature for this function: ",
                     this.toString()));
             StringBuilder output = new StringBuilder(StringUtils.join(getFunctionName(), "("));
             ExpressionList expressionList = getArgs();

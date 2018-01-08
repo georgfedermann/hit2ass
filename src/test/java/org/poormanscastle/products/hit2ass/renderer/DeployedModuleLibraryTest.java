@@ -11,6 +11,9 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.apache.velocity.app.Velocity;
+import org.apache.velocity.runtime.RuntimeConstants;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.junit.Test;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouBaustein;
 import org.poormanscastle.products.hit2ass.parser.javacc.HitAssAstParser;
@@ -25,6 +28,12 @@ public class DeployedModuleLibraryTest {
 
     @Test
     public void createNewHitAssDeploymentPackageLibrary() throws Exception {
+        Velocity.setProperty(RuntimeConstants.OUTPUT_ENCODING, "UTF-8");
+        Velocity.setProperty(RuntimeConstants.INPUT_ENCODING, "UTF-8");
+        Velocity.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+        Velocity.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+        Velocity.init();
+
         checkState(!StringUtils.isBlank(System.getProperty("hit2ass.clou.encoding")), "Please set system property hit2ass.clou.encoding");
         checkState(!StringUtils.isBlank(System.getProperty("hit2ass.clou.pathToDeployedModuleLibrary")), "Please set system property hit2ass.clou.pathToDeployedModuleLibrary");
         logger.info(StringUtils.join("Using encoding ", System.getProperty("hit2ass.xml.encoding"), " for XMLs."));

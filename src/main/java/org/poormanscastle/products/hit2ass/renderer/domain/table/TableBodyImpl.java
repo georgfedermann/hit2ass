@@ -9,13 +9,23 @@ import java.io.StringWriter;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkState;
+
 public class TableBodyImpl implements TableBody {
 
     private final List<TableRow> tableRows = new LinkedList<>();
 
+    TableBodyImpl(){}
+
     @Override
     public void addTableRow(TableRow tableRow) {
         tableRows.add(tableRow);
+    }
+
+    @Override
+    public TableRow getCurrentRow() {
+        return tableRows.isEmpty() ? null : tableRows.get(tableRows.size() - 1);
     }
 
     @Override

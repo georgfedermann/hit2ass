@@ -70,10 +70,21 @@ public interface Table extends Content {
 
     void addTableColumn(TableColumn column);
 
-    void setTableBody(TableBody body);
+
+    /**
+     *
+     * @return an integer value representing the number of columns in this table
+     */
+    int getColumnCount();
 
     static Table createTable(){
         return new TableImpl();
     }
+
+    /**
+     * add some content to this table
+     * @param content
+     */
+    void addContent(Content content);
 
 }

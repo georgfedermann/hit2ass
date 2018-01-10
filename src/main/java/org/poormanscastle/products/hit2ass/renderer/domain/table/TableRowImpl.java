@@ -13,9 +13,17 @@ public class TableRowImpl implements TableRow {
 
     private final List<TableCell> tableCells = new LinkedList<>();
 
+    TableRowImpl() {
+    }
+
     @Override
     public void addTableCell(TableCell tableCell) {
         tableCells.add(tableCell);
+    }
+
+    @Override
+    public int getSize() {
+        return tableCells.size();
     }
 
     @Override

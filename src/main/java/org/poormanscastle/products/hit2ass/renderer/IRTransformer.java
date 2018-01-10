@@ -8,40 +8,7 @@ import org.apache.log4j.Logger;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
-import org.poormanscastle.products.hit2ass.ast.domain.AssignmentStatement;
-import org.poormanscastle.products.hit2ass.ast.domain.AstItemVisitorAdapter;
-import org.poormanscastle.products.hit2ass.ast.domain.BinaryOperator;
-import org.poormanscastle.products.hit2ass.ast.domain.BinaryOperatorExpression;
-import org.poormanscastle.products.hit2ass.ast.domain.CaseStatement;
-import org.poormanscastle.products.hit2ass.ast.domain.CaseStatementImpl;
-import org.poormanscastle.products.hit2ass.ast.domain.CaseStatementList;
-import org.poormanscastle.products.hit2ass.ast.domain.ClouBausteinImpl;
-import org.poormanscastle.products.hit2ass.ast.domain.ClouFunctionCall;
-import org.poormanscastle.products.hit2ass.ast.domain.CodePosition;
-import org.poormanscastle.products.hit2ass.ast.domain.ConditionalStatement;
-import org.poormanscastle.products.hit2ass.ast.domain.DynamicValue;
-import org.poormanscastle.products.hit2ass.ast.domain.Expression;
-import org.poormanscastle.products.hit2ass.ast.domain.FixedText;
-import org.poormanscastle.products.hit2ass.ast.domain.ForStatement;
-import org.poormanscastle.products.hit2ass.ast.domain.GlobalDeclarationStatement;
-import org.poormanscastle.products.hit2ass.ast.domain.GlobalListDeclarationStatement;
-import org.poormanscastle.products.hit2ass.ast.domain.HitCommandStatement;
-import org.poormanscastle.products.hit2ass.ast.domain.IdExpression;
-import org.poormanscastle.products.hit2ass.ast.domain.IncludeBausteinStatement;
-import org.poormanscastle.products.hit2ass.ast.domain.InsertDay;
-import org.poormanscastle.products.hit2ass.ast.domain.InsertMonth;
-import org.poormanscastle.products.hit2ass.ast.domain.InsertYear;
-import org.poormanscastle.products.hit2ass.ast.domain.ListConcatenationStatement;
-import org.poormanscastle.products.hit2ass.ast.domain.LocalDeclarationStatement;
-import org.poormanscastle.products.hit2ass.ast.domain.LocalListDeclarationStatement;
-import org.poormanscastle.products.hit2ass.ast.domain.MacroCallStatement;
-import org.poormanscastle.products.hit2ass.ast.domain.NumExpression;
-import org.poormanscastle.products.hit2ass.ast.domain.PairCaseStatementList;
-import org.poormanscastle.products.hit2ass.ast.domain.PrintStatement;
-import org.poormanscastle.products.hit2ass.ast.domain.SectionStatement;
-import org.poormanscastle.products.hit2ass.ast.domain.SwitchStatement;
-import org.poormanscastle.products.hit2ass.ast.domain.TextExpression;
-import org.poormanscastle.products.hit2ass.ast.domain.WhileStatement;
+import org.poormanscastle.products.hit2ass.ast.domain.*;
 import org.poormanscastle.products.hit2ass.renderer.domain.CarriageReturn;
 import org.poormanscastle.products.hit2ass.renderer.domain.Container;
 import org.poormanscastle.products.hit2ass.renderer.domain.Content;
@@ -60,6 +27,7 @@ import org.poormanscastle.products.hit2ass.renderer.domain.TextDecoration;
 import org.poormanscastle.products.hit2ass.renderer.domain.WhileLoopFlagValueFlavor;
 import org.poormanscastle.products.hit2ass.renderer.domain.Workspace;
 import org.poormanscastle.products.hit2ass.renderer.domain.WorkspaceContainer;
+import org.poormanscastle.products.hit2ass.renderer.domain.table.Table;
 
 /**
  * Iterates an AST representing a HIT/CLOU text component and converts it into an
@@ -377,6 +345,23 @@ public final class IRTransformer extends AstItemVisitorAdapter {
             case RETURN:
                 containerStack.peek().addContent(new CarriageReturn("NL", hitCommandStatement.getRepetitor()));
                 break;
+            case ZL_NEU:
+                if(tableSpace==null) {
+                    /**
+                     * this could be a HIT/CLOU table preamble.
+                     */
+                    tableSpace = new TableSpace();
+                    tableSpace.startAnchor = hitCommandStatement;
+                    tableSpace.currentStatementAnchor = hitCommandStatement;
+                    tableSpace.table = Table.createTable();
+                    // since a tableSpace was created the IRTransformer will henceforth be in table builder mode.
+                } else {
+                    // this should be the end of a HIT/CLOU table.
+                    containerStack.peek().addContent(tableSpace.table);
+                    tableSpace = null;
+                    // since tableSpace was reset the IRTransformer will hencefoth be in normal mode.
+                }
+                break;
         }
     }
 
@@ -592,6 +577,11 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     /**
      * this variable holds the table information when the IRTransformer has to transform
      * parts of a HIT/CLOU Baustein into a DocFamily table.
+     * If this variable is null than no table processing is going on right now.
+     * When table processing starts, the table builder will create a new object and assign it to the variable thus
+     * documenting the new state of the IRTransformer while processing the table.
+     * When the table processing comes to an end, either because table rendering has finished or because an
+     * exception occurred, this variable will be set to null again.
      */
     private TableSpace tableSpace = null;
     /**
@@ -599,6 +589,33 @@ public final class IRTransformer extends AstItemVisitorAdapter {
      *
      */
     private class TableSpace {
+        /**
+         * this is the HitCommandStatement #^"ZL NEU" where everything took its start.
+         * If the table builder routine finds that this is not a HIT/CLOU table preamble,
+         * the IRTransformer can go back to that statement via this anchor and proceed from there.
+         */
+        private HitCommandStatement startAnchor;
+
+        /**
+         * this variable holds the current element being processed by the table builder.
+         * When the table builder finishes successfully, this will be the element at which the IRTransformer
+         * can start continuing transformation.
+         */
+        private Statement currentStatementAnchor;
+
+        /**
+         * this is the table being built
+         */
+        private Table table;
+
+    }
+
+    /**
+     * if IRTransformer is in normal mode, add content to the containerStack.
+     * if IRTransformer is in table mode, add content to the current table.
+     * @param content
+     */
+    private void addContentToIrTree(Content content){
 
     }
 

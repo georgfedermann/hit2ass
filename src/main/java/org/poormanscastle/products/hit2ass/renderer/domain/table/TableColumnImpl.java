@@ -18,7 +18,7 @@ public class TableColumnImpl implements TableColumn {
      */
     private final static double factorCharacterToCm = 0.3;
 
-    public TableColumnImpl(int width) {
+    TableColumnImpl(int width) {
         this.width = width;
     }
 

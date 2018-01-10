@@ -5,7 +5,7 @@ import org.poormanscastle.products.hit2ass.renderer.domain.AbstractContainer;
 
 public class TableCellImpl extends AbstractContainer implements TableCell {
 
-    public TableCellImpl() {
+    TableCellImpl() {
         super("TableCell", "/velocity/tables/TemplateCell");
     }
 

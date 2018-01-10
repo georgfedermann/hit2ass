@@ -6,4 +6,14 @@ public interface TableRow extends Content {
 
     void addTableCell(TableCell tableCell);
 
+    /**
+     *
+     * @return an integer representing the number of cells contained in this row.
+     */
+    int getSize();
+
+    static TableRow createTableRow(){
+        return new TableRowImpl();
+    }
+
 }

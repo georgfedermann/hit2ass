@@ -106,6 +106,7 @@ public final class HitAssTools {
         System.out.println("  -h  print this help.");
         System.out.println("  -v  print version information.");
         System.out.println("  -a  create AST diagram for the Clou component in dot format. Input data is read from the std input.");
+        System.out.println("      usage: cat B.al003 | hitAssTools.sh -a | dot -Gcharset=latin1 -Tsvg -o B_al003.svg");
         System.out.println("  -x  create DocFamily userdata XML from HIT/CLOU input text file.");
         System.out.println("      Additionally, the script needs to be configured with the Bausteinname and the AeFrNr.");
         System.out.println("      usage: cat hitclou_Order60071.txt | hitAssTools -x \"EK015 130/0001\" > userdata_Order60071.xml");

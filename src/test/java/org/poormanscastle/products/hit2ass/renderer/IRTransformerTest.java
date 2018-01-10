@@ -1,17 +1,11 @@
 package org.poormanscastle.products.hit2ass.renderer;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.io.File;
-import java.net.URL;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.runtime.RuntimeConstants;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.joda.time.DateTime;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.poormanscastle.products.hit2ass.TestUtils;
 import org.poormanscastle.products.hit2ass.ast.domain.AstItemVisitor;
@@ -19,6 +13,11 @@ import org.poormanscastle.products.hit2ass.ast.domain.ClouBaustein;
 import org.poormanscastle.products.hit2ass.parser.javacc.HitAssAstParser;
 import org.poormanscastle.products.hit2ass.renderer.domain.Workspace;
 import org.poormanscastle.products.hit2ass.transformer.EraseBlanksVisitor;
+
+import java.io.File;
+import java.net.URL;
+
+import static org.junit.Assert.*;
 
 /**
  * TODO migrate old unit tests to new test strategy based on AST analyzation.
@@ -31,16 +30,26 @@ public class IRTransformerTest {
     private AstItemVisitor blanksVisitor = new EraseBlanksVisitor();
     private IRTransformer irTransformer = new IRTransformer();
 
-    // @BeforeClass
+    @BeforeClass
     public static void initVelocity() throws Exception {
         // configure to load templates from classpath
-        URL url = IRTransformerTest.class.getResource("/prod/");
-        File file = new File(url.getFile());
-
-        Velocity.setProperty(RuntimeConstants.RESOURCE_LOADER, "file");
-        Velocity.setProperty(RuntimeConstants.FILE_RESOURCE_LOADER_PATH, file.getAbsolutePath());
-        Velocity.setProperty(RuntimeConstants.FILE_RESOURCE_LOADER_CACHE, "true");
+        Velocity.setProperty(RuntimeConstants.OUTPUT_ENCODING, "UTF-8");
+        Velocity.setProperty(RuntimeConstants.INPUT_ENCODING, "UTF-8");
+        Velocity.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+        Velocity.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
         Velocity.init();
+    }
+
+    @Test
+    public void testTableBuilder() throws Exception {
+        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("TableTest"),
+                "ISO8859-1");
+        baustein = parser.CB();
+        baustein.accept(blanksVisitor);
+        baustein.accept(irTransformer);
+        Workspace workspace = irTransformer.getWorkspace();
+        String acr = workspace.getContent();
+        assertFalse(StringUtils.isBlank(acr));
     }
 
     @Test

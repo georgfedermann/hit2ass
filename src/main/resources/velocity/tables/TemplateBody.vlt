@@ -1,4 +1,4 @@
-<Object id="20180108T170930.339-1755.5132655.751416.818" name="Table Body" enabled="True" type="com.assentis.cockpit.bo.BoTableBody">
+<Object id="${docFamUtils.createCockpitElementId()}" name="Table Body" enabled="True" type="com.assentis.cockpit.bo.BoTableBody">
   <Properties>
     <Attributes>
       <Attribute name="Notes"><![CDATA[]]></Attribute>
@@ -82,5 +82,5 @@
     </Attributes>
     <Relations/>
   </Properties>
-${tableRows}
+${tableRowsContent}
 </Object>

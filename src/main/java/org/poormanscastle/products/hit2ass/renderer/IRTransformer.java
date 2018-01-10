@@ -589,4 +589,17 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         return false;
     }
 
+    /**
+     * this variable holds the table information when the IRTransformer has to transform
+     * parts of a HIT/CLOU Baustein into a DocFamily table.
+     */
+    private TableSpace tableSpace = null;
+    /**
+     * this type holds all information needed when the IRTransformer is creating a new table structure.
+     *
+     */
+    private class TableSpace {
+
+    }
+
 }

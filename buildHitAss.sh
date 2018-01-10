@@ -12,9 +12,9 @@ HIT_CLOU_ENCODING=UTF-8
 print_help() {
     echo "build-tool v0.1 brought to you by poor man's castle."
     echo "Usage: ./build.sh arg"
-    echo "Default action is to execute maven builds and copy the artefacts to specified locations on the file system."
+    echo "Default action is h: print this help."
     echo
-    echo "t  build grammar tools package and deploy it to $TOOLS_TARGET_PATH"
+    echo "t  build grammar tools package, install it to local maven repository and deploy it to $TOOLS_TARGET_PATH"
     echo "d  build grammar tools package and deploy it to NEXUS snapshot repository"
     echo "h  print this help"
 }

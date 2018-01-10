@@ -271,7 +271,9 @@ public class PrettyPrintVisitor extends AstItemVisitorAdapter {
 
     @Override
     public void visitGStatement(GStatement gStatement) {
-        addItem("GS", String.valueOf(gStatement.getValue().getValue()));
+        addItem("GS", StringUtils.join(
+                String.valueOf(gStatement.getXpos().getValue()), "/",
+                String.valueOf(gStatement.getValue().getValue())));
         addBufferLine();
     }
 

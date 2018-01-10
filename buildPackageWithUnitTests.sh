@@ -1,0 +1,1 @@
+mvn -Pprod -Dhit2ass.clou.pathToDeployedModuleLibrary=/Users/georg/vms/UbuntuWork/shared/hitass/deployedModuleLibrary/TestLibrary.acr -Dhit2ass.clou.encoding=UTF-8 -DargLine=-Dhit2ass.clou.path=./src/test/resources/clou clean package

@@ -1,14 +1,5 @@
 package org.poormanscastle.products.hit2ass.renderer;
 
-import static com.google.common.base.Preconditions.checkState;
-
-import java.io.ByteArrayInputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.velocity.app.Velocity;
@@ -18,6 +9,15 @@ import org.junit.Test;
 import org.poormanscastle.products.hit2ass.ast.domain.ClouBaustein;
 import org.poormanscastle.products.hit2ass.parser.javacc.HitAssAstParser;
 import org.poormanscastle.products.hit2ass.transformer.ClouBausteinDependencyResolverVisitor;
+
+import java.io.ByteArrayInputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static com.google.common.base.Preconditions.checkState;
 
 /**
  * Created by georg on 03.10.16.

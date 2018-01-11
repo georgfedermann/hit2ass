@@ -83,8 +83,8 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         Velocity.setProperty(RuntimeConstants.OUTPUT_ENCODING, "UTF-8");
         Velocity.setProperty(RuntimeConstants.INPUT_ENCODING, "UTF-8");
         Velocity.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
-        Velocity.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
         Velocity.init();
+        Velocity.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
     }
 
     /**
@@ -361,20 +361,14 @@ public final class IRTransformer extends AstItemVisitorAdapter {
                     /**
                      * this could be a HIT/CLOU table preamble.
                      */
-                    tableSpace = new TableSpace();
-                    tableSpace.startAnchor = hitCommandStatement;
-                    tableSpace.currentStatementAnchor = hitCommandStatement;
-                    tableSpace.table = Table.createTable();
+                    tableSpace = new TableSpace(hitCommandStatement);
                     // since a tableSpace was created the IRTransformer will henceforth be in table builder mode.
                 } else {
                     // this should be the end of a HIT/CLOU table.
                     containerStack.peek().addContent(tableSpace.table);
                     // create a new table space. if this statement is followed by just #G 1 and #G 9 then
                     // there is now table directly following and the tableSpace can be demolished again
-                    tableSpace = new TableSpace();
-                    tableSpace.startAnchor = hitCommandStatement;
-                    tableSpace.currentStatementAnchor = hitCommandStatement;
-                    tableSpace.table = Table.createTable();
+                    tableSpace = new TableSpace(hitCommandStatement);
                     // since tableSpace was reset the IRTransformer will hencefoth be in normal mode.
                 }
                 break;
@@ -663,6 +657,12 @@ public final class IRTransformer extends AstItemVisitorAdapter {
      * this type holds all information needed when the IRTransformer is creating a new table structure.
      */
     private class TableSpace {
+
+        TableSpace(HitCommandStatement startAnchor) {
+            this.currentStatementAnchor = this.startAnchor = startAnchor;
+            table = Table.createTable();
+        }
+
         // flag that indicates that the table is being initialized properly
         private boolean gStatement1Found = false;
         // flag that indicates that the table column definition is finished

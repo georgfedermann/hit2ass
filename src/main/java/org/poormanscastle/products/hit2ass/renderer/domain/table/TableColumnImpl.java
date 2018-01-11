@@ -34,12 +34,13 @@ public class TableColumnImpl implements TableColumn {
 
     @Override
     public String getTranslatedWidth() {
-        return StringUtils.join(Math.round(100 * TableColumnImpl.factorCharacterToCm * width) / 100, " cm");
+        return StringUtils.join(Math.round(100 * TableColumnImpl.factorCharacterToCm * width) / 100.0, " cm");
     }
 
     @Override
     public String getContent() {
         VelocityContext context = VelocityHelper.getVelocityContext();
+        context.put("columnWidth", getTranslatedWidth());
         Template template = Velocity.getTemplate("/velocity/tables/TemplateColumn.vlt");
         StringWriter stringWriter = new StringWriter();
         template.merge(context, stringWriter);

@@ -34,7 +34,7 @@ public class TableBodyImpl implements TableBody {
         StringBuilder tableRowsContent = new StringBuilder();
         tableRows.stream().forEach(tableRow -> tableRowsContent.append(tableRow.getContent()));
         context.put("tableRowsContent", tableRowsContent.toString());
-        Template template = Velocity.getTemplate("/velocity/tables/TemplateBody");
+        Template template = Velocity.getTemplate("/velocity/tables/TemplateBody.vlt");
         StringWriter stringWriter = new StringWriter();
         template.merge(context, stringWriter);
         return stringWriter.toString();

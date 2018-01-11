@@ -27,10 +27,10 @@ public class TableImpl implements Table {
     }
 
     @Override
-    public void addTableColumn(TableColumn column) {
+    public void addTableColumn(int width) {
         checkState(tableBody.getCurrentRow() == null,
                 "No columns can be added after content has been added.");
-        tableColumns.add(column);
+        tableColumns.add(TableColumn.createTableColumnWithSpecifiedWidthinCharacters(width));
     }
 
     @Override
@@ -41,12 +41,23 @@ public class TableImpl implements Table {
         if (currentRow == null) {
             tableBody.addTableRow(currentRow = TableRow.createTableRow());
         }
+        TableCell currentTableCell = currentRow.getCurrentTableCell();
+        if (currentTableCell == null) {
+            currentRow.addTableCell(currentTableCell = TableCell.createTableCell());
+        }
+        currentTableCell.addContent(content);
+    }
+
+    @Override
+    public void startNewCell() {
+        TableRow currentRow = tableBody.getCurrentRow();
+        if (currentRow == null) {
+            tableBody.addTableRow(currentRow = TableRow.createTableRow());
+        }
         if (currentRow.getSize() >= getColumnCount()) {
             tableBody.addTableRow(currentRow = TableRow.createTableRow());
         }
-        TableCell tableCell = TableCell.createTableCell();
-        tableCell.addContent(content);
-        currentRow.addTableCell(tableCell);
+        currentRow.addTableCell(TableCell.createTableCell());
     }
 
     @Override

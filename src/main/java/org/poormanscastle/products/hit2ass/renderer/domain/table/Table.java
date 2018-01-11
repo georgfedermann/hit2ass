@@ -48,12 +48,12 @@ import java.util.List;
  * </pre>
  * This is the idea how to do this:
  * - When the command #^"ZL NEU" is found, a table builder takes over and iterates the AST
- *   until it finds the next instance of #^"ZL NEU" (which will end the table, maybe by starting
- *   the next table ...)
+ * until it finds the next instance of #^"ZL NEU" (which will end the table, maybe by starting
+ * the next table ...)
  * - if the table builder finds #G statements as expected it continues working
  * - if the following statements do not reflect the hit/clou logic of a table structure as outlined above,
- *   the table builder finishes and throws a NoTableFoundException so the IRTransformer knows that the
- *   given #^"ZL NEU" statement cannot be interpreted as a table preamble.
+ * the table builder finishes and throws a NoTableFoundException so the IRTransformer knows that the
+ * given #^"ZL NEU" statement cannot be interpreted as a table preamble.
  * - the table builder will create an irtree.Table object
  * - the table builder will create irtree.Column objects as motivated by #G statements and add the to the table
  * - the table builder will create one irtree.Body object and add it to the table
@@ -61,28 +61,33 @@ import java.util.List;
  * - the table builder will create one irtree.Cell object and add it to the available row
  * - the table builder will add all content to the available cell
  * - when a tab stop is encountered, the table builder will create a new irtree.Cell object and add it to the row
- *   except if that row is already full (number of cells = number of columns), then the
- *   table builder will create a new row, add it to the body, and then add the cell to the available row.
+ * except if that row is already full (number of cells = number of columns), then the
+ * table builder will create a new row, add it to the body, and then add the cell to the available row.
  * - When the #^"ZL NEU" statement is encountered, the table builder returns whatever it has
- *   constructed so far, no questions asked ...
+ * constructed so far, no questions asked ...
  */
 public interface Table extends Content {
 
-    void addTableColumn(TableColumn column);
+    void addTableColumn(int width);
 
 
     /**
-     *
      * @return an integer value representing the number of columns in this table
      */
     int getColumnCount();
 
-    static Table createTable(){
+    static Table createTable() {
         return new TableImpl();
     }
 
     /**
+     * this method will be called by the IRTransformer, if in table builder mode a TABU marker is found.
+     */
+    void startNewCell();
+
+    /**
      * add some content to this table
+     *
      * @param content
      */
     void addContent(Content content);

@@ -29,6 +29,8 @@ import org.poormanscastle.products.hit2ass.renderer.domain.Workspace;
 import org.poormanscastle.products.hit2ass.renderer.domain.WorkspaceContainer;
 import org.poormanscastle.products.hit2ass.renderer.domain.table.Table;
 
+import static com.google.common.base.Preconditions.checkState;
+
 /**
  * Iterates an AST representing a HIT/CLOU text component and converts it into an
  * Intermediate Representation tree, one more step into the direction of a
@@ -126,7 +128,8 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     public boolean proceedWithForStatement(ForStatement forStatement) {
         ForLoop forLoop = new ForLoop(StringUtils.join("FOR:", StringEscapeUtils.escapeXml10(forStatement.getRepetitionCount().toXPathString())),
                 forStatement.getRepetitionCount());
-        containerStack.peek().addContent(forLoop);
+        addContentToIrTree(forLoop);
+        // containerStack.peek().addContent(forLoop);
 
         IRTransformer spinOffTransformer = spinOff();
         spinOffTransformer.containerStack.push(forLoop);
@@ -144,7 +147,8 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         IdExpression switchExpression = (IdExpression) switchStatement.getExpression();
         // iterate over the SWITCH statement's CASE branches
         CaseStatementList caseStatementList = (CaseStatementList) switchStatement.getCaseStatement();
-        containerStack.peek().addContent(convertAndAppendCaseStatementToIfThenElseParagraph(caseStatementList, switchExpression));
+        addContentToIrTree(convertAndAppendCaseStatementToIfThenElseParagraph(caseStatementList, switchExpression));
+        // containerStack.peek().addContent(convertAndAppendCaseStatementToIfThenElseParagraph(caseStatementList, switchExpression));
         return false;
     }
 
@@ -212,7 +216,8 @@ public final class IRTransformer extends AstItemVisitorAdapter {
             insideWhileLoop = true;
             WhileLoopFlagValueFlavor whileLoop = new WhileLoopFlagValueFlavor("WHILE loop flag value flavor",
                     whileStatement.getCondition());
-            containerStack.peek().addContent(whileLoop);
+            addContentToIrTree(whileLoop);
+            // containerStack.peek().addContent(whileLoop);
 
             IRTransformer spinOffTransformer = spinOff();
             spinOffTransformer.containerStack.push(whileLoop);
@@ -236,7 +241,8 @@ public final class IRTransformer extends AstItemVisitorAdapter {
             ForLoop forLoop = new ForLoop(StringUtils.join("WHILE(FOR_flavor):", StringEscapeUtils.escapeXml10(whileStatement.getCondition().toXPathString())),
                     forLoopCondition);
 
-            containerStack.peek().addContent(forLoop);
+            addContentToIrTree(forLoop);
+            // containerStack.peek().addContent(forLoop);
             IRTransformer spinOffTransformer = spinOff();
             spinOffTransformer.containerStack.push(forLoop);
             whileStatement.getWhileBody().accept(spinOffTransformer);
@@ -254,7 +260,8 @@ public final class IRTransformer extends AstItemVisitorAdapter {
                 conditionalStatement.getCondition());
         logger.info(StringUtils.join("Creating IF statement for workspace ", getWorkspace().getWorkspaceName(), " with condition ",
                 ifParagraphTitle));
-        containerStack.peek().addContent(ifParagraph);
+        addContentToIrTree(ifParagraph);
+        // containerStack.peek().addContent(ifParagraph);
 
         if (conditionalStatement.getThenElement() != null) {
             IRTransformer spinOffTransformer = spinOff();
@@ -292,7 +299,11 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         } else if ("USAUS".equals(macroCallStatement.getMacroId())) {
             textDecoration = TextDecoration.INHERIT;
         } else if ("TABU".equals(macroCallStatement.getMacroId())) {
-            containerStack.peek().addContent(new Text("TABU", "       ", fontWeight, textDecoration));
+            if (tableSpace == null) {
+                containerStack.peek().addContent(new Text("TABU", "       ", fontWeight, textDecoration));
+            } else {
+                tableSpace.table.startNewCell();
+            }
         } else if ("ZLTZ12".equals(macroCallStatement.getMacroId())) {
             // this is the MACRO to switch to justified text alignment.
             // Check if the current parent element on the container stack is a paragraph.
@@ -346,7 +357,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
                 containerStack.peek().addContent(new CarriageReturn("NL", hitCommandStatement.getRepetitor()));
                 break;
             case ZL_NEU:
-                if(tableSpace==null) {
+                if (tableSpace == null) {
                     /**
                      * this could be a HIT/CLOU table preamble.
                      */
@@ -358,11 +369,54 @@ public final class IRTransformer extends AstItemVisitorAdapter {
                 } else {
                     // this should be the end of a HIT/CLOU table.
                     containerStack.peek().addContent(tableSpace.table);
-                    tableSpace = null;
+                    // create a new table space. if this statement is followed by just #G 1 and #G 9 then
+                    // there is now table directly following and the tableSpace can be demolished again
+                    tableSpace = new TableSpace();
+                    tableSpace.startAnchor = hitCommandStatement;
+                    tableSpace.currentStatementAnchor = hitCommandStatement;
+                    tableSpace.table = Table.createTable();
                     // since tableSpace was reset the IRTransformer will hencefoth be in normal mode.
                 }
                 break;
         }
+    }
+
+    @Override
+    public void visitGStatement(GStatement gStatement) {
+        int xpos = (Integer) gStatement.getXpos().getValue();
+        int code = (Integer) gStatement.getValue().getValue();
+        switch (code) {
+            case 1:
+                // code 1 stands for the left page margin
+                checkState(tableSpace.lastTabStopPosition == -1, "before #G code 1 the last tab position must be -1");
+                checkState(!tableSpace.gStatement1Found, "#G code 1 appears to be listed more than once");
+                checkState(!tableSpace.gStatement8Found, "#G code 8 appears to have been listed before code 1");
+                tableSpace.gStatement1Found = true;
+                tableSpace.lastTabStopPosition = xpos;
+                break;
+            case 2:
+                // code 2 stands probably for alignment left
+            case 4:
+                // code 4 stans probably for alignment right
+                checkState(tableSpace.gStatement1Found, StringUtils.join("#G col def code ", code, " appears to come before code 1"));
+                tableSpace.table.addTableColumn(xpos - tableSpace.lastTabStopPosition);
+                tableSpace.lastTabStopPosition = xpos;
+                break;
+            case 8:
+                // code 8 stands probably for right page margin
+                checkState(tableSpace.gStatement1Found, StringUtils.join("#G col def code ", code, " appears to come before code 1"));
+                tableSpace.gStatement8Found = true; // from now on it's ok to add content to this table
+                if (tableSpace.table.getColumnCount() > 0) {
+                    tableSpace.table.addTableColumn(xpos - tableSpace.lastTabStopPosition);
+                    tableSpace.lastTabStopPosition = xpos;
+                } else {
+                    // this was not a preamble to a new table but just a setting things straight for
+                    // normal page layout again.
+                    tableSpace = null;
+                }
+                break;
+        }
+        super.visitGStatement(gStatement);
     }
 
     @Override
@@ -376,35 +430,42 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         transformer.transformExpression(listConcatenationStatement.getListExpression(), listConcatenationStatement.getListId(),
                 fontWeight, textDecoration);
         for (Content content : transformer.getContentList()) {
-            containerStack.peek().addContent(content);
+            addContentToIrTree(content);
+            // containerStack.peek().addContent(content);
         }
     }
 
     @Override
     public void visitGlobalListDeclarationStatement(GlobalListDeclarationStatement globalListDeclarationStatement) {
         // add list declaration statement
-        containerStack.peek().addContent(new ListDeclaration(StringUtils.join("Listdeclaration: ", globalListDeclarationStatement.getListId()),
+        addContentToIrTree(new ListDeclaration(StringUtils.join("Listdeclaration: ", globalListDeclarationStatement.getListId()),
                 globalListDeclarationStatement.getListId()));
+        // containerStack.peek().addContent(new ListDeclaration(StringUtils.join("Listdeclaration: ", globalListDeclarationStatement.getListId()),
+        //        globalListDeclarationStatement.getListId()));
 
         ListExpressionTransformer transformer = new ListExpressionTransformer();
         transformer.transformExpression(globalListDeclarationStatement.getListExpression(),
                 globalListDeclarationStatement.getListId(), fontWeight, textDecoration);
         for (Content content : transformer.getContentList()) {
-            containerStack.peek().addContent(content);
+            addContentToIrTree(content);
+            // containerStack.peek().addContent(content);
         }
     }
 
     @Override
     public void visitLocalListDeclarationStatement(LocalListDeclarationStatement localListDeclarationStatement) {
         // add list declaration statement
-        containerStack.peek().addContent(new ListDeclaration(StringUtils.join("Listdeclaration: ", localListDeclarationStatement.getListId()),
+        addContentToIrTree(new ListDeclaration(StringUtils.join("Listdeclaration: ", localListDeclarationStatement.getListId()),
                 localListDeclarationStatement.getListId()));
+        // containerStack.peek().addContent(new ListDeclaration(StringUtils.join("Listdeclaration: ", localListDeclarationStatement.getListId()),
+        //        localListDeclarationStatement.getListId()));
 
         ListExpressionTransformer transformer = new ListExpressionTransformer();
         transformer.transformExpression(localListDeclarationStatement.getListExpression(),
                 localListDeclarationStatement.getListId(), fontWeight, textDecoration);
         for (Content content : transformer.getContentList()) {
-            containerStack.peek().addContent(content);
+            addContentToIrTree(content);
+            // containerStack.peek().addContent(content);
         }
     }
 
@@ -414,7 +475,8 @@ public final class IRTransformer extends AstItemVisitorAdapter {
             logger.info(StringUtils.join("Found SectionStatement ", sectionStatement.toString(),
                     " at ", sectionStatement.getCodePosition()));
         }
-        containerStack.peek().addContent(new CarriageReturn("NL", new NumExpression(CodePosition.createZeroPosition(), 1)));
+        addContentToIrTree(new CarriageReturn("NL", new NumExpression(CodePosition.createZeroPosition(), 1)));
+        // containerStack.peek().addContent(new CarriageReturn("NL", new NumExpression(CodePosition.createZeroPosition(), 1)));
     }
 
     /**
@@ -430,13 +492,15 @@ public final class IRTransformer extends AstItemVisitorAdapter {
                     " at ", dynamicValue.getCodePosition()));
         }
         if (insideWhileLoop) {
-            containerStack.peek().addContent(new DynamicContentReference(
+            // containerStack.peek().addContent(new DynamicContentReference(
+            addContentToIrTree(new DynamicContentReference(
                     StringUtils.join("Assign from Userdata XML (iWL): ", dynamicValue.getName()),
                     StringUtils.join(" hit2assext:setScalarVariableValue(var:read('renderSessionUuid'), '", dynamicValue.getName(),
                             "', ./. ) | hit2assext:incrementXmlSequence(var:read('renderSessionUuid')) "),
                     fontWeight, textDecoration));
         } else {
-            containerStack.peek().addContent(new DynamicContentReference(
+            // containerStack.peek().addContent(new DynamicContentReference(
+            addContentToIrTree(new DynamicContentReference(
                     StringUtils.join("Assign from Userdata XML (oWL): ", dynamicValue.getName()),
                     StringUtils.join(" hit2assext:setScalarVariableValue(var:read('renderSessionUuid'), '", dynamicValue.getName(),
                             "', /Briefdaten/payload/line[@lineNr = hit2assext:getXmlSequence(var:read('renderSessionUuid'))]) ",
@@ -447,17 +511,20 @@ public final class IRTransformer extends AstItemVisitorAdapter {
 
     @Override
     public void visitInsertDay(InsertDay insertDay) {
-        containerStack.peek().addContent(new DynamicContentReference("Insert Day", " fn:day-from-date(fn:current-date()) ", fontWeight, textDecoration));
+        addContentToIrTree(new DynamicContentReference("Insert Day", " fn:day-from-date(fn:current-date()) ", fontWeight, textDecoration));
+        // containerStack.peek().addContent(new DynamicContentReference("Insert Day", " fn:day-from-date(fn:current-date()) ", fontWeight, textDecoration));
     }
 
     @Override
     public void visitInsertMonth(InsertMonth insertMonth) {
-        containerStack.peek().addContent(new DynamicContentReference("Insert Month", " fn:month-from-date(fn:current-date()) ", fontWeight, textDecoration));
+        addContentToIrTree(new DynamicContentReference("Insert Month", " fn:month-from-date(fn:current-date()) ", fontWeight, textDecoration));
+        // containerStack.peek().addContent(new DynamicContentReference("Insert Month", " fn:month-from-date(fn:current-date()) ", fontWeight, textDecoration));
     }
 
     @Override
     public void visitInsertYear(InsertYear insertYear) {
-        containerStack.peek().addContent(new DynamicContentReference("Insert Year", " fn:year-from-date(fn:current-date()) ", fontWeight, textDecoration));
+        addContentToIrTree(new DynamicContentReference("Insert Year", " fn:year-from-date(fn:current-date()) ", fontWeight, textDecoration));
+        // containerStack.peek().addContent(new DynamicContentReference("Insert Year", " fn:year-from-date(fn:current-date()) ", fontWeight, textDecoration));
     }
 
     /**
@@ -471,7 +538,8 @@ public final class IRTransformer extends AstItemVisitorAdapter {
             logger.info(StringUtils.join("Found GlobalDeclarationStatement ", globalDeclarationStatement.toString(),
                     " at ", globalDeclarationStatement.getCodePosition()));
         }
-        containerStack.peek().addContent(new DynamicContentReference(StringUtils.join("Global Variable: ", globalDeclarationStatement.getId()),
+        // containerStack.peek().addContent(new DynamicContentReference(StringUtils.join("Global Variable: ", globalDeclarationStatement.getId()),
+        addContentToIrTree(new DynamicContentReference(StringUtils.join("Global Variable: ", globalDeclarationStatement.getId()),
                 StringUtils.join(" hit2assext:createScalarVariable(var:read('renderSessionUuid'), '", globalDeclarationStatement.getId(), "', ",
                         globalDeclarationStatement.getExpression().toXPathString(), ") "
                 ), fontWeight, textDecoration));
@@ -488,7 +556,8 @@ public final class IRTransformer extends AstItemVisitorAdapter {
             logger.info(StringUtils.join("Found LocalDeclarationStatement ", localDeclarationStatement.toString(),
                     " at ", localDeclarationStatement.getCodePosition()));
         }
-        containerStack.peek().addContent(new DynamicContentReference(StringUtils.join("Local Variable: ", localDeclarationStatement.getId()),
+        // containerStack.peek().addContent(new DynamicContentReference(StringUtils.join("Local Variable: ", localDeclarationStatement.getId()),
+        addContentToIrTree(new DynamicContentReference(StringUtils.join("Local Variable: ", localDeclarationStatement.getId()),
                 StringUtils.join(" hit2assext:createScalarVariable(var:read('renderSessionUuid'), '", localDeclarationStatement.getId(), "', ",
                         localDeclarationStatement.getExpression().toXPathString(), ") "), fontWeight, textDecoration));
     }
@@ -506,7 +575,8 @@ public final class IRTransformer extends AstItemVisitorAdapter {
             // assign a value to a scalar variable
             // uses the DocDesign DocumentVariable mechanism
             // var:write('varName', XPath Expression)
-            containerStack.peek().addContent(new DynamicContentReference(
+            // containerStack.peek().addContent(new DynamicContentReference(
+            addContentToIrTree(new DynamicContentReference(
                     StringUtils.join("Scalar Assignment: ", assignmentStatement.getIdExpression().getId()),
                     StringUtils.join("hit2assext:setScalarVariableValue(var:read('renderSessionUuid'), '", assignmentStatement.getIdExpression().getId(),
                             "', ", assignmentStatement.getExpression().toXPathString(), " )"),
@@ -516,7 +586,8 @@ public final class IRTransformer extends AstItemVisitorAdapter {
             // currently, the only other possibility is: assign a vlaue to a slot of a list variable
             // uses the hit2assext list mechanisms
             // hit2assext:setListValueAt(var:read('renderSessionUuid'), assignmentStatement.getExpression().getId(), value XPath)
-            containerStack.peek().addContent(new DynamicContentReference(
+            //containerStack.peek().addContent(new DynamicContentReference(
+            addContentToIrTree(new DynamicContentReference(
                     StringUtils.join("List Assignment: ", assignmentStatement.getIdExpression().getId()),
                     StringUtils.join("hit2assext:setListValueAt(var:read('renderSessionUuid'), '",
                             assignmentStatement.getIdExpression().getId(), "', ",
@@ -533,7 +604,8 @@ public final class IRTransformer extends AstItemVisitorAdapter {
             logger.info(StringUtils.join("Found PrintStatement ", printStatement.toString(),
                     " at ", printStatement.getCodePosition()));
         }
-        containerStack.peek().addContent(new DynamicContentReference(
+        // containerStack.peek().addContent(new DynamicContentReference(
+        addContentToIrTree(new DynamicContentReference(
                 StringUtils.join("Print: ",
                         printStatement.getExpression() instanceof IdExpression ?
                                 ((IdExpression) printStatement.getExpression()).getId() : "()"),
@@ -543,7 +615,8 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     @Override
     public void visitFixedText(FixedText fixedText) {
         if (!StringUtils.isBlank(fixedText.getText()) || " ".equals(fixedText.getText())) {
-            containerStack.peek().addContent(new Text(fixedText.getText(), fixedText.getText(), fontWeight, textDecoration));
+            // containerStack.peek().addContent(new Text(fixedText.getText(), fixedText.getText(), fontWeight, textDecoration));
+            addContentToIrTree(new Text(fixedText.getText(), fixedText.getText(), fontWeight, textDecoration));
         }
     }
 
@@ -566,7 +639,8 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         // Fetch the deployed module library
         // then look up the deployed module corresponding to the given path to baustein
         // create a DeployedModuleReference and insert it into the container stack
-        containerStack.peek().addContent(DeployedModuleDock.createDeployedModuleDock(
+        // containerStack.peek().addContent(DeployedModuleDock.createDeployedModuleDock(
+        addContentToIrTree(DeployedModuleDock.createDeployedModuleDock(
                 StringUtils.join("Call ", includeBausteinStatement.getCalledModuleName()),
                 includeBausteinStatement.getCalledModuleName(),
                 includeBausteinStatement.getCalledModuleElementId(), includeBausteinStatement.isLocalModuleReferences()));
@@ -584,11 +658,19 @@ public final class IRTransformer extends AstItemVisitorAdapter {
      * exception occurred, this variable will be set to null again.
      */
     private TableSpace tableSpace = null;
+
     /**
      * this type holds all information needed when the IRTransformer is creating a new table structure.
-     *
      */
     private class TableSpace {
+        // flag that indicates that the table is being initialized properly
+        private boolean gStatement1Found = false;
+        // flag that indicates that the table column definition is finished
+        private boolean gStatement8Found = false;
+        // this value is used to calculate the width of the current column
+        private int lastTabStopPosition = -1;
+
+
         /**
          * this is the HitCommandStatement #^"ZL NEU" where everything took its start.
          * If the table builder routine finds that this is not a HIT/CLOU table preamble,
@@ -613,10 +695,15 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     /**
      * if IRTransformer is in normal mode, add content to the containerStack.
      * if IRTransformer is in table mode, add content to the current table.
+     *
      * @param content
      */
-    private void addContentToIrTree(Content content){
-
+    private void addContentToIrTree(Content content) {
+        if (tableSpace == null) {
+            containerStack.peek().addContent(content);
+        } else {
+            tableSpace.table.addContent(content);
+        }
     }
 
 }

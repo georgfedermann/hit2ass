@@ -22,6 +22,11 @@ public class TableRowImpl implements TableRow {
     }
 
     @Override
+    public TableCell getCurrentTableCell() {
+        return tableCells.size() == 0 ? null : tableCells.get(tableCells.size() - 1);
+    }
+
+    @Override
     public int getSize() {
         return tableCells.size();
     }
@@ -32,7 +37,7 @@ public class TableRowImpl implements TableRow {
         StringBuilder tableCellsContent = new StringBuilder();
         tableCells.stream().forEach(tableCell -> tableCellsContent.append(tableCell.getContent()));
         context.put("tableCells", tableCellsContent.toString());
-        Template template = Velocity.getTemplate("/velocity/tables/TableRow.vlt");
+        Template template = Velocity.getTemplate("/velocity/tables/TemplateRow.vlt");
         StringWriter stringWriter = new StringWriter();
         template.merge(context, stringWriter);
         return stringWriter.toString();

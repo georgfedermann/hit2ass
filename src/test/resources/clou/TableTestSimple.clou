@@ -1,0 +1,34 @@
+#
+
+  Durch die Zahlung des Überweisungsbetrages von@
+  #^"RETURN"
+
+ #D W "EUR"
+ #D dbruckza409 "258,94"
+ #D dbuebtrg "36.114,54"
+ #D dbuesum "36.373,48"
+
+  #^"ZL NEU"
+  #G  9 1
+  #G 30 2
+  #G 46 4
+  #G 88 8
+  #^"RETURN"
+
+       #$TABU#*##> W#$TABU#*##> dbruckza409@
+       #$TABU#*##$ USEIN #> W#$TABU#*##> dbuebtrg #$USAUS @
+       somit insgesamt#$TABU#*##> W#$TABU#*##> dbuesum@
+       #$TABU#*##> W#$TABU#*##> dbuebtrg@
+  #^"RETURN"
+
+  gelten die nachstehend angeführten Zeiten als Versicherungszeiten in
+  der Pensionsversicherung (§ 313 ASVG):@
+
+  #^"RETURN"
+
+  #^"ZL NEU"
+  #^"W LÖSCHEN"
+  #G  9 1
+  #G 88 8
+  #^"RETURN"
+Das hier soll wieder ausserhalb stehen.

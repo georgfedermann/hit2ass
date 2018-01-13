@@ -53,6 +53,18 @@ public class IRTransformerTest {
     }
 
     @Test
+    public void testTableBuilderSimple() throws Exception {
+        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("TableTestSimple"),
+                "ISO8859-1");
+        baustein = parser.CB();
+        baustein.accept(blanksVisitor);
+        baustein.accept(irTransformer);
+        Workspace workspace = irTransformer.getWorkspace();
+        String acr = workspace.getContent();
+        assertFalse(StringUtils.isBlank(acr));
+    }
+
+    @Test
     public void testPrintStatementSequence() throws Exception {
         parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("PrintStatementSequence"), "ISO8859-1");
         baustein = parser.CB();

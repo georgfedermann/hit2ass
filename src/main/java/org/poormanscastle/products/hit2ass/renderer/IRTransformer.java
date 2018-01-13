@@ -83,8 +83,8 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         Velocity.setProperty(RuntimeConstants.OUTPUT_ENCODING, "UTF-8");
         Velocity.setProperty(RuntimeConstants.INPUT_ENCODING, "UTF-8");
         Velocity.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
-        Velocity.init();
         Velocity.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+        Velocity.init();
     }
 
     /**
@@ -100,6 +100,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         transformer.fontWeight = fontWeight;
         transformer.insideWhileLoop = insideWhileLoop;
         transformer.workspace = workspace;
+        transformer.tableSpace = tableSpace;
         return transformer;
     }
 
@@ -354,9 +355,11 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         }
         switch (hitCommandStatement.getHitCommand()) {
             case RETURN:
+                logger.info("Found HitCommand RETURN");
                 containerStack.peek().addContent(new CarriageReturn("NL", hitCommandStatement.getRepetitor()));
                 break;
             case ZL_NEU:
+                logger.info("Found HitCommand ZL_NEU");
                 if (tableSpace == null) {
                     /**
                      * this could be a HIT/CLOU table preamble.
@@ -365,11 +368,18 @@ public final class IRTransformer extends AstItemVisitorAdapter {
                     // since a tableSpace was created the IRTransformer will henceforth be in table builder mode.
                 } else {
                     // this should be the end of a HIT/CLOU table.
-                    containerStack.peek().addContent(tableSpace.table);
+                    // containerStack.peek().addContent(tableSpace.table); // bug: table is added to paragraph which is not allowed in DocFamily
+                    if (containerStack.peek() instanceof IfThenParagraph || containerStack.peek() instanceof IfElseParagraph) {
+                        containerStack.peek().addContent(tableSpace.table);
+                    } else {
+                        containerStack.push(tableSpace.table);
+                        containerStack.push(new Paragraph("1st paragraph after table"));
+                    }
+
                     // create a new table space. if this statement is followed by just #G 1 and #G 9 then
                     // there is now table directly following and the tableSpace can be demolished again
                     tableSpace = new TableSpace(hitCommandStatement);
-                    // since tableSpace was reset the IRTransformer will hencefoth be in normal mode.
+                    // since tableSpace was reset the IRTransformer will henceforth be in normal mode.
                 }
                 break;
         }
@@ -401,7 +411,6 @@ public final class IRTransformer extends AstItemVisitorAdapter {
                 checkState(tableSpace.gStatement1Found, StringUtils.join("#G col def code ", code, " appears to come before code 1"));
                 tableSpace.gStatement8Found = true; // from now on it's ok to add content to this table
                 if (tableSpace.table.getColumnCount() > 0) {
-                    tableSpace.table.addTableColumn(xpos - tableSpace.lastTabStopPosition);
                     tableSpace.lastTabStopPosition = xpos;
                 } else {
                     // this was not a preamble to a new table but just a setting things straight for

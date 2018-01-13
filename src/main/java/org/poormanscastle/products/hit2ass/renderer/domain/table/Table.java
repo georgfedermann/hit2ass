@@ -2,6 +2,7 @@ package org.poormanscastle.products.hit2ass.renderer.domain.table;
 
 import org.apache.velocity.VelocityContext;
 import org.poormanscastle.products.hit2ass.renderer.domain.AbstractContainer;
+import org.poormanscastle.products.hit2ass.renderer.domain.Container;
 import org.poormanscastle.products.hit2ass.renderer.domain.Content;
 
 import java.util.List;
@@ -66,7 +67,7 @@ import java.util.List;
  * - When the #^"ZL NEU" statement is encountered, the table builder returns whatever it has
  * constructed so far, no questions asked ...
  */
-public interface Table extends Content {
+public interface Table extends Container {
 
     void addTableColumn(int width);
 

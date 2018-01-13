@@ -15,8 +15,9 @@ public class TableColumnImpl implements TableColumn {
 
     /**
      * this factor shall help calculate the width of a column in cm which is stated in characters between tab stops.
+     * first guess is a 12th of an inch (12cpi) => 0.212 cm
      */
-    private final static double factorCharacterToCm = 0.3;
+    private final static double factorCharacterToCm = 0.212;
 
     TableColumnImpl(int width) {
         this.width = width;

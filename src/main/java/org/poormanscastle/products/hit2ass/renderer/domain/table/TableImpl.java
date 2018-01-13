@@ -1,5 +1,6 @@
 package org.poormanscastle.products.hit2ass.renderer.domain.table;
 
+import org.apache.log4j.Logger;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
@@ -14,10 +15,13 @@ import static com.google.common.base.Preconditions.checkState;
 
 public class TableImpl implements Table {
 
+    private final static Logger logger = Logger.getLogger(TableImpl.class);
+
     private final List<TableColumn> tableColumns = new LinkedList<>();
     private final TableBody tableBody;
 
     TableImpl() {
+        logger.info("Creating a new table instance");
         tableBody = TableBody.createTableBody();
     }
 
@@ -74,4 +78,18 @@ public class TableImpl implements Table {
         return stringWriter.toString();
     }
 
+    @Override
+    public List<Content> getComponents() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Content getContentAt(int index) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void addContentAt(Content content, int index) {
+        throw new UnsupportedOperationException();
+    }
 }

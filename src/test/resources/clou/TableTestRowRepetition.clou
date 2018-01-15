@@ -1,0 +1,25 @@
+#
+Hello dear customer, please find a table below
+
+               #^ "ZL NEU"
+               #^ "W LÖSCHEN"
+               #G 24 1
+               #G 57 2
+               #G 70 4
+               #G 88 8
+               #^ "RETURN"
+
+#= listschleif 5
+#= listind 0
+#W listschleif
+  Zeile Nummer #> listind #$TABU#*# Anzahl Zeilen: #> listschleif #$TABU#*# argl
+  #= listind listind + 1
+#
+
+
+              #^ "ZL NEU"
+              #^ "W LÖSCHEN"
+              #G 9 1
+              #G 88 8
+              #^ "RETURN"
+

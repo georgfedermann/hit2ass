@@ -28,6 +28,7 @@ import org.poormanscastle.products.hit2ass.renderer.domain.WhileLoopFlagValueFla
 import org.poormanscastle.products.hit2ass.renderer.domain.Workspace;
 import org.poormanscastle.products.hit2ass.renderer.domain.WorkspaceContainer;
 import org.poormanscastle.products.hit2ass.renderer.domain.table.Table;
+import org.poormanscastle.products.hit2ass.renderer.domain.table.TableRowRepetition;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -127,14 +128,37 @@ public final class IRTransformer extends AstItemVisitorAdapter {
 
     @Override
     public boolean proceedWithForStatement(ForStatement forStatement) {
-        ForLoop forLoop = new ForLoop(StringUtils.join("FOR:", StringEscapeUtils.escapeXml10(forStatement.getRepetitionCount().toXPathString())),
-                forStatement.getRepetitionCount());
-        addContentToIrTree(forLoop);
-        // containerStack.peek().addContent(forLoop);
+        // ForStatement represents something like #W listIndex, where listIndex is an integer that indicates
+        // the number of requested iterations.
 
-        IRTransformer spinOffTransformer = spinOff();
-        spinOffTransformer.containerStack.push(forLoop);
-        forStatement.getForBody().accept(spinOffTransformer);
+        // make a guess here:
+        // when within a table the loop structure requests that the current table row shall be repeated.
+        if (tableSpace == null) {
+            ForLoop forLoop = new ForLoop(StringUtils.join("FOR:", StringEscapeUtils.escapeXml10(forStatement.getRepetitionCount().toXPathString())),
+                    forStatement.getRepetitionCount());
+            addContentToIrTree(forLoop);
+            // containerStack.peek().addContent(forLoop);
+
+            IRTransformer spinOffTransformer = spinOff();
+            spinOffTransformer.containerStack.push(forLoop);
+            forStatement.getForBody().accept(spinOffTransformer);
+        } else {
+            // make a guess: the repetition needs its content to be repeated and each repetition
+            // shall be displayed in its own table row. This also means that the repetition should
+            // contain as many cells => #TAB markers, as there are columns defined on the table.
+            // theoretically, the implemented table mechanism should create rows as needed. so, next time
+            // a row is instantiated (when content from within the loop is added), that row shall get the
+            // repetition appended.
+            // strategy: push the repetition onto the tableSpace and let the table builder consume it when
+            // creating the next table row.
+            checkState(tableSpace.table != null, "in FOR statement, tableSpace was != null, and contained table was null!");
+            tableSpace.table.setTableRowRepetition(TableRowRepetition.createTableRowRepetition(forStatement.getRepetitionCount()));
+            IRTransformer spinOffTransformer = spinOff();
+            // the contents should now get added to the current table.
+            tableSpace.processingForBody = true;
+            forStatement.getForBody().accept(spinOffTransformer);
+            tableSpace.processingForBody = false;
+        }
         // the visit logic gets handled in the proceedWith method, so it returns "false" so that
         // the visit method won't get called.
         return false;
@@ -213,6 +237,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         // the following are not sure fire checks, but they depict the situations found in the legacy code base.
         if ((loopCondition.getLhs() instanceof IdExpression && loopCondition.getRhs() instanceof TextExpression) ||
                 (loopCondition.getLhs() instanceof TextExpression && loopCondition.getRhs() instanceof IdExpression)) {
+            // e.g. #W l_element <> '--'
             // handle this as WhileFlagValueFlavor
             insideWhileLoop = true;
             WhileLoopFlagValueFlavor whileLoop = new WhileLoopFlagValueFlavor("WHILE loop flag value flavor",
@@ -239,14 +264,29 @@ public final class IRTransformer extends AstItemVisitorAdapter {
                             BinaryOperator.PLUS, forLoopCondition);
                 }
             }
-            ForLoop forLoop = new ForLoop(StringUtils.join("WHILE(FOR_flavor):", StringEscapeUtils.escapeXml10(whileStatement.getCondition().toXPathString())),
-                    forLoopCondition);
+            // make a guess here:
+            // when within a table the loop structure requests that the current table row shall be repeated.
+            if (tableSpace == null) {
+                ForLoop forLoop = new ForLoop(StringUtils.join("WHILE(FOR_flavor):", StringEscapeUtils.escapeXml10(whileStatement.getCondition().toXPathString())),
+                        forLoopCondition);
 
-            addContentToIrTree(forLoop);
-            // containerStack.peek().addContent(forLoop);
-            IRTransformer spinOffTransformer = spinOff();
-            spinOffTransformer.containerStack.push(forLoop);
-            whileStatement.getWhileBody().accept(spinOffTransformer);
+                addContentToIrTree(forLoop);
+                // containerStack.peek().addContent(forLoop);
+                IRTransformer spinOffTransformer = spinOff();
+                spinOffTransformer.containerStack.push(forLoop);
+                whileStatement.getWhileBody().accept(spinOffTransformer);
+            } else {
+                // make a guess: the repetition needs its content to be repeated and each repetition
+                // shall be displayed in its own table row. This also means that the repetition should
+                // contain as many cells => #TAB markers, as there are columns defined on the table.
+                // theoretically, the implemented table mechanism should create rows as needed. so, next time
+                // a row is instantiated (when content from within the loop is added), that row shall get the
+                // repetition appended.
+                // strategy: push the repetition onto the tableSpace and let the table builder consume it when
+                // creating the next table row.
+                checkState(tableSpace.table != null, "in WHILE statement, tableSpace was != null, and contained table was null!");
+                tableSpace.table.setTableRowRepetition(TableRowRepetition.createTableRowRepetition(forLoopCondition));
+            }
         }
 
         return false;
@@ -255,28 +295,36 @@ public final class IRTransformer extends AstItemVisitorAdapter {
     @Override
     public boolean proceedWithConditionalStatement(ConditionalStatement conditionalStatement) {
         // 2017-12-03 20:44 Fix issue, that DocFamily element titles must not contain dot characters (".")
-        String ifParagraphTitle = StringEscapeUtils.escapeXml10(conditionalStatement.getCondition().toDebugString()).replaceAll("\\.", "_");
-        IfThenElseParagraph ifParagraph = new IfThenElseParagraph(
-                StringUtils.join("IF ", ifParagraphTitle),
-                conditionalStatement.getCondition());
-        logger.info(StringUtils.join("Creating IF statement for workspace ", getWorkspace().getWorkspaceName(), " with condition ",
-                ifParagraphTitle));
-        addContentToIrTree(ifParagraph);
-        // containerStack.peek().addContent(ifParagraph);
 
-        if (conditionalStatement.getThenElement() != null) {
-            IRTransformer spinOffTransformer = spinOff();
-            spinOffTransformer.containerStack.push(new IfThenParagraph("THEN"));
-            conditionalStatement.getThenElement().accept(spinOffTransformer);
-            ifParagraph.addContent(spinOffTransformer.containerStack.pop());
+        if (tableSpace != null) {
+            // If IF is found within a table, there are two possible options:
+            int a = 5;
         } else {
-            ifParagraph.addContent(new IfThenParagraph("THEN EMPTY"));
-        }
-        if (conditionalStatement.getElseElement() != null) {
-            IRTransformer spinOffTransformer = spinOff();
-            spinOffTransformer.containerStack.push(new IfElseParagraph("ELSE"));
-            conditionalStatement.getElseElement().accept(spinOffTransformer);
-            ifParagraph.addContent(spinOffTransformer.containerStack.pop());
+            // if IF is found outside a table, it will be interpreted as standard IfThenElseParagraph and added to
+            // the current container on containerStack
+            String ifParagraphTitle = StringEscapeUtils.escapeXml10(conditionalStatement.getCondition().toDebugString()).replaceAll("\\.", "_");
+            IfThenElseParagraph ifParagraph = new IfThenElseParagraph(
+                    StringUtils.join("IF ", ifParagraphTitle),
+                    conditionalStatement.getCondition());
+            logger.info(StringUtils.join("Creating IF statement for workspace ", getWorkspace().getWorkspaceName(), " with condition ",
+                    ifParagraphTitle));
+            addContentToIrTree(ifParagraph);
+            // containerStack.peek().addContent(ifParagraph);
+
+            if (conditionalStatement.getThenElement() != null) {
+                IRTransformer spinOffTransformer = spinOff();
+                spinOffTransformer.containerStack.push(new IfThenParagraph("THEN"));
+                conditionalStatement.getThenElement().accept(spinOffTransformer);
+                ifParagraph.addContent(spinOffTransformer.containerStack.pop());
+            } else {
+                ifParagraph.addContent(new IfThenParagraph("THEN EMPTY"));
+            }
+            if (conditionalStatement.getElseElement() != null) {
+                IRTransformer spinOffTransformer = spinOff();
+                spinOffTransformer.containerStack.push(new IfElseParagraph("ELSE"));
+                conditionalStatement.getElseElement().accept(spinOffTransformer);
+                ifParagraph.addContent(spinOffTransformer.containerStack.pop());
+            }
         }
         // the visit logic gets handled in the proceedWith method, so it returns "false" so that
         // the visit method won't get called.
@@ -365,6 +413,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
                      * this could be a HIT/CLOU table preamble.
                      */
                     tableSpace = new TableSpace(hitCommandStatement);
+                    tableSpace.preTableContainer = containerStack.peek();
                     // since a tableSpace was created the IRTransformer will henceforth be in table builder mode.
                 } else {
                     // this should be the end of a HIT/CLOU table.
@@ -409,6 +458,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
             case 8:
                 // code 8 stands probably for right page margin
                 checkState(tableSpace.gStatement1Found, StringUtils.join("#G col def code ", code, " appears to come before code 1"));
+                tableSpace.table.addTableColumn(xpos - tableSpace.lastTabStopPosition);
                 tableSpace.gStatement8Found = true; // from now on it's ok to add content to this table
                 if (tableSpace.table.getColumnCount() > 0) {
                     tableSpace.lastTabStopPosition = xpos;
@@ -586,7 +636,7 @@ public final class IRTransformer extends AstItemVisitorAdapter {
                     fontWeight, textDecoration
             ));
         } else {
-            // currently, the only other possibility is: assign a vlaue to a slot of a list variable
+            // currently, the only other possibility is: assign a value to a slot of a list variable
             // uses the hit2assext list mechanisms
             // hit2assext:setListValueAt(var:read('renderSessionUuid'), assignmentStatement.getExpression().getId(), value XPath)
             //containerStack.peek().addContent(new DynamicContentReference(
@@ -672,13 +722,26 @@ public final class IRTransformer extends AstItemVisitorAdapter {
             table = Table.createTable();
         }
 
+        /**
+         * this is the container directly pre-ceding the table.
+         * If variable declarations are found within the table structure in HIT/CLOU, they get added
+         * to this container to help guarantee secure variable declaration.
+         */
+        private Container preTableContainer = null;
+
+        /**
+         * while processing a FOR body, all assignment statements get added to the current table cell.
+         * while outside of a FOR body, assignment statements get added to the container directly preceding the table
+         * to support secure variable initalization.
+         */
+        private boolean processingForBody = false;
+
         // flag that indicates that the table is being initialized properly
         private boolean gStatement1Found = false;
         // flag that indicates that the table column definition is finished
         private boolean gStatement8Found = false;
         // this value is used to calculate the width of the current column
         private int lastTabStopPosition = -1;
-
 
         /**
          * this is the HitCommandStatement #^"ZL NEU" where everything took its start.
@@ -711,7 +774,15 @@ public final class IRTransformer extends AstItemVisitorAdapter {
         if (tableSpace == null) {
             containerStack.peek().addContent(content);
         } else {
-            tableSpace.table.addContent(content);
+            if (!tableSpace.processingForBody && content instanceof DynamicContentReference &&
+                    ((DynamicContentReference) content).getXpath().contains("setScalarVariableValue")) {
+                // when processing variable declaration preceding a FOR loop nested within a table,
+                // Assignment Statements shall get added to the
+                // container preceding the table to help securely initiate variables.
+                tableSpace.preTableContainer.addContent(content);
+            } else {
+                tableSpace.table.addContent(content);
+            }
         }
     }
 

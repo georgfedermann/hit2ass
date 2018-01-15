@@ -20,9 +20,21 @@ public class TableImpl implements Table {
     private final List<TableColumn> tableColumns = new LinkedList<>();
     private final TableBody tableBody;
 
+    /**
+     * when a TableRowRepetition is found, it shall get added to the next row which is created
+     * by the table builder and then be discarded. This is a parking place for the repetition
+     * until the next row gets created.
+     */
+    private TableRowRepetition tableRowRepetition;
+
     TableImpl() {
         logger.info("Creating a new table instance");
         tableBody = TableBody.createTableBody();
+    }
+
+    @Override
+    public void setTableRowRepetition(TableRowRepetition tableRowRepetition) {
+        this.tableRowRepetition = tableRowRepetition;
     }
 
     @Override
@@ -43,7 +55,14 @@ public class TableImpl implements Table {
                 "Table must be initialized with columns before content can be added to it.");
         TableRow currentRow = tableBody.getCurrentRow();
         if (currentRow == null) {
-            tableBody.addTableRow(currentRow = TableRow.createTableRow());
+            tableBody.addTableRow(currentRow = TableRow.createTableRow(tableRowRepetition));
+            tableRowRepetition = null;
+        } else if (tableRowRepetition != null){
+            // the situation should be: within a table, a for loop was declared. the for loop declaration is
+            // hanging within the first table cell(s), but the repetition was not yet assigned to the row.
+            // so add it here and now
+            currentRow.setTableRowRepetition(tableRowRepetition);
+            tableRowRepetition = null;
         }
         TableCell currentTableCell = currentRow.getCurrentTableCell();
         if (currentTableCell == null) {
@@ -56,10 +75,12 @@ public class TableImpl implements Table {
     public void startNewCell() {
         TableRow currentRow = tableBody.getCurrentRow();
         if (currentRow == null) {
-            tableBody.addTableRow(currentRow = TableRow.createTableRow());
+            tableBody.addTableRow(currentRow = TableRow.createTableRow(tableRowRepetition));
+            tableRowRepetition = null;
         }
         if (currentRow.getSize() >= getColumnCount()) {
-            tableBody.addTableRow(currentRow = TableRow.createTableRow());
+            tableBody.addTableRow(currentRow = TableRow.createTableRow(tableRowRepetition));
+            tableRowRepetition = null;
         }
         currentRow.addTableCell(TableCell.createTableCell());
     }

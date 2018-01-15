@@ -71,6 +71,12 @@ public interface Table extends Container {
 
     void addTableColumn(int width);
 
+    /**
+     * when a TableRowRepetition is found, it shall get added to the next row which is created
+     * by the table builder and then be discarded. This is a parking place for the repetition
+     * until the next row gets created.
+     */
+    void setTableRowRepetition(TableRowRepetition tableRowRepetition);
 
     /**
      * @return an integer value representing the number of columns in this table

@@ -8,17 +8,26 @@ public interface TableRow extends Content {
 
     /**
      * get the current table cell
+     *
      * @return the table cell of null if this TableRow is still empty.
      */
     TableCell getCurrentTableCell();
+
+    void setTableRowRepetition(TableRowRepetition tableRowRepetition);
 
     /**
      * @return an integer representing the number of cells contained in this row.
      */
     int getSize();
 
-    static TableRow createTableRow() {
-        return new TableRowImpl();
+    /**
+     * @param tableRowRepetition can be null. if not null, it will be added to this table row instance.
+     * @return
+     */
+    static TableRow createTableRow(TableRowRepetition tableRowRepetition) {
+        TableRow tableRow = new TableRowImpl();
+        tableRow.setTableRowRepetition(tableRowRepetition);
+        return tableRow;
     }
 
 }

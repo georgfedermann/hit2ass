@@ -41,6 +41,28 @@ public class IRTransformerTest {
     }
 
     @Test
+    public void testTableBuilderWithRowRepetition() throws Exception {
+        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("TableTestRowRepetition"), "ISO8859-1");
+        baustein = parser.CB();
+        baustein.accept(blanksVisitor);
+        baustein.accept(irTransformer);
+        Workspace workspace = irTransformer.getWorkspace();
+        String acr = workspace.getContent();
+        assertFalse(StringUtils.isBlank(acr));
+    }
+
+    @Test
+    public void testTableBuilderWithOuterIf() throws Exception {
+        parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("TableTestIfOuter"), "ISO8859-1");
+        baustein = parser.CB();
+        baustein.accept(blanksVisitor);
+        baustein.accept(irTransformer);
+        Workspace workspace = irTransformer.getWorkspace();
+        String acr = workspace.getContent();
+        assertFalse(StringUtils.isBlank(acr));
+    }
+
+    @Test
     public void testTableBuilder() throws Exception {
         parser = new HitAssAstParser(TestUtils.getClouBausteinAsInputStream("TableTest"),
                 "ISO8859-1");

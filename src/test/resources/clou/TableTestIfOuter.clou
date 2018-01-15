@@ -1,0 +1,27 @@
+#
+Please find your table below:
+#d zei 0
+#d spal 0
+#d durchlaufzähler 0
+#d rowCount 5
+
+               #^ "ZL NEU"
+               #^ "W LÖSCHEN"
+#G 9 1
+#G 25 2
+#G 40 2
+#G 88 8
+#^"RETURN"
+
+
+#? rowCount > 0:
+  /J
+  some text #$TABU#*# #> rowCount#$TABU#*#
+#
+
+               #^ "ZL NEU"
+               #^ "W LÖSCHEN"
+#G 9 1
+#G 88 8
+#^"RETURN"
+This text shall be printed after the table.

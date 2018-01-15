@@ -12,8 +12,14 @@ import java.util.List;
 public class TableRowImpl implements TableRow {
 
     private final List<TableCell> tableCells = new LinkedList<>();
+    private TableRowRepetition tableRowRepetition;
 
     TableRowImpl() {
+    }
+
+    @Override
+    public void setTableRowRepetition(TableRowRepetition tableRowRepetition) {
+        this.tableRowRepetition = tableRowRepetition;
     }
 
     @Override
@@ -37,6 +43,8 @@ public class TableRowImpl implements TableRow {
         StringBuilder tableCellsContent = new StringBuilder();
         tableCells.stream().forEach(tableCell -> tableCellsContent.append(tableCell.getContent()));
         context.put("tableCells", tableCellsContent.toString());
+        context.put("tableRowRepetition",
+                tableRowRepetition == null ? "" : tableRowRepetition.getContent());
         Template template = Velocity.getTemplate("/velocity/tables/TemplateRow.vlt");
         StringWriter stringWriter = new StringWriter();
         template.merge(context, stringWriter);

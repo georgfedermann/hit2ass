@@ -1245,9 +1245,9 @@ Expression EPrime(Expression lhs) :
 { Expression rhs; Expression ePrimeExpression; }
 {
     (
-        (<IF_OR>|<DS_OR>) rhs = T8() ePrimeExpression = EPrime(rhs)
+        (<IF_AND>|<DS_AND>|<LS_AMPERSAND>) rhs = T8() ePrimeExpression = EPrime(rhs)
         {
-            return new BinaryOperatorExpression(lhs, BinaryOperator.OR,
+            return new BinaryOperatorExpression(lhs, BinaryOperator.AND,
                 ePrimeExpression != null ? ePrimeExpression : rhs );
         }
     )?
@@ -1265,9 +1265,9 @@ Expression T8Prime(Expression lhs) :
 { Expression rhs, t8PrimeExpression; }
 {
     (
-        (<IF_AND>|<DS_AND>|<LS_AMPERSAND>) rhs = T7() t8PrimeExpression = T8Prime(rhs)
+        (<IF_OR>|<DS_OR>) rhs = T7() t8PrimeExpression = T8Prime(rhs)
         {
-            return new BinaryOperatorExpression(lhs, BinaryOperator.AND,
+            return new BinaryOperatorExpression(lhs, BinaryOperator.OR,
                 t8PrimeExpression != null ? t8PrimeExpression : rhs );
         }
     )?

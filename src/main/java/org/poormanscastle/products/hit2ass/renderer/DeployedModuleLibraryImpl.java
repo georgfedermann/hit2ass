@@ -7,6 +7,8 @@ import java.util.TreeMap;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
+import org.apache.velocity.runtime.RuntimeConstants;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 /**
  * Created by georg on 29.09.16.
@@ -62,6 +64,11 @@ class DeployedModuleLibraryImpl implements DeployedModuleLibrary {
 
     @Override
     public byte[] renderToDocFamilyWorkspace() {
+        Velocity.setProperty(RuntimeConstants.OUTPUT_ENCODING, "UTF-8");
+        Velocity.setProperty(RuntimeConstants.INPUT_ENCODING, "UTF-8");
+        Velocity.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+        Velocity.setProperty("classpath.resource.loaderclass", ClasspathResourceLoader.class.getName());
+        Velocity.init();
         VelocityContext context = VelocityHelper.getVelocityContext();
         context.put("elementId", elementId);
         context.put("content", createContent());
